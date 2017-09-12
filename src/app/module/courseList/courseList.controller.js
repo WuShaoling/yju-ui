@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('inspinia')
+        .module('opera')
         .controller('courseListCtrl', courseListCtrl);
 
     courseListCtrl.$inject = ['$scope'];
