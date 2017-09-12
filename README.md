@@ -16,8 +16,8 @@
     gulp build
 
     # run unit tests
-    
-    gulp unit
+
+    gulp test
 
 ```
 
@@ -53,3 +53,4 @@
 │   │       └── registerModal.html
 │   └── service                                   //封装一些接口，常用方法等
 └── index.html                                    //入口页面，也是主页面  
+```
