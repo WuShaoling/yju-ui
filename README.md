@@ -33,7 +33,7 @@
     │   ├── index.run.js            
     │   ├── opera.js                                 //初始化一些样式          
     │   ├── less                                     //样式文件夹            
-    │   ├── module                                   //功能模块，不同的功能对应不同的文件夹           
+    │   ├── module                                   //功能模块，不同的功能对应不同的文件夹      
     │   │   ├── about                                //关于我们功能模块             
     │   │   │   ├── about.controller.js              //关于我们对应的控制器           
     │   │   │   └── about.html                       //关于我们的页面文件            
