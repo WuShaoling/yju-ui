@@ -1,7 +1,7 @@
 'use strict';
 
 //Directive used to set metisMenu and minimalize button
-angular.module('opera')
+angular.module('phoenix')
     .directive('sideNavigation', function($timeout) {
         return {
             restrict: 'A',

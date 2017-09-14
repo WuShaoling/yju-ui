@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    angular.module('opera').value('reqUrl', "http://localhost:8081")
+    angular.module('phoenix').value('reqUrl', "http://localhost:8081")
         //toastr配置
     toastr.options = {
         "closeButton": true,

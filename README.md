@@ -1,4 +1,4 @@
-# opera-ui      
+# phoenix-ui      
 * How to run              
     ``` bash         
     # install dependencies      
@@ -31,7 +31,7 @@
     │   ├── index.module.js                          //angular module init  
     │   ├── index.route.js                           //路由配置            
     │   ├── index.run.js            
-    │   ├── opera.js                                 //初始化一些样式          
+    │   ├── phoenix.js                                 //初始化一些样式          
     │   ├── less                                     //样式文件夹            
     │   ├── module                                   //功能模块，不同的功能对应不同的文件夹      
     │   │   ├── about                                //关于我们功能模块             

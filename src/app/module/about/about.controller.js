@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('opera')
+        .module('phoenix')
         .controller('aboutCtrl', aboutCtrl);
 
     aboutCtrl.$inject = ['$scope'];
