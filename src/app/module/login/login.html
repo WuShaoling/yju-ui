@@ -1,0 +1,38 @@
+<div class="middle-box text-center loginscreen animated fadeInDown" dynamic-background style="margin-top:5%" background-image="https://picture.insight365.ai/ting-ui/gic19600054.tif">
+    <div>
+        <div>
+            <h3 style="font-size:80px ">Phoenix</h3>
+            <!-- <img src="https://picture.insight365.ai/logo/logo-l.png " width="100% " style="padding-top: 20% "> -->
+        </div>
+        <!--<h3>
+            <h2>ASKHERE</h2>
+        </h3>-->
+        <p>
+        </p>
+
+        <form class="m-t " role="form ">
+
+            <div class="form-group ">
+                <select class="form-control" ng-model="user.type" ng-options="item.label for item in usertypes" ng-change="change()">
+                                <!-- <option ng-repeat="item in business.first" label="{{item.label}}" value="{{item.label}}"></option> -->
+                             
+                              </select>
+            </div>
+            <div class="form-group ">
+                <input type="text" class="form-control" placeholder="{{'请输入'+user.type.value}}" required=" " ng-model="user.id" autocomplete="off">
+            </div>
+            <div class="form-group ">
+                <input type="password" class="form-control" placeholder="密码" required="" ng-model="user.password" autocomplete="off">
+            </div>
+            <!-- <p ng-show="login_error " class="help-block ">登录失败</p> -->
+
+            <button ng-click="login() " class="btn btn-primary block full-width m-b ">登录</button>
+
+            <a ui-sref="modifyPassword "><small>忘记密码？</small></a>
+            <!-- 11.01需求:本系统内部使用，不需要注册，账号又管理员分配 -->
+            <!-- <p class="text-muted text-center "><small>{{ 'NO_ACCOUNT' | translate }}</small></p>
+            <a class="btn btn-sm btn-white btn-block " ui-sref="register ">{{ 'CRAETE_ACCOUNT' | translate }}</a> -->
+        </form>
+        <!-- <p class="m-t "> <small>{{ 'COPYRIGHT' | translate }} &copy; {{ 'COMPANY' | translate }} {{ 'RIGHTS_RESERVED' | translate }}</small> </p> -->
+    </div>
+</div>

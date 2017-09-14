@@ -12,7 +12,12 @@
             .state('index', {
                 url: "/index",
                 templateUrl: "app/module/common/common.html",
-                // controller: "mainController"
+                controller: "commonCtrl"
+            })
+            .state('login', {
+                url: "/login",
+                templateUrl: "app/module/login/login.html",
+                controller: "loginCtrl"
             })
             .state('index.main', {
                 url: "/main",
@@ -29,6 +34,7 @@
                 templateUrl: "app/module/courseList/courseList.html",
                 // controller: "mainController"
             });
+
         $urlRouterProvider.otherwise('/index/main');
     }
 

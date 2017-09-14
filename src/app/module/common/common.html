@@ -11,18 +11,18 @@
                 </ul>
                 <ul class="topbar-right">
 
-                    <li class="top-search list-inline">
-                        <a href="#"><i class="fa fa-search"></i></a>
+                    <li class="top-search list-inline dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-search"></i></a>
                         <ul class="dropdown-menu dropdown-menu-right">
-                            <li>
+                            <li class="active">
                                 <span class="input-group">
-                            <input type="text" class="form-control" placeholder="Course Name">
-                            <button type="submit" class="btn btn-default commonBtn">Search</button>
+                            <input type="text" class="form-control" placeholder="课程名称" style="color:black;" ng-model="searchData">
+                            <button type="submit" class="btn btn-default commonBtn" ng-click="search(searchData)">搜索</button>
                           </span>
                             </li>
                         </ul>
                     </li>
-                    <li class="dropdown language">
+                    <!-- <li class="dropdown language">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-globe"></i>EN
                             <i class="fa fa-caret-down"></i>
@@ -35,11 +35,11 @@
                             <li><a href="#">Russian</a></li>
                             <li><a href="#">German</a></li>
                         </ul>
-                    </li>
+                    </li> -->
                     <li>
                         <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                        <a href="javascript:(0)" ng-click="login()">Login</a><span>/</span>
-                        <a href="javascript:(0)">  Register</a>
+                        <a href="javascript:(0)" ng-click="login()">登录</a><span>/</span>
+                        <a href="javascript:(0)" ng-click="register()">  注册</a>
                     </li>
                 </ul>
             </div>
