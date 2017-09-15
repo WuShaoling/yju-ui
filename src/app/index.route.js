@@ -22,7 +22,7 @@
             .state('index.main', {
                 url: "/main",
                 templateUrl: "app/module/main/main.html",
-                data: { pageTitle: 'Example view' }
+                controller: "MainController"
             })
             .state('index.about', {
                 url: "/about",

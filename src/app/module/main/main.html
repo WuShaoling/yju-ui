@@ -10,10 +10,10 @@
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="caption_inner animated fadeInUp">
-                                    <h1>Welcome To Royal College</h1>
+                                    <h1>欢迎来到大数据实训平台</h1>
                                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean consectetur ante volutpat sem aliquam lobortis. Mauris porta fermentum volutpat. Praesent est sapien, tincidunt vel arcu vitae, mattis sollicitudin lectus.
                                     </p>
-                                    <a href="about.html">Learn More</a>
+                                    <a href="about.html">了解更多</a>
                                 </div>
                                 <!--end caption_inner-->
                             </div>
@@ -34,7 +34,7 @@
                                     <h1>Admission going on</h1>
                                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean consectetur ante volutpat sem aliquam lobortis. Mauris porta fermentum volutpat. Praesent est sapien, tincidunt vel arcu vitae, mattis sollicitudin lectus.
                                     </p>
-                                    <a href="buying-steps.html">Apply Now</a>
+                                    <a href="buying-steps.html">立即申请</a>
                                 </div>
                                 <!--end caption_inner-->
                             </div>
@@ -111,8 +111,8 @@
             <!-- row clearfix -->
 
             <div class="about_inner clearfix">
-                <div class="row">
-                    <div class="col-xs-6 col-sm-3">
+                <!-- <div class="row"> -->
+                <!-- <div class="col-xs-6 col-sm-3">
                         <div class="aboutImage">
                             <a href="single-course-right-sidebar.html">
                                 <img src="img/home/learn/learn_1.jpg" alt="" class="img-responsive" />
@@ -122,7 +122,7 @@
                                 <span class="captionLink">English Literature<span></span></span>
                             </a>
                         </div>
-                        <!-- aboutImage -->
+
                     </div>
 
                     <div class="col-xs-6 col-sm-3">
@@ -135,7 +135,7 @@
                                 <span class="captionLink">Business Administration<span></span></span>
                             </a>
                         </div>
-                        <!-- aboutImage -->
+
                     </div>
 
                     <div class="col-xs-6 col-sm-3">
@@ -148,7 +148,7 @@
                                 <span class="captionLink">Computer Science<span></span></span>
                             </a>
                         </div>
-                        <!-- aboutImage -->
+
                     </div>
 
                     <div class="col-xs-6 col-sm-3">
@@ -161,10 +161,50 @@
                                 <span class="captionLink">Mathematics<span></span></span>
                             </a>
                         </div>
-                        <!-- aboutImage -->
+
                     </div>
-                </div>
+                </div> -->
                 <!-- row -->
+                <div class="row">
+                    <div class="col-md-3 col-sm-6 col-xs-6" ng-repeat="course in courses">
+                        <div class="imageBox">
+                            <div class="productImage clearfix">
+                                <a href="single-course-right-sidebar.html"><img src="{{course.image}}" alt="Image"></a>
+                                <span class="sticker"><i class="fa fa-clock-o" aria-hidden="true"></i>{{course.duration}}</span>
+                            </div>
+                            <div class="productCaption clearfix">
+                                <h3><a href="single-course-right-sidebar.html">{{course.name}}</a></h3>
+                                <div class="product-meta">
+                                    <span class="author">授课教师 : {{course.teacher}}</span>
+                                </div>
+                                <div class="rating">
+                                    <span class="rating-star">
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                                      </span>
+                                    <span class="rating-review">(20 Reviews)</span>
+                                </div>
+                                <div class="caption-bottom">
+                                    <div class="price">
+                                        <span class="offer-price">￥{{course.price}}</span>
+                                        <span class="regular-price"><del>￥{{course.originPrice}}</del></span>
+                                    </div>
+                                    <div class="user">
+                                        <i class="fa fa-users">&nbsp;&nbsp;{{course.studentNum}}</i>
+                                        <span class="course-user"></span>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                </div>
             </div>
             <!-- about_inner -->
 
@@ -243,32 +283,27 @@
                 <div class="col-sm-4 col-xs-12">
                     <div class="formArea clearfix">
                         <div class="formTitle">
-                            <h3>Find a Course</h3>
-                            <p>Offered in small class sizes with great emphasis on the demands of the specification and exam technique.</p>
+                            <h3>查找课程</h3>
+                            <p>小班化，强调规格和考试技术的要求。</p>
                         </div>
                         <!-- formTitle -->
-                        <form action="#" method="post">
-                            <div class="selectBox clearfix">
-                                <select name="guiest_id1" id="guiest_id1">
-                        <option value="0">Location</option>
-                        <option value="1">Location_1</option>
-                        <option value="2">Location_2</option>
-                        <option value="3">Location_3</option>
-                      </select>
+                        <form class="m-t" role="form">
+
+
+                            <div class="form-group">
+                                <select class="form-control" ng-model="searchCourseType" ng-options="item.label for item in courseTypes" ng-init="searchCourseType=courseTypes[0]" ng-change="change()"></select>
+
                             </div>
-                            <!-- selectBox -->
-                            <div class="selectBox clearfix">
-                                <select name="guiest_id2" id="guiest_id2">
-                        <option value="0">Level</option>
-                        <option value="1">Level_1</option>
-                        <option value="2">Level_2</option>
-                        <option value="3">Level_3</option>
-                      </select>
+
+                            <div class="form-group">
+                                <select class="form-control" ng-model="searchCourseDetailType" ng-options="item.label for item in searchCourseType.contain" ng-init="searchCourseDetailType=searchCourseType.contain[0]"></select>
+
                             </div>
-                            <!-- selectBox -->
+
                             <div class="form-group">
                                 <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Course Name">
                             </div>
+
                             <button type="submit" class="btn btn-default btn-block commonBtn">Search</button>
                         </form>
                     </div>
