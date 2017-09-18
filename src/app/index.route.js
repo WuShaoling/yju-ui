@@ -29,6 +29,11 @@
                 templateUrl: "app/module/about/about.html",
                 controller: "aboutCtrl"
             })
+            .state('index.courseDetail', {
+                url: "/courseDetail",
+                templateUrl: "app/module/courseDetail/courseDetail.html",
+                controller: "courseDetailCtrl"
+            })
             .state('index.courseList', {
                 url: "/courseList",
                 templateUrl: "app/module/courseList/courseList.html",

@@ -31,8 +31,9 @@
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="caption_inner animated fadeInUp">
-                                    <h1>Admission going on</h1>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean consectetur ante volutpat sem aliquam lobortis. Mauris porta fermentum volutpat. Praesent est sapien, tincidunt vel arcu vitae, mattis sollicitudin lectus.
+                                    <h1>前端进阶：响应式开发与常用框架</h1>
+                                    <p>
+                                        首先恭喜你顺利通关了前端小白的课程，本路径属于进阶段位，主要关卡覆盖以下三个阶段。 第一关，适配。本关卡将通过学习HTML5与CSS3实现动态特效网站；通过对移动基础、响应式的讲解，Get√适配不同移动设备的技能； 第二关，搭建。本关卡将通过对Bootstrap框架的讲解，让小白毕业生从原生编写迅速过渡到使用Bootstrap快速搭建网页结构； 第三关，高效。本关卡将主攻CSS的预处理语言“Less”，因为Less将大幅减少编写原生CSS代码的工作量。而且对于前端攻城狮来说，代码更容易管理，开发效率倍增。
                                     </p>
                                     <a href="buying-steps.html">立即申请</a>
                                 </div>
@@ -55,7 +56,7 @@
                                     <h1>Arrange a tour to our college</h1>
                                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean consectetur ante volutpat sem aliquam lobortis. Mauris porta fermentum volutpat. Praesent est sapien, tincidunt vel arcu vitae, mattis sollicitudin lectus.
                                     </p>
-                                    <a href="contact-us.html">Contact Us</a>
+                                    <a href="contact-us.html">联系我们</a>
                                 </div>
                                 <!--end caption_inner-->
                             </div>
@@ -76,7 +77,7 @@
                                     <h1>Find your dream course</h1>
                                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean consectetur ante volutpat sem aliquam lobortis. Mauris porta fermentum volutpat. Praesent est sapien, tincidunt vel arcu vitae, mattis sollicitudin lectus.
                                     </p>
-                                    <a href="course-fullwidth.html">Find Course</a>
+                                    <a href="course-fullwidth.html">查找课程</a>
                                 </div>
                                 <!--end caption_inner-->
                             </div>
@@ -102,7 +103,7 @@
             <div class="row clearfix">
                 <div class="col-xs-12">
                     <div class="aboutTitle">
-                        <h2>Our Popular Courses</h2>
+                        <h2>热门课程</h2>
                     </div>
                     <!-- aboutTitle -->
                 </div>
@@ -169,7 +170,7 @@
                     <div class="col-md-3 col-sm-6 col-xs-6" ng-repeat="course in courses">
                         <div class="imageBox">
                             <div class="productImage clearfix">
-                                <a href="single-course-right-sidebar.html"><img src="{{course.image}}" alt="Image"></a>
+                                <a ui-sref="index.courseDetail"><img src="{{course.image}}" alt="Image"></a>
                                 <span class="sticker"><i class="fa fa-clock-o" aria-hidden="true"></i>{{course.duration}}</span>
                             </div>
                             <div class="productCaption clearfix">
@@ -221,16 +222,16 @@
                     <div class="videoNine clearfix">
 
                         <div class="videoArea clearfix">
-                            <h3>Welcome To Royal College</h3>
+                            <h3>欢迎来到Phoenix</h3>
                             <div class="row">
                                 <div class="col-lg-8 col-md-7 col-xs-12 videoLeft">
                                     <img src="img/home/video/video_image.jpg" data-video="https://www.youtube.com/embed/oOMcZoeEK0A?autoplay=1">
                                 </div>
                                 <!-- videoLeft -->
                                 <div class="col-lg-4 col-md-5 col-xs-12 videoRight">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean consectetur ante volutpat sem aliquam lobortis. Mauris porta fermentum volutpat. Praesent est sapien, tincidunt vel arcu vitae, mattis sollicitudin lectus.
-                                        Mauris porta fermentum volutpat. Praesent est sapien, tincidunt vel arcu vitae, mattis sollicitudin lectus.</p>
-                                    <a href="about.html" class="btn btn-block learnBtn">Learn More</a>
+                                    <p>Phoenix是一个大数据实训平台，是国内领先的IT技术实训平台，采用创新的“在线实验”学习模式，为学生及在职程序员提供编程、运维、测试、云计算、大数据、数据库等最新的IT技术实践课程。<br> 帮助学习者通过动手实践收获知识，同时体会实验精神。从实践切入，依靠交互性、操作性更强的课程，理论学习+动手实践共同激发你的创造力。
+                                    </p>
+                                    <a href="about.html" class="btn btn-block learnBtn">了解更多</a>
                                 </div>
                                 <!-- videoRight -->
                             </div>
@@ -239,7 +240,7 @@
                         <!-- videoArea -->
 
                         <div class="related_post_sec single_post">
-                            <h3>Recent News</h3>
+                            <h3>最新课程</h3>
                             <ul>
                                 <li>
                                     <span class="rel_thumb">
@@ -247,12 +248,15 @@
                         </span>
                                     <!--end rel_thumb-->
                                     <div class="rel_right">
-                                        <h4><a href="single-post-right-sidebar.html">Lorem Ipsum dolar simt Amet simply dummy Text Lorem Ipsum dolar</a></h4>
+                                        <h4><a href="single-post-right-sidebar.html">前端进阶：响应式开发与常用框架</h1>
+                                            <p></a></h4>
                                         <div class="meta">
                                             <span class="author">Posted in: <a href="#">Update</a></span>
                                             <span class="date">on: <a href="#">January 24, 2015</a></span>
                                         </div>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation...</p>
+                                        <p>
+                                            首先恭喜你顺利通关了前端小白的课程，本路径属于进阶段位，主要关卡覆盖以下三个阶段。 第一关，适配。本关卡将通过学习HTML5与CSS3实现动态特效网站；通过对移动基础、响应式的讲解，Get√适配不同移动设备的技能； 第二关，搭建。本关卡将通过对Bootstrap框架的讲解，让小白毕业生从原生编写迅速过渡到使用Bootstrap快速搭建网页结构 ...
+                                        </p>
                                     </div>
                                     <!--end rel right-->
                                 </li>
@@ -262,12 +266,14 @@
                         </span>
                                     <!--end rel_thumb-->
                                     <div class="rel_right">
-                                        <h4><a href="single-post-right-sidebar.html">Lorem Ipsum dolar simt Amet simply dummy Text Lorem Ipsum dolar</a></h4>
+                                        <h4><a href="single-post-right-sidebar.html">Java零基础入门</a></h4>
                                         <div class="meta">
                                             <span class="author">Posted in: <a href="#">Exam</a></span>
                                             <span class="date">on: <a href="#">January 24, 2015</a></span>
                                         </div>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation...</p>
+                                        <p>
+                                            Java作为面向对象编程语言的代表，极好地实现了面向对象理论，允许程序员以优雅的思维方式进行复杂的编程。据IDC统计，Java在所有软件开发类人才的需求中，对Java工程师的需求曾达到全部需求量的50%以上。TIOBE指数显示，Java编程已经超过了20%的普及门槛，这意味着每五行源代码当中就有一行采用Java编写 第...
+                                        </p>
                                     </div>
                                     <!--end rel right-->
                                 </li>
@@ -301,16 +307,16 @@
                             </div>
 
                             <div class="form-group">
-                                <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Course Name">
+                                <input type="text" class="form-control" id="" placeholder="课程名称">
                             </div>
 
-                            <button type="submit" class="btn btn-default btn-block commonBtn">Search</button>
+                            <button type="submit" class="btn btn-default btn-block commonBtn">搜索</button>
                         </form>
                     </div>
                     <!-- formArea -->
                     <div class="list_block related_post_sec">
                         <div class="upcoming_events">
-                            <h3>Upcoming Events</h3>
+                            <h3>最新通知</h3>
                             <ul>
                                 <li class="related_post_sec single_post">
                                     <span class="date-wrapper">
@@ -349,7 +355,7 @@
                                     </div>
                                 </li>
                             </ul>
-                            <a href="events-3col.html" class="btn btn-default btn-block commonBtn">More Events</a>
+                            <a href="events-3col.html" class="btn btn-default btn-block commonBtn">更多事件</a>
                         </div>
                     </div>
                     <!-- end list_block -->
@@ -373,7 +379,7 @@
                             <span class="timer">8298</span>
                         </div>
                         <div class="seperator-small"></div>
-                        <p>Students</p>
+                        <p>学生</p>
                     </div>
                 </div>
                 <!-- col-sm-3 -->
@@ -384,7 +390,7 @@
                             <span class="timer">142</span>
                         </div>
                         <div class="seperator-small"></div>
-                        <p>Courses</p>
+                        <p>课程</p>
                     </div>
                 </div>
                 <!-- col-sm-3 -->
@@ -395,7 +401,7 @@
                             <span class="timer">1047</span>
                         </div>
                         <div class="seperator-small"></div>
-                        <p>Stuffs</p>
+                        <p>方向</p>
                     </div>
                 </div>
                 <!-- col-sm-3 -->
@@ -406,18 +412,18 @@
                             <span class="timer">10</span>
                         </div>
                         <div class="seperator-small"></div>
-                        <p>Locations</p>
+                        <p>学校</p>
                     </div>
                 </div>
                 <!-- col-sm-3 -->
             </div>
             <!-- row -->
-            <div class="paralax-text text-center">
+            <!-- <div class="paralax-text text-center">
                 <h2>Do you like this template?</h2>
                 <p>nec congue consequat risus, nec volutpat enim tempus id. Proin et sapien eget diam ullamcorper consectetur. Sed blandit imperdiet mauris. Mauris eleifend faucib</p>
                 <p>ipsum quis varius. Quisque pharetra leo erat, non eleifend nibh interdum quis.</p>
                 <a href="buying-steps.html" class="btn btn-default commonBtn">Buy now</a>
-            </div>
+            </div> -->
             <!-- row -->
         </div>
         <!-- container -->
@@ -430,15 +436,15 @@
                 <div class="col-xs-12 col-sm-6">
                     <div class="testimonial">
                         <div class="carousal_content">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris</p>
+                            <p>这个平台真是太好了，通过学习这门课程让我掌握了spring boot项目中绝大部分知识，能够独立完成一个spring boot的后端项目</p>
                         </div>
                         <div class="carousal_bottom">
                             <div class="thumb">
                                 <img src="img/about/SARA-LISBON_Art-Student.jpg" alt="" draggable="false">
                             </div>
                             <div class="thumb_title">
-                                <span class="author_name">Sara Lisbon</span>
-                                <span class="author_designation">Student<a href="#"> English Literature</a></span>
+                                <span class="author_name">张君义</span>
+                                <span class="author_designation">学生<a href="#"> Spring Boot实战</a></span>
                             </div>
                         </div>
                     </div>
@@ -447,13 +453,13 @@
                 <!-- col-xs-12 -->
                 <div class="col-xs-12 col-sm-6">
                     <div class="features">
-                        <h3>Why Choose Us?</h3>
+                        <h3>为什么选择我们?</h3>
                         <ul>
-                            <li><i class="fa fa-check-circle-o"></i>It’s a complete solution for your college website</li>
-                            <li><i class="fa fa-check-circle-o"></i>PSD file included to help you customize the design better</li>
-                            <li><i class="fa fa-check-circle-o"></i>SASS file included for unlimited hasel free style customization</li>
-                            <li><i class="fa fa-check-circle-o"></i>Theme option switcher for live cusomization preview</li>
-                            <li><i class="fa fa-check-circle-o"></i>24/7 Support</li>
+                            <li><i class="fa fa-check-circle-o"></i>为你的大学提供了一整套的解决方案</li>
+                            <li><i class="fa fa-check-circle-o"></i>随时随地做实验</li>
+                            <li><i class="fa fa-check-circle-o"></i>老师在线及时反馈</li>
+                            <li><i class="fa fa-check-circle-o"></i>反复学习，温故知新</li>
+                            <!-- <li><i class="fa fa-check-circle-o"></i></li> -->
                         </ul>
                     </div>
                 </div>
