@@ -5,9 +5,12 @@
         .module('phoenix')
         .controller('MainController', MainController);
 
-    MainController.$inject = ['$scope'];
+    MainController.$inject = ['$scope', '$timeout'];
 
-    function MainController($scope) {
+    function MainController($scope, $timeout) {
+
+
+
         $scope.courses = [{
             id: "1",
             image: "img/home/course/course-img1.jpg",

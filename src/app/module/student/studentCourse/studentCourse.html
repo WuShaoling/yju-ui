@@ -1,0 +1,60 @@
+<div class="main_wrapper">
+
+
+    <div class="aboutArea">
+        <div class="container">
+            <div class="row clearfix">
+                <div class="col-xs-12">
+                    <div class="aboutTitle">
+                        <h2>我的课程</h2>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="about_inner clearfix">
+
+                <div class="row">
+                    <div class="col-md-3 col-sm-6 col-xs-6" ng-repeat="course in courses">
+                        <div class="imageBox">
+                            <div class="productImage clearfix">
+                                <a ui-sref="index.studentCourseDetail"><img src="{{course.image}}" alt="Image"></a>
+                                <span class="sticker"><i class="fa fa-clock-o" aria-hidden="true"></i>{{course.duration}}</span>
+                            </div>
+                            <div class="productCaption clearfix">
+                                <h3><a ui-sref="index.studentCourseDetail">{{course.name}}</a></h3>
+                                <div class="product-meta">
+                                    <span class="author">授课教师 : {{course.teacher}}</span>
+                                </div>
+
+                                <div class="caption-bottom">
+                                    <div class="price">
+                                        <span class="offer-price"><a ui-sref="index.studentCourseDetail">查看详情</a></span>
+
+                                    </div>
+                                    <div class="user">
+                                        <i class="fa fa-users">&nbsp;&nbsp;{{course.studentNum}}</i>
+                                        <span class="course-user"></span>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            <!-- about_inner -->
+
+        </div>
+        <!-- container -->
+    </div>
+    <!-- aboutArea -->
+
+
+
+</div>

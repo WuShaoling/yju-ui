@@ -4,10 +4,13 @@
         <div class="topbar clearfix">
             <div class="container">
                 <ul class="topbar-left">
-                    <li class="phoneNo"><i class="fa fa-phone"></i>{{phone}}</li>
-                    <li class="email-id hidden-xs hidden-sm"><i class="fa fa-envelope"></i>
+                    <li><i class="fa fa-home"></i><a ui-sref="index.main"> 首页</a></li>
+
+
+                    <li ng-repeat="nav in navbar"><i class="{{nav.class}}"></i><a ui-sref="{{nav.url}}"> {{nav.name}}</a></li>
+                    <!-- <li class="email-id hidden-xs hidden-sm"><i class="fa fa-envelope"></i>
                         <a href="mailto:info@yourdomain.com">{{email}}</a>
-                    </li>
+                    </li> -->
                 </ul>
                 <ul class="topbar-right">
 
@@ -22,298 +25,32 @@
                             </li>
                         </ul>
                     </li>
-                    <!-- <li class="dropdown language">
+                    <li class="dropdown language" ng-if="logined">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-globe"></i>EN
+                            <i class="glyphicon glyphicon-user"></i>{{username}}
                             <i class="fa fa-caret-down"></i>
                         </a>
                         <ul class="dropdown-menu">
-                            <li class="active">
-                                <a href="#">English </a>
+                            <li>
+                                <a href="#">修改密码 </a>
                             </li>
-                            <li><a href="#">Spanish</a></li>
-                            <li><a href="#">Russian</a></li>
-                            <li><a href="#">German</a></li>
+                            <li><a href="#">退出登录</a></li>
+
                         </ul>
-                    </li> -->
-                    <li>
+                    </li>
+                    <li ng-if="!logined">
                         <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                        <a href="javascript:(0)" ng-click="login()">登录</a><span>/</span>
-                        <a href="javascript:(0)" ng-click="register()">  注册</a>
+                        <a href="javascript:(0)" ng-click="login()">登录</a>
+                        <!-- <span>/</span> <a href="javascript:(0)" ng-click="register()">  注册</a> -->
                     </li>
                 </ul>
             </div>
         </div>
 
-        <div class="header clearfix">
-            <nav class="navbar navbar-main navbar-default">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <div class="header_inner">
 
-                                <!-- Brand and toggle get grouped for better mobile display -->
-                                <div class="navbar-header">
-                                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-nav" aria-expanded="false">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            </button>
-                                    <a class="navbar-brand logo clearfix" ui-sref="index.main"><img src="img/logo.png" alt="" class="img-responsive" /></a>
-                                </div>
-
-                                <!-- Collect the nav links, forms, and other content for toggling -->
-                                <div class="collapse navbar-collapse" id="main-nav">
-                                    <ul class="nav navbar-nav navbar-right">
-                                        <li class="active ">
-                                            <a ui-sref="index.main">首页</a>
-                                            <!-- <ul class="dropdown-menu">
-                                                <li><a ui-sref="index.main">默认首页</a></li>
-                                                <li><a ui-sref="index.courseList">课程列表</a></li>
-                                                <li><a ui-sref="index.about">关于我们</a></li>
-
-
-                                            </ul> -->
-                                        </li>
-                                        <li class=" dropdown">
-                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">课程</a>
-                                            <ul class="dropdown-menu">
-                                                <li class="dropdown">
-                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">后端开发</a>
-                                                    <ul class="dropdown-menu">
-                                                        <li><a href="course-grid-3col.html">Python</a></li>
-                                                        <li><a href="course-grid-4col.html">PHP</a></li>
-                                                        <li><a href="course-grid-sidebar-right.html">Java</a></li>
-                                                        <li><a href="">Ruby</a></li>
-                                                        <li><a href="">NodeJS</a></li>
-                                                        <li><a href="">C</a></li>
-                                                        <li><a href="">C++</a></li>
-                                                        <li><a href="">Laravel</a></li>
-                                                        <li><a href="">Flask</a></li>
-                                                        <li><a href="">Go</a></li>
-                                                        <li><a href="">Spring</a></li>
-                                                        <li><a href="">爬虫</a></li>
-
-
-                                                    </ul>
-                                                </li>
-                                                <li class="dropdown">
-                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Linux运维</a>
-                                                    <ul class="dropdown-menu">
-                                                        <li><a href="course-grid-version2-4col.html">Linux</a></li>
-                                                        <li><a href="course-grid-version2-3col.html">Shell</a></li>
-                                                        <!-- <li><a href="course-version2-right-sidebar.html">Sidebar Right</a></li>
-                                                        <li><a href="course-version2-left-sidebar.html">Sidebar Left</a></li> -->
-                                                    </ul>
-                                                </li>
-                                                <li class="dropdown">
-                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">云计算与大数据</a>
-                                                    <ul class="dropdown-menu">
-                                                        <li><a href="course-right-sidebar.html">Hadoop</a></li>
-                                                        <li><a href="course-left-sidebar.html">Spark</a></li>
-                                                        <!-- <li><a href="course-fullwidth.html">Fullwidth</a></li> -->
-                                                    </ul>
-                                                </li>
-                                                <li class="dropdown">
-                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">数据库</a>
-                                                    <ul class="dropdown-menu">
-                                                        <li><a href="single-course-right-sidebar.html">SQL</a></li>
-                                                        <li><a href="single-course-left-sidebar.html">NoSQL</a></li>
-                                                        <!-- <li><a href="single-course-fullwidth.html">Fullwidth</a></li> -->
-                                                    </ul>
-                                                </li>
-                                                <li class="dropdown">
-                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">信息安全</a>
-                                                    <ul class="dropdown-menu">
-                                                        <li><a href="cart.html">Web安全</a></li>
-                                                        <li><a href="checkout.html">安全开发</a></li>
-                                                        <!-- <li><a href="confirmation.html">Confirmation </a></li> -->
-                                                    </ul>
-                                                </li>
-                                                <li class="dropdown">
-                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Web前端</a>
-                                                    <ul class="dropdown-menu">
-                                                        <li><a href="cart.html">Web安全</a></li>
-                                                        <li><a href="checkout.html">安全开发</a></li>
-                                                        <!-- <li><a href="confirmation.html">Confirmation </a></li> -->
-                                                    </ul>
-                                                </li>
-                                                <li class="dropdown">
-                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">计算机专业课</a>
-                                                    <ul class="dropdown-menu">
-                                                        <li><a href="cart.html">新手入门</a></li>
-                                                        <li><a href="checkout.html">Web</a></li>
-                                                        <!-- <li><a href="confirmation.html">Confirmation </a></li> -->
-                                                    </ul>
-                                                </li>
-                                                <li class="dropdown">
-                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">其他技术</a>
-                                                    <ul class="dropdown-menu">
-                                                        <li><a href="cart.html">Swift</a></li>
-                                                        <li><a href="checkout.html">Windows</a></li>
-                                                        <!-- <li><a href="confirmation.html">Confirmation </a></li> -->
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li class=" dropdown">
-                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">路径</a>
-                                            <ul class="dropdown-menu">
-                                                <!-- <li><a href="about.html">About College</a></li> -->
-                                                <li class="dropdown">
-                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Web前端工程师</a>
-                                                    <ul class="dropdown-menu">
-                                                        <li><a href="photo-gallery3col.html">HTML</a></li>
-                                                        <li><a href="photo-gallery4col.html">JavaScript入门</a></li>
-                                                        <li><a href="photo-gallery4col.html">AngularJS</a></li>
-                                                        <li><a href="photo-gallery4col.html">ReactJS</a></li>
-
-
-                                                    </ul>
-                                                </li>
-                                                <li class="dropdown">
-                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Android工程师</a>
-                                                    <ul class="dropdown-menu">
-                                                        <li><a href="buying-steps.html">Java</a></li>
-                                                        <li><a href="buying-confirmation.html">Android基础</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li class="dropdown">
-                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Ios工程师</a>
-                                                    <ul class="dropdown-menu">
-                                                        <li><a href="price-table-3col.html">swift</a></li>
-                                                        <li><a href="price-table-4col.html">objecttive-c</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li><a href="campus.html">数据分析师</a></li>
-                                                <li><a href="stuff.html">产品架构师</a></li>
-                                                <li><a href="international_students.html">其他</a></li>
-                                                <!-- <li><a href="contact-us.html">Contact Us</a></li>
-                                                <li><a href="privacy-policy.html">Privacy Policy</a></li>
-                                                <li><a href="404-error.html">404 Not Found</a></li>
-                                                <li><a href="coming-soon-dark.html" target="_blank">Coming Soon</a></li> -->
-                                            </ul>
-                                        </li>
-                                        <li class=" dropdown">
-                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">讨论</a>
-                                            <ul class="dropdown-menu">
-                                                <li><a href="blog-right-sidebar.html">Blog Sidebar Right</a></li>
-                                                <li><a href="blog-left-sidebar.html">Blog Sidebar Left</a></li>
-                                                <li><a href="single-post-right-sidebar.html">Single Post Sidebar Right</a></li>
-                                                <li><a href="single-post-left-sidebar.html">Single Post Sidebar Left</a></li>
-                                            </ul>
-                                        </li>
-                                        <li class=" dropdown">
-                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">训练营</a>
-                                            <ul class="dropdown-menu">
-                                                <li><a href="events-3col.html">Events 3 Columns</a></li>
-                                                <li><a href="events-right-sidebar.html">Events Sidebar Right</a></li>
-                                                <li><a href="events-left-sidebar.html">Events Sidebar Left</a></li>
-                                                <li><a href="single-events.html">Single Event</a></li>
-                                                <li><a href="events-calendar.html">Events Callender</a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="apply_now"><a href="buying-steps.html">立即申请</a></li>
-                                    </ul>
-                                </div>
-                                <!-- navbar-collapse -->
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /.container -->
-            </nav>
-            <!-- navbar -->
-        </div>
     </header>
 
     <div ui-view></div>
-    <footer class="footer-v1">
-        <div class="menuFooter clearfix">
-            <div class="container">
-                <div class="row clearfix">
 
-                    <div class="col-sm-3 col-xs-6">
-                        <ul class="menuLink">
-                            <li><a href="about.html">About Royal College</a></li>
-                            <li><a href="campus.html">About Campus</a></li>
-                            <li><a href="stuff.html">Staff Members</a></li>
-                            <li><a href="about.html">Why Choose Us?</a></li>
-                        </ul>
-                    </div>
-                    <!-- col-sm-3 col-xs-6 -->
-
-                    <div class="col-sm-3 col-xs-6 borderLeft">
-                        <ul class="menuLink">
-                            <li><a href="course-fullwidth.html">All Courses</a></li>
-                            <li><a href="buying-steps.html">Admission</a></li>
-                            <li><a href="photo-gallery3col.html">Photo Gallery</a></li>
-                            <li><a href="international_students.html">International Students</a></li>
-                        </ul>
-                    </div>
-                    <!-- col-sm-3 col-xs-6 -->
-
-                    <div class="col-sm-3 col-xs-6 borderLeft">
-                        <div class="footer-address">
-                            <h5>Location:</h5>
-                            <address>
-                  Royal College<br>
-                  1727 Lombard St.<br>
-                  San Francisco
-                </address>
-                            <a href="contact-us.html"><span class="place"><i class="fa fa-map-marker"></i>Main Campus</span></a>
-                        </div>
-                    </div>
-                    <!-- col-sm-3 col-xs-6 -->
-
-                    <div class="col-sm-3 col-xs-6 borderLeft">
-                        <div class="socialArea">
-                            <h5>Find us on:</h5>
-                            <ul class="list-inline ">
-                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                                <li><a href="#"><i class="fa fa-pinterest-p"></i></a></li>
-                                <li><a href="#"><i class="fa fa-flickr"></i></a></li>
-                                <li><a href="#"><i class="fa fa-youtube-play"></i></a></li>
-                            </ul>
-                        </div>
-                        <!-- social -->
-                        <div class="contactNo">
-                            <h5>Call us on:</h5>
-                            <h3>012-3434-456768</h3>
-                        </div>
-                        <!-- contactNo -->
-                    </div>
-                    <!-- col-sm-3 col-xs-6 -->
-
-                </div>
-                <!-- row -->
-            </div>
-            <!-- container -->
-        </div>
-        <!-- menuFooter -->
-
-        <div class="footer clearfix">
-            <div class="container">
-                <div class="row clearfix">
-                    <div class="col-sm-6 col-xs-12 copyRight">
-                        <p>© 2016 Copyright 观山科技 by <a href="http://guanshantech.com" target="view_frame">JUNYI</a></p>
-                    </div>
-                    <!-- col-sm-6 col-xs-12 -->
-                    <div class="col-sm-6 col-xs-12 privacy_policy">
-                        <a href="contact-us.html">Contact us</a>
-                        <a href="privacy-policy.html">Privacy Policy</a>
-                    </div>
-                    <!-- col-sm-6 col-xs-12 -->
-                </div>
-                <!-- row clearfix -->
-            </div>
-            <!-- container -->
-        </div>
-        <!-- footer -->
-    </footer>
-
+    <div ng-include="'app/module/common/footer.html'"></div>
 </div>

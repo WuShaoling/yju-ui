@@ -12,7 +12,7 @@
         <form>
             <div class="form-group formField">
                 <div class="input-group">
-                    <div class="input-group-addon"><i class="fa fa-user" style="font-size:10px"></i></div>
+                    <div class="input-group-addon"><i class="fa fa-user"></i></div>
 
                     <select class="form-control" ng-model="user.type" ng-options="item.label for item in usertypes" ng-change="change()">
                                     <!-- <option ng-repeat="item in business.first" label="{{item.label}}" value="{{item.label}}"></option> -->
@@ -26,8 +26,8 @@
 
                 <!-- <label class="fa fa-mobile" for="exampleInputAmount"><i class=""></i></label> -->
                 <div class="input-group">
-                    <div class="input-group-addon"><i class="fa fa-mobile"></i></div>
-                    <input type="text" class="form-control" id="exampleInputAmount" placeholder="{{'请输入'+user.type.value}}">
+                    <div class="input-group-addon"><i class="fa fa-credit-card"></i></div>
+                    <input type="text" class="form-control" id="exampleInputAmount" ng-model="user.id" placeholder="{{'请输入'+user.type.value}}">
 
                 </div>
             </div>
@@ -36,10 +36,10 @@
                 <div class="input-group">
 
                     <div class="input-group-addon"> <i class="fa fa-lock" aria-hidden="true"></i></div>
-                    <input type="password" class="form-control" placeholder="请输入密码">
+                    <input type="password" class="form-control" ng-model="user.pass" placeholder="请输入密码">
                 </div>
             </div>
-            <button type="submit" class="btn btn-block commonBtn">登录</button>
+            <button type="submit" class="btn btn-block commonBtn" ng-click="login()">登录</button>
             <div class="form-group">
                 <div class="checkbox">
                     <label>
@@ -60,9 +60,9 @@
         </div> -->
 
     </div>
-    <div class="panel-footer">
+    <!-- <div class="panel-footer">
         <p style="text-align:center">还没有账号? <a href="javascript:(0)" ng-click="goRegister()">注册</a></p>
-    </div>
+    </div> -->
     <!-- <div class="modal-footer">
         <button type="button" class="btn btn-white" ng-click="cancel()">取消</button>
 

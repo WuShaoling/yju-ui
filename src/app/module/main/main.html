@@ -1,103 +1,6 @@
 <div class="main_wrapper">
 
 
-    <div class="banner carousel slide" id="recommended-item-carousel" data-ride="carousel">
-        <div class="slides carousel-inner">
-            <div class="item active">
-                <img src="img/home/slider/slider_image_1.jpg" alt="" />
-                <div class="banner_caption">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <div class="caption_inner animated fadeInUp">
-                                    <h1>欢迎来到大数据实训平台</h1>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean consectetur ante volutpat sem aliquam lobortis. Mauris porta fermentum volutpat. Praesent est sapien, tincidunt vel arcu vitae, mattis sollicitudin lectus.
-                                    </p>
-                                    <a href="about.html">了解更多</a>
-                                </div>
-                                <!--end caption_inner-->
-                            </div>
-                        </div>
-                        <!--end row-->
-                    </div>
-                    <!--end container-->
-                </div>
-                <!--end banner_caption-->
-            </div>
-            <div class="item">
-                <img src="img/home/slider/slider_image_2.jpg" alt="" />
-                <div class="banner_caption">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <div class="caption_inner animated fadeInUp">
-                                    <h1>前端进阶：响应式开发与常用框架</h1>
-                                    <p>
-                                        首先恭喜你顺利通关了前端小白的课程，本路径属于进阶段位，主要关卡覆盖以下三个阶段。 第一关，适配。本关卡将通过学习HTML5与CSS3实现动态特效网站；通过对移动基础、响应式的讲解，Get√适配不同移动设备的技能； 第二关，搭建。本关卡将通过对Bootstrap框架的讲解，让小白毕业生从原生编写迅速过渡到使用Bootstrap快速搭建网页结构； 第三关，高效。本关卡将主攻CSS的预处理语言“Less”，因为Less将大幅减少编写原生CSS代码的工作量。而且对于前端攻城狮来说，代码更容易管理，开发效率倍增。
-                                    </p>
-                                    <a href="buying-steps.html">立即申请</a>
-                                </div>
-                                <!--end caption_inner-->
-                            </div>
-                        </div>
-                        <!--end row-->
-                    </div>
-                    <!--end container-->
-                </div>
-                <!--end banner_caption-->
-            </div>
-            <div class="item">
-                <img src="img/home/slider/slider_image_3.jpg" alt="" />
-                <div class="banner_caption">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <div class="caption_inner animated fadeInUp">
-                                    <h1>Arrange a tour to our college</h1>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean consectetur ante volutpat sem aliquam lobortis. Mauris porta fermentum volutpat. Praesent est sapien, tincidunt vel arcu vitae, mattis sollicitudin lectus.
-                                    </p>
-                                    <a href="contact-us.html">联系我们</a>
-                                </div>
-                                <!--end caption_inner-->
-                            </div>
-                        </div>
-                        <!--end row-->
-                    </div>
-                    <!--end container-->
-                </div>
-                <!--end banner_caption-->
-            </div>
-            <div class="item">
-                <img src="img/home/slider/slider_image_4.jpg" alt="" />
-                <div class="banner_caption">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <div class="caption_inner animated fadeInUp">
-                                    <h1>Find your dream course</h1>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean consectetur ante volutpat sem aliquam lobortis. Mauris porta fermentum volutpat. Praesent est sapien, tincidunt vel arcu vitae, mattis sollicitudin lectus.
-                                    </p>
-                                    <a href="course-fullwidth.html">查找课程</a>
-                                </div>
-                                <!--end caption_inner-->
-                            </div>
-                        </div>
-                        <!--end row-->
-                    </div>
-                    <!--end container-->
-                </div>
-                <!--end banner_caption-->
-            </div>
-        </div>
-        <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
-            <img src="img/home/slider/prev.png">
-        </a>
-        <a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="next">
-            <img src="img/home/slider//next.png">
-        </a>
-    </div>
-    <!--end banner-->
-
     <div class="aboutArea">
         <div class="container">
             <div class="row clearfix">
@@ -170,7 +73,7 @@
                     <div class="col-md-3 col-sm-6 col-xs-6" ng-repeat="course in courses">
                         <div class="imageBox">
                             <div class="productImage clearfix">
-                                <a ui-sref="index.courseDetail"><img src="{{course.image}}" alt="Image"></a>
+                                <a ui-sref="index.courseDetail1"><img src="{{course.image}}" alt="Image"></a>
                                 <span class="sticker"><i class="fa fa-clock-o" aria-hidden="true"></i>{{course.duration}}</span>
                             </div>
                             <div class="productCaption clearfix">
@@ -239,46 +142,6 @@
                         </div>
                         <!-- videoArea -->
 
-                        <div class="related_post_sec single_post">
-                            <h3>最新课程</h3>
-                            <ul>
-                                <li>
-                                    <span class="rel_thumb">
-                          <a href="single-post-right-sidebar.html"><img src="img/news/related_thumb_01.png" alt=""></a>
-                        </span>
-                                    <!--end rel_thumb-->
-                                    <div class="rel_right">
-                                        <h4><a href="single-post-right-sidebar.html">前端进阶：响应式开发与常用框架</h1>
-                                            <p></a></h4>
-                                        <div class="meta">
-                                            <span class="author">Posted in: <a href="#">Update</a></span>
-                                            <span class="date">on: <a href="#">January 24, 2015</a></span>
-                                        </div>
-                                        <p>
-                                            首先恭喜你顺利通关了前端小白的课程，本路径属于进阶段位，主要关卡覆盖以下三个阶段。 第一关，适配。本关卡将通过学习HTML5与CSS3实现动态特效网站；通过对移动基础、响应式的讲解，Get√适配不同移动设备的技能； 第二关，搭建。本关卡将通过对Bootstrap框架的讲解，让小白毕业生从原生编写迅速过渡到使用Bootstrap快速搭建网页结构 ...
-                                        </p>
-                                    </div>
-                                    <!--end rel right-->
-                                </li>
-                                <li>
-                                    <span class="rel_thumb">
-                          <a href="single-post-right-sidebar.html"><img src="img/news/related_thumb_02.jpg" alt=""></a>
-                        </span>
-                                    <!--end rel_thumb-->
-                                    <div class="rel_right">
-                                        <h4><a href="single-post-right-sidebar.html">Java零基础入门</a></h4>
-                                        <div class="meta">
-                                            <span class="author">Posted in: <a href="#">Exam</a></span>
-                                            <span class="date">on: <a href="#">January 24, 2015</a></span>
-                                        </div>
-                                        <p>
-                                            Java作为面向对象编程语言的代表，极好地实现了面向对象理论，允许程序员以优雅的思维方式进行复杂的编程。据IDC统计，Java在所有软件开发类人才的需求中，对Java工程师的需求曾达到全部需求量的50%以上。TIOBE指数显示，Java编程已经超过了20%的普及门槛，这意味着每五行源代码当中就有一行采用Java编写 第...
-                                        </p>
-                                    </div>
-                                    <!--end rel right-->
-                                </li>
-                            </ul>
-                        </div>
                         <!--related_post_sec-->
 
                     </div>
@@ -287,32 +150,7 @@
                 <!-- col-sm-8 col-xs-12 -->
 
                 <div class="col-sm-4 col-xs-12">
-                    <div class="formArea clearfix">
-                        <div class="formTitle">
-                            <h3>查找课程</h3>
-                            <p>小班化，强调规格和考试技术的要求。</p>
-                        </div>
-                        <!-- formTitle -->
-                        <form class="m-t" role="form">
 
-
-                            <div class="form-group">
-                                <select class="form-control" ng-model="searchCourseType" ng-options="item.label for item in courseTypes" ng-init="searchCourseType=courseTypes[0]" ng-change="change()"></select>
-
-                            </div>
-
-                            <div class="form-group">
-                                <select class="form-control" ng-model="searchCourseDetailType" ng-options="item.label for item in searchCourseType.contain" ng-init="searchCourseDetailType=searchCourseType.contain[0]"></select>
-
-                            </div>
-
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="" placeholder="课程名称">
-                            </div>
-
-                            <button type="submit" class="btn btn-default btn-block commonBtn">搜索</button>
-                        </form>
-                    </div>
                     <!-- formArea -->
                     <div class="list_block related_post_sec">
                         <div class="upcoming_events">
@@ -430,45 +268,7 @@
     </div>
     <!-- count -->
 
-    <div class="testimonial-section clearfix">
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12 col-sm-6">
-                    <div class="testimonial">
-                        <div class="carousal_content">
-                            <p>这个平台真是太好了，通过学习这门课程让我掌握了spring boot项目中绝大部分知识，能够独立完成一个spring boot的后端项目</p>
-                        </div>
-                        <div class="carousal_bottom">
-                            <div class="thumb">
-                                <img src="img/about/SARA-LISBON_Art-Student.jpg" alt="" draggable="false">
-                            </div>
-                            <div class="thumb_title">
-                                <span class="author_name">张君义</span>
-                                <span class="author_designation">学生<a href="#"> Spring Boot实战</a></span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- testimonial -->
-                </div>
-                <!-- col-xs-12 -->
-                <div class="col-xs-12 col-sm-6">
-                    <div class="features">
-                        <h3>为什么选择我们?</h3>
-                        <ul>
-                            <li><i class="fa fa-check-circle-o"></i>为你的大学提供了一整套的解决方案</li>
-                            <li><i class="fa fa-check-circle-o"></i>随时随地做实验</li>
-                            <li><i class="fa fa-check-circle-o"></i>老师在线及时反馈</li>
-                            <li><i class="fa fa-check-circle-o"></i>反复学习，温故知新</li>
-                            <!-- <li><i class="fa fa-check-circle-o"></i></li> -->
-                        </ul>
-                    </div>
-                </div>
-                <!-- col-xs-12 -->
-            </div>
-            <!-- row -->
-        </div>
-        <!-- container -->
-    </div>
+
     <!-- testimonial-section -->
 
     <!-- <div class="brandSection clearfix">

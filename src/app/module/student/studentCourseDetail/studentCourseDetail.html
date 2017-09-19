@@ -1,0 +1,83 @@
+<div class="main_wrapper">
+    <div class="mainContent clearfix">
+
+
+        <div class="container">
+            <div class="row">
+
+                <div class="col-sm-5 m-b-xs">
+                    <h3>Python语言与数据分析
+                    </h3>
+                </div>
+
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-5 m-b-xs">
+                    <select class="form-control" ng-model="q" ng-options="item.value as item.label for item in condition" ng-change="change()">
+                                <!-- <option ng-repeat="item in business.first" label="{{item.label}}" value="{{item.label}}"></option> -->
+                             
+                              </select>
+                    <!-- <select class="input-sm form-control input-s-sm inline" ng-model="q">
+                        <option value="0">全部</option>
+                    <option value="0">第一课时</option>
+                            <option value="1">第二课时</option>
+                            <option value="2">第三课时</option>
+                            <option value="3">第四课时</option>
+                        </select> -->
+                </div>
+                <div class="col-sm-5 m-b-xs">
+                    <!-- <div data-toggle="buttons" class="btn-group">
+                        <label class="btn btn-sm btn-white"> <input type="radio" id="option1" name="options"> Day </label>
+                        <label class="btn btn-sm btn-white active"> <input type="radio" id="option2" name="options"> Week </label>
+                        <label class="btn btn-sm btn-white"> <input type="radio" id="option3" name="options"> Month </label>
+                    </div> -->
+                </div>
+                <div class="col-sm-2">
+                    <button type="button" class="btn btn-success " ng-click="checkCourseHomework()">查看课程作业</button>
+                    <!-- <div class="input-group">
+                        <input type="text" placeholder="Search" class="input-sm form-control">
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-sm btn-primary form-control">搜索</button> </div>
+                    </div> -->
+                </div>
+            </div>
+            <div class="table-responsive" ng-repeat="item in courseContent|filter:q">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+
+
+                            <th>{{item.moduleName}}</th>
+                            <th>实验描述</th>
+                            <th>Completed</th>
+                            <th>Task</th>
+                            <th>Date</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="detail in item.moduleContent">
+
+                            <td>{{detail.experimentName}}
+                            </td>
+                            <td>{{detail.experimentDes}}</td>
+                            <td><a href=""><i class="fa fa-check text-navy"></i></a></td>
+
+                            <td>20%</td>
+                            <td>{{detail.date}}</td>
+                            <td>
+                                <button type="button" class="btn btn-success btn-outline" ng-click="startExp()">开始实验</button>
+                                <!-- <button type="button" class="btn btn-primary btn-outline" ng-click="doHomework()">做作业</button> -->
+
+                            </td>
+
+
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,103 @@
+<div class="main_wrapper">
+    <div class="mainContent clearfix">
+
+
+        <div class="container">
+            <div class="row">
+
+                <div class="col-sm-5 m-b-xs">
+                    <h3>Python语言与数据分析
+                    </h3>
+                </div>
+                <div class="col-sm-3 m-b-xs">
+
+                </div>
+                <div class="col-sm-4">
+
+                </div>
+            </div>
+
+            <hr>
+            <div class="row">
+                <div class="col-sm-3">
+                    <select class="form-control" ng-model="q" ng-options="item.value as item.label for item in condition" ng-change="change()"></select>
+
+                </div>
+                <div class="col-sm-4 m-b-xs">
+                    <select class="form-control" ng-model="q" ng-options="item.value as item.label for item in condition" ng-change="change()"></select>
+                </div>
+
+                <div class="col-sm-4">
+
+
+                </div>
+            </div>
+            <hr>
+            <div class="table-responsive" ng-repeat="item in courseContent|filter:q">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <h4 style="margin-top:10px">{{item.homeworkName}}</h4>
+                    </div>
+                    <div class="col-sm-2">
+                        <h5 style="margin-top:5px">
+                            已提交的作业：12/20</h5>
+                    </div>
+                    <div class="col-sm-2">
+                        <!-- <select class="form-control" ng-model="q" ng-options="item.value as item.label for item in condition" ng-change="change()"></select> -->
+
+                    </div>
+                    <div class="col-sm-3">
+                        <!-- <select class="form-control" ng-model="q" ng-options="item.value as item.label for item in condition" ng-change="change()"></select> -->
+
+                    </div>
+                    <div class="col-sm-2">
+                        <select class="form-control" ng-model="q" ng-options="item.value as item.label for item in condition" ng-change="change()"></select>
+
+                    </div>
+                </div>
+                <hr>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+
+
+                            <th>学生名</th>
+                            <th>学号</th>
+                            <th>是否提交</th>
+
+                            <th>提交日期</th>
+                            <th>
+                                操作
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="detail in item.student">
+
+                            <td>{{detail.name}}
+                            </td>
+                            <td>{{detail.studentId}}</td>
+                            <td><a href=""><i class="fa fa-check text-navy"></i></a></td>
+
+
+                            <td>{{detail.date}}</td>
+                            <td>
+                                <button type="button" class="btn btn-success btn-outline" ng-click="startExp()">启动</button>
+                                <button type="button" class="btn btn-success btn-outline" ng-click="startExp()">查看作业</button>
+
+                                <button type="button" class="btn btn-success btn-outline" ng-click="startExp()">评分</button>
+
+
+                                <!-- <button type="button" class="btn btn-primary btn-outline" ng-click="doHomework()">做作业</button> -->
+
+                            </td>
+
+
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

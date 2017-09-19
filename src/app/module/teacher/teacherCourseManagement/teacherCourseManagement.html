@@ -1,0 +1,88 @@
+<div class="main_wrapper">
+    <div class="mainContent clearfix">
+
+
+        <div class="container">
+            <div class="row">
+
+                <div class="col-sm-5 m-b-xs">
+                    <h3>Python语言与数据分析
+                    </h3>
+                </div>
+                <div class="col-sm-3 m-b-xs">
+
+                </div>
+                <div class="col-sm-4">
+                    <button type="button" class="btn btn-success " ng-click="checkCourseHomework()">作业列表</button>
+                    <button type="button" class="btn btn-success " ng-click="checkCourseHomework()">添加课时</button>
+
+                    <!-- <div class="input-group">
+                                <input type="text" placeholder="Search" class="input-sm form-control">
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-sm btn-primary form-control">搜索</button> </div>
+                            </div> -->
+                </div>
+            </div>
+
+            <hr>
+            <div class="row">
+                <div class="col-sm-4 m-b-xs">
+                    <select class="form-control" ng-model="q" ng-options="item.value as item.label for item in condition" ng-change="change()"></select>
+                </div>
+                <div class="col-sm-3 m-b-xs">
+
+                </div>
+                <div class="col-sm-4">
+                    <!-- <button type="button" class="btn btn-success " ng-click="checkCourseHomework()">作业列表</button>
+                    <button type="button" class="btn btn-success " ng-click="checkCourseHomework()">添加课时</button> -->
+
+                </div>
+            </div>
+            <div class="table-responsive" ng-repeat="item in courseContent|filter:q">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+
+
+                            <th>{{item.moduleName}}</th>
+                            <th>实验描述</th>
+                            <th>Completed</th>
+                            <th>Task</th>
+                            <th>Date</th>
+                            <th>
+                                <button type="button" class="btn btn-primary btn-sm" ng-click="checkCourseHomework()">布置新作业</button>
+                                <button type="button" class="btn btn-primary btn-sm" ng-click="checkCourseHomework()">添加实验</button>
+                                <button type="button" class="btn btn-danger btn-sm" ng-click="checkCourseHomework()">删除该课时</button>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="detail in item.moduleContent">
+
+                            <td>{{detail.experimentName}}
+                            </td>
+                            <td>{{detail.experimentDes}}</td>
+                            <td><a href=""><i class="fa fa-check text-navy"></i></a></td>
+
+                            <td>20%</td>
+                            <td>{{detail.date}}</td>
+                            <td>
+                                <button type="button" class="btn btn-success btn-outline" ng-click="startExp()">启动</button>
+                                <button type="button" class="btn btn-success btn-outline" ng-click="startExp()">编辑</button>
+                                <button type="button" class="btn btn-success btn-outline" ui-sref="index.homeworkDetail">查看作业情况</button>
+
+                                <button type="button" class="btn btn-danger btn-outline" ng-click="startExp()">删除</button>
+
+                                <!-- <button type="button" class="btn btn-primary btn-outline" ng-click="doHomework()">做作业</button> -->
+
+                            </td>
+
+
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -34,6 +34,59 @@
                 templateUrl: "app/module/courseDetail/courseDetail.html",
                 controller: "courseDetailCtrl"
             })
+            .state('index.courseDetail1', {
+                url: "/courseDetail1",
+                templateUrl: "app/module/courseDetail/courseDetail_1.html",
+                controller: "courseDetail1Ctrl"
+            })
+            //student
+            .state('index.studentCourse', {
+                url: "/student/course",
+                templateUrl: "app/module/student/studentCourse/studentCourse.html",
+                controller: "studentCourseCtrl"
+            })
+            .state('index.studentCourseDetail', {
+                url: "/student/course/detail",
+                templateUrl: "app/module/student/studentCourseDetail/studentCourseDetail.html",
+                controller: "studentCourseDetailCtrl"
+            })
+            .state('index.studentStartExperiment', {
+                url: "/student/course/experiment",
+                templateUrl: "app/module/student/studentStartExperiment/studentStartExperiment.html",
+                controller: "studentStartExperimentCtrl"
+            })
+            .state('index.studentHomework', {
+                url: "/student/course/homework",
+                templateUrl: "app/module/student/studentHomework/studentHomework.html",
+                controller: "studentHomeworkCtrl"
+            })
+            .state('index.studentDoHomework', {
+                url: "/student/course/homework/detail",
+                templateUrl: "app/module/student/studentDoHomework/studentDoHomework.html",
+                controller: "studentDoHomeworkCtrl"
+            })
+            //student end
+
+        //teacher
+
+        .state('index.teacherCourse', {
+                url: "/teacher/course",
+                templateUrl: "app/module/teacher/teacherCourse/teacherCourse.html",
+                controller: "teacherCourseCtrl"
+            })
+            .state('index.teacherCourseManagement', {
+                url: "/teacher/course/management/:id",
+                params: { id: null },
+                templateUrl: "app/module/teacher/teacherCourseManagement/teacherCourseManagement.html",
+                controller: "teacherCourseManagementCtrl"
+            })
+            .state('index.homeworkDetail', {
+                url: "/teacher/course/homework/:id",
+                params: { id: null },
+                templateUrl: "app/module/teacher/homeworkDetail/homeworkDetail.html",
+                controller: "homeworkDetailCtrl"
+            })
+            //teacher end
             .state('index.courseList', {
                 url: "/courseList",
                 templateUrl: "app/module/courseList/courseList.html",
