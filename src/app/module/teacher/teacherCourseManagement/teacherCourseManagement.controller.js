@@ -3,11 +3,32 @@
 
     angular
         .module('phoenix')
-        .controller('teacherCourseManagementCtrl', teacherCourseManagementCtrl);
+        .controller('teacherCourseManagementCtrl', teacherCourseManagementCtrl)
+        .controller('addNewExperimentCtrl', addNewExperimentCtrl);
 
-    teacherCourseManagementCtrl.$inject = ['$scope'];
+    teacherCourseManagementCtrl.$inject = ['$scope', '$uibModal'];
+    addNewExperimentCtrl.$inject = ['$scope']
 
-    function teacherCourseManagementCtrl($scope) {
+    function teacherCourseManagementCtrl($scope, $uibModal) {
+        $scope.addNewEx = function() {
+            var modalInstance = $uibModal.open({
+                size: "lg",
+                templateUrl: 'app/module/modal/addNewExperiment.html',
+                controller: addNewExperimentCtrl
+            });
+
+
+            modalInstance.result.then(function(result) {
+                console.log(result);
+                if (result.errorCode === "000") {
+                    toastr.success("修改成功");
+
+
+                }
+            }, function(reason) {
+                console.log(reason);
+            });
+        }
         $scope.courseContent = [{
             moduleName: "第一课时",
             moduleContent: [{
@@ -95,6 +116,10 @@
         }
 
         $scope.q = $scope.condition[0].value
+
+    }
+
+    function addNewExperimentCtrl($scope) {
 
     }
 })();

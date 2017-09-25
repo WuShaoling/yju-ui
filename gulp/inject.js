@@ -24,6 +24,8 @@ gulp.task('inject', ['scripts', 'styles'], function() {
     ], { read: false });
 
     var injectScripts = gulp.src([
+            // path.join(conf.paths.src, '../lib/*.js'),
+
             path.join(conf.paths.src, '/app/**/*.module.js'),
             path.join(conf.paths.src, '/app/**/*.js'),
             path.join('!' + conf.paths.src, '/app/**/*.spec.js'),

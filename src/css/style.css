@@ -4711,7 +4711,7 @@ li.language.dropdown>a:focus {
 }
 
 .modal-dialog {
-    max-width: 400px;
+    /* max-width: 400px; */
     margin: 30px auto;
 }
 
@@ -4724,7 +4724,7 @@ li.language.dropdown>a:focus {
 
 @media (min-width: 768px) {
     .modal-dialog {
-        width: 400px;
+        /* width: 400px; */
     }
 }
 
@@ -5413,7 +5413,7 @@ li.language.dropdown>a:focus {
 }
 
 .form-control {
-    height: 42px;
+    height: 39px;
     border-color: #dcdfe3;
 }
 

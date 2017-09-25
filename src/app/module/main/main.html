@@ -70,7 +70,7 @@
                 </div> -->
                 <!-- row -->
                 <div class="row">
-                    <div class="col-md-3 col-sm-6 col-xs-6" ng-repeat="course in courses">
+                    <div class="col-md-3 col-sm-6 col-xs-6" ng-repeat="course in courses|filter:common.searchData">
                         <div class="imageBox">
                             <div class="productImage clearfix">
                                 <a ui-sref="index.courseDetail1"><img src="{{course.image}}" alt="Image"></a>

@@ -10,9 +10,9 @@
         $stateProvider
 
             .state('index', {
-                url: "/index",
+                url: "",
                 templateUrl: "app/module/common/common.html",
-                controller: "commonCtrl"
+                controller: "commonCtrl as common"
             })
             .state('login', {
                 url: "/login",
@@ -23,6 +23,11 @@
                 url: "/main",
                 templateUrl: "app/module/main/main.html",
                 controller: "MainController"
+            })
+            .state('index.pageNotFound', {
+                url: "/pageNotFound",
+                templateUrl: "app/module/404page/404page.html",
+                controller: "pageNotFoundCtrl"
             })
             .state('index.about', {
                 url: "/about",
@@ -50,8 +55,8 @@
                 templateUrl: "app/module/student/studentCourseDetail/studentCourseDetail.html",
                 controller: "studentCourseDetailCtrl"
             })
-            .state('index.studentStartExperiment', {
-                url: "/student/course/experiment",
+            .state('index.StartExperiment', {
+                url: "/course/experiment",
                 templateUrl: "app/module/student/studentStartExperiment/studentStartExperiment.html",
                 controller: "studentStartExperimentCtrl"
             })
@@ -65,6 +70,11 @@
                 templateUrl: "app/module/student/studentDoHomework/studentDoHomework.html",
                 controller: "studentDoHomeworkCtrl"
             })
+            .state('index.test', {
+                url: "/test",
+                templateUrl: "app/module/student/test/test.html",
+                controller: "testCtrl"
+            })
             //student end
 
         //teacher
@@ -75,25 +85,57 @@
                 controller: "teacherCourseCtrl"
             })
             .state('index.teacherCourseManagement', {
-                url: "/teacher/course/management/:id",
-                params: { id: null },
+                url: "/teacher/course/:courseId/management",
+                params: { courseId: null },
+
                 templateUrl: "app/module/teacher/teacherCourseManagement/teacherCourseManagement.html",
                 controller: "teacherCourseManagementCtrl"
             })
             .state('index.homeworkDetail', {
-                url: "/teacher/course/homework/:id",
-                params: { id: null },
+                url: "/teacher/course/:courseId/homework",
+                params: { courseId: null },
                 templateUrl: "app/module/teacher/homeworkDetail/homeworkDetail.html",
                 controller: "homeworkDetailCtrl"
             })
+            .state('index.checkHomework', {
+                url: "/teacher/course/:courseId/homework/:id",
+                params: { courseId: null, id: null },
+                templateUrl: "app/module/teacher/checkHomework/checkHomework.html",
+                controller: "checkHomeworkCtrl"
+            })
             //teacher end
+
+        //administrator
+        .state('index.classManagement', {
+                url: "/administrator/classManagement",
+                params: { courseId: null, id: null },
+                templateUrl: "app/module/administrator/classManagement/classManagement.html",
+                controller: "classManagementCtrl"
+            })
+            .state('index.teacherManagement', {
+                url: "/administrator/teacherManagement",
+                params: { courseId: null, id: null },
+                templateUrl: "app/module/administrator/teacherManagement/teacherManagement.html",
+                controller: "teacherManagementCtrl"
+            }).state('index.semesterManagement', {
+                url: "/administrator/semesterManagement",
+                params: { courseId: null, id: null },
+                templateUrl: "app/module/administrator/semesterManagement/semesterManagement.html",
+                controller: "semesterManagementCtrl"
+            }).state('index.courseManagement', {
+                url: "/administrator/courseManagement",
+                params: { courseId: null, id: null },
+                templateUrl: "app/module/administrator/courseManagement/courseManagement.html",
+                controller: "courseManagementCtrl"
+            })
+            //end
             .state('index.courseList', {
                 url: "/courseList",
                 templateUrl: "app/module/courseList/courseList.html",
                 // controller: "mainController"
             });
 
-        $urlRouterProvider.otherwise('/index/main');
+        $urlRouterProvider.otherwise('/pageNotFound');
     }
 
 })();

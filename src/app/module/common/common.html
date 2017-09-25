@@ -5,36 +5,37 @@
             <div class="container">
                 <ul class="topbar-left">
                     <li><i class="fa fa-home"></i><a ui-sref="index.main"> 首页</a></li>
-
-
                     <li ng-repeat="nav in navbar"><i class="{{nav.class}}"></i><a ui-sref="{{nav.url}}"> {{nav.name}}</a></li>
-                    <!-- <li class="email-id hidden-xs hidden-sm"><i class="fa fa-envelope"></i>
-                        <a href="mailto:info@yourdomain.com">{{email}}</a>
+
+                    <!-- <li class="email-id hidden-xs hidden-sm"><i class="fa fa-building-o"></i>
+                        <a href="mailto:info@yourdomain.com">上海应用技术大学</a>
                     </li> -->
                 </ul>
                 <ul class="topbar-right">
 
+
+
                     <li class="top-search list-inline dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-search"></i></a>
+                        <a href="javascript:(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-search"></i></a>
                         <ul class="dropdown-menu dropdown-menu-right">
                             <li class="active">
                                 <span class="input-group">
-                            <input type="text" class="form-control" placeholder="课程名称" style="color:black;" ng-model="searchData">
+                            <input type="text" class="form-control" placeholder="课程名称" style="color:black;" ng-model="searchData" ng-change="test()">
                             <button type="submit" class="btn btn-default commonBtn" ng-click="search(searchData)">搜索</button>
                           </span>
                             </li>
                         </ul>
                     </li>
                     <li class="dropdown language" ng-if="logined">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <a href="javascript:(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                             <i class="glyphicon glyphicon-user"></i>{{username}}
                             <i class="fa fa-caret-down"></i>
                         </a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="#">修改密码 </a>
+                                <a href="javascript:(0)" ng-click="modifyPass()">修改密码 </a>
                             </li>
-                            <li><a href="#">退出登录</a></li>
+                            <li><a href="javascript:(0)" ng-click="logout()">退出登录</a></li>
 
                         </ul>
                     </li>

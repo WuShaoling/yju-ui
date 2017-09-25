@@ -23,9 +23,13 @@
                     <select class="form-control" ng-model="q" ng-options="item.value as item.label for item in condition" ng-change="change()"></select>
 
                 </div>
-                <div class="col-sm-4 m-b-xs">
-                    <select class="form-control" ng-model="q" ng-options="item.value as item.label for item in condition" ng-change="change()"></select>
+                <div class="col-sm-2">
+                    <select class="form-control" ng-model="p" ng-options="item.value as item.label for item in condition1" ng-change="change()"></select>
+
                 </div>
+                <!-- <div class="col-sm-4 m-b-xs">
+                    <select class="form-control" ng-model="q" ng-options="item.value as item.label for item in condition" ng-change="change()"></select>
+                </div> -->
 
                 <div class="col-sm-4">
 
@@ -51,7 +55,7 @@
 
                     </div>
                     <div class="col-sm-2">
-                        <select class="form-control" ng-model="q" ng-options="item.value as item.label for item in condition" ng-change="change()"></select>
+                        <!-- <select class="form-control" ng-model="p" ng-options="item.value as item.label for item in condition"></select> -->
 
                     </div>
                 </div>
@@ -69,23 +73,24 @@
                             <th>
                                 操作
                             </th>
+
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="detail in item.student">
+                        <tr ng-repeat="detail in item.student |filter:filterFunc">
 
                             <td>{{detail.name}}
                             </td>
                             <td>{{detail.studentId}}</td>
-                            <td><a href=""><i class="fa fa-check text-navy"></i></a></td>
+                            <td><a href=""><i class="fa fa-check " ng-class="{1:'fa-check text-navy',0:'fa-times text-danger'}[detail.completed]"></i></a></td>
 
 
                             <td>{{detail.date}}</td>
                             <td>
-                                <button type="button" class="btn btn-success btn-outline" ng-click="startExp()">启动</button>
-                                <button type="button" class="btn btn-success btn-outline" ng-click="startExp()">查看作业</button>
+                                <!-- <button type="button" class="btn btn-success btn-outline" ng-click="startExp()">启动</button> -->
+                                <button type="button" class="btn btn-success btn-outline" ui-sref="index.checkHomework">查看作业</button>
 
-                                <button type="button" class="btn btn-success btn-outline" ng-click="startExp()">评分</button>
+                                <button type="button" class="btn btn-success btn-outline" ng-click="grade()">评分</button>
 
 
                                 <!-- <button type="button" class="btn btn-primary btn-outline" ng-click="doHomework()">做作业</button> -->

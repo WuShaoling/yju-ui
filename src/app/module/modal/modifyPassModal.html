@@ -1,0 +1,80 @@
+<div class="inmodal">
+    <div class="modal-header">
+        <button type="button" class="close pull-right" ng-click="cancel()">×</button>
+        <h4 class="modal-title">Phoenix</h4>
+        <small class="font-bold">修改密码</small>
+        <!-- <i class="fa fa-laptop modal-icon"></i> -->
+        <!-- <h4 class="modal-title">上传声音文件</h4>
+                    
+                            <small class="font-bold">下方填写文件描述并上传文件，越详细越好~</small> -->
+    </div>
+    <div class="modal-body">
+        <form>
+            <!-- <div class="form-group formField">
+                <div class="input-group">
+                    <div class="input-group-addon"><i class="fa fa-user" style="font-size:10px"></i></div>
+
+                    <select class="form-control" ng-model="user.type" ng-options="item.label for item in usertypes" ng-change="change()">
+
+                                         
+                                          </select>
+                </div>
+
+
+            </div> -->
+            <div class="form-group formField">
+
+                <!-- <label class="fa fa-mobile" for="exampleInputAmount"><i class=""></i></label> -->
+                <div class="input-group">
+                    <div class="input-group-addon"><i class="fa fa-lock"></i></div>
+                    <!-- <input type="text" class="form-control" id="exampleInputAmount" placeholder="{{'请输入'+user.type.value}}"> -->
+                    <input type="password" class="form-control" placeholder="请输入旧密码">
+
+                </div>
+            </div>
+
+            <div class="form-group formField">
+                <div class="input-group">
+
+                    <div class="input-group-addon"> <i class="fa fa-lock" aria-hidden="true"></i></div>
+                    <input type="password" class="form-control" placeholder="请输入新密码">
+                </div>
+            </div>
+            <div class="form-group formField">
+                <div class="input-group">
+
+                    <div class="input-group-addon"> <i class="fa fa-lock" aria-hidden="true"></i></div>
+                    <input type="password" class="form-control" placeholder="再次输入新密码">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-block commonBtn">确认修改</button>
+            <!-- <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                          <input type="checkbox">记住密码
+                        </label>
+                    </div>
+                    <div style="margin-left:40%;">
+                        <a class="forgot-link" href="#" style="text-align:center">忘记密码?</a>
+    
+                    </div>
+                </div> -->
+        </form>
+        <!-- <div class="alt-text">or</div>
+                <div class="modal-border"></div> -->
+        <!-- <div class="alt-btn">
+                    <a class="btn btn-block commonBtn" href="#">Log in with Facebook</a>
+                    <a class="twitter-btn btn btn-block" href="#">Log in with Facebook</a>
+                </div> -->
+
+    </div>
+    <!-- <div class="panel-footer">
+        <p style="text-align:center">? <a href="javascript:(0)" ng-click="goLogin()">登录</a></p>
+    </div> -->
+    <!-- <div class="modal-footer">
+                <button type="button" class="btn btn-white" ng-click="cancel()">取消</button>
+        
+        
+                <button type="submit" class="btn btn-primary" ng-click="ok()">保存</button>
+            </div> -->
+</div>

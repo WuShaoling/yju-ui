@@ -6,10 +6,16 @@
         .controller('commonCtrl', commonCtrl)
         .controller('loginCtrl', loginCtrl);
 
-    commonCtrl.$inject = ['$scope', '$uibModal'];
+    commonCtrl.$inject = ['$scope', '$uibModal', '$state'];
     loginCtrl.$inject = ['$scope', '$uibModalInstance', '$uibModal'];
 
-    function commonCtrl($scope, $uibModal) {
+    function commonCtrl($scope, $uibModal, $state) {
+        var vm = this;
+        $scope.test = function() {
+            vm.searchData = $scope.searchData;
+
+        }
+
 
         if (localStorage['logined']) {
             var user = JSON.parse(localStorage['user'])
@@ -28,6 +34,7 @@
                 templateUrl: 'app/module/modal/loginModal.html',
                 controller: loginCtrl,
                 // windowClass: "animated flipInY"
+                size: "sm"
             });
 
 
@@ -44,12 +51,40 @@
                 console.log(reason);
             });
         }
-        $scope.register = function() {
-            toastr.success("res...");
+
+        $scope.logout = function() {
+                localStorage.clear();
+                $scope.logined = false;
+                $scope.navbar = [];
+                $state.go('index.main')
+
+            }
+            // $scope.register = function() {
+            //     toastr.success("res...");
+            //     var modalInstance = $uibModal.open({
+            //         templateUrl: 'app/module/modal/registerModal.html',
+            //         controller: loginCtrl,
+            //         // windowClass: "animated flipInY"
+            //     });
+            // }
+
+        $scope.modifyPass = function() {
             var modalInstance = $uibModal.open({
-                templateUrl: 'app/module/modal/registerModal.html',
+                templateUrl: 'app/module/modal/modifyPassModal.html',
                 controller: loginCtrl,
                 // windowClass: "animated flipInY"
+            });
+
+
+            modalInstance.result.then(function(result) {
+                console.log(result);
+                if (result.errorCode === "000") {
+                    toastr.success("修改成功");
+
+
+                }
+            }, function(reason) {
+                console.log(reason);
             });
         }
     }
@@ -116,7 +151,7 @@
                     }, {
                         name: "班级管理",
                         class: 'fa fa-table',
-                        url: 'index.teacherCourse'
+                        url: 'index.classManagement'
                     }],
                     role: $scope.user.type //0:student;1:teacher;2:administrator
                 }

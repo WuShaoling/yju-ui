@@ -13,14 +13,10 @@
 
                 </div>
                 <div class="col-sm-4">
-                    <button type="button" class="btn btn-success " ng-click="checkCourseHomework()">作业列表</button>
-                    <button type="button" class="btn btn-success " ng-click="checkCourseHomework()">添加课时</button>
+                    <!-- <button type="button" class="btn btn-success " ng-click="checkCourseHomework()">作业列表</button>
+                    <button type="button" class="btn btn-success " ng-click="checkCourseHomework()">添加课时</button> -->
 
-                    <!-- <div class="input-group">
-                                <input type="text" placeholder="Search" class="input-sm form-control">
-                                <div class="input-group-btn">
-                                    <button type="button" class="btn btn-sm btn-primary form-control">搜索</button> </div>
-                            </div> -->
+
                 </div>
             </div>
 
@@ -50,9 +46,9 @@
                             <th>Task</th>
                             <th>Date</th>
                             <th>
-                                <button type="button" class="btn btn-primary btn-sm" ng-click="checkCourseHomework()">布置新作业</button>
-                                <button type="button" class="btn btn-primary btn-sm" ng-click="checkCourseHomework()">添加实验</button>
-                                <button type="button" class="btn btn-danger btn-sm" ng-click="checkCourseHomework()">删除该课时</button>
+                                <button type="button" class="btn btn-primary btn-sm" ui-sref="index.homeworkDetail">查看作业情况</button>
+                                <!-- <button type="button" class="btn btn-primary btn-sm" ng-click="addNewEx()">添加实验</button>
+                                <button type="button" class="btn btn-danger btn-sm" ng-click="checkCourseHomework()">删除该课时</button> -->
                             </th>
                         </tr>
                     </thead>
@@ -67,11 +63,11 @@
                             <td>20%</td>
                             <td>{{detail.date}}</td>
                             <td>
-                                <button type="button" class="btn btn-success btn-outline" ng-click="startExp()">启动</button>
-                                <button type="button" class="btn btn-success btn-outline" ng-click="startExp()">编辑</button>
+                                <button type="button" class="btn btn-success btn-outline btn-sm" ui-sref="index.StartExperiment">查看实验</button>
+                                <!-- <button type="button" class="btn btn-success btn-outline" ng-click="startExp()">编辑</button>
                                 <button type="button" class="btn btn-success btn-outline" ui-sref="index.homeworkDetail">查看作业情况</button>
 
-                                <button type="button" class="btn btn-danger btn-outline" ng-click="startExp()">删除</button>
+                                <button type="button" class="btn btn-danger btn-outline" ng-click="startExp()">删除</button> -->
 
                                 <!-- <button type="button" class="btn btn-primary btn-outline" ng-click="doHomework()">做作业</button> -->
 

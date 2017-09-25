@@ -13,7 +13,7 @@
         }
         $scope.startExp = function() {
 
-            $state.go('index.studentStartExperiment');
+            $state.go('index.StartExperiment');
         }
         $scope.doHomework = function() {
             $state.go('index.studentDoHomework');

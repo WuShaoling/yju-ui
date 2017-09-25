@@ -11,17 +11,17 @@
 
 
         $scope.edit = function(item) {
-            $state.go('index.teacherCourseManagement');
-        }
-        $.get("app/module/teacher/teacherCourse/test.md", function(result) {
-            // console.log(result)
-            if (result == null) {
-                return
+                $state.go('index.teacherCourseManagement');
             }
-            // console.log(result.label_type)
-            document.getElementById('content').innerHTML =
-                marked(result);
-        });
+            // $.get("app/module/teacher/teacherCourse/test.md", function(result) {
+            //     // console.log(result)
+            //     if (result == null) {
+            //         return
+            //     }
+            //     // console.log(result.label_type)
+            //     document.getElementById('content').innerHTML =
+            //         marked(result);
+            // });
 
 
         $scope.courseContent = [{
