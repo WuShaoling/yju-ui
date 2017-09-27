@@ -3,20 +3,17 @@
 
     angular
         .module('phoenix')
-        .controller('addSemesterCtrl', addSemesterCtrl)
-        .controller('editSemesterCtrl', editSemesterCtrl)
-        .controller('semesterManagementCtrl', semesterManagementCtrl);
+        .controller('classDetailCtrl', classDetailCtrl)
+        .controller('editStudentCtrl', editStudentCtrl)
+        .controller('addStudentCtrl', addStudentCtrl);
 
-    addSemesterCtrl.$inject = ['$scope', '$uibModalInstance'];
-    editSemesterCtrl.$inject = ['$scope', '$uibModalInstance', 'semester']
-    semesterManagementCtrl.$inject = ['$scope', 'reqUrl', '$uibModal'];
+    classDetailCtrl.$inject = ['$scope', 'reqUrl', '$uibModal'];
+    addStudentCtrl.$inject = ['$scope', '$uibModalInstance'];
+    editStudentCtrl.$inject = ['$scope', '$uibModalInstance', 'student'];
 
-    function semesterManagementCtrl($scope, reqUrl, $uibModal) {
+    function classDetailCtrl($scope, reqUrl, $uibModal) {
         var vm = this;
-
-
-
-        var semesterTable = $('#Semester').DataTable({
+        var studentTable = $('#Student').DataTable({
                 //控制各个控件的位置
                 dom: "<'row datatable-row'<'col-sm-6'B><'col-sm-6'f>>" +
                     "<'row datatable-row'<'col-sm-12'tr>>" +
@@ -27,7 +24,7 @@
                 },
                 //数据源
                 ajax: {
-                    "url": reqUrl + 'administrator/semesterManagement/semester.json',
+                    "url": reqUrl + 'administrator/classDetail/student.json',
                     "type": 'GET',
                     beforeSend: function(xhr) {
                         // xhr.setRequestHeader('access_token', '1504751421487');
@@ -37,10 +34,10 @@
                         data.data.map(function(item) {
 
                             console.log(item);
-                            if (item.semester == "1") {
-                                item.semester = "第一学期"
+                            if (item.gender == "1") {
+                                item.gender = "女"
                             } else {
-                                item.semester = "第二学期"
+                                item.gender = "男"
                             }
                             return item;
                         });
@@ -51,8 +48,10 @@
                 //设置列显示的值的 键名
                 columns: [
 
-                    { data: 'semesterYear' },
-                    { data: 'semester' },
+                    { data: 'studentId' },
+                    { data: 'name' },
+                    { data: 'gender' },
+
 
                     { data: '' }
                 ],
@@ -61,7 +60,7 @@
                     "targets": -1,
                     "data": null,
                     'className': "lsr-body-center",
-                    "defaultContent": "<div class='btn-group'><button class='btn btn-info btn-outline editSemester'>编辑</button><button class='btn btn-danger btn-outline deleteSemester'>删除</button></div>"
+                    "defaultContent": "<div class='btn-group'><button class='btn btn-info btn-outline editStudent'>修改学生信息</button><button class='btn btn-warning btn-outline resetPass'>重置密码</button><button class='btn btn-danger btn-outline deleteStudent'>删除</button></div>"
                 }],
                 //自定义Button
                 buttons: [{
@@ -71,9 +70,15 @@
                         }
                     },
                     {
-                        text: '新增',
+                        text: '导入学生名单',
                         action: function(e, dt, node, config) {
-                            addSemester();
+                            batchAddStudent();
+                            dt.ajax.reload();
+                        }
+                    }, {
+                        text: '添加学生',
+                        action: function(e, dt, node, config) {
+                            addStudent();
                             dt.ajax.reload();
                         }
                     }
@@ -93,45 +98,92 @@
                 }
             });
 
-        $('#Semester tbody').on('click', '.editSemester', function() {
+        $('#Student tbody').on('click', '.editStudent', function() {
             //获取当前行的某一列的数据
             //localStorageSrv.log(classTable.row($(this).parents('tr')).data().id);
-            editSemester(semesterTable.row($(this).parents('tr')).data());
+            editStudent(studentTable.row($(this).parents('tr')).data());
         });
-        $('#Semester tbody').on('click', '.deleteSemester', function() {
-            deleteSemester(semesterTable.row($(this).parents('tr')).data());
+        $('#Student tbody').on('click', '.resetPass', function() {
+            resetPass(studentTable.row($(this).parents('tr')).data());
+        });
+        $('#Student tbody').on('click', '.deleteStudent', function() {
+            deleteStudent(studentTable.row($(this).parents('tr')).data());
         });
 
-        var addSemester = function() {
-            var modalInstance = $uibModal.open({
-                size: "md",
-                templateUrl: 'app/module/modal/addSemesterModal.html',
-                controller: addSemesterCtrl,
-
-            });
-            modalInstance.result.then(function(result) {}, function(reason) {
-                console.log(reason);
-            });
-        }
-        var editSemester = function(item) {
+        var editStudent = function(item) {
             console.log(item);
+
             var modalInstance = $uibModal.open({
                 size: "md",
-                templateUrl: 'app/module/modal/editSemesterModal.html',
-                controller: editSemesterCtrl,
+                templateUrl: 'app/module/modal/editStudentModal.html',
+                controller: editStudentCtrl,
                 resolve: {
-                    semester: function() { return angular.copy(item); }
+                    student: function() { return angular.copy(item); }
                 }
             });
-            modalInstance.result.then(function(result) {}, function(reason) {
+
+
+            modalInstance.result.then(function(result) {
+                console.log(result);
+
+            }, function(reason) {
                 console.log(reason);
             });
         }
-        var deleteSemester = function(item) {
+        var addStudent = function() {
+            var modalInstance = $uibModal.open({
+                size: "md",
+                templateUrl: 'app/module/modal/addStudentModal.html',
+                controller: addStudentCtrl
+            });
+
+
+            modalInstance.result.then(function(result) {
+
+            }, function(reason) {
+                console.log(reason);
+            });
+        }
+        var resetPass = function(item) {
             console.log(item);
+
+            swal({
+                    title: "确定要重置吗？",
+                    text: "编号为" + item.studentId + "的学生密码将被重置为【222222】",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "确定",
+                    closeOnConfirm: false,
+                    cancelButtonText: "取消",
+                    closeOnCancel: true
+                },
+                function(isConfirm) {
+
+                    if (isConfirm) {
+
+                        swal({
+                            title: "重置成功咯",
+                            // text: "项目【" + projectName + "】已删除咯",
+                            type: "success",
+                            showCancelButton: false,
+                            // confirmButtonColor: "#DD6B55",
+                            confirmButtonText: "确定",
+                            closeOnConfirm: true,
+                            closeOnCancel: true
+                        }, function() {
+
+                        });
+                        // toastr.success("删除成功!");
+                    }
+                });
+        }
+        var deleteStudent = function(item) {
+            console.log(item);
+
             swal({
                     title: "确定要删除吗？",
-                    text: item.semesterYear + item.semester + "将被删除",
+                    text: item.studentId + "将被删除",
                     type: "error",
                     showCancelButton: true,
                     confirmButtonColor: "#DD6B55",
@@ -154,7 +206,7 @@
                             closeOnConfirm: true,
                             closeOnCancel: true
                         }, function() {
-                            semesterTable.ajax.reload();
+
                         });
                         // toastr.success("删除成功!");
                     }
@@ -162,37 +214,50 @@
         }
     }
 
-    function addSemesterCtrl($scope, $uibModalInstance) {
-        $scope.semester = {};
 
+    function addStudentCtrl($scope, $uibModalInstance) {
+        $scope.student = {}
+        $scope.gender = [{
+            label: "男",
+            value: 0,
+        }, {
+            label: "女",
+            value: 1,
+        }]
         $scope.cancel = function() {
             $uibModalInstance.dismiss('cancel');
         }
         $scope.ok = function() {
-            console.log($scope.semester);
+            console.log($scope.student);
             $uibModalInstance.close();
+
         }
+
     }
 
-    function editSemesterCtrl($scope, $uibModalInstance, semester) {
-        $scope.semester = semester;
-        console.log($scope.semester);
-        if ($scope.semester.semester == "第一学期") {
-            console.log(1)
-            $scope.semester.semester = "1";
+    function editStudentCtrl($scope, $uibModalInstance, student) {
+        $scope.cancel = function() {
+            $uibModalInstance.dismiss('cancel');
+        }
+        $scope.gender = [{
+            "label": "男",
+            "value": 0,
+        }, {
+            "label": "女",
+            "value": 1,
+        }]
+        $scope.student = student;
+        // $scope.student.gender = $scope.gender[1];
+
+        console.log($scope.student)
+        console.log($scope.student.gender);
+        if ($scope.student.gender == "男") {
+            $scope.student.gender = 0
         } else {
-            console.log(2)
-
-            $scope.semester.semester = "2";
-
-        }
-        $scope.cancel = function() {
-            $uibModalInstance.dismiss('cancel');
+            $scope.student.gender = 1
         }
         $scope.ok = function() {
-            console.log($scope.semester);
             $uibModalInstance.close();
         }
     }
-
 })();

@@ -1,0 +1,39 @@
+{
+    "errorCode": "100",
+    "message": "获取成功",
+    "data": [{
+            "id": 1,
+            "className": "1班",
+            "courseName": "Python语言基础",
+            "semester": "2017第一学期",
+            "teacherName": "王老师",
+            "teacherEmail": "2123@123.com",
+            "studentNum": 100
+        },
+        {
+            "id": 2,
+            "className": "2班",
+            "courseName": "Python语言基础",
+            "semester": "2017第二学期",
+            "teacherName": "王老师",
+            "teacherEmail": "2123@123.com",
+            "studentNum": 100
+        }, {
+            "id": 3,
+            "className": "2班",
+            "courseName": "Python语言基础",
+            "semester": "2017第二学期",
+            "teacherName": "王老师",
+            "teacherEmail": "2123@123.com",
+            "studentNum": 100
+        }, {
+            "id": 4,
+            "className": "2班",
+            "courseName": "Python语言基础",
+            "semester": "2017第二学期",
+            "teacherName": "王老师",
+            "teacherEmail": "2123@123.com",
+            "studentNum": 100
+        }
+    ]
+}

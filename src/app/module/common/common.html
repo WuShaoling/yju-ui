@@ -15,17 +15,20 @@
 
 
 
-                    <li class="top-search list-inline dropdown">
+                    <!-- <li class="top-search list-inline dropdown">
                         <a href="javascript:(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-search"></i></a>
                         <ul class="dropdown-menu dropdown-menu-right">
                             <li class="active">
-                                <span class="input-group">
-                            <input type="text" class="form-control" placeholder="课程名称" style="color:black;" ng-model="searchData" ng-change="test()">
-                            <button type="submit" class="btn btn-default commonBtn" ng-click="search(searchData)">搜索</button>
-                          </span>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="课程名称" style="color:black;" ng-model="searchData" ng-change="test()">
+                                    <span class="input-group-btn">
+                                <button type="submit" class="btn btn-info" style="float:left" ng-click="search(searchData)">搜索</button>
+                         </span>
+
+                                </div>
                             </li>
                         </ul>
-                    </li>
+                    </li> -->
                     <li class="dropdown language" ng-if="logined">
                         <a href="javascript:(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                             <i class="glyphicon glyphicon-user"></i>{{username}}

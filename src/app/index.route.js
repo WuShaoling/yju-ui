@@ -108,25 +108,51 @@
         //administrator
         .state('index.classManagement', {
                 url: "/administrator/classManagement",
-                params: { courseId: null, id: null },
+
                 templateUrl: "app/module/administrator/classManagement/classManagement.html",
                 controller: "classManagementCtrl"
             })
             .state('index.teacherManagement', {
                 url: "/administrator/teacherManagement",
-                params: { courseId: null, id: null },
+
                 templateUrl: "app/module/administrator/teacherManagement/teacherManagement.html",
                 controller: "teacherManagementCtrl"
-            }).state('index.semesterManagement', {
+            })
+            .state('index.semesterManagement', {
                 url: "/administrator/semesterManagement",
-                params: { courseId: null, id: null },
+
                 templateUrl: "app/module/administrator/semesterManagement/semesterManagement.html",
                 controller: "semesterManagementCtrl"
-            }).state('index.courseManagement', {
+            })
+            .state('index.courseManagement', {
                 url: "/administrator/courseManagement",
-                params: { courseId: null, id: null },
+
                 templateUrl: "app/module/administrator/courseManagement/courseManagement.html",
                 controller: "courseManagementCtrl"
+            })
+            .state('index.courseMaintainence', {
+                url: "/administrator/courseMaintainence",
+
+                templateUrl: "app/module/administrator/courseMaintainence/courseMaintainence.html",
+                controller: "courseMaintainenceCtrl"
+            })
+            .state('index.adCheckHw', {
+                url: "/administrator/adCheckHw",
+
+                templateUrl: "app/module/administrator/adCheckHw/adCheckHw.html",
+                controller: "adCheckHwCtrl"
+            })
+            .state('index.adCheckEx', {
+                url: "/administrator/adCheckEx",
+
+                templateUrl: "app/module/administrator/adCheckEx/adCheckEx.html",
+                controller: "adCheckExCtrl"
+            })
+            .state('index.classDetail', {
+                url: "/administrator/classDetail",
+
+                templateUrl: "app/module/administrator/classDetail/classDetail.html",
+                controller: "classDetailCtrl"
             })
             //end
             .state('index.courseList', {

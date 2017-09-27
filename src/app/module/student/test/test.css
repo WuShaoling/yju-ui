@@ -2,3 +2,41 @@
     list-style-type: inherit;
     margin: 0;
 }
+
+.md table {
+    border: solid #ccc 1px;
+}
+
+.md table tr:hover {
+    background: #fbf8e9;
+    -o-transition: all 0.1s ease-in-out;
+    -webkit-transition: all 0.1s ease-in-out;
+    -moz-transition: all 0.1s ease-in-out;
+    -ms-transition: all 0.1s ease-in-out;
+    transition: all 0.1s ease-in-out;
+}
+
+.md table td:first-child,
+.md table th:first-child {
+    border-left: none;
+}
+
+.md table td,
+.md .table th {
+    border-left: 1px solid #ccc;
+    border-top: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+}
+
+.md table th {
+    border-top: none;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, .5);
+    padding: 5px;
+    border-left: 1px solid #ccc;
+}
+
+.md table td:first-child,
+.md table th:first-child {
+    border-left: none;
+}

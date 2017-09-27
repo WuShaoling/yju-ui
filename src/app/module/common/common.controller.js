@@ -72,7 +72,8 @@
             var modalInstance = $uibModal.open({
                 templateUrl: 'app/module/modal/modifyPassModal.html',
                 controller: loginCtrl,
-                // windowClass: "animated flipInY"
+                size: "sm"
+                    // windowClass: "animated flipInY"
             });
 
 
@@ -139,18 +140,18 @@
                     navbar: [{
                         name: "教师管理",
                         class: 'fa fa-users',
-                        url: 'index.teacherCourse'
+                        url: 'index.teacherManagement'
                     }, {
                         name: "学期管理",
-                        class: 'fa fa-cogs',
-                        url: 'index.teacherCourse'
+                        class: 'fa fa-graduation-cap',
+                        url: 'index.semesterManagement'
                     }, {
                         name: "课程管理",
-                        class: 'fa fa-table',
-                        url: 'index.teacherCourse'
+                        class: 'fa fa-calendar',
+                        url: 'index.courseManagement'
                     }, {
                         name: "班级管理",
-                        class: 'fa fa-table',
+                        class: 'fa fa-university',
                         url: 'index.classManagement'
                     }],
                     role: $scope.user.type //0:student;1:teacher;2:administrator

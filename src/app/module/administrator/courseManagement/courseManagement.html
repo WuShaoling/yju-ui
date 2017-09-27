@@ -35,43 +35,20 @@
                 </div>
             </div>
             <hr>
-            <div class="table-responsive" ng-repeat="item in courseContent|filter:q">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
+            <table id='Course' class="table table-striped table-bordered table-hover display">
+                <thead>
+                    <tr>
+                        <th>课程编号</th>
+                        <th>课程名称</th>
+                        <th>课程描述</th>
+                        <!-- <th>Completed</th> -->
+                        <th>授课教师</th>
+                        <th>老师联系方式</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+            </table>
 
-
-                            <th>{{item.moduleName}}</th>
-                            <th>课程描述</th>
-                            <!-- <th>Completed</th> -->
-                            <th>授课教师</th>
-                            <th>上课时间</th>
-                            <th>操作</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="detail in item.moduleContent">
-
-                            <td>{{detail.courseName}}
-                            </td>
-                            <td>{{detail.courseDes}}</td>
-                            <!-- <td><a href=""><i class="fa fa-check text-navy"></i></a></td> -->
-                            <td>{{detail.teacherName}}</td>
-                            <td>{{detail.date}}</td>
-                            <td>
-                                <!-- <button type="button" class="btn btn-success btn-outline" ng-click="startExp()">查看详情</button> -->
-                                <button type="button" class="btn btn-primary btn-outline" ng-click="edit(detail)">查看详情</button>
-
-                            </td>
-
-
-                        </tr>
-
-                    </tbody>
-                </table>
-
-            </div>
-            <div id="content"></div>
 
         </div>
 
