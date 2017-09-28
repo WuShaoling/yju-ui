@@ -26,12 +26,12 @@ angular.module('phoenix')
                     console.log(123);
                     angular.element('#leftNav').toggleClass('mini-navbar');
                     if (angular.element('#leftNav').hasClass('mini-navbar')) {
-                        if (angular.element('#design').hasClass('col-md-8')) {
+                        if (angular.element('#design').hasClass('col-md-9')) {
 
                             // Hide menu in order to smoothly turn on when maximize menu
                             angular.element('#leftNav').hide(1000, function() {
-                                angular.element('#design').removeClass('col-md-8');
-                                angular.element('#design').addClass('col-md-9');
+                                angular.element('#design').removeClass('col-md-9');
+                                angular.element('#design').addClass('col-md-12');
 
                                 angular.element('#cloudware').css('width', "100%");
                                 $scope.leftControl = false;
@@ -40,8 +40,8 @@ angular.module('phoenix')
                             });
                         } else {
                             angular.element('#leftNav').hide(1000, function() {
-                                angular.element('#design').removeClass('col-md-11');
-                                angular.element('#design').addClass('col-md-12');
+                                angular.element('#design').removeClass('col-md-12');
+                                angular.element('#design').addClass('col-md-9');
 
                                 angular.element('#cloudware').css('width', "100%");
                                 $scope.leftControl = false;
@@ -66,7 +66,7 @@ angular.module('phoenix')
                             });
                         } else {
                             angular.element('#design').removeClass('col-md-12');
-                            angular.element('#design').addClass('col-md-11');
+                            angular.element('#design').addClass('col-md-9');
                             angular.element('#leftNav').show(1000, function() {
 
 
@@ -90,7 +90,7 @@ angular.module('phoenix')
         return {
             restrict: 'A',
             // template: '<a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="" ng-click="minimalize()">题库</a>',
-            template: '<span class="navbar-minimalize minimalize-styl-2 btn btn-success" ng-click="minimalizeRight()"><i class="fa " ng-class="{true:\'fa-arrow-left\',false:\'fa-arrow-right\'}[rightControl]"></i></span>',
+            template: '<span class="navbar-minimalize minimalize-styl-2 btn btn-success" ng-click="minimalizeRight()"><i class="fa " ng-class="{true:\'fa-arrow-right\',false:\'fa-arrow-left\'}[rightControl]"></i></span>',
             controller: function($scope) {
                 $scope.minimalizeRight = function() {
                     angular.element('#rightNav').toggleClass('mini-navbar');

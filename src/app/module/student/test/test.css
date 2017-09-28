@@ -3,6 +3,8 @@
     margin: 0;
 }
 
+
+/* 
 .md table {
     border: solid #ccc 1px;
 }
@@ -39,4 +41,4 @@
 .md table td:first-child,
 .md table th:first-child {
     border-left: none;
-}
+} */

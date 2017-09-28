@@ -10,7 +10,7 @@
     function adCheckExCtrl($scope, $timeout) {
         var vm = this;
         $scope.leftControl = true;
-        $scope.rightControl = false;
+        $scope.rightControl = true;
 
         var converter = new showdown.Converter();
         converter.setOption('tasklists', true);
