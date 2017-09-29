@@ -11,56 +11,69 @@
     <div class="modal-body">
         <div class="row">
             <div class="col-md-6">
-                <input type="text" class="form-control" ng-model="containerAddr" placeholder="配置容器地址">
+                <!-- <input type="text" class="form-control" ng-model="containerAddr" placeholder="选择容器类型"> -->
+                <select name="" id="" class="form-control" placeholder="选择容器类型">
+                        <option value="0" label="选择容器类型"></option>
+                        
+                    <option value="rstudio" label="rstudio"></option>
+                    <option value="gedit" label="gedit"></option>
+                    
+                </select>
+            </div>
+            <div class="col-md-6">
+                <div class="btn-group">
+                    <button type="submit" class="btn btn-success btn-outline">预览容器</button>
+
+                    <button type="submit" class="btn btn-success btn-outline">添加容器</button>
+                    <button type="submit" class="btn btn-success btn-outline" ng-click="ok()">保存</button>
+
+                    <button type="button" class="btn btn-danger btn-outline" ng-click="cancel()">取消</button>
+                </div>
 
             </div>
-            <div class="col-md-2">
-                <button type="submit" class="btn btn-success">配置容器地址</button>
 
-            </div>
+            <!-- <div class="col-md-2">
 
-            <div class="col-md-2">
-                <button type="submit" class="btn btn-success">预览容器</button>
+            </div> -->
+            <!-- <div class="col-md-2">
 
-            </div>
-            <div class="col-md-2">
-                <button type="submit" class="btn btn-success">保存</button>
 
-            </div>
+            </div> -->
         </div>
         <br>
         <div class="row">
-            <div class="col-md-12">
-                <textarea name="" id="" class="form-control" placeholder="实验内容" style="resize:none" rows="10"></textarea>
+            <div class="col-md-12" height="600px">
+                <div class="tabs-container">
+
+                    <uib-tabset>
+                        <uib-tab heading="上传markdown文件" ng-click="change(0)">
+                            <div class="panel-body">
+                                <button class="btn btn-success" ng-click="chooseFile()">选择文件</button>
+                                <button class="btn btn-success" ng-click="uploadFile()">上传</button>
+                            </div>
+                        </uib-tab>
+                        <uib-tab heading="在线编辑markdown" ng-click="change(1)">
+                            <div class="panel-body">
+                                <div id="test-editormd">
+                                    <textarea style="display:none;" ng-model="text"></textarea>
+                                </div>
+                            </div>
+                        </uib-tab>
+                    </uib-tabset>
+
+                </div>
+
+                <!-- <textarea name="" id="" class="form-control" placeholder="实验内容" style="resize:none" rows="10"></textarea> -->
             </div>
         </div>
-        <!-- <div class="form-group">
-                        <div class="checkbox">
-                            <label>
-                              <input type="checkbox">记住密码
-                            </label>
-                        </div>
-                        <div style="margin-left:40%;">
-                            <a class="forgot-link" href="#" style="text-align:center">忘记密码?</a>
-        
-                        </div>
-                    </div> -->
+
         </form>
-        <!-- <div class="alt-text">or</div>
-                    <div class="modal-border"></div> -->
-        <!-- <div class="alt-btn">
-                        <a class="btn btn-block commonBtn" href="#">Log in with Facebook</a>
-                        <a class="twitter-btn btn btn-block" href="#">Log in with Facebook</a>
-                    </div> -->
+
 
     </div>
-    <!-- <div class="panel-footer">
-            <p style="text-align:center">? <a href="javascript:(0)" ng-click="goLogin()">登录</a></p>
-        </div> -->
-    <!-- <div class="modal-footer">
-                    <button type="button" class="btn btn-white" ng-click="cancel()">取消</button>
-            
-            
-                    <button type="submit" class="btn btn-success" ng-click="ok()">保存</button>
-                </div> -->
+
+
+    <div class="modal-footer">
+
+    </div>
 </div>

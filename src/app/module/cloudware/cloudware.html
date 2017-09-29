@@ -1,0 +1,88 @@
+<div class="main_wrapper">
+    <div style="margin-top:20px"></div>
+
+
+    <div class="container">
+
+        <div ui-view></div>
+        <!-- <div class="row">
+
+            <div class="col-sm-5 m-b-xs">
+                <h4>Python语言与数据分析/课时1/实验1
+                </h4>
+
+            </div>
+
+
+        </div> -->
+        <hr>
+
+    </div>
+    <div class="row">
+
+        <!-- <div class="col-md-1" id="leftNav" style="z-index:10;height:100%;">
+
+            <nav class="navbar-default navbar-static-side" role="navigation" style="width:100%">
+                <div class="sidebar-collapse">
+                    <ul side-navigation class="nav metismenu" id="side-menu">
+                        <li class="nav-header">
+
+                                <div class="profile-element" uib-dropdown>
+                                    <a uib-dropdown-toggle="">
+
+
+                                        <span class="text-muted text-xs block">Example menu<b class="caret"></b></span>
+                                        </span>
+                                    </a>
+                                    <ul uib-dropdown-menu class="animated flipInX m-t-xs">
+                                        <li><a href="">Logout</a></li>
+                                    </ul>
+                                </div>
+                                <div class="logo-element">
+                                    IN+
+                                </div>
+
+                            </li>
+
+                        <li ui-sref-active="active">
+                            <a style="    padding-left: 10px;"><i class="fa fa-laptop"></i> <span class="nav-label">启动</span> </a>
+                        </li>
+                        <li ui-sref-active="active">
+                            <a><i class="fa fa-desktop"></i> <span class="nav-label">停止</span></a>
+                        </li>
+                    </ul>
+
+                </div>
+            </nav>
+        </div> -->
+        <div class="col-md-3" style="height:700px;overflow:auto;background-color:#fff" id="leftNav">
+            <div ng-bind-html="html" class="md markdown-body" id="ht" style="padding:15px;"></div>
+
+        </div>
+        <div class="col-md-9" style="background-color: #F5f5f5;z-index:9;height:700px" id="design">
+            <div class="row" style="text-align:center;margin-top:250px" ng-hide="hideExText">
+                <h1 style="font-size:80px">实验区域</h1>
+                <small>点击右侧工具栏开始实验</small>
+            </div>
+            <span us-spinner="{ color: '#0060b1', radius: 10, width: 5, length: 10, zIndex: 10 ,top:'30%'}" spinner-key="ex-spinner" spinner-start-active="false"></span>
+            <div id="cloudware" data-cloudware-env="rstudio" style="height:100%;width:100%;z-index:100"></div>
+        </div>
+
+    </div>
+</div>
+</div>
+
+<span minimaliza-Left style="position: fixed;top:100px;left:0;z-index:101"></span>
+<span minimaliza-Right style="position: fixed;top:100px;right:0;z-index:101"></span>
+
+<div style="position: fixed;top:132px;right:0;z-index:101;width:38px" id="rightNav">
+
+    <button class="navbar-minimalize minimalize-styl-2 btn btn-primary " tooltip-placement="left" uib-tooltip="开始试验" ng-disabled="hasStarted" ng-click="startEx()"><i class="fa fa-play" ></i></button>
+    <button class="navbar-minimalize minimalize-styl-2 btn btn-danger " tooltip-placement="left" uib-tooltip="暂停实验" ng-click=""><i class="fa fa-pause" ></i></button>
+    <button class="navbar-minimalize minimalize-styl-2 btn btn-default " tooltip-placement="left" uib-tooltip="剪切板" ng-click=""><i class="fa fa-cut" ></i></button>
+    <button class="navbar-minimalize minimalize-styl-2 btn btn-default " tooltip-placement="left" uib-tooltip="共享" ng-click=""><i class="fa fa-share" ></i></button>
+    <button class="navbar-minimalize minimalize-styl-2 btn btn-default " tooltip-placement="left" uib-tooltip="下载代码" ng-click=""><i class="fa fa-download" ></i></button>
+    <button class="navbar-minimalize minimalize-styl-2 btn btn-default " tooltip-placement="left" uib-tooltip="全屏" ng-click="fullScreen()"><i class="fa fa-expand" ></i></button>
+
+
+</div>

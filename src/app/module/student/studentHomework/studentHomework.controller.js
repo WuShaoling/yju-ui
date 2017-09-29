@@ -9,7 +9,7 @@
 
     function studentHomeworkCtrl($scope, $state) {
         $scope.doHomework = function() {
-            $state.go('index.studentDoHomework');
+            $state.go('index.cloudware.studentDoHomework');
         }
         $scope.courseContent = [{
             moduleName: "第一课时",

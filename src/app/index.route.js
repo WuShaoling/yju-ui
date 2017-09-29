@@ -29,12 +29,14 @@
                 templateUrl: "app/module/404page/404page.html",
                 controller: "pageNotFoundCtrl"
             })
-            .state('index.about', {
-                url: "/about",
-                templateUrl: "app/module/about/about.html",
-                controller: "aboutCtrl"
-            })
-            .state('index.courseDetail', {
+
+        .state('index.about', {
+            url: "/about",
+            templateUrl: "app/module/about/about.html",
+            controller: "aboutCtrl"
+        })
+
+        .state('index.courseDetail', {
                 url: "/courseDetail",
                 templateUrl: "app/module/courseDetail/courseDetail.html",
                 controller: "courseDetailCtrl"
@@ -44,6 +46,19 @@
                 templateUrl: "app/module/courseDetail/courseDetail_1.html",
                 controller: "courseDetail1Ctrl"
             })
+
+        //cloudware
+        .state('index.cloudware', {
+                url: "/cloudware",
+                templateUrl: "app/module/cloudware/cloudware.html",
+                controller: "cloudwareCtrl"
+            })
+            .state('index.cloudware.experiment', {
+                url: "/cloudware/experiment",
+                templateUrl: "app/module/cloudware/experiment.html",
+                controller: "experimentCtrl"
+            })
+            //end
             //student
             .state('index.studentCourse', {
                 url: "/student/course",
@@ -55,7 +70,7 @@
                 templateUrl: "app/module/student/studentCourseDetail/studentCourseDetail.html",
                 controller: "studentCourseDetailCtrl"
             })
-            .state('index.StartExperiment', {
+            .state('index.cloudware.startExperiment', {
                 url: "/course/experiment",
                 templateUrl: "app/module/student/studentStartExperiment/studentStartExperiment.html",
                 controller: "studentStartExperimentCtrl"
@@ -65,7 +80,7 @@
                 templateUrl: "app/module/student/studentHomework/studentHomework.html",
                 controller: "studentHomeworkCtrl"
             })
-            .state('index.studentDoHomework', {
+            .state('index.cloudware.studentDoHomework', {
                 url: "/student/course/homework/detail",
                 templateUrl: "app/module/student/studentDoHomework/studentDoHomework.html",
                 controller: "studentDoHomeworkCtrl"
@@ -97,7 +112,7 @@
                 templateUrl: "app/module/teacher/homeworkDetail/homeworkDetail.html",
                 controller: "homeworkDetailCtrl"
             })
-            .state('index.checkHomework', {
+            .state('index.cloudware.checkHomework', {
                 url: "/teacher/course/:courseId/homework/:id",
                 params: { courseId: null, id: null },
                 templateUrl: "app/module/teacher/checkHomework/checkHomework.html",

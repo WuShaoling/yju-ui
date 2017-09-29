@@ -53,7 +53,7 @@
                                     </div> -->
                     </div>
                     <div class="col-sm-2">
-                        <a type="button" class="badge badge-danger pull-right" tooltip-placement="left" uib-tooltip="删除课时" ng-click="deleteModule()"><i class="fa fa-times"></i></a>
+                        <a type="button" class="badge badge-danger pull-right" tooltip-placement="left" uib-tooltip="删除课时" ng-click="deleteModule(item)"><i class="fa fa-times"></i></a>
 
                         <!-- <div class="input-group">
                                         <input type="text" placeholder="Search" class="input-sm form-control">
@@ -138,7 +138,7 @@
                                 <td>{{hw.date}}</td>
                                 <td>
                                     <!-- <button type="button" class="btn btn-success btn-outline" ng-click="startExp()">查看详情</button> -->
-                                    <button type="button" class="btn btn-success btn-outline" ng-click="edit(hw)" ui-sref="index.adCheckHw">查看作业</button>
+                                    <button type="button" class="btn btn-success btn-outline" ng-click="edit(hw)" ui-sref="index.cloudware.experiment">查看作业</button>
                                     <button type="button" class="btn btn-danger btn-outline" ng-click="deleteHw(hw)">删除作业</button>
 
                                 </td>
