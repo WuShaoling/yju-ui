@@ -20,10 +20,10 @@ angular.module('phoenix')
         return {
             restrict: 'A',
             // template: '<a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="" ng-click="minimalize()">题库</a>',
-            template: '<span class="navbar-minimalize minimalize-styl-2 btn btn-success " ng-click="minimalizeLeft()"><i class="fa " ng-class="{true:\'fa-arrow-left\',false:\'fa-arrow-right\'}[leftControl]"></i></span>',
+            template: '<span class="navbar-minimalize minimalize-styl-2 btn btn-success " tooltip-placement="right" uib-tooltip="{{leftText}}" ng-click="minimalizeLeft()"><i class="fa " ng-class="{true:\'fa-arrow-left\',false:\'fa-arrow-right\'}[leftControl]"></i></span>',
             controller: function($scope) {
                 $scope.minimalizeLeft = function() {
-                    console.log(123);
+
                     angular.element('#leftNav').toggleClass('mini-navbar');
                     if (angular.element('#leftNav').hasClass('mini-navbar')) {
                         if (angular.element('#design').hasClass('col-md-9')) {
@@ -34,19 +34,26 @@ angular.module('phoenix')
                                 angular.element('#design').addClass('col-md-12');
 
                                 angular.element('#cloudware').css('width', "100%");
-                                $scope.leftControl = false;
                                 $scope.$apply();
 
+
                             });
+                            $scope.leftControl = false;
+
+                            $scope.leftText = "显示教程";
+
                         } else {
                             angular.element('#leftNav').hide(1000, function() {
                                 angular.element('#design').removeClass('col-md-12');
                                 angular.element('#design').addClass('col-md-9');
 
                                 angular.element('#cloudware').css('width', "100%");
-                                $scope.leftControl = false;
                                 $scope.$apply();
                             })
+                            $scope.leftControl = false;
+
+                            $scope.leftText = "显示教程";
+
                         }
 
 
@@ -60,19 +67,25 @@ angular.module('phoenix')
 
 
                                 angular.element('#cloudware').css('width', "100%");
-                                $scope.leftControl = true;
                                 $scope.$apply();
 
                             });
+                            $scope.leftControl = true;
+
+                            $scope.leftText = "隐藏教程";
+
                         } else {
                             angular.element('#design').removeClass('col-md-12');
                             angular.element('#design').addClass('col-md-9');
+                            $scope.leftText = "隐藏教程";
+                            $scope.leftControl = true;
+
                             angular.element('#leftNav').show(1000, function() {
 
 
                                 angular.element('#cloudware').css('width', "100%");
-                                $scope.leftControl = true;
                                 $scope.$apply();
+
 
                             })
                         }
@@ -90,57 +103,33 @@ angular.module('phoenix')
         return {
             restrict: 'A',
             // template: '<a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="" ng-click="minimalize()">题库</a>',
-            template: '<span class="navbar-minimalize minimalize-styl-2 btn btn-success" ng-click="minimalizeRight()"><i class="fa " ng-class="{true:\'fa-arrow-right\',false:\'fa-arrow-left\'}[rightControl]"></i></span>',
+            template: '<span class="navbar-minimalize minimalize-styl-2 btn btn-success" tooltip-placement="left" uib-tooltip="{{rightText}}" ng-click="minimalizeRight()"><i class="fa " ng-class="{true:\'fa-arrow-right\',false:\'fa-arrow-left\'}[rightControl]"></i></span>',
             controller: function($scope) {
                 $scope.minimalizeRight = function() {
                     angular.element('#rightNav').toggleClass('mini-navbar');
                     if (angular.element('#rightNav').hasClass('mini-navbar')) {
                         // Hide menu in order to smoothly turn on when maximize menu
-                        if (angular.element('#design').hasClass('col-md-8')) {
-                            angular.element('#rightNav').hide(1000, function() {
-                                angular.element('#design').removeClass('col-md-8');
-                                angular.element('#design').addClass('col-md-11');
-                                angular.element('#cloudware').css('width', "100%");
-                                $scope.rightControl = false;
-                                $scope.$apply();
-                            });
-                        } else {
-                            angular.element('#rightNav').hide(1000, function() {
-                                angular.element('#design').removeClass('col-md-9');
-                                angular.element('#design').addClass('col-md-12');
-                                angular.element('#cloudware').css('width', "100%");
-                                $scope.rightControl = false;
-                                $scope.$apply();
-                            });
-                        }
+
+                        angular.element('#rightNav').hide(1000, function() {
+
+                            $scope.rightControl = false;
+                            $scope.rightText = "显示工具栏";
+
+                            $scope.$apply();
+
+                        });
+
+
                         // $scope.refreshTest();
                     } else {
-                        if (angular.element('#design').hasClass('col-md-11')) {
+                        angular.element('#rightNav').show(1000, function() {
+                            angular.element('#cloudware').css('width', "100%");
+                            $scope.rightControl = true;
+                            $scope.rightText = "隐藏工具栏";
 
-                            angular.element('#design').removeClass('col-md-11');
-                            angular.element('#design').addClass('col-md-8');
-                            angular.element('#rightNav').show(1000, function() {
-                                angular.element('#cloudware').css('width', "100%");
-                                $scope.rightControl = true;
-                                $scope.$apply();
+                            $scope.$apply();
 
-                            });
-                        } else {
-                            angular.element('#design').removeClass('col-md-12');
-                            angular.element('#design').addClass('col-md-9');
-                            angular.element('#rightNav').show(1000, function() {
-                                angular.element('#cloudware').css('width', "100%");
-                                $scope.rightControl = true;
-                                $scope.$apply();
-
-                            });
-                        }
-
-                        // Remove all inline style from jquery fadeIn function to reset menu state
-                        // angular.element('#lib').removeAttr('style');
-
-                        //刷新
-                        // $scope.refreshTest();
+                        });
                     }
                 };
             }

@@ -15,8 +15,8 @@
             <div class="row">
                 <div class="col-sm-5 m-b-xs">
                     <!-- <select class="form-control" ng-model="q" ng-options="item.value as item.label for item in condition" ng-change="change()"></select> -->
-                    <h4>Python语言与数据分析/课程维护
-                    </h4>
+                    <h2>Python语言与数据分析/课程维护
+                    </h2>
                 </div>
                 <div class="col-sm-5 m-b-xs">
                     <!-- <div data-toggle="buttons" class="btn-group">
@@ -26,11 +26,13 @@
                         </div> -->
                 </div>
                 <div class="col-sm-2">
-                    <button type="button" class="btn btn-success " ng-click="addModule()">新增模块</button>
+                    <!-- <button type="button" class="btn btn-success " ng-click="addModule()">新增模块</button> -->
+                    <a type="button" class="badge badge-success pull-right" tooltip-placement="left" uib-tooltip="添加模块" ng-click="addModule()"><i class="fa fa-plus"></i></a>
+
                     <!-- <div class="input-group">
                             <input type="text" placeholder="Search" class="input-sm form-control">
                             <div class="input-group-btn">
-                                <button type="button" class="btn btn-sm btn-primary form-control">搜索</button> </div>
+                                <button type="button" class="btn btn-sm btn-success form-control">搜索</button> </div>
                         </div> -->
                 </div>
             </div>
@@ -39,8 +41,9 @@
                 <div class="row">
                     <div class="col-sm-5 m-b-xs">
                         <!-- <select class="form-control" ng-model="q" ng-options="item.value as item.label for item in condition" ng-change="change()"></select> -->
-                        <h5>{{item.moduleName}}
-                        </h5>
+                        <h3>{{item.moduleName}}
+
+                        </h3>
                     </div>
                     <div class="col-sm-5 m-b-xs">
                         <!-- <div data-toggle="buttons" class="btn-group">
@@ -50,11 +53,12 @@
                                     </div> -->
                     </div>
                     <div class="col-sm-2">
-                        <button type="button" class="btn btn-danger btn-sm" ng-click="deleteModule()">删除模块</button>
+                        <a type="button" class="badge badge-danger pull-right" tooltip-placement="left" uib-tooltip="删除课时" ng-click="deleteModule()"><i class="fa fa-times"></i></a>
+
                         <!-- <div class="input-group">
                                         <input type="text" placeholder="Search" class="input-sm form-control">
                                         <div class="input-group-btn">
-                                            <button type="button" class="btn btn-sm btn-primary form-control">搜索</button> </div>
+                                            <button type="button" class="btn btn-sm btn-success form-control">搜索</button> </div>
                                     </div> -->
                     </div>
                 </div>
@@ -72,7 +76,7 @@
                                 <th>授课教师</th>
                                 <th>截止日期</th>
                                 <th>
-                                    <button type="button" class="btn btn-info btn-sm " ng-click="addNewEx()">添加实验</button>
+                                    <button type="button" class="btn btn-success btn-sm " ng-click="addNewEx()">添加实验</button>
 
                                 </th>
                             </tr>
@@ -90,9 +94,11 @@
                                 <td>{{ex.date}}</td>
                                 <td>
                                     <!-- <button type="button" class="btn btn-success btn-outline" ng-click="startExp()">查看详情</button> -->
-                                    <button type="button" class="btn btn-primary btn-outline" ng-click="checkEx(ex)" ui-sref="index.adCheckEx">查看实验</button>
-                                    <button type="button" class="btn btn-danger btn-outline" ng-click="deleteEx(ex)">删除实验</button>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-success btn-outline" ng-click="checkEx(ex)" ui-sref="index.adCheckEx">查看实验</button>
+                                        <button type="button" class="btn btn-danger btn-outline" ng-click="deleteEx(ex)">删除实验</button>
 
+                                    </div>
 
                                 </td>
 
@@ -116,7 +122,7 @@
                                 <th>授课教师</th>
                                 <th>截止日期</th>
                                 <th>
-                                    <button type="button" class="btn btn-info btn-sm " ng-click="addNewHw()">添加作业</button>
+                                    <button type="button" class="btn btn-success btn-sm " ng-click="addNewHw()">添加作业</button>
 
                                 </th>
                             </tr>
@@ -132,7 +138,7 @@
                                 <td>{{hw.date}}</td>
                                 <td>
                                     <!-- <button type="button" class="btn btn-success btn-outline" ng-click="startExp()">查看详情</button> -->
-                                    <button type="button" class="btn btn-primary btn-outline" ng-click="edit(hw)" ui-sref="index.adCheckHw">查看作业</button>
+                                    <button type="button" class="btn btn-success btn-outline" ng-click="edit(hw)" ui-sref="index.adCheckHw">查看作业</button>
                                     <button type="button" class="btn btn-danger btn-outline" ng-click="deleteHw(hw)">删除作业</button>
 
                                 </td>

@@ -58,7 +58,11 @@
 
         </div>
         <div class="col-md-9" style="background-color: #F5f5f5;z-index:9;height:700px" id="design">
-            <span us-spinner="{ color: '#0060b1', radius: 10, width: 5, length: 10, zIndex: 10 ,top:'30%'}" spinner-key="ex-spinner" spinner-start-active="true"></span>
+            <div class="row" style="text-align:center;margin-top:250px" ng-hide="hideExText">
+                <h1 style="font-size:80px">实验区域</h1>
+                <small>点击右侧工具栏开始实验</small>
+            </div>
+            <span us-spinner="{ color: '#0060b1', radius: 10, width: 5, length: 10, zIndex: 10 ,top:'30%'}" spinner-key="ex-spinner" spinner-start-active="false"></span>
             <div id="cloudware" data-cloudware-env="busybox" style="height:100%;width:100%;z-index:100"></div>
         </div>
 
@@ -68,3 +72,15 @@
 
 <span minimaliza-Left style="position: fixed;top:100px;left:0;z-index:101"></span>
 <span minimaliza-Right style="position: fixed;top:100px;right:0;z-index:101"></span>
+
+<div style="position: fixed;top:132px;right:0;z-index:101;width:38px" id="rightNav">
+
+    <button class="navbar-minimalize minimalize-styl-2 btn btn-primary " tooltip-placement="left" uib-tooltip="开始试验" ng-disabled="hasStarted" ng-click="startEx()"><i class="fa fa-play" ></i></button>
+    <button class="navbar-minimalize minimalize-styl-2 btn btn-danger " tooltip-placement="left" uib-tooltip="暂停实验" ng-click=""><i class="fa fa-pause" ></i></button>
+    <button class="navbar-minimalize minimalize-styl-2 btn btn-default " tooltip-placement="left" uib-tooltip="剪切板" ng-click=""><i class="fa fa-cut" ></i></button>
+    <button class="navbar-minimalize minimalize-styl-2 btn btn-default " tooltip-placement="left" uib-tooltip="共享" ng-click=""><i class="fa fa-share" ></i></button>
+    <button class="navbar-minimalize minimalize-styl-2 btn btn-default " tooltip-placement="left" uib-tooltip="下载代码" ng-click=""><i class="fa fa-download" ></i></button>
+    <button class="navbar-minimalize minimalize-styl-2 btn btn-default " tooltip-placement="left" uib-tooltip="全屏" ng-click="fullScreen()"><i class="fa fa-expand" ></i></button>
+
+
+</div>
