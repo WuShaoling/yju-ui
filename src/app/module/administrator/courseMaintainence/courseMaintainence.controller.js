@@ -5,8 +5,32 @@
         .module('phoenix')
         .controller('courseMaintainenceCtrl', courseMaintainenceCtrl)
         .controller('addNewExperimentCtrl', addNewExperimentCtrl)
-        .controller('addNewHomeworkCtrl', addNewHomeworkCtrl);
+        .controller('addNewHomeworkCtrl', addNewHomeworkCtrl)
+        .controller('addNewModuleModalCtrl', addNewModuleModalCtrl);
 
+
+    addNewModuleModalCtrl.$inject = ['$scope', '$uibModalInstance']
+
+    function addNewModuleModalCtrl($scope, $uibModalInstance) {
+        $scope.cancel = function() {
+            $uibModalInstance.dismiss('cancel');
+        }
+        $scope.moduleName = ""
+        $scope.ok = function() {
+            if ($scope.moduleName == "") {
+                toastr.error("请输入模块名称！")
+                return
+            }
+            var newModule = {
+                moduleId: 5,
+                moduleName: $scope.moduleName,
+                moduleExperiment: [],
+                moduleHomework: []
+            }
+            $uibModalInstance.close(newModule);
+        }
+
+    }
 
     addNewHomeworkCtrl.$inject = ['$scope', '$uibModalInstance']
 
@@ -15,8 +39,17 @@
             $uibModalInstance.dismiss('cancel');
         }
         $scope.ok = function() {
-
-            $uibModalInstance.close();
+            console.log($scope.course.courseName, $scope.course.courseDes)
+            var newHw = {
+                id: "123",
+                courseName: $scope.course.courseName,
+                courseDes: $scope.course.courseDes,
+                teacherName: "王老师",
+                dueDate: "",
+                date: new Date(),
+                completed: 0
+            }
+            $uibModalInstance.close(newHw);
         }
 
     }
@@ -64,7 +97,15 @@
         }
         $scope.ok = function() {
 
-            $uibModalInstance.close();
+            $uibModalInstance.close({
+                id: "123",
+                courseName: "C语言编程基础实验",
+                courseDes: "描述",
+                teacherName: "王老师",
+                dueDate: "",
+                date: new Date(),
+                completed: 0
+            });
         }
 
     }
@@ -79,18 +120,19 @@
             var modalInstance = $uibModal.open({
 
                 templateUrl: 'app/module/modal/addNewModuleModal.html',
-                // controller: addNewExperimentCtrl
+                controller: 'addNewModuleModalCtrl'
             });
 
 
             modalInstance.result.then(function(result) {
                 console.log(result);
+                $scope.courseDetail.push(result)
 
             }, function(reason) {
                 console.log(reason);
             });
         }
-        $scope.addNewEx = function() {
+        $scope.addNewEx = function(item) {
             var modalInstance = $uibModal.open({
                 size: "lg",
                 templateUrl: 'app/module/modal/addNewExperiment.html',
@@ -99,7 +141,12 @@
 
 
             modalInstance.result.then(function(result) {
-
+                for (var i in $scope.courseDetail) {
+                    if (item.moduleId == $scope.courseDetail[i].moduleId) {
+                        $scope.courseDetail[i].moduleExperiment.push(result)
+                        break
+                    }
+                }
             }, function(reason) {
                 console.log(reason);
             });
@@ -121,7 +168,13 @@
                 function(isConfirm) {
 
                     if (isConfirm) {
-
+                        for (var i in $scope.courseDetail) {
+                            if (item.moduleId == $scope.courseDetail[i].moduleId) {
+                                $scope.courseDetail.splice(i, 1);
+                                $scope.$apply()
+                                break
+                            }
+                        }
                         swal({
                             title: "删除成功咯",
                             // text: "项目【" + projectName + "】已删除咯",
@@ -136,21 +189,27 @@
                     }
                 });
         }
-        $scope.addNewHw = function() {
+        $scope.addNewHw = function(item) {
+
             var modalInstance = $uibModal.open({
 
                 templateUrl: 'app/module/modal/addNewHomework.html',
-                controller: addNewExperimentCtrl
+                controller: addNewHomeworkCtrl
             });
 
 
             modalInstance.result.then(function(result) {
-
+                for (var i in $scope.courseDetail) {
+                    if (item.moduleId == $scope.courseDetail[i].moduleId) {
+                        $scope.courseDetail[i].moduleHomework.push(result)
+                        break
+                    }
+                }
             }, function(reason) {
                 console.log(reason);
             });
         }
-        $scope.deleteEx = function(ex) {
+        $scope.deleteEx = function(ex, id, index) {
             swal({
                     title: "确定要删除吗？",
                     text: "【" + ex.courseName + "】将被删除",
@@ -165,6 +224,13 @@
                 function(isConfirm) {
 
                     if (isConfirm) {
+                        for (var i in $scope.courseDetail) {
+                            if (id == $scope.courseDetail[i].moduleId) {
+                                $scope.courseDetail[i].moduleExperiment.splice(index, 1);
+                                $scope.$apply()
+                                break
+                            }
+                        }
 
                         swal({
                             title: "删除成功咯",
@@ -181,7 +247,7 @@
                 });
         }
 
-        $scope.deleteHw = function(hw) {
+        $scope.deleteHw = function(hw, id, index) {
 
             swal({
                     title: "确定要删除吗？",
@@ -197,7 +263,13 @@
                 function(isConfirm) {
 
                     if (isConfirm) {
-
+                        for (var i in $scope.courseDetail) {
+                            if (id == $scope.courseDetail[i].moduleId) {
+                                $scope.courseDetail[i].moduleHomework.splice(index, 1);
+                                $scope.$apply()
+                                break
+                            }
+                        }
                         swal({
                             title: "删除成功咯",
                             // text: "项目【" + projectName + "】已删除咯",
@@ -215,6 +287,7 @@
                 });
         }
         $scope.courseDetail = [{
+            moduleId: 0,
             moduleName: "课时1",
             moduleExperiment: [{
                 id: "123",
@@ -267,6 +340,7 @@
                 completed: 0
             }]
         }, {
+            moduleId: 1,
             moduleName: "课时2",
             moduleExperiment: [{
                 id: "123",

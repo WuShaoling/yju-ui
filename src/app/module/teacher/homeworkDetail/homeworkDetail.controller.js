@@ -12,19 +12,11 @@
             var modalInstance = $uibModal.open({
                 // size: "",
                 templateUrl: 'app/module/modal/gradeModal.html',
-                // controller: addNewExperimentCtrl
+                controller: 'gradeModalCtrl'
+
             });
-
-
             modalInstance.result.then(function(result) {
-                console.log(result);
-                if (result.errorCode === "000") {
-                    toastr.success("修改成功");
 
-
-                }
-            }, function(reason) {
-                console.log(reason);
             });
         }
         $scope.courseContent = [{

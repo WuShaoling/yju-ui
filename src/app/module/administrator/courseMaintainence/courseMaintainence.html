@@ -76,7 +76,7 @@
                                 <th>授课教师</th>
                                 <th>截止日期</th>
                                 <th>
-                                    <button type="button" class="btn btn-success btn-sm " ng-click="addNewEx()">添加实验</button>
+                                    <button type="button" class="btn btn-success btn-sm " ng-click="addNewEx(item)">添加实验</button>
 
                                 </th>
                             </tr>
@@ -96,7 +96,7 @@
                                     <!-- <button type="button" class="btn btn-success btn-outline" ng-click="startExp()">查看详情</button> -->
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-success btn-outline" ng-click="checkEx(ex)" ui-sref="index.adCheckEx">查看实验</button>
-                                        <button type="button" class="btn btn-danger btn-outline" ng-click="deleteEx(ex)">删除实验</button>
+                                        <button type="button" class="btn btn-danger btn-outline" ng-click="deleteEx(ex,item.moduleId,$index)">删除实验</button>
 
                                     </div>
 
@@ -122,7 +122,7 @@
                                 <th>授课教师</th>
                                 <th>截止日期</th>
                                 <th>
-                                    <button type="button" class="btn btn-success btn-sm " ng-click="addNewHw()">添加作业</button>
+                                    <button type="button" class="btn btn-success btn-sm " ng-click="addNewHw(item)">添加作业</button>
 
                                 </th>
                             </tr>
@@ -139,7 +139,7 @@
                                 <td>
                                     <!-- <button type="button" class="btn btn-success btn-outline" ng-click="startExp()">查看详情</button> -->
                                     <button type="button" class="btn btn-success btn-outline" ng-click="edit(hw)" ui-sref="index.cloudware.experiment">查看作业</button>
-                                    <button type="button" class="btn btn-danger btn-outline" ng-click="deleteHw(hw)">删除作业</button>
+                                    <button type="button" class="btn btn-danger btn-outline" ng-click="deleteHw(hw,item.moduleId,$index)">删除作业</button>
 
                                 </td>
 

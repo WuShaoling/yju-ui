@@ -29,7 +29,7 @@ angular.module('phoenix')
                         if (angular.element('#design').hasClass('col-md-9')) {
 
                             // Hide menu in order to smoothly turn on when maximize menu
-                            angular.element('#leftNav').hide(1000, function() {
+                            angular.element('#leftNav').hide(500, function() {
                                 angular.element('#design').removeClass('col-md-9');
                                 angular.element('#design').addClass('col-md-12');
 
@@ -43,7 +43,7 @@ angular.module('phoenix')
                             $scope.leftText = "显示教程";
 
                         } else {
-                            angular.element('#leftNav').hide(1000, function() {
+                            angular.element('#leftNav').hide(500, function() {
                                 angular.element('#design').removeClass('col-md-12');
                                 angular.element('#design').addClass('col-md-9');
 
@@ -63,7 +63,7 @@ angular.module('phoenix')
 
                             angular.element('#design').removeClass('col-md-9');
                             angular.element('#design').addClass('col-md-8');
-                            angular.element('#leftNav').show(1000, function() {
+                            angular.element('#leftNav').show(500, function() {
 
 
                                 angular.element('#cloudware').css('width', "100%");
@@ -80,7 +80,7 @@ angular.module('phoenix')
                             $scope.leftText = "隐藏教程";
                             $scope.leftControl = true;
 
-                            angular.element('#leftNav').show(1000, function() {
+                            angular.element('#leftNav').show(500, function() {
 
 
                                 angular.element('#cloudware').css('width', "100%");
@@ -156,4 +156,23 @@ angular.module('phoenix')
                 };
             }
         };
-    });
+    })
+    .directive('fileModel', ['$parse', function($parse) {
+        return {
+            restrict: 'A',
+            link: function(scope, element, attrs, ngModel) {
+                var model = $parse(attrs.fileModel);
+                var modelSetter = model.assign;
+                element.bind('change', function(event) {
+                    // scope.$apply(function() {
+                    //     modelSetter(scope, element[0].files[0]);
+                    // });
+                    // console.info(scope);
+                    //附件预览
+                    scope.file = (event.srcElement || event.target).files[0];
+                    // console.log(scope.file);
+                    scope.getFile(scope.file);
+                });
+            }
+        };
+    }]);
