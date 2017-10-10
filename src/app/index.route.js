@@ -133,6 +133,12 @@
                 templateUrl: "app/module/administrator/teacherManagement/teacherManagement.html",
                 controller: "teacherManagementCtrl"
             })
+            .state('index.addNewEx', {
+                url: "/administrator/addNewEx",
+
+                templateUrl: "app/module/administrator/addNewEx/addNewEx.html",
+                controller: "addNewExCtrl"
+            })
             .state('index.semesterManagement', {
                 url: "/administrator/semesterManagement",
 

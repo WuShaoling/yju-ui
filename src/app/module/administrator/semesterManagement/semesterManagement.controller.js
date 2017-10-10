@@ -27,7 +27,7 @@
                 },
                 //数据源
                 ajax: {
-                    "url": reqUrl + 'administrator/semesterManagement/semester.json',
+                    "url": 'http://xlab.rainlf.com:8080/course/term/all',
                     "type": 'GET',
                     beforeSend: function(xhr) {
                         // xhr.setRequestHeader('access_token', '1504751421487');
@@ -37,11 +37,11 @@
                         data.data.map(function(item) {
 
                             console.log(item);
-                            if (item.semester == "1") {
-                                item.semester = "第一学期"
-                            } else {
-                                item.semester = "第二学期"
-                            }
+
+                            item.semester = "第" + item.semester + "学期"
+
+
+
                             return item;
                         });
                         // localStorageSrv.log('ajax data:'+JSON.stringify(data));
@@ -50,7 +50,7 @@
                 },
                 //设置列显示的值的 键名
                 columns: [
-
+                    { data: 'termId' },
                     { data: 'semesterYear' },
                     { data: 'semester' },
 

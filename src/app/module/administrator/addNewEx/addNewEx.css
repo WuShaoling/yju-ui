@@ -1,0 +1,25 @@
+.copyPic {
+    float: right;
+    font-size: 16px;
+    padding: 5px;
+    /* color: #36b293; */
+    margin-bottom: -21px!important;
+    /* margin-right: -7px!important; */
+    position: relative;
+    background-color: rgba(245, 245, 245, 0.97);
+}
+
+.deletePic {
+    float: right;
+    font-size: 16px;
+    padding: 5px;
+    color: red;
+    margin-bottom: -21px!important;
+    /* margin-right: -7px!important; */
+    position: relative;
+    background-color: rgba(245, 245, 245, 0.97);
+}
+
+.editormd-preview {
+    z-index: 100;
+}

@@ -95,7 +95,28 @@
         $scope.cancel = function() {
             $uibModalInstance.dismiss('cancel');
         };
+        $scope.modifyPass = function() {
+            $uibModalInstance.close();
 
+            var modalInstance = $uibModal.open({
+                templateUrl: 'app/module/modal/modifyPassModal.html',
+                controller: loginCtrl,
+                size: "sm"
+                    // windowClass: "animated flipInY"
+            });
+
+
+            modalInstance.result.then(function(result) {
+                console.log(result);
+                if (result.errorCode === "000") {
+                    toastr.success("修改成功");
+
+
+                }
+            }, function(reason) {
+                console.log(reason);
+            });
+        }
         $scope.login = function() {
 
             if ($scope.user.id == "") {

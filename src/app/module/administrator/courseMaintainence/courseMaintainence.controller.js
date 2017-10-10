@@ -128,8 +128,6 @@
                 console.log(result);
                 $scope.courseDetail.push(result)
 
-            }, function(reason) {
-                console.log(reason);
             });
         }
         $scope.addNewEx = function(item) {

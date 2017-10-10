@@ -1,0 +1,70 @@
+<div class="">
+    <div class="modal-header">
+        <div class="row">
+            <div class="col-md-2">
+                <h3 class="modal-title">图片资源库</h3>
+
+            </div>
+            <div class="col-md-7">
+
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-primary btn-sm pull-right" ng-click="choosePic()">本地上传</button>
+
+            </div>
+            <div class="col-md-1">
+                <button type="button" class="close pull-right" ng-click="cancel()">×</button>
+                <input type="file" accept="image/*" ng-show="false" id="picFile" file-model>
+            </div>
+        </div>
+
+        <!-- <small class="font-bold">Python语言与数据分析/课时1/张君义/作业1</small> -->
+
+
+
+    </div>
+    <div class="modal-body">
+
+        <form class="form-horizontal">
+            <div class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery">
+                <div class="row">
+                    <div class="col-md-2" ng-repeat="pic in pics track by $index">
+                        <i class="fa fa-times deletePic" tooltip-placement="right" uib-tooltip="删除图片" ng-click="deletePic($index)"></i>
+                        <i class="fa fa-clipboard copyPic" tooltip-placement="top" uib-tooltip="复制图片地址" clipboard supported="supported" text="pic.url" on-copied="success(pic)" on-error="fail(err)"></i>
+
+                        <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+                            <a href="{{pic.url}}" itemprop="contentUrl" data-size="600x600">
+                                <img src="{{pic.url}}" itemprop="thumbnail" alt="Image description" />
+                            </a>
+                            <figcaption itemprop="caption description" style="text-align:center">{{pic.des}}</figcaption>
+                        </figure>
+
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- <div class="row">
+                <div class="col-md-2" ng-repeat="pic in pics">
+
+
+                    <i class="fa fa-times deletePic" tooltip-placement="top" uib-tooltip="删除图片"></i>
+
+                    <i class="fa fa-clipboard copyPic" tooltip-placement="top" uib-tooltip="复制图片地址" clipboard supported="supported" text="pic.url" on-copied="success(pic)" on-error="fail(err)"></i>
+                    <img src="{{pic.url}}" alt="" width="100%">
+                </div>
+            </div> -->
+
+
+        </form>
+
+    </div>
+    <!-- <div class="panel-footer">
+                        <p style="text-align:center">? <a href="" ng-click="goLogin()">登录</a></p>
+                    </div> -->
+    <div class="modal-footer">
+        <button type="button" class="btn btn-white" ng-click="cancel()">关闭</button>
+
+        <!-- <button type="submit" class="btn btn-success" ng-click="ok()">保存</button> -->
+    </div>
+</div>

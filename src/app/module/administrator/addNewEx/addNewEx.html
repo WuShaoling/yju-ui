@@ -1,0 +1,70 @@
+<div class="main_wrapper">
+    <div class="mainContent clearfix">
+
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <!-- <input type="text" class="form-control" ng-model="containerAddr" placeholder="选择容器类型"> -->
+                    <select name="" id="" class="form-control" placeholder="选择容器类型">
+                            <option value="0" label="选择容器类型"></option>
+                            
+                        <option value="rstudio" label="rstudio"></option>
+                        <option value="gedit" label="gedit"></option>
+                        
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <div class="btn-group">
+                        <button type="submit" class="btn btn-success btn-outline">预览容器</button>
+
+                        <button type="submit" class="btn btn-success btn-outline">添加容器</button>
+                        <button type="submit" class="btn btn-success btn-outline" ng-click="ok()">保存</button>
+
+                        <button type="button" class="btn btn-danger btn-outline" ng-click="cancel()">取消</button>
+                    </div>
+
+                </div>
+
+                <!-- <div class="col-md-2">
+    
+                </div> -->
+                <!-- <div class="col-md-2">
+    
+    
+                </div> -->
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-12" height="600px">
+                    <div class="tabs-container">
+
+                        <uib-tabset>
+                            <uib-tab heading="上传markdown文件" ng-click="change(0)">
+                                <div class="panel-body">
+                                    <button class="btn btn-success" ng-click="chooseFile()">选择文件</button>
+                                    <button class="btn btn-success" ng-click="uploadFile()">上传</button>
+                                </div>
+                            </uib-tab>
+                            <uib-tab heading="在线编辑markdown" ng-click="change(1)">
+                                <div class="panel-body">
+                                    <div id="test-editormd">
+                                        <textarea style="display:none;" ng-model="text"></textarea>
+                                    </div>
+                                </div>
+                            </uib-tab>
+                            <button class="btn btn-default pull-right" ng-if="showPicLibBtn" ng-click="showPicLib()">图片资源</button>
+                        </uib-tabset>
+
+                    </div>
+
+                    <!-- <textarea name="" id="" class="form-control" placeholder="实验内容" style="resize:none" rows="10"></textarea> -->
+                </div>
+                <div class="col-md-2">
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

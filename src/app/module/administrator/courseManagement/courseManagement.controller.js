@@ -24,7 +24,7 @@
                 },
                 //数据源
                 ajax: {
-                    "url": reqUrl + 'administrator/courseManagement/course.json',
+                    "url": 'http://xlab.rainlf.com:8080/course/all',
                     "type": 'GET',
                     beforeSend: function(xhr) {
                         // xhr.setRequestHeader('access_token', '1504751421487');

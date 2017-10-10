@@ -28,13 +28,13 @@
                 },
                 //数据源
                 ajax: {
-                    "url": reqUrl + 'administrator/classManagement/test.json',
+                    "url": 'http://xlab.rainlf.com:8080/class/all',
                     "type": 'GET',
                     beforeSend: function(xhr) {
                         // xhr.setRequestHeader('access_token', '1504751421487');
                     },
                     "dataSrc": function(data) {
-
+                        console.log(data);
                         // data.data.map(function(item) {
 
                         //     console.log(item);
@@ -51,11 +51,12 @@
                 },
                 //设置列显示的值的 键名
                 columns: [
+                    { data: 'classId' },
                     { data: 'className' },
                     { data: 'courseName' },
-                    { data: 'semester' },
+                    { data: 'term' },
                     { data: 'teacherName' },
-                    { data: 'teacherEmail' },
+                    { data: 'teacherMail' },
                     { data: 'studentNum' },
 
                     // { data: 'brand' },
