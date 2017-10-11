@@ -9,7 +9,9 @@
 
     function MainController($scope, $timeout) {
 
-
+        $scope.play = function() {
+            $('video')[0].play();
+        }
 
         $scope.courses = [{
             id: "1",

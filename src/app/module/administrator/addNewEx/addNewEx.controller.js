@@ -73,7 +73,13 @@
 
     function addNewExCtrl($scope, $timeout, $uibModal) {
 
+        $scope.$on("$destroy", function() {
 
+            $('.menuFooter').show()
+
+            $('.footer').css({ 'position': '', 'bottom': "none" })
+
+        })
 
         $timeout(function() {
             $('.menuFooter').hide()
@@ -106,7 +112,7 @@
                 case 1:
                     $timeout(function() {
                         var testEditor = editormd("test-editormd", {
-                            path: 'lib/',
+                            path: 'markdownLib/',
                             height: 600,
                             emoji: true
                         });
