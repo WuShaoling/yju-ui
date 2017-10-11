@@ -28,6 +28,8 @@
             moduleName: "课程名称",
             moduleContent: [{
                 id: "123",
+                classId: 1,
+                className: "1班",
                 courseName: "R语言编程基础实验",
                 courseDes: "描述",
                 teacherName: "王老师",
@@ -36,6 +38,8 @@
                 completed: 0
             }, {
                 id: "123",
+                classId: 1,
+                className: "2班",
                 courseName: "R语言统计建模与分析基础实验",
                 courseDes: "描述",
                 teacherName: "王老师",
@@ -44,6 +48,8 @@
                 completed: 0
             }, {
                 id: "123",
+                classId: 1,
+                className: "3班",
                 courseName: "Python语言编程基础实验",
                 courseDes: "描述",
                 teacherName: "王老师",
