@@ -15,36 +15,36 @@
 
         $scope.courses = [{
             id: "1",
-            image: "img/home/course/course-img1.jpg",
+            image: "img/hadoop.jpg",
             duration: "1h20min",
-            name: "python语言与数据分析",
+            name: "Hadoop + Spark的安装与示例",
             teacher: "Jasper",
             studentNum: "1100",
             price: "70",
             originPrice: "100"
         }, {
             id: "2",
-            image: "img/home/course/course-img2.jpg",
+            image: "img/spss.jpg",
             duration: "1h20min",
-            name: "R语言与数据分析",
+            name: "SPSS统计分析与实践",
             teacher: "Jane",
             studentNum: "3000",
             price: "80",
             originPrice: "120"
         }, {
             id: "3",
-            image: "img/home/course/course-img3.jpg",
+            image: "img/python.jpg",
             duration: "1h20min",
-            name: "大数据与数据分析",
+            name: "Python大数据分析",
             teacher: "JUny1",
             studentNum: "200",
             price: "90",
             originPrice: "1300"
         }, {
             id: "4",
-            image: "img/home/course/course-img4.jpg",
+            image: "img/bigData.jpg",
             duration: "2h20min",
-            name: "python语言与数据分析",
+            name: "大数据原理与实践",
             teacher: "Raymond",
             studentNum: "2000",
             price: "170",
