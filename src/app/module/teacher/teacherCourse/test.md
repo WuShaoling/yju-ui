@@ -1,70 +1,80 @@
 # 实验目的
 
-掌握R语言中常用的数据集编辑函数，并对数据集进行编辑操作
+掌握R语言中统计作图函数的用法
 
 # 实验原理
 
-R语言可以对数据集进行访问、修改、连接、合并等操作，下面的例子新建一个数据集并对其进行数据编辑
+通过统计作图函数绘制的图标可以直观地反映出数据及统计量地性质及其内在规律，如盒图可以表示多个样本地均值，误差条形图能同时显示下限误差和上限误差，最小二乘拟合曲线图能分析两变量间的关系。
 
 # 实验步骤
 
-新建student数据集，并查看该数据集结构
+常用的统计作图函数列举如下：
+
+| 函数名 | 函数功能 |
+| :--- | :--- |
+| barplot\(\) | 绘制简单条形图 |
+| pie\(\) | 绘制饼图 |
+| hist\(\) | 绘制二维条形直方图，可以显示数据的分配情况 |
+| boxplot\(\) | 绘制箱形图 |
+| plot\(\) | 绘制线性二维图、折线图、散点图 |
+
+## 1、barplot
+
+下面的代码随机生成"a","b","c"三种数据，并绘制饼图
 
 ```
-> student <- data.frame(ID=c(11,12,13),Name=c("Devin","Edward","Wenli"),Gender=c("M","M","F"),Birthdate=c("1984-12-29","1983-5-6","1986-8-8"))
-> str(student)
-'data.frame':    3 obs. of  4 variables:
- $ ID       : num  11 12 13
- $ Name     : Factor w/ 3 levels "Devin","Edward",..: 1 2 3
- $ Gender   : Factor w/ 2 levels "F","M": 2 2 1
- $ Birthdate: Factor w/ 3 levels "1983-5-6","1984-12-29",..: 2 1 3
+> x <- sample(rep(c("a","b","c"),20),50)
+> counts <- table(x)
+> barplot(counts)
 ```
 
-![](https://tjxlab.gitbooks.io/bigdata/content/assets/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_37.png)
+![](https://tjxlab.gitbooks.io/bigdata/content/assets/barplot.jpeg)
 
-更改student数据集中Name和Birthdate数据类型并查看数据结构
+## 2、pie
 
-```
-> student$Name<-as.character(student$Name)
-> student$Birthdate<-as.Date(student$Birthdate)
-> str(student)
-'data.frame':    3 obs. of  4 variables:
- $ ID       : num  11 12 13
- $ Name     : chr  "Devin" "Edward" "Wenli"
- $ Gender   : Factor w/ 2 levels "F","M": 2 2 1
- $ Birthdate: Date, format: "1984-12-29" "1983-05-06" "1986-08-08"
-```
-
-![](https://tjxlab.gitbooks.io/bigdata/content/assets/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_38.png)
-
-利用student中数据列Birthdate计算年龄
+下面的代码利用上面的数据绘制饼图
 
 ```
-> student<-within(student,{
-+     Age<-as.integer(format(Sys.Date(),"%Y"))-as.integer(format(Birthdate,"%Y"))
-+ })
-> student
-  ID   Name Gender  Birthdate Age
-1 11  Devin      M 1984-12-29  33
-2 12 Edward      M 1983-05-06  34
-3 13  Wenli      F 1986-08-08  31
+> pct <- round(counts/sum(counts)*100)
+> lbls <- paste(c("a","b","c"),pct,"%")
+> pie(counts,labels=lbls)
 ```
 
-![](https://tjxlab.gitbooks.io/bigdata/content/assets/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_39.png)
+![](https://tjxlab.gitbooks.io/bigdata/content/assets/pie.jpeg)
 
-下面的代码生成新数据集score，并将score与student进行连接生成新数据集result
+## 3、hist
+
+下面的代码生成100个随机数，绘制直方图并添加密度曲线
 
 ```
-> score<-data.frame(SID=c(11,11,12,12,13),Course=c("Math","English","Math","Chinese","Math"),Score=c(90,80,80,95,96))
-> result<-merge(student,score,by.x="ID",by.y="SID")
-> result
-  ID   Name Gender  Birthdate Age  Course Score
-1 11  Devin      M 1984-12-29  33    Math    90
-2 11  Devin      M 1984-12-29  33 English    80
-3 12 Edward      M 1983-05-06  34    Math    80
-4 12 Edward      M 1983-05-06  34 Chinese    95
-5 13  Wenli      F 1986-08-08  31    Math    96
+> x <- sample(1:999,100)%%100
+> hist(x,freq=FALSE,breaks=7)
+> lines(density(x),col="red")
 ```
 
-![](https://tjxlab.gitbooks.io/bigdata/content/assets/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_40.png)
+![](https://tjxlab.gitbooks.io/bigdata/content/assets/hist.jpeg)
+
+## 4、boxplot
+
+下面的代码生成两组随机数并绘制箱线图
+
+```
+> x1 <- c(rnorm(50,5,2),11,1)
+> x2 <- c(rnorm(50,7,4),10,2)
+> boxplot(x1,x2,notch=TRUE)
+```
+
+![](https://tjxlab.gitbooks.io/bigdata/content/assets/boxplot.jpeg)
+
+## 5、plot
+
+下面的代码使用plot\(\)函数绘制正弦函数曲线
+
+```
+> x <- seq(from=0,to=2*pi,length=100)
+> y <- sin(x)
+> plot(x,y,type="l")
+```
+
+![](https://tjxlab.gitbooks.io/bigdata/content/assets/plot.jpeg)
 

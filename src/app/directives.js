@@ -26,11 +26,11 @@ angular.module('phoenix')
 
                     angular.element('#leftNav').toggleClass('mini-navbar');
                     if (angular.element('#leftNav').hasClass('mini-navbar')) {
-                        if (angular.element('#design').hasClass('col-md-9')) {
+                        if (angular.element('#design').hasClass('col-md-8')) {
 
                             // Hide menu in order to smoothly turn on when maximize menu
                             angular.element('#leftNav').hide(500, function() {
-                                angular.element('#design').removeClass('col-md-9');
+                                angular.element('#design').removeClass('col-md-8');
                                 angular.element('#design').addClass('col-md-12');
 
                                 angular.element('#cloudware').css('width', "100%");
@@ -76,7 +76,7 @@ angular.module('phoenix')
 
                         } else {
                             angular.element('#design').removeClass('col-md-12');
-                            angular.element('#design').addClass('col-md-9');
+                            angular.element('#design').addClass('col-md-8');
                             $scope.leftText = "隐藏教程";
                             $scope.leftControl = true;
 
