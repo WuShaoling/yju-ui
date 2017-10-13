@@ -23,9 +23,10 @@
         }
         $scope.flag = true;
         $scope.fullScreenDes = function() {
+            console.log($scope.flag);
             if ($scope.flag) {
                 angular.element('#design').hide(500, function() {
-                    angular.element('#leftNav').removeClass('col-md-3');
+                    angular.element('#leftNav').removeClass('col-md-4');
                     angular.element('#leftNav').addClass('col-md-12');
                     $scope.flag = false;
 
@@ -35,7 +36,7 @@
             } else {
                 angular.element('#design').show(200, function() {
                     angular.element('#leftNav').removeClass('col-md-12');
-                    angular.element('#leftNav').addClass('col-md-3');
+                    angular.element('#leftNav').addClass('col-md-4');
                     $scope.flag = true;
 
                     $scope.$apply();
