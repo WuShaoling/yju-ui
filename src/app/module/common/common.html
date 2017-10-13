@@ -5,16 +5,14 @@
             <div class="container">
                 <ul class="topbar-left">
 
-                    <li class="email-id hidden-xs hidden-sm"><i class="fa fa-building-o"></i>
-                        <a href="javascript:">上海应用技术大学</a>
-                    </li>
+                    <li><i class="fa fa-home"></i><a ui-sref="index.main"> 首页</a></li>
+                    <li ng-repeat="nav in navbar"><i class="{{nav.class}}"></i><a ui-sref="{{nav.url}}"> {{nav.name}}</a></li>
+
                 </ul>
                 <ul class="topbar-right">
 
 
 
-                    <li><i class="fa fa-home"></i><a ui-sref="index.main"> 首页</a></li>
-                    <li ng-repeat="nav in navbar"><i class="{{nav.class}}"></i><a ui-sref="{{nav.url}}"> {{nav.name}}</a></li>
 
                     <li class="dropdown language" ng-if="logined">
                         <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -43,7 +41,7 @@
 
     <div ui-view></div>
 
-    <!-- <div ng-include="'app/module/common/footer.html'"></div> -->
+    <div ng-include="'app/module/common/footer.html'"></div>
 </div>
 
 
