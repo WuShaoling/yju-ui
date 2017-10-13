@@ -1,0 +1,117 @@
+<div class="main_wrapper">
+    <div class="mainContent clearfix">
+
+
+        <div class="container">
+            <!-- <div class="row">
+
+                <div class="col-sm-5 m-b-xs">
+                    <h3>Python语言与数据分析
+                    </h3>
+                </div>
+
+            </div> -->
+            <!-- <hr> -->
+            <div class="row">
+                <div class="col-sm-5 m-b-xs">
+                    <!-- <select class="form-control" ng-model="q" ng-options="item.value as item.label for item in condition" ng-change="change()"></select> -->
+                    <h2>Python语言与数据分析/课程维护
+                    </h2>
+                </div>
+                <div class="col-sm-5 m-b-xs">
+                    <!-- <div data-toggle="buttons" class="btn-group">
+                            <label class="btn btn-sm btn-white"> <input type="radio" id="option1" name="options"> Day </label>
+                            <label class="btn btn-sm btn-white active"> <input type="radio" id="option2" name="options"> Week </label>
+                            <label class="btn btn-sm btn-white"> <input type="radio" id="option3" name="options"> Month </label>
+                        </div> -->
+                </div>
+                <div class="col-sm-2">
+                    <!-- <button type="button" class="btn btn-success " ng-click="addModule()">新增模块</button> -->
+                    <!-- <a type="button" class="badge badge-success pull-right" tooltip-placement="left" uib-tooltip="添加模块" ng-click="addModule()"><i class="fa fa-plus"></i></a> -->
+
+                    <!-- <div class="input-group">
+                            <input type="text" placeholder="Search" class="input-sm form-control">
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-sm btn-success form-control">搜索</button> </div>
+                        </div> -->
+                </div>
+            </div>
+            <hr>
+            <div ng-repeat="item in courseDetail">
+                <div class="row">
+                    <div class="col-sm-5 m-b-xs">
+                        <!-- <select class="form-control" ng-model="q" ng-options="item.value as item.label for item in condition" ng-change="change()"></select> -->
+                        <h3>{{item.moduleName}}
+
+                        </h3>
+                    </div>
+                    <div class="col-sm-5 m-b-xs">
+                        <!-- <div data-toggle="buttons" class="btn-group">
+                                        <label class="btn btn-sm btn-white"> <input type="radio" id="option1" name="options"> Day </label>
+                                        <label class="btn btn-sm btn-white active"> <input type="radio" id="option2" name="options"> Week </label>
+                                        <label class="btn btn-sm btn-white"> <input type="radio" id="option3" name="options"> Month </label>
+                                    </div> -->
+                    </div>
+                    <div class="col-sm-2">
+                        <!-- <a type="button" class="badge badge-danger pull-right" tooltip-placement="left" uib-tooltip="删除课时" ng-click="deleteModule(item)"><i class="fa fa-times"></i></a> -->
+
+                        <!-- <div class="input-group">
+                                        <input type="text" placeholder="Search" class="input-sm form-control">
+                                        <div class="input-group-btn">
+                                            <button type="button" class="btn btn-sm btn-success form-control">搜索</button> </div>
+                                    </div> -->
+                    </div>
+                </div>
+                <hr>
+
+
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+
+                                <th>课程作业</th>
+                                <th>作业名称</th>
+                                <th>作业描述</th>
+                                <!-- <th>Completed</th> -->
+                                <th>授课教师</th>
+                                <th>截止日期</th>
+                                <th>
+                                    <button type="button" class="btn btn-success btn-sm " ng-click="addNewHw(item)">添加作业</button>
+
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="hw in item.moduleHomework track by $index">
+                                <td>{{$index+1}}</td>
+                                <td>{{hw.courseName}}
+                                </td>
+                                <td>{{hw.courseDes}}</td>
+                                <!-- <td><a href=""><i class="fa fa-check text-navy"></i></a></td> -->
+                                <td>{{hw.teacherName}}</td>
+                                <td>{{hw.date}}</td>
+                                <td>
+                                    <!-- <button type="button" class="btn btn-success btn-outline" ng-click="startExp()">查看详情</button> -->
+                                    <button type="button" class="btn btn-success btn-outline" ng-click="edit(hw)" ui-sref="index.cloudware.experiment">查看作业</button>
+                                    <button type="button" class="btn btn-danger btn-outline" ng-click="deleteHw(hw,item.moduleId,$index)">删除作业</button>
+
+                                </td>
+
+
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+                </div>
+
+                <hr>
+            </div>
+
+
+        </div>
+
+
+    </div>
+</div>

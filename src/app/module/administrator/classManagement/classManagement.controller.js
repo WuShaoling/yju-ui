@@ -67,7 +67,7 @@
                     "targets": -1,
                     "data": null,
                     'className': "lsr-body-center",
-                    "defaultContent": "<div class='btn-group'><button class='btn btn-info btn-outline checkClass'>查看</button><button class='btn btn-info btn-outline editClass'>更新选课</button><button class='btn btn-info btn-outline addStudent'>添加学生</button><button class='btn btn-info btn-outline batchAddStudent'>批量导入学生名单</button><button class='btn btn-danger btn-outline deleteClass'>删除班级</button></div>"
+                    "defaultContent": "<div class='btn-group'><button class='btn btn-info btn-outline checkClass'>学生管理</button><button class='btn btn-info btn-outline editClass'>更新选课</button><button class='btn btn-info btn-outline homework'>作业管理</button><button class='btn btn-danger btn-outline deleteClass'>删除班级</button></div>"
                 }],
                 //自定义Button
                 buttons: [{
@@ -108,8 +108,8 @@
         $('#Class tbody').on('click', '.deleteClass', function() {
             deleteClass(classTable.row($(this).parents('tr')).data());
         });
-        $('#Class tbody').on('click', '.addStudent', function() {
-            addStudent(classTable.row($(this).parents('tr')).data());
+        $('#Class tbody').on('click', '.homework', function() {
+            homework(classTable.row($(this).parents('tr')).data());
         });
         $('#Class tbody').on('click', '.addClass', function() {
             addClass(classTable.row($(this).parents('tr')).data());
@@ -132,19 +132,8 @@
             });
         }
 
-        var addStudent = function() {
-            var modalInstance = $uibModal.open({
-                size: "md",
-                templateUrl: 'app/module/modal/addStudentModal.html',
-                controller: 'addStudentCtrl'
-            });
-
-
-            modalInstance.result.then(function(result) {
-
-            }, function(reason) {
-                console.log(reason);
-            });
+        var homework = function(item) {
+            $state.go('index.homeworkManagement')
         }
 
         var editClass = function(item) {

@@ -5,8 +5,8 @@
         .module('phoenix')
         .controller('courseMaintainenceCtrl', courseMaintainenceCtrl)
         .controller('addNewExperimentCtrl', addNewExperimentCtrl)
-        .controller('addNewHomeworkCtrl', addNewHomeworkCtrl)
-        .controller('addNewModuleModalCtrl', addNewModuleModalCtrl);
+
+    .controller('addNewModuleModalCtrl', addNewModuleModalCtrl);
 
 
     addNewModuleModalCtrl.$inject = ['$scope', '$uibModalInstance']
@@ -32,27 +32,7 @@
 
     }
 
-    addNewHomeworkCtrl.$inject = ['$scope', '$uibModalInstance']
 
-    function addNewHomeworkCtrl($scope, $uibModalInstance) {
-        $scope.cancel = function() {
-            $uibModalInstance.dismiss('cancel');
-        }
-        $scope.ok = function() {
-            console.log($scope.course.courseName, $scope.course.courseDes)
-            var newHw = {
-                id: "123",
-                courseName: $scope.course.courseName,
-                courseDes: $scope.course.courseDes,
-                teacherName: "王老师",
-                dueDate: "",
-                date: new Date(),
-                completed: 0
-            }
-            $uibModalInstance.close(newHw);
-        }
-
-    }
     addNewExperimentCtrl.$inject = ['$scope', '$uibModalInstance', '$timeout']
 
     function addNewExperimentCtrl($scope, $uibModalInstance, $timeout) {

@@ -9,7 +9,13 @@
 
     function courseDetail1Ctrl($scope) {
         var vm = this;
-
+        $scope.doEx = function() {
+            if (localStorage['logined'] == "1") {
+                toastr.success("dodododo")
+            } else {
+                $state.go('login');
+            }
+        }
 
         activate();
 

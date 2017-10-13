@@ -157,6 +157,11 @@
                 templateUrl: "app/module/administrator/courseMaintainence/courseMaintainence.html",
                 controller: "courseMaintainenceCtrl"
             })
+            .state('index.homeworkManagement', {
+                url: "/administrator/homeworkManagement",
+                templateUrl: "app/module/administrator/homeworkManagement/homeworkManagement.html",
+                controller: "homeworkManagementCtrl"
+            })
             .state('index.adCheckHw', {
                 url: "/administrator/adCheckHw",
 
