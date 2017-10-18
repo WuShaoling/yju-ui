@@ -17,21 +17,22 @@
             <div class="about_inner clearfix">
 
                 <div class="row">
+                    <h1 ng-if="courses.length==0;" style="text-align:center">暂无选课</h1>
                     <div class="col-md-3 col-sm-6 col-xs-6" ng-repeat="course in courses">
                         <div class="imageBox">
                             <div class="productImage clearfix">
-                                <a ui-sref="index.studentCourseDetail"><img src="{{course.image}}" alt="Image"></a>
+                                <a ui-sref="index.studentCourseDetail({classId:course.classId,courseId:course.id})"><img src="{{course.image}}" alt="Image"></a>
                                 <span class="sticker"><i class="fa fa-clock-o" aria-hidden="true"></i>{{course.duration}}</span>
                             </div>
                             <div class="productCaption clearfix">
-                                <h3><a ui-sref="index.studentCourseDetail">{{course.name}}</a></h3>
+                                <h3><a ui-sref="index.studentCourseDetail({classId:course.classId,courseId:course.id})">{{course.name}}</a></h3>
                                 <div class="product-meta">
                                     <span class="author">授课教师 : {{course.teacher}}</span>
                                 </div>
 
                                 <div class="caption-bottom">
                                     <div class="price">
-                                        <span class="offer-price"><a ui-sref="index.studentCourseDetail">查看详情</a></span>
+                                        <span class="offer-price"><a ui-sref="index.studentCourseDetail({classId:course.classId,courseId:course.id})">查看详情</a></span>
 
                                     </div>
                                     <div class="user">

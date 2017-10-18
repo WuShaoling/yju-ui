@@ -36,13 +36,22 @@
             controller: "aboutCtrl"
         })
 
-        .state('index.courseDetail', {
-                url: "/courseDetail",
+        .state('index.files', {
+                url: "/:id",
+                params: { id: null },
+                templateUrl: "app/module/fileManagement/files.html",
+                controller: "FileManagerCtrl as FM"
+            })
+            .state('index.courseDetail', {
+                url: "/courseDetail/:courseId",
+                params: { "courseId": null },
                 templateUrl: "app/module/courseDetail/courseDetail.html",
                 controller: "courseDetailCtrl"
             })
             .state('index.courseDetail1', {
-                url: "/courseDetail1",
+                url: "/courseDetail1/:courseId",
+                params: { "courseId": null },
+
                 templateUrl: "app/module/courseDetail/courseDetail_1.html",
                 controller: "courseDetail1Ctrl"
             })
@@ -66,7 +75,8 @@
                 controller: "studentCourseCtrl"
             })
             .state('index.studentCourseDetail', {
-                url: "/student/course/detail",
+                url: "/student/:classId/course/:courseId/detail",
+                params: { courseId: null, classId: null },
                 templateUrl: "app/module/student/studentCourseDetail/studentCourseDetail.html",
                 controller: "studentCourseDetailCtrl"
             })
@@ -76,12 +86,14 @@
                 controller: "studentStartExperimentCtrl"
             })
             .state('index.studentHomework', {
-                url: "/student/course/homework",
+                url: "/student/:classId/homework",
+                params: { classId: null },
                 templateUrl: "app/module/student/studentHomework/studentHomework.html",
                 controller: "studentHomeworkCtrl"
             })
             .state('index.cloudware.studentDoHomework', {
-                url: "/student/course/homework/detail",
+                url: "/student/homework/:homeworkId/detail",
+                params: { homeworkId: null },
                 templateUrl: "app/module/student/studentDoHomework/studentDoHomework.html",
                 controller: "studentDoHomeworkCtrl"
             })
@@ -107,13 +119,13 @@
                 controller: "teacherCourseManagementCtrl"
             })
             .state('index.homeworkDetail', {
-                url: "/teacher/course/:courseId/homework",
-                params: { courseId: null },
+                url: "/teacher/course/:moduleId/homework",
+                params: { moduleId: null },
                 templateUrl: "app/module/teacher/homeworkDetail/homeworkDetail.html",
                 controller: "homeworkDetailCtrl"
             })
             .state('index.cloudware.checkHomework', {
-                url: "/teacher/course/:courseId/homework/:id",
+                url: "/teacher/homework/:id",
                 params: { courseId: null, id: null },
                 templateUrl: "app/module/teacher/checkHomework/checkHomework.html",
                 controller: "checkHomeworkCtrl"
@@ -187,7 +199,7 @@
                 // controller: "mainController"
             });
 
-        $urlRouterProvider.otherwise('/pageNotFound');
+        // $urlRouterProvider.otherwise('/pageNotFound');
     }
 
 })();

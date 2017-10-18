@@ -5,9 +5,9 @@
         .module('phoenix')
         .controller('courseDetail1Ctrl', courseDetail1Ctrl);
 
-    courseDetail1Ctrl.$inject = ['$scope'];
+    courseDetail1Ctrl.$inject = ['$scope', '$stateParams', 'courseSrv'];
 
-    function courseDetail1Ctrl($scope) {
+    function courseDetail1Ctrl($scope, $stateParams, courseSrv) {
         var vm = this;
         $scope.doEx = function() {
             if (localStorage['logined'] == "1") {
@@ -16,11 +16,19 @@
                 $state.go('login');
             }
         }
-
-        activate();
+        courseSrv.getCourseDetail().get({
+            courseId: $stateParams.courseId
+        }).$promise.then(
+            function(response) {
+                toastr.success("get it");
+            },
+            function(error) {
+                toastr.error("not found");
+            }
+        )
 
         ////////////////
 
-        function activate() {}
+
     }
 })();

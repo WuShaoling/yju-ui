@@ -7,7 +7,7 @@
         .controller('checkReportModalCtrl', checkReportModalCtrl)
         .controller('gradeModalCtrl', gradeModalCtrl);
 
-    checkHomeworkCtrl.$inject = ['$scope', '$uibModal'];
+    checkHomeworkCtrl.$inject = ['$scope', '$uibModal', '$stateParams', 'teacherCourseSrv'];
     checkReportModalCtrl.$inject = ['$scope', '$uibModalInstance', '$timeout']
     gradeModalCtrl.$inject = ['$scope', '$uibModalInstance', '$timeout']
 
@@ -31,11 +31,19 @@
         }
     }
 
-    function checkHomeworkCtrl($scope, $uibModal) {
+    function checkHomeworkCtrl($scope, $uibModal, $stateParams, teacherCourseSrv) {
         var vm = this;
 
 
-
+        teacherCourseSrv.getHwDetail().get({
+                id: $stateParams.id
+            },
+            function(response) {
+                console.log(response);
+            },
+            function(error) {
+                console.log(error)
+            })
         $scope.grade = function() {
             var modalInstance = $uibModal.open({
                 // size: "",

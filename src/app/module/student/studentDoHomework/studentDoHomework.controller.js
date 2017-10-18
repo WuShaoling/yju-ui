@@ -6,7 +6,7 @@
         .controller('studentDoHomeworkCtrl', studentDoHomeworkCtrl)
         .controller('uploadReportModalCtrl', uploadReportModalCtrl);
 
-    studentDoHomeworkCtrl.$inject = ['$scope', '$uibModal', '$timeout'];
+    studentDoHomeworkCtrl.$inject = ['$scope', '$uibModal', '$timeout', 'stuCourseSrv', '$stateParams'];
     uploadReportModalCtrl.$inject = ['$scope', '$uibModalInstance', '$timeout']
 
     function uploadReportModalCtrl($scope, $uibModalInstance, $timeout) {
@@ -38,11 +38,21 @@
     }
 
 
-    function studentDoHomeworkCtrl($scope, $uibModal) {
+    function studentDoHomeworkCtrl($scope, $uibModal, $timeout, stuCourseSrv, $stateParams) {
         var vm = this;
         $scope.commitWork = function() {
             toastr.success("提交成功")
         }
+        console.log($stateParams);
+        stuCourseSrv.getHomeworkDetail().get({
+            homeworkId: $stateParams.homeworkId
+        }, function(response) {
+            console.log(response);
+            $scope.detail = response.data
+            console.log($scope.detail)
+        }, function(error) {
+            console.log(error);
+        })
         $scope.uploadReport = function() {
             var modalInstance = $uibModal.open({
                 templateUrl: 'app/module/modal/uploadReportModal.html',

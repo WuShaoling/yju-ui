@@ -1,0 +1,82 @@
+{
+    "data": {
+        "classId": "1",
+        "courseName": "python",
+        "moduleName": "课时1",
+        "moduleId": "123",
+        "homeworks": [{
+            "homeworkName": "作业1",
+            "condition": "",
+            "student": [{
+                "id": "123",
+                "name": "张君义",
+                "studentId": "1352890",
+                "dueDate": "",
+                "date": "Jul 14, 2013",
+                "completed": 0
+            }, {
+                "id": "123",
+                "name": "张君义",
+                "studentId": "1352890",
+                "dueDate": "",
+                "": "Jul 14, 2013",
+                "completed": 1
+            }, {
+                "id": "123",
+                "name": "张君义",
+                "studentId": "1352890",
+                "dueDate": "",
+                "": "Jul 14, 2013",
+                "completed": 1
+            }]
+        }, {
+            "homeworkName": "作业二",
+            "student": [{
+                "id": "123",
+                "name": "张君义",
+                "studentId": "1352890",
+                "dueDate": "",
+                "": "Jul 14, 2013",
+                "completed": 0
+            }, {
+                "id": "123",
+                "name": "张君义",
+                "studentId": "1352890",
+                "dueDate": "",
+                "": "Jul 14, 2013",
+                "completed": 0
+            }, {
+                "id": "123",
+                "name": "张君义",
+                "studentId": "1352890",
+                "dueDate": "",
+                "": "Jul 14, 2013",
+                "completed": 0
+            }]
+        }, {
+            "homeworkName": "作业三",
+            "student": [{
+                "id": "123",
+                "name": "张君义",
+                "studentId": "1352890",
+                "dueDate": "",
+                "": "Jul 14, 2013",
+                "completed": 0
+            }, {
+                "id": "123",
+                "name": "张君义",
+                "studentId": "1352890",
+                "dueDate": "",
+                "": "Jul 14, 2013",
+                "completed": 0
+            }, {
+                "id": "123",
+                "name": "张君义",
+                "studentId": "1352890",
+                "dueDate": "",
+                "": "Jul 14, 2013",
+                "completed": 0
+            }]
+        }]
+    }
+}

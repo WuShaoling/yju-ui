@@ -5,97 +5,36 @@
         .module('phoenix')
         .controller('teacherCourseManagementCtrl', teacherCourseManagementCtrl);
 
-    teacherCourseManagementCtrl.$inject = ['$scope', '$uibModal'];
+    teacherCourseManagementCtrl.$inject = ['$scope', '$uibModal', 'stuCourseSrv', '$stateParams'];
 
-    function teacherCourseManagementCtrl($scope, $uibModal) {
+    function teacherCourseManagementCtrl($scope, $uibModal, stuCourseSrv, $stateParams) {
+        stuCourseSrv.getCourseDetail().get({
+                courseId: $stateParams.courseId
+            },
+            function(response) {
+                console.log(response)
+                $scope.courseContent = response.data;
+                for (var i in $scope.courseContent) {
+                    $scope.condition.push({
+                        label: $scope.courseContent[i].moduleName,
+                        value: $scope.courseContent[i].moduleName
+                    })
+                    $scope.q = $scope.condition[0].value
 
-        $scope.courseContent = [{
-            moduleName: "第一课时",
-            moduleContent: [{
-                id: "123",
-                experimentName: "实验一",
-                experimentDes: "描述",
-                dueDate: "",
-                date: "Jul 14, 2013",
-                completed: 0
-            }, {
-                id: "123",
-                experimentName: "实验一",
-                experimentDes: "描述",
-                dueDate: "",
-                date: "Jul 14, 2013",
-                completed: 0
-            }, {
-                id: "123",
-                experimentName: "实验一",
-                experimentDes: "描述",
-                dueDate: "",
-                date: "Jul 14, 2013",
-                completed: 0
-            }]
-        }, {
-            moduleName: "第二课时",
-            moduleContent: [{
-                id: "123",
-                experimentName: "实验一",
-                experimentDes: "描述",
-                dueDate: "",
-                date: "Jul 14, 2013",
-                completed: 0
-            }, {
-                id: "123",
-                experimentName: "实验一",
-                experimentDes: "描述",
-                dueDate: "",
-                date: "Jul 14, 2013",
-                completed: 0
-            }, {
-                id: "123",
-                experimentName: "实验一",
-                experimentDes: "描述",
-                dueDate: "",
-                date: "Jul 14, 2013",
-                completed: 0
-            }]
-        }, {
-            moduleName: "第三课时",
-            moduleContent: [{
-                id: "123",
-                experimentName: "实验一",
-                experimentDes: "描述",
-                dueDate: "",
-                date: "Jul 14, 2013",
-                completed: 0
-            }, {
-                id: "123",
-                experimentName: "实验一",
-                experimentDes: "描述",
-                dueDate: "",
-                date: "Jul 14, 2013",
-                completed: 0
-            }, {
-                id: "123",
-                experimentName: "实验一",
-                experimentDes: "描述",
-                dueDate: "",
-                date: "Jul 14, 2013",
-                completed: 0
-            }]
-        }];
-
+                }
+            },
+            function(error) {
+                console.log(error);
+            })
+        $scope.courseContent = []
         $scope.condition = [{
             label: "全部",
             value: ""
         }]
 
-        for (var i in $scope.courseContent) {
-            $scope.condition.push({
-                label: $scope.courseContent[i].moduleName,
-                value: $scope.courseContent[i].moduleName
-            })
-        }
 
-        $scope.q = $scope.condition[0].value
+
+
 
     }
 
