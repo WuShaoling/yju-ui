@@ -26,8 +26,8 @@
                 },
                 //数据源
                 ajax: {
-                    'url': 'http://xlab.rainlf.com:8080/user/teacher/all',
-                    // "url": reqUrl + 'administrator/teacherManagement/teacher.json',
+                    // 'url': 'http://xlab.rainlf.com:8080/user/teacher/all',
+                    "url": reqUrl + '/administrator/teacherManagement/teacher.json',
                     "type": 'GET',
                     beforeSend: function(xhr) {
                         // xhr.setRequestHeader('access_token', '1504751421487');

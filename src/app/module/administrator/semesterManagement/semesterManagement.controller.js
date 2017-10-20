@@ -27,7 +27,9 @@
                 },
                 //数据源
                 ajax: {
-                    "url": 'http://xlab.rainlf.com:8080/course/term/all',
+                    // "url": 'http://xlab.rainlf.com:8080/course/term/all',
+                    "url": reqUrl + '/administrator/semesterManagement/semester.json',
+
                     "type": 'GET',
                     beforeSend: function(xhr) {
                         // xhr.setRequestHeader('access_token', '1504751421487');

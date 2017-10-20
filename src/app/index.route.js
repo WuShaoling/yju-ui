@@ -10,7 +10,7 @@
         $stateProvider
 
             .state('index', {
-                url: "",
+                url: "/index",
                 templateUrl: "app/module/common/common.html",
                 controller: "commonCtrl as common"
             })
@@ -18,6 +18,11 @@
                 url: "/login",
                 templateUrl: "app/module/login/login.html",
                 controller: "loginCtrl"
+            })
+            .state('intro', {
+                url: "",
+                templateUrl: "app/module/intro/intro.html",
+                controller: "introCtrl"
             })
             .state('index.main', {
                 url: "/main",
@@ -31,14 +36,20 @@
             })
 
         .state('index.about', {
-            url: "/about",
-            templateUrl: "app/module/about/about.html",
-            controller: "aboutCtrl"
-        })
+                url: "/about",
+                templateUrl: "app/module/about/about.html",
+                controller: "aboutCtrl"
+            })
+            .state('index.notification', {
+                url: "/notification",
+                templateUrl: "app/module/notification/notification.html",
+                controller: "notificationCtrl"
+            })
+
 
         .state('index.files', {
-                url: "/:id",
-                params: { id: null },
+                url: "/files/:id",
+                params: { id: '' },
                 templateUrl: "app/module/fileManagement/files.html",
                 controller: "FileManagerCtrl as FM"
             })

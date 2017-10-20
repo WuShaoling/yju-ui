@@ -28,7 +28,9 @@
                 },
                 //数据源
                 ajax: {
-                    "url": 'http://xlab.rainlf.com:8080/class/all',
+                    // "url": 'http://xlab.rainlf.com:8080/class/all',
+                    "url": reqUrl + '/administrator/classManagement/test.json',
+
                     "type": 'GET',
                     beforeSend: function(xhr) {
                         // xhr.setRequestHeader('access_token', '1504751421487');
@@ -56,7 +58,7 @@
                     { data: 'courseName' },
                     { data: 'term' },
                     { data: 'teacherName' },
-                    { data: 'teacherMail' },
+                    { data: 'teacherEmail' },
                     { data: 'studentNum' },
 
                     // { data: 'brand' },

@@ -216,13 +216,16 @@
                         $('[data-cloudware-env]').each(function(index, el) {
                             var env = $(el).attr('data-cloudware-env')
                             $.ajax({
-                                url: 'http://api.cloudwarehub.com/instances',
+                                url: 'http://api.cloudwarehub.com/services',
+                                headers: { 'secret': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJpYXQiOjE1MDU4MTM0NTd9.Ftw1yHeUrqdNvymFZcIpuEoS0RHBFZqu4MfUZON9Zm0' },
                                 method: 'post',
                                 data: {
-                                    cloudware: env
+                                    cloudware: env,
+                                    user_id: '123'
                                 },
                                 dataType: 'json',
                                 success: function(resp, textStatus, xhr) {
+                                    console.log(el)
                                     start(resp.ws, el)
                                 }
                             });

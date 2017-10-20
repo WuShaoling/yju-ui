@@ -138,6 +138,10 @@
                         name: "我的课程",
                         class: 'fa fa-table',
                         url: 'index.studentCourse'
+                    }, {
+                        name: "我的文件夹",
+                        class: 'fa fa-file',
+                        url: 'index.files({id:' + $scope.user.id + '})'
                     }],
                     role: $scope.user.type //0:student;1:teacher;2:administrator
                 }
