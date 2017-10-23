@@ -16,12 +16,18 @@
 
             <div class="form-group"><label class="col-lg-2 control-label">学期</label>
 
-                <div class="col-lg-10">
+                <!-- <div class="col-lg-10">
                     <select class="form-control" ng-model="semester.semester">
                                 <option value="1" label="第一学期"></option>
                                 <option value="2" label="第二学期"></option>
                                 
                                   </select>
+                </div> -->
+
+                <div class="col-lg-10">
+                    <select class="form-control" ng-model="semester.semester" ng-options="item.value as item.label for item in semesterLabel">
+                            
+                              </select>
                 </div>
             </div>
 

@@ -10,7 +10,7 @@
         <form class="form-horizontal">
             <div class="form-group"><label class="col-lg-2 control-label">编号</label>
 
-                <div class="col-lg-10"><input type="text" placeholder="教师编号" ng-model="teacher.teacherId" class="form-control">
+                <div class="col-lg-10"><input type="text" placeholder="教师编号" ng-model="teacher.teacherNo" class="form-control">
                 </div>
             </div>
             <div class="form-group"><label class="col-lg-2 control-label">姓名</label>
@@ -20,7 +20,10 @@
             </div>
             <div class="form-group"><label class="col-lg-2 control-label">职称</label>
 
-                <div class="col-lg-10"><input type="text" placeholder="教师职称" ng-model="teacher.teacherPosition" class="form-control"></input>
+                <div class="col-lg-10">
+                    <select class="form-control" ng-model="teacher.teacherTitle" ng-options="item.value as item.label for item in title">
+                            
+                              </select>
                 </div>
             </div>
             <div class="form-group"><label class="col-lg-2 control-label">性别</label>

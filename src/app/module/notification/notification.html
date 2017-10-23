@@ -8,12 +8,11 @@
         <!-- ng-class with current state name give you the ability to extended customization your view -->
         <div id="" class="gray-bg {{$state.current.name}}" fit-height>
 
-            <!-- Page wrapper -->
-            <div ng-include="'views/common/topnavbar.html'"></div>
+
 
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
-                    <h2>Outlook view</h2>
+                    <h2>Notices</h2>
                     <ol class="breadcrumb">
                         <li>
                             <a href="index.html">Home</a>
@@ -31,9 +30,9 @@
                 </div>
             </div>
 
-            <div class="fh-breadcrumb">
+            <div class="fh-breadcrumb" style="height: 800px">
 
-                <div class="fh-column">
+                <div class="fh-column" style="overflow:auto;    margin-right: 20px;">
                     <div class="full-height-scroll" full-scroll>
                         <ul class="list-group elements-list">
                             <li class="list-group-item">

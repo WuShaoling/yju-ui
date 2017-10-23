@@ -8,11 +8,11 @@
         .controller('addClassCtrl', addClassCtrl);
 
 
-    classManagementCtrl.$inject = ['$scope', 'reqUrl', '$state', '$uibModal'];
-    editClassCtrl.$inject = ['$scope', '$uibModalInstance', 'classtemp'];
-    addClassCtrl.$inject = ['$scope', '$uibModalInstance'];
+    classManagementCtrl.$inject = ['$scope', 'reqUrl', '$state', '$uibModal', 'classManagementSrv'];
+    editClassCtrl.$inject = ['$scope', '$uibModalInstance', 'classtemp', 'courseManagementSrv', 'semesterSrv', 'classManagementSrv'];
+    addClassCtrl.$inject = ['$scope', '$uibModalInstance', 'courseManagementSrv', 'classManagementSrv', 'semesterSrv'];
 
-    function classManagementCtrl($scope, reqUrl, $state, $uibModal) {
+    function classManagementCtrl($scope, reqUrl, $state, $uibModal, classManagementSrv) {
         var vm = this;
 
         $scope.classList = []
@@ -29,7 +29,7 @@
                 //数据源
                 ajax: {
                     // "url": 'http://xlab.rainlf.com:8080/class/all',
-                    "url": reqUrl + '/administrator/classManagement/test.json',
+                    "url": reqUrl + '/admin/class/all',
 
                     "type": 'GET',
                     beforeSend: function(xhr) {
@@ -48,17 +48,20 @@
                         //     return item;
                         // });
                         // localStorageSrv.log('ajax data:'+JSON.stringify(data));
-                        return data.data;
+                        return data.data.classInfoList;
                     }
                 },
                 //设置列显示的值的 键名
                 columns: [
                     { data: 'classId' },
                     { data: 'className' },
+
                     { data: 'courseName' },
+                    // { data: 'courseDes' },
+
                     { data: 'term' },
                     { data: 'teacherName' },
-                    { data: 'teacherEmail' },
+                    { data: 'teacherContact' },
                     { data: 'studentNum' },
 
                     // { data: 'brand' },
@@ -75,14 +78,14 @@
                 buttons: [{
                         text: '刷新',
                         action: function(e, dt, node, config) {
-                            dt.ajax.reload();
+                            classTable.ajax.reload();
                         }
                     },
                     {
                         text: '新增选课',
                         action: function(e, dt, node, config) {
                             addClass();
-                            dt.ajax.reload();
+
                         }
                     }
                 ],
@@ -116,8 +119,8 @@
         $('#Class tbody').on('click', '.addClass', function() {
             addClass(classTable.row($(this).parents('tr')).data());
         });
-        var checkClass = function() {
-            $state.go('index.classDetail')
+        var checkClass = function(item) {
+            $state.go('index.classDetail', { classId: item.classId })
         }
         var addClass = function() {
             var modalInstance = $uibModal.open({
@@ -128,14 +131,15 @@
 
 
             modalInstance.result.then(function(result) {
+                if (result) {
+                    classTable.ajax.reload();
 
-            }, function(reason) {
-                console.log(reason);
+                }
             });
         }
 
         var homework = function(item) {
-            $state.go('index.homeworkManagement')
+            $state.go('index.homeworkManagement', { classId: item.classId })
         }
 
         var editClass = function(item) {
@@ -150,9 +154,10 @@
 
 
             modalInstance.result.then(function(result) {
+                if (result) {
+                    classTable.ajax.reload();
 
-            }, function(reason) {
-                console.log(reason);
+                }
             });
         }
         var deleteClass = function(item) {
@@ -171,25 +176,34 @@
 
                     if (isConfirm) {
 
-                        swal({
-                            title: "删除成功咯",
-                            // text: "项目【" + projectName + "】已删除咯",
-                            type: "success",
-                            showCancelButton: false,
-                            // confirmButtonColor: "#DD6B55",
-                            confirmButtonText: "确定",
-                            closeOnConfirm: true,
-                            closeOnCancel: true
-                        }, function() {
-                            courseTable.ajax.reload();
-                        });
-                        // toastr.success("删除成功!");
+                        classManagementSrv.deleteclass().save({
+                                classId: item.classId
+                            }, function(response) {
+                                console.log(response);
+                                if (response.errorCode == 0) {
+                                    swal({
+                                        title: "删除成功咯",
+                                        // text: "项目【" + projectName + "】已删除咯",
+                                        type: "success",
+                                        showCancelButton: false,
+                                        // confirmButtonColor: "#DD6B55",
+                                        confirmButtonText: "确定",
+                                        closeOnConfirm: true,
+                                        closeOnCancel: true
+                                    }, function() {
+                                        classTable.ajax.reload();
+                                    });
+                                }
+                            },
+                            function(error) {
+                                toastr.error("删除失败");
+                            })
                     }
                 });
         }
     }
 
-    function addClassCtrl($scope, $uibModalInstance) {
+    function addClassCtrl($scope, $uibModalInstance, courseManagementSrv, classManagementSrv, semesterSrv) {
         $scope.class = {}
 
         $scope.cancel = function() {
@@ -197,37 +211,67 @@
         }
         $scope.ok = function() {
             console.log($scope.class);
-            $uibModalInstance.close();
+            if (!$scope.class.className) {
+                toastr.error("班级名称不能为空");
+                return;
+            }
+            if (!$scope.class.semester) {
+                toastr.error("学期不能为空");
+                return;
+            }
+            if (!$scope.class.course) {
+                toastr.error("课程不能为空");
+                return;
+            }
+            classManagementSrv.addclass().save({
+                "className": $scope.class.className,
+                "courseId": $scope.class.course.id,
+                "termId": $scope.class.semester.id
+            }, function(response) {
+                console.log(response)
+                if (response.errorCode == 0) {
+                    toastr.success("添加成功")
+                    $uibModalInstance.close(1);
+                } else {
+                    toastr.error(response.message)
+
+                }
+            }, function(error) {
+                toastr.error("添加失败")
+
+            })
+
 
         }
-        $scope.people = [
-            { name: '王老师', email: 'adam@email.com', id: 1352980, country: 'United States' },
-            { name: '张老师', email: 'amalie@email.com', id: 1452120, country: 'Argentina' },
-            { name: '邱老师', email: 'estefania@email.com', id: 1131280, country: 'Argentina' },
-            // { name: 'Adrian', email: 'adrian@email.com', id: 21, country: 'Ecuador' },
-            // { name: 'Wladimir', email: 'wladimir@email.com', id: 30, country: 'Ecuador' },
-            // { name: 'Samantha', email: 'samantha@email.com', id: 30, country: 'United States' },
-            // { name: 'Nicole', email: 'nicole@email.com', id: 43, country: 'Colombia' },
-            // { name: 'Natasha', email: 'natasha@email.com', id: 54, country: 'Ecuador' },
-            // { name: 'Michael', email: 'michael@email.com', id: 15, country: 'Colombia' },
-            // { name: 'Nicolás', email: 'nicolas@email.com', id: 43, country: 'Colombia' }
-        ];
-        $scope.semesters = [{
-                label: "2017第一学期",
-                value: "2017第一学期",
+        semesterSrv.getAllSemester().get(function(response) {
+                console.log(response)
+                if (response.errorCode == 0) {
+                    $scope.semesters = response.data.semesterList
+                } else {
+                    toastr.error(response.message)
+
+                }
             },
-            {
-                label: "2017第二学期",
-                value: "2017第二学期",
-            }
-        ]
+            function(error) {
+                toastr.error("获取学期信息失败，请稍后再试")
+            })
+        courseManagementSrv.getAllCourse().get(function(response) {
+                console.log(response)
+                if (response.errorCode == 0) {
+                    $scope.courses = response.data.courseInfoList
+                } else {
+                    toastr.error(response.message)
 
+                }
+            },
+            function(error) {
+                toastr.error("获取课程信息失败，请稍后再试")
+            })
 
-        $scope.person = {}
 
     }
 
-    function editClassCtrl($scope, $uibModalInstance, classtemp) {
+    function editClassCtrl($scope, $uibModalInstance, classtemp, courseManagementSrv, semesterSrv, classManagementSrv) {
         $scope.cancel = function() {
             $uibModalInstance.dismiss('cancel');
         }
@@ -239,44 +283,76 @@
             "value": 1,
         }]
         $scope.class = classtemp;
-        // $scope.class.gender = $scope.gender[1];
+        console.log($scope.class);
+        semesterSrv.getAllSemester().get(function(response) {
+                console.log(response)
+                if (response.errorCode == 0) {
+                    $scope.semesters = response.data.semesterList;
+                    for (var i in $scope.semesters) {
+                        if ($scope.class.term == $scope.semesters[i].description) {
+                            $scope.class.semester = $scope.semesters[i]
+                            break;
+                        }
+                    }
+                } else {
+                    toastr.error("获取学期信息失败，请稍后再试")
 
-        console.log($scope.class)
-        console.log($scope.class.gender);
-        if ($scope.class.gender == "男") {
-            $scope.class.gender = 0
-        } else {
-            $scope.class.gender = 1
-        }
-        $scope.ok = function() {
-            $uibModalInstance.close();
-        }
-
-        $scope.people = [
-            { name: '王老师', email: 'adam@email.com', id: 1352980, country: 'United States' },
-            { name: '张老师', email: 'amalie@email.com', id: 1452120, country: 'Argentina' },
-            { name: '邱老师', email: 'estefania@email.com', id: 1131280, country: 'Argentina' },
-            // { name: 'Adrian', email: 'adrian@email.com', id: 21, country: 'Ecuador' },
-            // { name: 'Wladimir', email: 'wladimir@email.com', id: 30, country: 'Ecuador' },
-            // { name: 'Samantha', email: 'samantha@email.com', id: 30, country: 'United States' },
-            // { name: 'Nicole', email: 'nicole@email.com', id: 43, country: 'Colombia' },
-            // { name: 'Natasha', email: 'natasha@email.com', id: 54, country: 'Ecuador' },
-            // { name: 'Michael', email: 'michael@email.com', id: 15, country: 'Colombia' },
-            // { name: 'Nicolás', email: 'nicolas@email.com', id: 43, country: 'Colombia' }
-        ];
-        $scope.semesters = [{
-                label: "2017第一学期",
-                value: "2017第一学期",
+                }
             },
-            {
-                label: "2017第二学期",
-                value: "2017第二学期",
+            function(error) {
+                toastr.error("获取学期信息失败，请稍后再试")
+            })
+        courseManagementSrv.getAllCourse().get(function(response) {
+                console.log(response)
+                if (response.errorCode == 0) {
+                    $scope.courses = response.data.courseInfoList
+                    for (var i in $scope.courses) {
+                        if ($scope.class.courseId == $scope.courses[i].id) {
+                            $scope.class.course = $scope.courses[i]
+                            break;
+                        }
+                    }
+                } else {
+                    toastr.error("获取课程信息失败，请稍后再试")
+
+                }
+            },
+            function(error) {
+                toastr.error("获取课程信息失败，请稍后再试")
+            })
+        $scope.ok = function() {
+            console.log($scope.class)
+            if (!$scope.class.className) {
+                toastr.error("班级名称不能为空");
+                return;
             }
-        ]
+            if (!$scope.class.semester) {
+                toastr.error("学期不能为空");
+                return;
+            }
+            if (!$scope.class.course) {
+                toastr.error("课程不能为空");
+                return;
+            }
+            classManagementSrv.editclass().save({
+                "classId": $scope.class.classId,
+                "className": $scope.class.className,
+                "courseId": $scope.class.course.id,
+                "termId": $scope.class.semester.id
+            }, function(response) {
+                console.log(response)
+                if (response.errorCode == 0) {
+                    toastr.success("更新成功")
+                    $uibModalInstance.close(1);
+                } else {
+                    toastr.error(response.message)
 
+                }
+            }, function(error) {
+                toastr.error("更新失败")
 
-        $scope.person = {}
-        $scope.person['selected'] = $scope.people[0];
+            })
+        }
 
     }
 })();

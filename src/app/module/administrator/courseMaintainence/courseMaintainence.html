@@ -15,7 +15,7 @@
             <div class="row">
                 <div class="col-sm-5 m-b-xs">
                     <!-- <select class="form-control" ng-model="q" ng-options="item.value as item.label for item in condition" ng-change="change()"></select> -->
-                    <h2>Python语言与数据分析/课程维护
+                    <h2>{{courseDetail.courseName}}/课程维护
                     </h2>
                 </div>
                 <div class="col-sm-5 m-b-xs">
@@ -37,7 +37,7 @@
                 </div>
             </div>
             <hr>
-            <div ng-repeat="item in courseDetail">
+            <div ng-repeat="item in courseDetail.moduleList">
                 <div class="row">
                     <div class="col-sm-5 m-b-xs">
                         <!-- <select class="form-control" ng-model="q" ng-options="item.value as item.label for item in condition" ng-change="change()"></select> -->
@@ -73,7 +73,7 @@
                                 <th>实验名称</th>
                                 <!-- <th>Completed</th> -->
                                 <th>实验描述</th>
-                                <th>授课教师</th>
+                                <th>实验类型</th>
                                 <th>截止日期</th>
                                 <th>
                                     <button type="button" class="btn btn-success btn-sm " ui-sref="index.addNewEx">添加实验</button>
@@ -82,21 +82,21 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="ex in item.moduleExperiment track by $index">
+                            <tr ng-repeat="ex in item.moduleContent track by $index">
                                 <td>{{$index+1}}</td>
-                                <td>{{ex.courseName}}
+                                <td>{{ex.experimentName}}
                                 </td>
-                                <td>{{ex.teacherName}}</td>
+                                <td>{{ex.experimentDes}}</td>
 
-                                <td>{{ex.courseDes}}</td>
+                                <td>{{ex.cloudwareType}}</td>
                                 <!-- <td><a href=""><i class="fa fa-check text-navy"></i></a></td> -->
 
-                                <td>{{ex.date}}</td>
+                                <td>{{ex.dueDate}}</td>
                                 <td>
-                                    <!-- <button type="button" class="btn btn-success btn-outline" ng-click="startExp()">查看详情</button> -->
+                                    <!-- <button type="button" class="btn btn-success btn-outline btn-sm" ng-click="startExp()">查看详情</button> -->
                                     <div class="btn-group">
-                                        <button type="button" class="btn btn-success btn-outline" ng-click="checkEx(ex)" ui-sref="index.cloudware.experiment">查看实验</button>
-                                        <button type="button" class="btn btn-danger btn-outline" ng-click="deleteEx(ex,item.moduleId,$index)">删除实验</button>
+                                        <button type="button" class="btn btn-success btn-outline btn-sm" ng-click="checkEx(ex)" ui-sref="index.cloudware.experiment">查看实验</button>
+                                        <button type="button" class="btn btn-danger btn-outline btn-sm" ng-click="deleteEx(ex,item.moduleId,$index)">删除实验</button>
 
                                     </div>
 
@@ -138,8 +138,8 @@
                                 <td>{{hw.date}}</td>
                                 <td>
 
-                                    <button type="button" class="btn btn-success btn-outline" ng-click="edit(hw)" ui-sref="index.cloudware.experiment">查看作业</button>
-                                    <button type="button" class="btn btn-danger btn-outline" ng-click="deleteHw(hw,item.moduleId,$index)">删除作业</button>
+                                    <button type="button" class="btn btn-success btn-outline btn-sm" ng-click="edit(hw)" ui-sref="index.cloudware.experiment">查看作业</button>
+                                    <button type="button" class="btn btn-danger btn-outline btn-sm" ng-click="deleteHw(hw,item.moduleId,$index)">删除作业</button>
 
                                 </td>
 
@@ -151,7 +151,7 @@
 
                 </div> -->
 
-                <hr>
+
             </div>
 
 

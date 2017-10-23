@@ -7,11 +7,11 @@
         .controller('addTeacherCtrl', addTeacherCtrl)
         .controller('editTeacherCtrl', editTeacherCtrl);
 
-    teacherManagementCtrl.$inject = ['$scope', 'reqUrl', '$uibModal'];
-    addTeacherCtrl.$inject = ['$scope', '$uibModalInstance'];
-    editTeacherCtrl.$inject = ['$scope', '$uibModalInstance', 'teacher'];
+    teacherManagementCtrl.$inject = ['$scope', 'reqUrl', '$uibModal', 'teacherManageSrv', 'commonSrv'];
+    addTeacherCtrl.$inject = ['$scope', '$uibModalInstance', 'teacherManageSrv'];
+    editTeacherCtrl.$inject = ['$scope', '$uibModalInstance', 'teacher', 'teacherManageSrv'];
 
-    function teacherManagementCtrl($scope, reqUrl, $uibModal) {
+    function teacherManagementCtrl($scope, reqUrl, $uibModal, teacherManageSrv, commonSrv) {
         var vm = this;
 
 
@@ -27,33 +27,25 @@
                 //数据源
                 ajax: {
                     // 'url': 'http://xlab.rainlf.com:8080/user/teacher/all',
-                    "url": reqUrl + '/administrator/teacherManagement/teacher.json',
+                    "url": reqUrl + '/admin/teacher/all',
                     "type": 'GET',
                     beforeSend: function(xhr) {
                         // xhr.setRequestHeader('access_token', '1504751421487');
                     },
                     "dataSrc": function(data) {
 
-                        data.data.map(function(item) {
-
-                            if (item.gender == 0) {
-                                item.gender = "男"
-                            } else {
-                                item.gender = "女"
-                            }
-                            return item;
-                        });
-                        // localStorageSrv.log('ajax data:'+JSON.stringify(data));
-                        return data.data;
+                        console.log(data)
+                            // localStorageSrv.log('ajax data:'+JSON.stringify(data));
+                        return data.data.teacherInfoList;
                     }
                 },
                 //设置列显示的值的 键名
                 columns: [
-                    { data: 'teacherId' },
+                    { data: 'teacherNo' },
 
                     { data: 'teacherName' },
 
-                    { data: 'teacherPosition' },
+                    { data: 'teacherTitle' },
                     { data: 'gender' },
                     { data: 'teacherContact' },
                     // { data: 'studentNum' },
@@ -125,8 +117,11 @@
 
 
             modalInstance.result.then(function(result) {
-                console.log(result);
 
+                if (result) {
+                    teacherTable.ajax.reload();
+
+                }
             }, function(reason) {
                 console.log(reason);
             });
@@ -148,19 +143,34 @@
                 function(isConfirm) {
 
                     if (isConfirm) {
+                        console.log(item)
+                        teacherManageSrv.deleteTeacher().save({
+                            "teacherId": item.id
+                        }, function(response) {
+                            console.log(response)
+                            if (response.errorCode == 0) {
+                                swal({
+                                    title: "删除成功咯",
+                                    // text: "项目【" + projectName + "】已删除咯",
+                                    type: "success",
+                                    showCancelButton: false,
+                                    // confirmButtonColor: "#DD6B55",
+                                    confirmButtonText: "确定",
+                                    closeOnConfirm: true,
+                                    closeOnCancel: true
+                                }, function() {
+                                    teacherTable.ajax.reload();
+                                });
+                            } else {
+                                toastr.error(response.message);
 
-                        swal({
-                            title: "删除成功咯",
-                            // text: "项目【" + projectName + "】已删除咯",
-                            type: "success",
-                            showCancelButton: false,
-                            // confirmButtonColor: "#DD6B55",
-                            confirmButtonText: "确定",
-                            closeOnConfirm: true,
-                            closeOnCancel: true
-                        }, function() {
-                            teacherTable.ajax.reload();
-                        });
+                            }
+                        }, function(error) {
+                            console.log(error);
+                            toastr.error("删除失败，请稍后再试！");
+
+                        })
+
                         // toastr.success("删除成功!");
                     }
                 });
@@ -170,7 +180,7 @@
 
             swal({
                     title: "确定要重置吗？",
-                    text: "编号为" + item.teacherId + "的教师密码将被重置为【222222】",
+                    text: "编号为" + item.teacherNo + "的教师密码将被重置为【12345678】",
                     type: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#DD6B55",
@@ -182,19 +192,32 @@
                 function(isConfirm) {
 
                     if (isConfirm) {
+                        commonSrv.resetPass().save({
+                                userId: item.id
+                            }, function(response) {
+                                console.log(response)
+                                if (response.errorCode == 0) {
+                                    swal({
+                                        title: "重置成功咯",
+                                        // text: "项目【" + projectName + "】已删除咯",
+                                        type: "success",
+                                        showCancelButton: false,
+                                        // confirmButtonColor: "#DD6B55",
+                                        confirmButtonText: "确定",
+                                        closeOnConfirm: true,
+                                        closeOnCancel: true
+                                    }, function() {
 
-                        swal({
-                            title: "重置成功咯",
-                            // text: "项目【" + projectName + "】已删除咯",
-                            type: "success",
-                            showCancelButton: false,
-                            // confirmButtonColor: "#DD6B55",
-                            confirmButtonText: "确定",
-                            closeOnConfirm: true,
-                            closeOnCancel: true
-                        }, function() {
+                                    });
+                                } else {
+                                    toastr.error(response.message);
 
-                        });
+                                }
+                            },
+                            function() {
+                                toastr.error("重置失败")
+                            })
+
                         // toastr.success("删除成功!");
                     }
                 });
@@ -208,7 +231,10 @@
 
 
             modalInstance.result.then(function(result) {
+                if (result) {
+                    teacherTable.ajax.reload();
 
+                }
             }, function(reason) {
                 console.log(reason);
             });
@@ -216,49 +242,144 @@
     }
 
 
-    function addTeacherCtrl($scope, $uibModalInstance) {
+    function addTeacherCtrl($scope, $uibModalInstance, teacherManageSrv) {
         $scope.teacher = {}
         $scope.gender = [{
             label: "男",
-            value: 0,
+            value: 1,
         }, {
             label: "女",
-            value: 1,
+            value: 2,
         }]
+        $scope.title = [{
+            label: "教授",
+            value: 1,
+        }, {
+            label: "副教授",
+            value: 2,
+        }, {
+            label: "讲师",
+            value: 3,
+        }]
+        $scope.teacher.gender = 1;
+        $scope.teacher.title = 1;
         $scope.cancel = function() {
             $uibModalInstance.dismiss('cancel');
         }
         $scope.ok = function() {
             console.log($scope.teacher);
-            $uibModalInstance.close();
+
+            if (!$scope.teacher.id) {
+                toastr.error("教师编号不能为空");
+                return;
+            }
+            if (!$scope.teacher.name) {
+                toastr.error("教师名字不能为空");
+                return;
+            }
+            if (!$scope.teacher.contact) {
+                toastr.error("教师联系方式不能为空");
+                return;
+            }
+            teacherManageSrv.addNewTeacher().save({
+                    "gender": $scope.teacher.gender,
+                    "teacherContact": $scope.teacher.contact,
+                    "teacherName": $scope.teacher.name,
+                    "teacherNo": $scope.teacher.id,
+                    "teacherTitleId": $scope.teacher.title
+                }, function(response) {
+                    console.log(response)
+                    if (response.errorCode === 0) {
+                        toastr.success('添加成功');
+                        $uibModalInstance.close(1);
+                    } else {
+                        toastr.error(response.message);
+                    }
+
+                },
+                function(error) {
+                    console.log(error);
+                    toastr.error('添加失败');
+
+                })
 
         }
 
     }
 
-    function editTeacherCtrl($scope, $uibModalInstance, teacher) {
+    function editTeacherCtrl($scope, $uibModalInstance, teacher, teacherManageSrv) {
         $scope.cancel = function() {
             $uibModalInstance.dismiss('cancel');
         }
         $scope.gender = [{
             "label": "男",
-            "value": 0,
+            "value": 1,
         }, {
             "label": "女",
+            "value": 2,
+        }]
+        $scope.title = [{
+            "label": "教授",
             "value": 1,
+        }, {
+            "label": "副教授",
+            "value": 2,
+        }, {
+            "label": "讲师",
+            "value": 3,
         }]
         $scope.teacher = teacher;
+        for (var i in $scope.title) {
+            if ($scope.teacher.teacherTitle == $scope.title[i].label) {
+                $scope.teacher.teacherTitle = $scope.title[i].value;
+            }
+        }
         // $scope.teacher.gender = $scope.gender[1];
 
         console.log($scope.teacher)
         console.log($scope.teacher.gender);
         if ($scope.teacher.gender == "男") {
-            $scope.teacher.gender = 0
-        } else {
             $scope.teacher.gender = 1
+        } else {
+            $scope.teacher.gender = 2
         }
         $scope.ok = function() {
-            $uibModalInstance.close();
+            console.log($scope.teacher);
+            if (!$scope.teacher.teacherNo) {
+                toastr.error("教师编号不能为空");
+                return;
+            }
+            if (!$scope.teacher.teacherName) {
+                toastr.error("教师名字不能为空");
+                return;
+            }
+            if (!$scope.teacher.teacherContact) {
+                toastr.error("教师联系方式不能为空");
+                return;
+            }
+            teacherManageSrv.editTeacher().save({
+                    "id": $scope.teacher.id,
+                    "gender": $scope.teacher.gender,
+                    "teacherContact": $scope.teacher.teacherContact,
+                    "teacherName": $scope.teacher.teacherName,
+                    "teacherNo": $scope.teacher.teacherNo,
+                    "teacherTitleId": $scope.teacher.teacherTitle
+                }, function(response) {
+                    console.log(response)
+                    if (response.errorCode === 0) {
+                        toastr.success('更新成功');
+                        $uibModalInstance.close(1);
+                    } else {
+                        toastr.error(response.message);
+                    }
+
+                },
+                function(error) {
+                    console.log(error);
+                    toastr.error('更新失败');
+
+                })
+
         }
     }
 

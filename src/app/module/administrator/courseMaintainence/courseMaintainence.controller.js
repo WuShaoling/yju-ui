@@ -9,9 +9,9 @@
     .controller('addNewModuleModalCtrl', addNewModuleModalCtrl);
 
 
-    addNewModuleModalCtrl.$inject = ['$scope', '$uibModalInstance']
+    addNewModuleModalCtrl.$inject = ['$scope', '$uibModalInstance', 'courseManagementSrv', '$stateParams']
 
-    function addNewModuleModalCtrl($scope, $uibModalInstance) {
+    function addNewModuleModalCtrl($scope, $uibModalInstance, courseManagementSrv, $stateParams) {
         $scope.cancel = function() {
             $uibModalInstance.dismiss('cancel');
         }
@@ -21,21 +21,34 @@
                 toastr.error("请输入模块名称！")
                 return
             }
-            var newModule = {
-                moduleId: 5,
-                moduleName: $scope.moduleName,
-                moduleExperiment: [],
-                moduleHomework: []
-            }
-            $uibModalInstance.close(newModule);
+            courseManagementSrv.addModule().save({
+                "courseId": $stateParams.courseId,
+                "name": $scope.moduleName
+            }, function(response) {
+                console.log(response);
+                if (response.errorCode == 0) {
+                    toastr.success("添加成功");
+                    var newModule = {
+                        moduleName: $scope.moduleName,
+                        moduleId: response.data,
+                        moduleContent: [],
+                    }
+                    $uibModalInstance.close(newModule);
+                } else {
+                    toastr.error(response.message)
+                }
+            }, function(error) {
+                toastr.error("添加失败，请稍后再试");
+            })
+
         }
 
     }
 
 
-    addNewExperimentCtrl.$inject = ['$scope', '$uibModalInstance', '$timeout']
+    addNewExperimentCtrl.$inject = ['$scope', '$uibModalInstance', '$timeout', 'courseManagementSrv']
 
-    function addNewExperimentCtrl($scope, $uibModalInstance, $timeout) {
+    function addNewExperimentCtrl($scope, $uibModalInstance, $timeout, courseManagementSrv) {
         var converter = new showdown.Converter();
         $scope.change = function(tab) {
             switch (tab) {
@@ -90,12 +103,25 @@
 
     }
 
-    courseMaintainenceCtrl.$inject = ['$scope', '$uibModal'];
+    courseMaintainenceCtrl.$inject = ['$scope', '$uibModal', 'courseManagementSrv', '$stateParams'];
 
-    function courseMaintainenceCtrl($scope, $uibModal) {
+    function courseMaintainenceCtrl($scope, $uibModal, courseManagementSrv, $stateParams) {
 
+        courseManagementSrv.getCourseDetail().get({
+                courseId: $stateParams.courseId
+            }, function(response) {
+                console.log(response);
+                if (response.errorCode == 0) {
+                    $scope.courseDetail = response.data
 
-        var vm = this;
+                } else {
+                    toastr.error(response.message)
+                }
+            },
+            function(error) {
+                toastr.error("获取课程详情失败，请稍后再试")
+            })
+
         $scope.addModule = function() {
             var modalInstance = $uibModal.open({
 
@@ -106,8 +132,7 @@
 
             modalInstance.result.then(function(result) {
                 console.log(result);
-                $scope.courseDetail.push(result)
-
+                $scope.courseDetail.moduleList.push(result)
             });
         }
         $scope.addNewEx = function(item) {
@@ -146,24 +171,37 @@
                 function(isConfirm) {
 
                     if (isConfirm) {
-                        for (var i in $scope.courseDetail) {
-                            if (item.moduleId == $scope.courseDetail[i].moduleId) {
-                                $scope.courseDetail.splice(i, 1);
-                                $scope.$apply()
-                                break
-                            }
-                        }
-                        swal({
-                            title: "删除成功咯",
-                            // text: "项目【" + projectName + "】已删除咯",
-                            type: "success",
-                            showCancelButton: false,
-                            // confirmButtonColor: "#DD6B55",
-                            confirmButtonText: "确定",
-                            closeOnConfirm: true,
-                            closeOnCancel: true
-                        }, function() {});
-                        // toastr.success("删除成功!");
+                        courseManagementSrv.deleteModule().save({
+                                "moduleId": item.moduleId
+                            }, function(response) {
+                                if (response.errorCode == 0) {
+                                    for (var i in $scope.courseDetail.moduleList) {
+                                        if (item.moduleId == $scope.courseDetail.moduleList[i].moduleId) {
+                                            $scope.courseDetail.moduleList.splice(i, 1);
+                                            break
+                                        }
+                                    }
+                                    swal({
+                                        title: "删除成功咯",
+                                        // text: "项目【" + projectName + "】已删除咯",
+                                        type: "success",
+                                        showCancelButton: false,
+                                        // confirmButtonColor: "#DD6B55",
+                                        confirmButtonText: "确定",
+                                        closeOnConfirm: true,
+                                        closeOnCancel: true
+                                    }, function() {
+
+                                    });
+                                } else {
+                                    toastr.error(response.message)
+                                }
+                            },
+                            function(error) {
+                                toastr.error("删除失败");
+                            })
+
+
                     }
                 });
         }
@@ -264,113 +302,6 @@
                     }
                 });
         }
-        $scope.courseDetail = [{
-            moduleId: 0,
-            moduleName: "课时1",
-            moduleExperiment: [{
-                id: "123",
-                courseName: "R语言编程基础实验",
-                courseDes: "描述",
-                teacherName: "王老师",
-                dueDate: "",
-                date: "Jul 14, 2013",
-                completed: 0
-            }, {
-                id: "123",
-                courseName: "R语言统计建模与分析基础实验",
-                courseDes: "描述",
-                teacherName: "王老师",
-                dueDate: "",
-                date: "Jul 14, 2013",
-                completed: 0
-            }, {
-                id: "123",
-                courseName: "Python语言编程基础实验",
-                courseDes: "描述",
-                teacherName: "王老师",
-                dueDate: "",
-                date: "Jul 14, 2013",
-                completed: 0
-            }],
-            moduleHomework: [{
-                id: "123",
-                courseName: "R语言编程基础实验",
-                courseDes: "描述",
-                teacherName: "王老师",
-                dueDate: "",
-                date: "Jul 14, 2013",
-                completed: 0
-            }, {
-                id: "123",
-                courseName: "R语言统计建模与分析基础实验",
-                courseDes: "描述",
-                teacherName: "王老师",
-                dueDate: "",
-                date: "Jul 14, 2013",
-                completed: 0
-            }, {
-                id: "123",
-                courseName: "Python语言编程基础实验",
-                courseDes: "描述",
-                teacherName: "王老师",
-                dueDate: "",
-                date: "Jul 14, 2013",
-                completed: 0
-            }]
-        }, {
-            moduleId: 1,
-            moduleName: "课时2",
-            moduleExperiment: [{
-                id: "123",
-                courseName: "R语言编程基础实验",
-                courseDes: "描述",
-                teacherName: "王老师",
-                dueDate: "",
-                date: "Jul 14, 2013",
-                completed: 0
-            }, {
-                id: "123",
-                courseName: "R语言统计建模与分析基础实验",
-                courseDes: "描述",
-                teacherName: "王老师",
-                dueDate: "",
-                date: "Jul 14, 2013",
-                completed: 0
-            }, {
-                id: "123",
-                courseName: "Python语言编程基础实验",
-                courseDes: "描述",
-                teacherName: "王老师",
-                dueDate: "",
-                date: "Jul 14, 2013",
-                completed: 0
-            }],
-            moduleHomework: [{
-                id: "123",
-                courseName: "R语言编程基础实验",
-                courseDes: "描述",
-                teacherName: "王老师",
-                dueDate: "",
-                date: "Jul 14, 2013",
-                completed: 0
-            }, {
-                id: "123",
-                courseName: "R语言统计建模与分析基础实验",
-                courseDes: "描述",
-                teacherName: "王老师",
-                dueDate: "",
-                date: "Jul 14, 2013",
-                completed: 0
-            }, {
-                id: "123",
-                courseName: "Python语言编程基础实验",
-                courseDes: "描述",
-                teacherName: "王老师",
-                dueDate: "",
-                date: "Jul 14, 2013",
-                completed: 0
-            }]
-        }]
 
     }
 })();

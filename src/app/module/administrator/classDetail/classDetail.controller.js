@@ -7,12 +7,12 @@
         .controller('editStudentCtrl', editStudentCtrl)
         .controller('addStudentCtrl', addStudentCtrl);
 
-    classDetailCtrl.$inject = ['$scope', 'reqUrl', '$uibModal'];
-    addStudentCtrl.$inject = ['$scope', '$uibModalInstance'];
-    editStudentCtrl.$inject = ['$scope', '$uibModalInstance', 'student'];
+    classDetailCtrl.$inject = ['$scope', 'reqUrl', '$uibModal', '$stateParams', 'commonSrv', 'classManagementSrv'];
+    addStudentCtrl.$inject = ['$scope', '$uibModalInstance', 'classManagementSrv', '$stateParams'];
+    editStudentCtrl.$inject = ['$scope', '$uibModalInstance', 'student', 'classManagementSrv'];
 
-    function classDetailCtrl($scope, reqUrl, $uibModal) {
-        var vm = this;
+    function classDetailCtrl($scope, reqUrl, $uibModal, $stateParams, commonSrv, classManagementSrv) {
+
         var studentTable = $('#Student').DataTable({
                 //控制各个控件的位置
                 dom: "<'row datatable-row'<'col-sm-6'B><'col-sm-6'f>>" +
@@ -24,17 +24,17 @@
                 },
                 //数据源
                 ajax: {
-                    "url": reqUrl + 'administrator/classDetail/student.json',
+                    "url": reqUrl + '/admin/class/' + $stateParams.classId + '/students/all',
                     "type": 'GET',
                     beforeSend: function(xhr) {
                         // xhr.setRequestHeader('access_token', '1504751421487');
                     },
                     "dataSrc": function(data) {
 
-                        data.data.map(function(item) {
+                        data.data.studentList.map(function(item) {
 
-                            console.log(item);
-                            if (item.gender == "1") {
+
+                            if (item.gender == "2") {
                                 item.gender = "女"
                             } else {
                                 item.gender = "男"
@@ -42,14 +42,14 @@
                             return item;
                         });
                         // localStorageSrv.log('ajax data:'+JSON.stringify(data));
-                        return data.data;
+                        return data.data.studentList;
                     }
                 },
                 //设置列显示的值的 键名
                 columns: [
 
-                    { data: 'studentId' },
-                    { data: 'name' },
+                    { data: 'studentNo' },
+                    { data: 'studentName' },
                     { data: 'gender' },
 
 
@@ -60,26 +60,27 @@
                     "targets": -1,
                     "data": null,
                     'className': "lsr-body-center",
-                    "defaultContent": "<div class='btn-group'><button class='btn btn-info btn-outline editStudent'>修改学生信息</button><button class='btn btn-warning btn-outline resetPass'>重置密码</button><button class='btn btn-danger btn-outline deleteStudent'>删除</button></div>"
+                    "defaultContent": "<div class='btn-group'><button class='btn btn-warning btn-outline resetPass'>重置密码</button><button class='btn btn-danger btn-outline deleteStudent'>删除</button></div>"
+
+                    // "defaultContent": "<div class='btn-group'><button class='btn btn-info btn-outline editStudent'>修改学生信息</button><button class='btn btn-warning btn-outline resetPass'>重置密码</button><button class='btn btn-danger btn-outline deleteStudent'>删除</button></div>"
                 }],
                 //自定义Button
                 buttons: [{
                         text: '刷新',
                         action: function(e, dt, node, config) {
-                            dt.ajax.reload();
+                            studentTable.ajax.reload();
                         }
                     },
                     {
                         text: '导入学生名单',
                         action: function(e, dt, node, config) {
                             batchAddStudent();
-                            dt.ajax.reload();
+
                         }
                     }, {
                         text: '添加学生',
                         action: function(e, dt, node, config) {
                             addStudent();
-                            dt.ajax.reload();
                         }
                     }
                 ],
@@ -92,10 +93,10 @@
                 // localStorageSrv.log("json-------------------->" + JSON.stringify(json));
                 //localStorageSrv.log("xhr-------------------->" + JSON.stringify(xhr.status));
                 //angular-http-auth插件无法捕捉datatable内ajax发出请求后回复头中的status，所以这里单独捕捉
-                if (xhr.status == 401) {
-                    // $rootScope.$broadcast('event:auth-loginRequire');
-                    //localStorageSrv.log('401xhr');
-                }
+
+                // $rootScope.$broadcast('event:auth-loginRequire');
+                //localStorageSrv.log('401xhr');
+
             });
 
         $('#Student tbody').on('click', '.editStudent', function() {
@@ -122,12 +123,12 @@
                 }
             });
 
-
             modalInstance.result.then(function(result) {
-                console.log(result);
+                if (result) {
+                    studentTable.ajax.reload();
 
-            }, function(reason) {
-                console.log(reason);
+                }
+
             });
         }
         var addStudent = function() {
@@ -139,9 +140,10 @@
 
 
             modalInstance.result.then(function(result) {
+                if (result) {
+                    studentTable.ajax.reload();
 
-            }, function(reason) {
-                console.log(reason);
+                }
             });
         }
         var resetPass = function(item) {
@@ -149,7 +151,7 @@
 
             swal({
                     title: "确定要重置吗？",
-                    text: "编号为" + item.studentId + "的学生密码将被重置为【222222】",
+                    text: "编号为" + item.studentId + "的学生密码将被重置为【12345678】",
                     type: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#DD6B55",
@@ -162,19 +164,30 @@
 
                     if (isConfirm) {
 
-                        swal({
-                            title: "重置成功咯",
-                            // text: "项目【" + projectName + "】已删除咯",
-                            type: "success",
-                            showCancelButton: false,
-                            // confirmButtonColor: "#DD6B55",
-                            confirmButtonText: "确定",
-                            closeOnConfirm: true,
-                            closeOnCancel: true
-                        }, function() {
+                        commonSrv.resetPass().save({
+                                    userId: item.id
+                                }, function(response) {
+                                    console.log(response)
+                                    if (response.errorCode == 0) {
+                                        swal({
+                                            title: "重置成功咯",
+                                            // text: "项目【" + projectName + "】已删除咯",
+                                            type: "success",
+                                            showCancelButton: false,
+                                            // confirmButtonColor: "#DD6B55",
+                                            confirmButtonText: "确定",
+                                            closeOnConfirm: true,
+                                            closeOnCancel: true
+                                        });
+                                    } else {
+                                        toastr.error(response.message);
 
-                        });
-                        // toastr.success("删除成功!");
+                                    }
+                                },
+                                function(error) {
+                                    toastr.error("重置失败")
+                                })
+                            // toastr.success("删除成功!");
                     }
                 });
         }
@@ -183,7 +196,7 @@
 
             swal({
                     title: "确定要删除吗？",
-                    text: item.studentId + "将被删除",
+                    text: item.studentNo + "将被删除",
                     type: "error",
                     showCancelButton: true,
                     confirmButtonColor: "#DD6B55",
@@ -195,19 +208,30 @@
                 function(isConfirm) {
 
                     if (isConfirm) {
+                        classManagementSrv.deleteStudent().save({
+                            "classId": parseInt($stateParams.classId),
+                            "studentId": item.studentNo
+                        }, function(response) {
+                            console.log(response)
+                            if (response.errorCode == 0) {
+                                swal({
+                                    title: "删除成功咯",
+                                    // text: "项目【" + projectName + "】已删除咯",
+                                    type: "success",
+                                    showCancelButton: false,
+                                    // confirmButtonColor: "#DD6B55",
+                                    confirmButtonText: "确定",
+                                    closeOnConfirm: true,
+                                    closeOnCancel: true
+                                });
+                            } else {
+                                toastr.error(response.message)
+                            }
+                        }, function(error) {
+                            toastr.error("删除失败，请稍后再试")
+                        })
+                        studentTable.ajax.reload()
 
-                        swal({
-                            title: "删除成功咯",
-                            // text: "项目【" + projectName + "】已删除咯",
-                            type: "success",
-                            showCancelButton: false,
-                            // confirmButtonColor: "#DD6B55",
-                            confirmButtonText: "确定",
-                            closeOnConfirm: true,
-                            closeOnCancel: true
-                        }, function() {
-
-                        });
                         // toastr.success("删除成功!");
                     }
                 });
@@ -215,48 +239,101 @@
     }
 
 
-    function addStudentCtrl($scope, $uibModalInstance) {
+    function addStudentCtrl($scope, $uibModalInstance, classManagementSrv, $stateParams) {
         $scope.student = {}
         $scope.gender = [{
             label: "男",
-            value: 0,
+            value: 1,
         }, {
             label: "女",
-            value: 1,
+            value: 2,
         }]
         $scope.cancel = function() {
             $uibModalInstance.dismiss('cancel');
         }
+        console.log($stateParams)
         $scope.ok = function() {
-            console.log($scope.student);
-            $uibModalInstance.close();
+            console.log($scope.student)
+            classManagementSrv.addStudent().save({
+                "classId": $stateParams.classId,
+                "gender": $scope.student.gender,
+                "override": false,
+                "studentName": $scope.student.name,
+                "studentNo": $scope.student.studentId
+            }, function(response) {
+                console.log(response);
+                if (response.errorCode == 0) {
+                    toastr.success("添加成功");
+                    $uibModalInstance.close(1);
+                } else if (response.errorCode == 29) {
+
+                    swal({
+                            title: "注意",
+                            text: response.message,
+                            type: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#DD6B55",
+                            confirmButtonText: "确定",
+                            closeOnConfirm: true,
+                            cancelButtonText: "取消",
+                            closeOnCancel: true
+                        },
+                        function(isConfirm) {
+
+                            if (isConfirm) {
+                                classManagementSrv.addStudent().save({
+                                    "classId": $stateParams.classId,
+                                    "gender": $scope.student.gender,
+                                    "override": true,
+                                    "studentName": $scope.student.name,
+                                    "studentNo": $scope.student.studentId
+                                }, function(success) {
+                                    console.log(success);
+                                    if (success.errorCode == 0) {
+                                        toastr.success("添加成功");
+                                        $uibModalInstance.close(1);
+                                    } else {
+                                        toastr.error(success.message);
+                                    }
+                                }, function() {
+                                    toastr.error("添加失败")
+                                })
+
+                                // toastr.success("删除成功!");
+                            }
+                        });
+                } else {
+                    toastr.error(response.message);
+                }
+            }, function(error) {
+                toastr.error("添加失败")
+            })
+
 
         }
 
     }
 
-    function editStudentCtrl($scope, $uibModalInstance, student) {
+    function editStudentCtrl($scope, $uibModalInstance, student, classManagementSrv) {
         $scope.cancel = function() {
             $uibModalInstance.dismiss('cancel');
         }
         $scope.gender = [{
             "label": "男",
-            "value": 0,
+            "value": 1,
         }, {
             "label": "女",
-            "value": 1,
+            "value": 2,
         }]
         $scope.student = student;
-        // $scope.student.gender = $scope.gender[1];
 
-        console.log($scope.student)
-        console.log($scope.student.gender);
         if ($scope.student.gender == "男") {
-            $scope.student.gender = 0
-        } else {
             $scope.student.gender = 1
+        } else {
+            $scope.student.gender = 2
         }
         $scope.ok = function() {
+
             $uibModalInstance.close();
         }
     }

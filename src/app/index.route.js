@@ -175,13 +175,14 @@
                 controller: "courseManagementCtrl"
             })
             .state('index.courseMaintainence', {
-                url: "/administrator/courseMaintainence",
-
+                url: "/administrator/:courseId/courseMaintainence",
+                params: { courseId: null },
                 templateUrl: "app/module/administrator/courseMaintainence/courseMaintainence.html",
                 controller: "courseMaintainenceCtrl"
             })
             .state('index.homeworkManagement', {
-                url: "/administrator/homeworkManagement",
+                url: "/administrator/:classId/homeworkManagement",
+                params: { classId: null },
                 templateUrl: "app/module/administrator/homeworkManagement/homeworkManagement.html",
                 controller: "homeworkManagementCtrl"
             })
@@ -198,8 +199,8 @@
                 controller: "adCheckExCtrl"
             })
             .state('index.classDetail', {
-                url: "/administrator/classDetail",
-
+                url: "/administrator/:classId/classDetail",
+                params: { classId: null },
                 templateUrl: "app/module/administrator/classDetail/classDetail.html",
                 controller: "classDetailCtrl"
             })

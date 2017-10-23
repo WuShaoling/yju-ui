@@ -140,7 +140,7 @@
                         url: 'index.studentCourse'
                     }, {
                         name: "我的文件夹",
-                        class: 'fa fa-file',
+                        class: 'fa fa-folder-open-o',
                         url: 'index.files({id:' + $scope.user.id + '})'
                     }],
                     role: $scope.user.type //0:student;1:teacher;2:administrator

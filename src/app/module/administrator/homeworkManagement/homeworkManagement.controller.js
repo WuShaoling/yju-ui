@@ -110,12 +110,27 @@
 
     }
 
-    homeworkManagementCtrl.$inject = ['$scope', '$uibModal'];
 
-    function homeworkManagementCtrl($scope, $uibModal) {
+    homeworkManagementCtrl.$inject = ['$scope', '$uibModal', 'classManagementSrv', '$stateParams'];
+
+    function homeworkManagementCtrl($scope, $uibModal, classManagementSrv, $stateParams) {
+
+        classManagementSrv.getHomework({
+                classId: $stateParams.classId
+            }, function(response) {
+                console.log(response);
+                if (response.errorCode == 0) {
+                    $scope.courseDetail = response.data;
+                } else {
+                    toastr.error(response.message)
+                }
+            },
+            function(error) {
+                console.log("获取作业列表失败，请稍后再试");
+            }
+        )
 
 
-        var vm = this;
         $scope.addModule = function() {
             var modalInstance = $uibModal.open({
 
@@ -284,113 +299,8 @@
                     }
                 });
         }
-        $scope.courseDetail = [{
-            moduleId: 0,
-            moduleName: "课时1",
-            moduleExperiment: [{
-                id: "123",
-                courseName: "R语言编程基础实验",
-                courseDes: "描述",
-                teacherName: "王老师",
-                dueDate: "",
-                date: "Jul 14, 2013",
-                completed: 0
-            }, {
-                id: "123",
-                courseName: "R语言统计建模与分析基础实验",
-                courseDes: "描述",
-                teacherName: "王老师",
-                dueDate: "",
-                date: "Jul 14, 2013",
-                completed: 0
-            }, {
-                id: "123",
-                courseName: "Python语言编程基础实验",
-                courseDes: "描述",
-                teacherName: "王老师",
-                dueDate: "",
-                date: "Jul 14, 2013",
-                completed: 0
-            }],
-            moduleHomework: [{
-                id: "123",
-                courseName: "R语言编程基础实验",
-                courseDes: "描述",
-                teacherName: "王老师",
-                dueDate: "",
-                date: "Jul 14, 2013",
-                completed: 0
-            }, {
-                id: "123",
-                courseName: "R语言统计建模与分析基础实验",
-                courseDes: "描述",
-                teacherName: "王老师",
-                dueDate: "",
-                date: "Jul 14, 2013",
-                completed: 0
-            }, {
-                id: "123",
-                courseName: "Python语言编程基础实验",
-                courseDes: "描述",
-                teacherName: "王老师",
-                dueDate: "",
-                date: "Jul 14, 2013",
-                completed: 0
-            }]
-        }, {
-            moduleId: 1,
-            moduleName: "课时2",
-            moduleExperiment: [{
-                id: "123",
-                courseName: "R语言编程基础实验",
-                courseDes: "描述",
-                teacherName: "王老师",
-                dueDate: "",
-                date: "Jul 14, 2013",
-                completed: 0
-            }, {
-                id: "123",
-                courseName: "R语言统计建模与分析基础实验",
-                courseDes: "描述",
-                teacherName: "王老师",
-                dueDate: "",
-                date: "Jul 14, 2013",
-                completed: 0
-            }, {
-                id: "123",
-                courseName: "Python语言编程基础实验",
-                courseDes: "描述",
-                teacherName: "王老师",
-                dueDate: "",
-                date: "Jul 14, 2013",
-                completed: 0
-            }],
-            moduleHomework: [{
-                id: "123",
-                courseName: "R语言编程基础实验",
-                courseDes: "描述",
-                teacherName: "王老师",
-                dueDate: "",
-                date: "Jul 14, 2013",
-                completed: 0
-            }, {
-                id: "123",
-                courseName: "R语言统计建模与分析基础实验",
-                courseDes: "描述",
-                teacherName: "王老师",
-                dueDate: "",
-                date: "Jul 14, 2013",
-                completed: 0
-            }, {
-                id: "123",
-                courseName: "Python语言编程基础实验",
-                courseDes: "描述",
-                teacherName: "王老师",
-                dueDate: "",
-                date: "Jul 14, 2013",
-                completed: 0
-            }]
-        }]
+
+
 
     }
 })();

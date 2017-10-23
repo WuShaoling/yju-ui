@@ -6,11 +6,11 @@
         .controller('addCourseCtrl', addCourseCtrl)
         .controller('courseManagementCtrl', courseManagementCtrl);
 
-    addCourseCtrl.$inject = ['$scope', '$uibModalInstance'];
+    addCourseCtrl.$inject = ['$scope', '$uibModalInstance', 'teacherManageSrv', 'courseManagementSrv', 'commonSrv'];
 
-    courseManagementCtrl.$inject = ['$scope', 'reqUrl', '$uibModal', '$state'];
+    courseManagementCtrl.$inject = ['$scope', 'reqUrl', '$uibModal', '$state', 'courseManagementSrv'];
 
-    function courseManagementCtrl($scope, reqUrl, $uibModal, $state) {
+    function courseManagementCtrl($scope, reqUrl, $uibModal, $state, courseManagementSrv) {
         var vm = this;
 
         var courseTable = $('#Course').DataTable({
@@ -25,7 +25,7 @@
                 //数据源
                 ajax: {
                     // "url": 'http://xlab.rainlf.com:8080/course/all',
-                    "url": reqUrl + '/administrator/courseManagement/course.json',
+                    "url": reqUrl + '/admin/course/all',
 
                     "type": 'GET',
                     beforeSend: function(xhr) {
@@ -44,18 +44,18 @@
                         //     return item;
                         // });
                         // localStorageSrv.log('ajax data:'+JSON.stringify(data));
-                        return data.data;
+                        return data.data.courseInfoList;
                     }
                 },
                 //设置列显示的值的 键名
                 columns: [
-                    { data: 'courseId' },
+                    { data: 'id' },
 
                     { data: 'courseName' },
 
                     { data: 'courseDes' },
                     { data: 'teacherName' },
-                    { data: 'teacherEmail' },
+                    { data: 'teacherContact' },
                     // { data: 'studentNum' },
 
                     // { data: 'brand' },
@@ -72,14 +72,14 @@
                 buttons: [{
                         text: '刷新',
                         action: function(e, dt, node, config) {
-                            dt.ajax.reload();
+                            courseTable.ajax.reload();
                         }
                     },
                     {
                         text: '新增课程',
                         action: function(e, dt, node, config) {
                             addCourse();
-                            dt.ajax.reload();
+
                         }
                     }
                 ],
@@ -115,15 +115,18 @@
                 controller: addCourseCtrl,
 
             });
-            modalInstance.result.then(function(result) {}, function(reason) {
-                console.log(reason);
+            modalInstance.result.then(function(result) {
+                if (result) {
+                    courseTable.ajax.reload();
+                }
             });
         }
         var courseMaintain = function(item) {
-            $state.go('index.courseMaintainence');
+            $state.go('index.courseMaintainence', { courseId: item.id });
         }
         var deleteCourse = function(item) {
             console.log(item);
+
             swal({
                     title: "确定要删除吗？",
                     text: item.teacherName + "的【" + item.courseName + "】课程将被删除",
@@ -138,52 +141,116 @@
                 function(isConfirm) {
 
                     if (isConfirm) {
+                        courseManagementSrv.deletecourse().save({
+                                id: item.id
+                            }, function(response) {
+                                console.log(response)
+                                if (response.errorCode == 0) {
+                                    swal({
+                                        title: "删除成功咯",
+                                        // text: "项目【" + projectName + "】已删除咯",
+                                        type: "success",
+                                        showCancelButton: false,
+                                        // confirmButtonColor: "#DD6B55",
+                                        confirmButtonText: "确定",
+                                        closeOnConfirm: true,
+                                        closeOnCancel: true
+                                    }, function() {
+                                        courseTable.ajax.reload();
+                                    });
+                                }
+                            },
+                            function(error) {
+                                toastr.error("删除失败");
+                            })
 
-                        swal({
-                            title: "删除成功咯",
-                            // text: "项目【" + projectName + "】已删除咯",
-                            type: "success",
-                            showCancelButton: false,
-                            // confirmButtonColor: "#DD6B55",
-                            confirmButtonText: "确定",
-                            closeOnConfirm: true,
-                            closeOnCancel: true
-                        }, function() {
-                            courseTable.ajax.reload();
-                        });
                         // toastr.success("删除成功!");
                     }
                 });
         }
     }
 
-    function addCourseCtrl($scope, $uibModalInstance) {
+    function addCourseCtrl($scope, $uibModalInstance, teacherManageSrv, courseManagementSrv, commonSrv) {
         $scope.course = {};
-
+        teacherManageSrv.getAllTeachers().get().$promise.then(
+            function(response) {
+                console.log(response);
+                if (response.errorCode == 0) {
+                    $scope.people = response.data.teacherInfoList;
+                } else {
+                    toastr.error(response.message)
+                }
+            },
+            function(error) {
+                console.log("获取教师列表失败，请稍后再试");
+            }
+        )
         $scope.cancel = function() {
             $uibModalInstance.dismiss('cancel');
         }
+        $scope.filename = "上传图片文件"
+        $scope.chooseFile = function() {
+            $('#courseImage').trigger('click');
+        }
+
+        $scope.getFile = function(file) {
+            console.log(file);
+            var fileFormData = new FormData();
+            fileFormData.append(0, file);
+            commonSrv.uploadImage().save({
+                file: fileFormData
+            }, function(response) {
+                console.log(response)
+            }, function(error) {
+                console.log(error);
+                toastr.error("上传失败")
+            })
+            $scope.filename = file.name;
+
+            $scope.$apply()
+        };
         $scope.ok = function() {
             $scope.course.teacher = $scope.person;
             console.log($scope.course);
+            // if (!$scope.course.imageUrl) {
+            //     toastr.error("课程图片不能为空")
+            //     return
+            // }
+            if (!$scope.course.courseName) {
+                toastr.error("课程名称不能为空")
+                return
+            }
+            if (!$scope.course.teacher.selected.id) {
+                toastr.error("授课教师不能为空")
+                return
+            }
+            courseManagementSrv.addcourse().save({
+                "description": $scope.course.courseDes,
+                "imageName": $scope.course.imageName,
+                "imageUrl": $scope.course.imageUrl,
+                "name": $scope.course.courseName,
+                "teacherId": $scope.course.teacher.selected.id
+            }, function(response) {
+                console.log(response)
+                if (response.errorCode == 0) {
+                    toastr.success("添加成功")
+                    $uibModalInstance.close(1);
 
-            $uibModalInstance.close();
+                } else {
+                    toastr.error(response.message)
+
+                }
+            }, function(error) {
+                toastr.error("添加失败")
+
+            })
+            console.log($scope.course);
+
         }
 
 
         $scope.person = {};
-        $scope.people = [
-            { name: '王老师', email: 'adam@email.com', id: 1352980, country: 'United States' },
-            { name: '张老师', email: 'amalie@email.com', id: 1452120, country: 'Argentina' },
-            { name: '邱老师', email: 'estefania@email.com', id: 1131280, country: 'Argentina' },
-            // { name: 'Adrian', email: 'adrian@email.com', id: 21, country: 'Ecuador' },
-            // { name: 'Wladimir', email: 'wladimir@email.com', id: 30, country: 'Ecuador' },
-            // { name: 'Samantha', email: 'samantha@email.com', id: 30, country: 'United States' },
-            // { name: 'Nicole', email: 'nicole@email.com', id: 43, country: 'Colombia' },
-            // { name: 'Natasha', email: 'natasha@email.com', id: 54, country: 'Ecuador' },
-            // { name: 'Michael', email: 'michael@email.com', id: 15, country: 'Colombia' },
-            // { name: 'Nicolás', email: 'nicolas@email.com', id: 43, country: 'Colombia' }
-        ];
+
     }
 
 

@@ -7,11 +7,11 @@
         .controller('editSemesterCtrl', editSemesterCtrl)
         .controller('semesterManagementCtrl', semesterManagementCtrl);
 
-    addSemesterCtrl.$inject = ['$scope', '$uibModalInstance'];
-    editSemesterCtrl.$inject = ['$scope', '$uibModalInstance', 'semester']
-    semesterManagementCtrl.$inject = ['$scope', 'reqUrl', '$uibModal'];
+    addSemesterCtrl.$inject = ['$scope', '$uibModalInstance', 'semesterSrv'];
+    editSemesterCtrl.$inject = ['$scope', '$uibModalInstance', 'semester', 'semesterSrv']
+    semesterManagementCtrl.$inject = ['$scope', 'reqUrl', '$uibModal', 'semesterSrv'];
 
-    function semesterManagementCtrl($scope, reqUrl, $uibModal) {
+    function semesterManagementCtrl($scope, reqUrl, $uibModal, semesterSrv) {
         var vm = this;
 
 
@@ -28,33 +28,23 @@
                 //数据源
                 ajax: {
                     // "url": 'http://xlab.rainlf.com:8080/course/term/all',
-                    "url": reqUrl + '/administrator/semesterManagement/semester.json',
+                    "url": reqUrl + '/admin/semester/all',
 
                     "type": 'GET',
                     beforeSend: function(xhr) {
                         // xhr.setRequestHeader('access_token', '1504751421487');
                     },
                     "dataSrc": function(data) {
-
-                        data.data.map(function(item) {
-
-                            console.log(item);
-
-                            item.semester = "第" + item.semester + "学期"
-
-
-
-                            return item;
-                        });
+                        console.log(data);
                         // localStorageSrv.log('ajax data:'+JSON.stringify(data));
-                        return data.data;
+                        return data.data.semesterList;
                     }
                 },
                 //设置列显示的值的 键名
                 columns: [
-                    { data: 'termId' },
-                    { data: 'semesterYear' },
-                    { data: 'semester' },
+                    { data: 'id' },
+                    { data: 'year' },
+                    { data: 'description' },
 
                     { data: '' }
                 ],
@@ -111,8 +101,12 @@
                 controller: addSemesterCtrl,
 
             });
-            modalInstance.result.then(function(result) {}, function(reason) {
-                console.log(reason);
+            modalInstance.result.then(function(result) {
+
+                if (result) {
+                    semesterTable.ajax.reload();
+
+                }
             });
         }
         var editSemester = function(item) {
@@ -125,15 +119,18 @@
                     semester: function() { return angular.copy(item); }
                 }
             });
-            modalInstance.result.then(function(result) {}, function(reason) {
-                console.log(reason);
+            modalInstance.result.then(function(result) {
+                if (result) {
+                    semesterTable.ajax.reload();
+
+                }
             });
         }
         var deleteSemester = function(item) {
             console.log(item);
             swal({
                     title: "确定要删除吗？",
-                    text: item.semesterYear + item.semester + "将被删除",
+                    text: "【" + item.description + "】" + "将被删除",
                     type: "error",
                     showCancelButton: true,
                     confirmButtonColor: "#DD6B55",
@@ -146,54 +143,128 @@
 
                     if (isConfirm) {
 
-                        swal({
-                            title: "删除成功咯",
-                            // text: "项目【" + projectName + "】已删除咯",
-                            type: "success",
-                            showCancelButton: false,
-                            // confirmButtonColor: "#DD6B55",
-                            confirmButtonText: "确定",
-                            closeOnConfirm: true,
-                            closeOnCancel: true
-                        }, function() {
-                            semesterTable.ajax.reload();
-                        });
-                        // toastr.success("删除成功!");
+                        semesterSrv.deletesemester().save({
+                                "semesterId": item.id
+                            }, function(response) {
+                                console.log(response)
+                                if (response.errorCode == 0) {
+                                    swal({
+                                        title: "删除成功咯",
+                                        // text: "项目【" + projectName + "】已删除咯",
+                                        type: "success",
+                                        showCancelButton: false,
+                                        // confirmButtonColor: "#DD6B55",
+                                        confirmButtonText: "确定",
+                                        closeOnConfirm: true,
+                                        closeOnCancel: true
+                                    }, function() {
+                                        semesterTable.ajax.reload();
+                                    });
+                                } else {
+                                    toastr.error(response.message);
+
+                                }
+                            }, function(error) {
+                                console.log(error);
+                                toastr.error("删除失败，请稍后再试！");
+
+                            })
+                            // toastr.success("删除成功!");
                     }
                 });
         }
     }
 
-    function addSemesterCtrl($scope, $uibModalInstance) {
+    function addSemesterCtrl($scope, $uibModalInstance, semesterSrv) {
         $scope.semester = {};
 
         $scope.cancel = function() {
             $uibModalInstance.dismiss('cancel');
         }
+
+        $scope.semesterLabel = [{
+            "label": "第一学期",
+            "value": 1,
+        }, {
+            "label": "第二学期",
+            "value": 2,
+        }, {
+            "label": "第三学期",
+            "value": 3,
+        }]
+        $scope.semester.semester = 1;
         $scope.ok = function() {
-            console.log($scope.semester);
-            $uibModalInstance.close();
+            if (!$scope.semester.semesterYear) {
+                toastr.error("学年不能为空")
+                return
+            }
+            semesterSrv.addNewSemester().save({
+                    "semester": $scope.semester.semester,
+                    "year": $scope.semester.semesterYear
+
+                }, function(response) {
+                    console.log(response)
+                    if (response.errorCode === 0) {
+                        toastr.success('添加成功');
+                        $uibModalInstance.close(1);
+                    } else {
+                        toastr.error(response.message);
+                    }
+
+                },
+                function(error) {
+                    console.log(error);
+                    toastr.error('添加失败');
+
+                })
+
         }
     }
 
-    function editSemesterCtrl($scope, $uibModalInstance, semester) {
+    function editSemesterCtrl($scope, $uibModalInstance, semester, semesterSrv) {
         $scope.semester = semester;
+
+        $scope.semesterLabel = [{
+            "label": "第一学期",
+            "value": 1,
+        }, {
+            "label": "第二学期",
+            "value": 2,
+        }, {
+            "label": "第三学期",
+            "value": 3,
+        }]
         console.log($scope.semester);
-        if ($scope.semester.semester == "第一学期") {
-            console.log(1)
-            $scope.semester.semester = "1";
-        } else {
-            console.log(2)
 
-            $scope.semester.semester = "2";
-
-        }
         $scope.cancel = function() {
             $uibModalInstance.dismiss('cancel');
         }
         $scope.ok = function() {
-            console.log($scope.semester);
-            $uibModalInstance.close();
+            if (!$scope.semester.year) {
+                toastr.error("学年不能为空")
+                return
+            }
+            semesterSrv.editsemester().save({
+                    "id": $scope.semester.id,
+                    "semester": $scope.semester.semester,
+                    "year": $scope.semester.year
+
+                }, function(response) {
+                    console.log(response)
+                    if (response.errorCode === 0) {
+                        toastr.success('更新成功');
+                        $uibModalInstance.close(1);
+                    } else {
+                        toastr.error(response.message);
+                    }
+
+                },
+                function(error) {
+                    console.log(error);
+                    toastr.error('更新失败');
+
+                })
+
         }
     }
 
