@@ -115,7 +115,7 @@
 
     function homeworkManagementCtrl($scope, $uibModal, classManagementSrv, $stateParams) {
 
-        classManagementSrv.getHomework().save({
+        classManagementSrv.getHomework().get({
             classId: $stateParams.classId
         }).$promise.then(function(response) {
 

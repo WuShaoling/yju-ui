@@ -196,7 +196,7 @@
         $scope.getFile = function(file) {
             console.log(file);
             var fileFormData = new FormData();
-            fileFormData.append(0, file);
+            fileFormData.append('file', file);
             commonSrv.uploadImage().save({
                 file: fileFormData
             }, function(response) {
