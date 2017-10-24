@@ -115,9 +115,10 @@
 
     function homeworkManagementCtrl($scope, $uibModal, classManagementSrv, $stateParams) {
 
-        classManagementSrv.getHomework({
-                classId: $stateParams.classId
-            }, function(response) {
+        classManagementSrv.getHomework().save({
+            classId: $stateParams.classId
+        }).$promise.then(function(response) {
+
                 console.log(response);
                 if (response.errorCode == 0) {
                     $scope.courseDetail = response.data;
@@ -126,7 +127,7 @@
                 }
             },
             function(error) {
-                console.log("获取作业列表失败，请稍后再试");
+                toastr.error("获取作业列表失败，请稍后再试");
             }
         )
 
