@@ -157,8 +157,8 @@
                 controller: "teacherManagementCtrl"
             })
             .state('index.addNewEx', {
-                url: "/administrator/addNewEx",
-
+                url: "/administrator/:moduleId/addNewEx",
+                params: { moduleId: null },
                 templateUrl: "app/module/administrator/addNewEx/addNewEx.html",
                 controller: "addNewExCtrl"
             })

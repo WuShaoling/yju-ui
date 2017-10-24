@@ -15,7 +15,7 @@
             <div class="row">
                 <div class="col-sm-5 m-b-xs">
                     <!-- <select class="form-control" ng-model="q" ng-options="item.value as item.label for item in condition" ng-change="change()"></select> -->
-                    <h2>{{courseDetail.className}}/作业管理
+                    <h2>{{courseDetail.courseName}}/{{courseDetail.className}}/作业管理
                     </h2>
                 </div>
                 <div class="col-sm-5 m-b-xs">
@@ -83,18 +83,18 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="hw in item.moduleHomework track by $index">
+                            <tr ng-repeat="hw in item.homeworks track by $index">
                                 <td>{{$index+1}}</td>
-                                <td>{{hw.courseName}}
+                                <td>{{hw.homeworkName}}
                                 </td>
-                                <td>{{hw.courseDes}}</td>
+                                <td>{{hw.homeworkDes}}</td>
                                 <!-- <td><a href=""><i class="fa fa-check text-navy"></i></a></td> -->
                                 <td>{{hw.teacherName}}</td>
-                                <td>{{hw.date}}</td>
+                                <td>{{hw.homeworkDueDate}}</td>
                                 <td>
                                     <!-- <button type="button" class="btn btn-success btn-outline" ng-click="startExp()">查看详情</button> -->
                                     <button type="button" class="btn btn-success btn-outline" ng-click="edit(hw)" ui-sref="index.cloudware.experiment">查看作业</button>
-                                    <button type="button" class="btn btn-danger btn-outline" ng-click="deleteHw(hw,item.moduleId,$index)">删除作业</button>
+                                    <button type="button" class="btn btn-danger btn-outline" ng-click="deleteHw(hw)">删除作业</button>
 
                                 </td>
 

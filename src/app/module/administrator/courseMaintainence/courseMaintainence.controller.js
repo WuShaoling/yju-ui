@@ -30,7 +30,7 @@
                     toastr.success("添加成功");
                     var newModule = {
                         moduleName: $scope.moduleName,
-                        moduleId: response.data,
+                        moduleId: response.data.moduleId,
                         moduleContent: [],
                     }
                     $uibModalInstance.close(newModule);
@@ -106,27 +106,29 @@
     courseMaintainenceCtrl.$inject = ['$scope', '$uibModal', 'courseManagementSrv', '$stateParams'];
 
     function courseMaintainenceCtrl($scope, $uibModal, courseManagementSrv, $stateParams) {
+        $scope.getEx = function() {
+            courseManagementSrv.getCourseDetail().get({
+                    courseId: $stateParams.courseId
+                }, function(response) {
+                    console.log(response);
+                    if (response.errorCode == 0) {
+                        $scope.courseDetail = response.data
 
-        courseManagementSrv.getCourseDetail().get({
-                courseId: $stateParams.courseId
-            }, function(response) {
-                console.log(response);
-                if (response.errorCode == 0) {
-                    $scope.courseDetail = response.data
-
-                } else {
-                    toastr.error(response.message)
-                }
-            },
-            function(error) {
-                toastr.error("获取课程详情失败，请稍后再试")
-            })
-
+                    } else {
+                        toastr.error(response.message)
+                    }
+                },
+                function(error) {
+                    toastr.error("获取课程详情失败，请稍后再试")
+                })
+        }
+        $scope.getEx();
         $scope.addModule = function() {
             var modalInstance = $uibModal.open({
 
                 templateUrl: 'app/module/modal/addNewModuleModal.html',
                 controller: 'addNewModuleModalCtrl'
+
             });
 
 
@@ -205,30 +207,11 @@
                     }
                 });
         }
-        $scope.addNewHw = function(item) {
 
-            var modalInstance = $uibModal.open({
-
-                templateUrl: 'app/module/modal/addNewHomework.html',
-                controller: addNewHomeworkCtrl
-            });
-
-
-            modalInstance.result.then(function(result) {
-                for (var i in $scope.courseDetail) {
-                    if (item.moduleId == $scope.courseDetail[i].moduleId) {
-                        $scope.courseDetail[i].moduleHomework.push(result)
-                        break
-                    }
-                }
-            }, function(reason) {
-                console.log(reason);
-            });
-        }
         $scope.deleteEx = function(ex, id, index) {
             swal({
                     title: "确定要删除吗？",
-                    text: "【" + ex.courseName + "】将被删除",
+                    text: "【" + ex.experimentName + "】将被删除",
                     type: "error",
                     showCancelButton: true,
                     confirmButtonColor: "#DD6B55",
@@ -240,68 +223,36 @@
                 function(isConfirm) {
 
                     if (isConfirm) {
-                        for (var i in $scope.courseDetail) {
-                            if (id == $scope.courseDetail[i].moduleId) {
-                                $scope.courseDetail[i].moduleExperiment.splice(index, 1);
-                                $scope.$apply()
-                                break
-                            }
-                        }
 
-                        swal({
-                            title: "删除成功咯",
-                            // text: "项目【" + projectName + "】已删除咯",
-                            type: "success",
-                            showCancelButton: false,
-                            // confirmButtonColor: "#DD6B55",
-                            confirmButtonText: "确定",
-                            closeOnConfirm: true,
-                            closeOnCancel: true
-                        }, function() {});
-                        // toastr.success("删除成功!");
+                        courseManagementSrv.deleteExperiment().save({
+                                "id": ex.id
+                            }, function(response) {
+                                if (response.errorCode == 0) {
+                                    $scope.getEx()
+                                    swal({
+                                        title: "删除成功咯",
+                                        // text: "项目【" + projectName + "】已删除咯",
+                                        type: "success",
+                                        showCancelButton: false,
+                                        // confirmButtonColor: "#DD6B55",
+                                        confirmButtonText: "确定",
+                                        closeOnConfirm: true,
+                                        closeOnCancel: true
+                                    }, function() {
+
+                                    });
+                                } else {
+                                    toastr.error(response.message)
+                                }
+                            },
+                            function(error) {
+                                toastr.error("删除失败");
+                            })
                     }
                 });
         }
 
-        $scope.deleteHw = function(hw, id, index) {
 
-            swal({
-                    title: "确定要删除吗？",
-                    text: "【" + hw.courseName + "】将被删除",
-                    type: "error",
-                    showCancelButton: true,
-                    confirmButtonColor: "#DD6B55",
-                    confirmButtonText: "确定",
-                    closeOnConfirm: false,
-                    cancelButtonText: "取消",
-                    closeOnCancel: true
-                },
-                function(isConfirm) {
-
-                    if (isConfirm) {
-                        for (var i in $scope.courseDetail) {
-                            if (id == $scope.courseDetail[i].moduleId) {
-                                $scope.courseDetail[i].moduleHomework.splice(index, 1);
-                                $scope.$apply()
-                                break
-                            }
-                        }
-                        swal({
-                            title: "删除成功咯",
-                            // text: "项目【" + projectName + "】已删除咯",
-                            type: "success",
-                            showCancelButton: false,
-                            // confirmButtonColor: "#DD6B55",
-                            confirmButtonText: "确定",
-                            closeOnConfirm: true,
-                            closeOnCancel: true
-                        }, function() {
-
-                        });
-                        // toastr.success("删除成功!");
-                    }
-                });
-        }
 
     }
 })();

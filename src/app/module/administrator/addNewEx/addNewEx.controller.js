@@ -37,16 +37,7 @@
         $scope.deletePic = function(index) {
             $scope.pics.splice(index, 1);
         }
-        $scope.pics = [{
-            des: "description",
-            url: "https://picture.insight365.ai/logo.jpeg"
-        }, {
-            des: "description",
-            url: "https://picture.insight365.ai/logo.jpeg"
-        }, {
-            des: "description",
-            url: "https://picture.insight365.ai/logo.jpeg"
-        }]
+        $scope.pics = [];
         $scope.supported = false;
 
         // $scope.textToCopy = 'I can copy by clicking!';
@@ -67,12 +58,69 @@
             $uibModalInstance.close();
         }
     }
-    addNewExCtrl.$inject = ['$scope', '$timeout', '$uibModal'];
+
+    addNewExCtrl.$inject = ['$scope', '$timeout', '$uibModal', 'commonSrv', 'courseManagementSrv', '$stateParams'];
 
 
 
-    function addNewExCtrl($scope, $timeout, $uibModal) {
+    function addNewExCtrl($scope, $timeout, $uibModal, commonSrv, courseManagementSrv, $stateParams) {
+        $scope.experiment = {};
+        $scope.ok = function() {
+            if (!$scope.experiment.experimentName) {
+                toastr.error("作业名称不能为空");
+                return;
+            }
+            if (!$scope.experiment.cloudwareType) {
+                toastr.error("容器类型不能为空");
+                return;
+            }
 
+
+            //   {
+            //     "cloudwareType": $scope.experiment.cloudwareType,
+            //     "experimentContent": $scope.text,
+            //     "experimentCreateDate": new Date(),
+            //     // "experimentDueDate": $scope.experiment.dueDate,
+            //     "experimentName": $scope.experiment.experimentName,
+            //     "moduleId": $stateParams.moduleId
+            // }
+            courseManagementSrv.addExperiment().save({
+                "cloudwareType": $scope.experiment.cloudwareType,
+                "experimentContent": $scope.text,
+                "experimentCreateDate": new Date(),
+                // "experimentDueDate": "2017-10-24T07:10:27.269Z",
+                "experimentName": $scope.experiment.experimentName,
+                // "experimentUrl": "string",
+                "moduleId": $stateParams.moduleId
+            }).$promise.then(
+                function(response) {
+                    console.log(response)
+                    if (response.errorCode == 0) {
+                        toastr.success("添加成功")
+                        $uibModalInstance.close(1);
+
+                    } else {
+                        toastr.error(response.message);
+                    }
+                },
+                function(error) {
+                    toastr.error("添加失败，请稍后再试");
+                }
+            )
+        }
+        $scope.cloudwares = [{
+            label: "Rstudio",
+            value: 1,
+        }, {
+            label: "Python",
+            value: 2,
+        }, {
+            label: "Base",
+            value: 3,
+        }, {
+            label: "Hadoop",
+            value: 4,
+        }];
         $scope.$on("$destroy", function() {
 
             $('.menuFooter').show()
@@ -80,6 +128,28 @@
             $('.footer').css({ 'position': '', 'bottom': "none" })
 
         })
+
+        $scope.chooseMarkdown = function() {
+            $('#markdownFile').trigger('click');
+
+        }
+
+        $scope.getFile = function(file) {
+            var formdata = new FormData();
+            formdata.append('file', file);
+            commonSrv.uploadMarkdown().save({
+                file: formdata
+            }).$promise.then(function(response) {
+                console.log(response)
+                if (response.errorCode == 0) {
+                    toastr.success("上传成功")
+                } else {
+                    toastr.error(response.message)
+                }
+            }, function(error) {
+                toastr.error("上传失败，请稍后再试")
+            })
+        };
 
         $timeout(function() {
             $('.menuFooter').hide()

@@ -45,5 +45,13 @@
                 classId: "@classId"
             })
         }
+        this.addHomework = function() {
+            return $resource(reqUrl + '/admin/class/homework/creation')
+        }
+        this.deleteHomework = function() {
+            return $resource(reqUrl + "/admin/class/homework/deletion")
+        }
+
+
     }
 })();

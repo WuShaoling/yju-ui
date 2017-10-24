@@ -15,5 +15,8 @@
         this.uploadImage = function() {
             return $resource(reqUrl + '/admin/course/experiment/piclib');
         }
+        this.uploadMarkdown = function() {
+            return $resource(reqUrl + '/admin/course/experiment/markdown');
+        }
     }
 })();

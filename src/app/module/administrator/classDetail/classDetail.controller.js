@@ -210,10 +210,12 @@
                     if (isConfirm) {
                         classManagementSrv.deleteStudent().save({
                             "classId": parseInt($stateParams.classId),
-                            "studentId": item.studentNo
+                            "studentId": item.id
                         }, function(response) {
                             console.log(response)
                             if (response.errorCode == 0) {
+                                studentTable.ajax.reload()
+
                                 swal({
                                     title: "删除成功咯",
                                     // text: "项目【" + projectName + "】已删除咯",
@@ -230,7 +232,6 @@
                         }, function(error) {
                             toastr.error("删除失败，请稍后再试")
                         })
-                        studentTable.ajax.reload()
 
                         // toastr.success("删除成功!");
                     }
@@ -254,6 +255,15 @@
         console.log($stateParams)
         $scope.ok = function() {
             console.log($scope.student)
+            if (!$scope.student.studentId) {
+                toastr.error("学生学号不能为空");
+                return;
+            }
+            if (!$scope.student.name) {
+                toastr.error("学生姓名不能为空");
+                return;
+            }
+
             classManagementSrv.addStudent().save({
                 "classId": $stateParams.classId,
                 "gender": $scope.student.gender,
