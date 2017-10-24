@@ -18,5 +18,13 @@
         this.uploadMarkdown = function() {
             return $resource(reqUrl + '/admin/course/experiment/markdown');
         }
+
+        this.login = function() {
+            return $resource(reqUrl + '/auth/login');
+        }
+
+        this.startEx = function() {
+            return $resource("http://192.168.1.128:8080/services")
+        }
     }
 })();

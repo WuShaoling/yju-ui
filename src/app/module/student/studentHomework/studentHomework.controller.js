@@ -9,24 +9,32 @@
 
     function studentHomeworkCtrl($scope, $state, stuCourseSrv, $stateParams) {
         $scope.doHomework = function(item) {
-            $state.go('index.cloudware.studentDoHomework', { homeworkId: item.id });
+            $state.go('index.studentDoHomework.cloudware', { homeworkId: item.id });
         }
         stuCourseSrv.getAllHomework().get({
                 classId: $stateParams.classId
             }, function(response) {
                 console.log(response)
-                $scope.courseContent = response.data;
-                for (var i in $scope.courseContent) {
-                    $scope.condition.push({
-                        label: $scope.courseContent[i].moduleName,
-                        value: $scope.courseContent[i].moduleName
-                    })
-                }
+                if (response.errorCode == 0) {
 
-                $scope.q = $scope.condition[0].value
+                    $scope.courseId = response.data.courseId;
+                    $scope.courseName = response.data.courseName;
+                    $scope.courseContent = response.data.moduleList;
+                    for (var i in $scope.courseContent) {
+                        $scope.condition.push({
+                            label: $scope.courseContent[i].moduleName,
+                            value: $scope.courseContent[i].moduleName
+                        })
+                    }
+
+                    $scope.q = $scope.condition[0].value
+                } else {
+                    toastr.error(response.message);
+                }
             },
             function(error) {
-                console.log(error);
+                toastr.error("获取作业失败，请稍后再试");
+
             })
 
         $scope.condition = [{

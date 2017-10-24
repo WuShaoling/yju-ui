@@ -7,7 +7,7 @@
         .controller('loginCtrl', loginCtrl);
 
     commonCtrl.$inject = ['$scope', '$uibModal', '$state'];
-    loginCtrl.$inject = ['$scope', '$uibModalInstance', '$uibModal'];
+    loginCtrl.$inject = ['$scope', '$uibModalInstance', '$uibModal', 'commonSrv'];
 
     function commonCtrl($scope, $uibModal, $state) {
         var vm = this;
@@ -15,7 +15,6 @@
             vm.searchData = $scope.searchData;
 
         }
-
 
         if (localStorage['logined']) {
             var user = JSON.parse(localStorage['user'])
@@ -36,7 +35,6 @@
                 // windowClass: "animated flipInY"
                 size: "sm"
             });
-
 
             modalInstance.result.then(function(result) {
                 console.log(result);
@@ -91,7 +89,7 @@
     }
 
 
-    function loginCtrl($scope, $uibModalInstance, $uibModal) {
+    function loginCtrl($scope, $uibModalInstance, $uibModal, commonSrv) {
         $scope.cancel = function() {
             $uibModalInstance.dismiss('cancel');
         };
@@ -126,65 +124,84 @@
                 toastr.error("密码不能为空");
                 return
             }
+
+            commonSrv.login().save({
+                "password": $scope.user.pass,
+                "username": $scope.user.id
+
+            }).$promise.then(
+                function(response) {
+                    console.log(response)
+                    if (response.errorCode == 0) {
+                        var params;
+                        localStorage['userId'] = response.data.body.userId
+                        if ($scope.user.type.label == "学生") {
+                            params = {
+                                errorCode: "000",
+                                message: "success",
+                                username: $scope.user.id,
+                                navbar: [{
+                                    name: "我的课程",
+                                    class: 'fa fa-table',
+                                    url: 'index.studentCourse'
+                                }, {
+                                    name: "我的文件夹",
+                                    class: 'fa fa-folder-open-o',
+                                    url: 'index.files({id:' + $scope.user.id + '})'
+                                }],
+                                role: $scope.user.type //0:student;1:teacher;2:administrator
+                            }
+                        } else if ($scope.user.type.label == "老师") {
+                            params = {
+                                errorCode: "000",
+                                message: "success",
+                                username: $scope.user.id,
+                                navbar: [{
+                                    name: "我的课程",
+                                    class: 'fa fa-table',
+                                    url: 'index.teacherCourse'
+                                }],
+                                role: $scope.user.type //0:student;1:teacher;2:administrator
+                            }
+                        } else if ($scope.user.type.label == "教务") {
+                            params = {
+                                errorCode: "000",
+                                message: "success",
+                                username: $scope.user.id,
+                                navbar: [{
+                                    name: "教师管理",
+                                    class: 'fa fa-users',
+                                    url: 'index.teacherManagement'
+                                }, {
+                                    name: "学期管理",
+                                    class: 'fa fa-graduation-cap',
+                                    url: 'index.semesterManagement'
+                                }, {
+                                    name: "课程管理",
+                                    class: 'fa fa-calendar',
+                                    url: 'index.courseManagement'
+                                }, {
+                                    name: "班级管理",
+                                    class: 'fa fa-university',
+                                    url: 'index.classManagement'
+                                }],
+                                role: $scope.user.type //0:student;1:teacher;2:administrator
+                            }
+                        }
+                        localStorage['logined'] = true;
+                        localStorage['user'] = JSON.stringify(params);
+                        $uibModalInstance.close(params);
+
+                    } else {
+                        toastr.error(response.message)
+                    }
+                },
+                function(error) {
+                    toastr.error("登录失败，请稍后再试")
+                }
+            );
             console.log($scope.user)
                 //success 
-            var params;
-            if ($scope.user.type.label == "学生") {
-                params = {
-                    errorCode: "000",
-                    message: "success",
-                    username: $scope.user.id,
-                    navbar: [{
-                        name: "我的课程",
-                        class: 'fa fa-table',
-                        url: 'index.studentCourse'
-                    }, {
-                        name: "我的文件夹",
-                        class: 'fa fa-folder-open-o',
-                        url: 'index.files({id:' + $scope.user.id + '})'
-                    }],
-                    role: $scope.user.type //0:student;1:teacher;2:administrator
-                }
-            } else if ($scope.user.type.label == "老师") {
-                params = {
-                    errorCode: "000",
-                    message: "success",
-                    username: $scope.user.id,
-                    navbar: [{
-                        name: "我的课程",
-                        class: 'fa fa-table',
-                        url: 'index.teacherCourse'
-                    }],
-                    role: $scope.user.type //0:student;1:teacher;2:administrator
-                }
-            } else if ($scope.user.type.label == "教务") {
-                params = {
-                    errorCode: "000",
-                    message: "success",
-                    username: $scope.user.id,
-                    navbar: [{
-                        name: "教师管理",
-                        class: 'fa fa-users',
-                        url: 'index.teacherManagement'
-                    }, {
-                        name: "学期管理",
-                        class: 'fa fa-graduation-cap',
-                        url: 'index.semesterManagement'
-                    }, {
-                        name: "课程管理",
-                        class: 'fa fa-calendar',
-                        url: 'index.courseManagement'
-                    }, {
-                        name: "班级管理",
-                        class: 'fa fa-university',
-                        url: 'index.classManagement'
-                    }],
-                    role: $scope.user.type //0:student;1:teacher;2:administrator
-                }
-            }
-            localStorage['logined'] = true;
-            localStorage['user'] = JSON.stringify(params);
-            $uibModalInstance.close(params);
 
 
         }

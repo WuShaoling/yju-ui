@@ -5,9 +5,9 @@
         .module('phoenix')
         .controller('cloudwareCtrl', cloudwareCtrl);
 
-    cloudwareCtrl.$inject = ['$scope', '$timeout', 'usSpinnerService'];
+    cloudwareCtrl.$inject = ['$scope', '$timeout', 'usSpinnerService', 'commonSrv'];
 
-    function cloudwareCtrl($scope, $timeout, usSpinnerService) {
+    function cloudwareCtrl($scope, $timeout, usSpinnerService, commonSrv) {
         var vm = this;
         $scope.leftControl = true;
         $scope.rightControl = true;
@@ -16,6 +16,19 @@
         $scope.hasStarted = false;
         $scope.startEx = function() {
             startService();
+            // commonSrv.startEx().save({
+            //     secret: "123",
+            //     cloudware_type: "rstudio",
+            //     user_id: JSON.parse(localStorage['user']).username
+            // }).$promise.then(
+            //     function(response) {
+            //         console.log(response);
+            //         start(wsaddr, el)
+            //     },
+            //     function(error) {
+
+            //     }
+            // )
             $scope.hideExText = true;
             usSpinnerService.spin('ex-spinner')
             $scope.hasStarted = true;
@@ -75,24 +88,7 @@
             }, 500)
         });
 
-        var converter = new showdown.Converter();
-        converter.setOption('tasklists', true);
-        converter.setOption('tables', true);
-        $.get("app/module/teacher/teacherCourse/test.md", function(result) {
-            // console.log(result)
-            if (result == null) {
-                return
-            }
-            $scope.text = result;
-            $scope.html = converter.makeHtml($scope.text);
-            $timeout(function() {
-                console.log($('#ht').height())
-                $('#or').height($('#ht').height());
-            })
 
-            // console.log(result.label_type)
-
-        });
 
 
         function start(wsaddr, el) {
@@ -194,7 +190,11 @@
             ws.binaryType = "arraybuffer";
             ws.onmessage = function(msg) {
                 var data = msg.data;
+                if (!data) {
+                    return
+                }
                 var dv = new DataView(data);
+
                 var x = dv.getInt32(0, true);
                 var y = dv.getInt32(4, true);
                 var d = data.slice(8);
@@ -220,12 +220,12 @@
                                 headers: { 'secret': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJpYXQiOjE1MDU4MTM0NTd9.Ftw1yHeUrqdNvymFZcIpuEoS0RHBFZqu4MfUZON9Zm0' },
                                 method: 'post',
                                 data: {
-                                    cloudware_type: env,
-                                    user_id: '123'
+                                    cloudware_type: 'rstudio',
+                                    user_id: '1352890'
                                 },
                                 dataType: 'json',
                                 success: function(resp, textStatus, xhr) {
-                                    console.log(el)
+                                    console.log(resp)
                                     start(resp.ws, el)
                                 }
                             });

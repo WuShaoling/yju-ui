@@ -6,7 +6,7 @@
             <div class="row">
 
                 <div class="col-sm-5 m-b-xs">
-                    <h3>数据分析语言学习实验
+                    <h3>{{courseName}} / 详情
                     </h3>
                 </div>
 
@@ -50,9 +50,9 @@
 
                             <th>{{item.moduleName}}</th>
                             <th>实验描述</th>
-                            <th>Completed</th>
-                            <th>Task</th>
-                            <th>Date</th>
+                            <th>实验类型</th>
+                            <!-- <th>Task</th> -->
+                            <th>创建时间</th>
                             <th>操作</th>
                         </tr>
                     </thead>
@@ -62,10 +62,10 @@
                             <td>{{detail.experimentName}}
                             </td>
                             <td>{{detail.experimentDes}}</td>
-                            <td><a href=""><i class="fa fa-check text-navy"></i></a></td>
+                            <!-- <td><a href=""><i class="fa fa-check text-navy"></i></a></td> -->
 
-                            <td>20%</td>
-                            <td>{{detail.date}}</td>
+                            <td>{{detail.cloudwareType}}</td>
+                            <td>{{detail.publishDate}}</td>
                             <td>
                                 <button type="button" class="btn btn-success btn-outline" ng-click="startExp()">开始实验</button>
                                 <!-- <button type="button" class="btn btn-primary btn-outline" ng-click="doHomework()">做作业</button> -->

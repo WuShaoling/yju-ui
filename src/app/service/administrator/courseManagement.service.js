@@ -37,10 +37,10 @@
         }
 
         this.addExperiment = function() {
-            return $resource(reqUrl + '/admin/class/experiment/creation')
+            return $resource(reqUrl + '/admin/course/module/experiment/creation')
         }
         this.deleteExperiment = function() {
-            return $resource(reqUrl + "/admin/class/experiment/deletion")
+            return $resource(reqUrl + "/admin/course/experiment/deletion")
         }
     }
 })();

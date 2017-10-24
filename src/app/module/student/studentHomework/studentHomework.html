@@ -22,23 +22,25 @@
 
 
                             <th>{{item.moduleName}}</th>
+
                             <th>作业描述</th>
-                            <th>Completed</th>
-                            <th>Task</th>
-                            <th>Date</th>
+
+                            <!-- <th>Completed</th> -->
+                            <th>发布日期</th>
+                            <th>截止日期</th>
                             <th>操作</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr ng-repeat="detail in item.moduleContent">
 
-                            <td>{{detail.experimentName}}
+                            <td>{{detail.homeworkName}}
                             </td>
-                            <td>{{detail.experimentDes}}</td>
-                            <td><a href=""><i class="fa fa-check text-navy"></i></a></td>
+                            <td>{{detail.homeworkDes}}</td>
+                            <!-- <td><a href=""><i class="fa fa-check text-navy"></i></a></td> -->
 
-                            <td>20%</td>
-                            <td>{{detail.date}}</td>
+                            <td>{{detail.publishDate}}</td>
+                            <td>{{detail.dueDate}}</td>
                             <td>
                                 <!-- <button type="button" class="btn btn-primary btn-outline" ng-click="startExp()">做作业</button> -->
                                 <button type="button" class="btn btn-primary btn-outline" ng-click="doHomework(detail)">做作业</button>

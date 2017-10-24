@@ -87,6 +87,7 @@
             courseManagementSrv.addExperiment().save({
                 "cloudwareType": $scope.experiment.cloudwareType,
                 "experimentContent": $scope.text,
+                "experimentDes": $scope.experiment.experimentDes,
                 "experimentCreateDate": new Date(),
                 // "experimentDueDate": "2017-10-24T07:10:27.269Z",
                 "experimentName": $scope.experiment.experimentName,
@@ -97,7 +98,6 @@
                     console.log(response)
                     if (response.errorCode == 0) {
                         toastr.success("添加成功")
-                        $uibModalInstance.close(1);
 
                     } else {
                         toastr.error(response.message);

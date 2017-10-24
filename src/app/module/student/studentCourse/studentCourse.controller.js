@@ -10,10 +10,14 @@
     function studentCourseCtrl($scope, stuCourseSrv) {
         $scope.courses = []
         stuCourseSrv.getSelfCourse().get({
-            studentId: JSON.parse(localStorage['user']).username
+            studentId: localStorage['userId']
         }, function(response) {
             console.log(response);
-            $scope.courses = response.data;
+            if (response.errorCode == 0) {
+                $scope.courses = response.data.studentClassList;
+            } else {
+                toastr.error(response.message)
+            }
         }, function(error) {
             console.log(error);
         })

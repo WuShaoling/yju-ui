@@ -1,22 +1,48 @@
-<div class="row">
-    <div class="col-sm-5 m-b-xs">
-        <h4>{{detail.courseName}}/{{detail.moduleName}}/{{detail.homeworkName}}
-        </h4>
-    </div>
-    <div class="col-sm-5 m-b-xs">
-    </div>
-    <div class="col-sm-2 m-b-xs">
-        <button type="button" class="btn btn-success btn-sm" ng-click="uploadReport()">上传报告</button>
-        <!-- <button type="button" class="btn btn-success btn-sm">启动作业容器</button>
-   
+<div class="main_wrapper">
+    <div style="margin-top:20px"></div>
 
-        <button type="button" class="btn btn-success btn-sm">保存</button> -->
 
-        <!-- <button type="button" class="btn btn-success btn-sm" ng-click="commitWork()">提交作业</button> -->
-        <!-- <div class="input-group">
-                                        <input type="text" placeholder="Search" class="input-sm form-control">
-                                        <div class="input-group-btn">
-                                            <button type="button" class="btn btn-sm btn-primary form-control">搜索</button> </div>
-                                    </div> -->
+    <div class="container">
+
+        <div class="row">
+            <div class="col-sm-5 m-b-xs">
+                <h4>{{detail.courseName}}/{{detail.moduleName}}/{{detail.homeworkName}}
+                </h4>
+            </div>
+            <div class="col-sm-5 m-b-xs">
+            </div>
+            <div class="col-sm-2 m-b-xs">
+                <button type="button" class="btn btn-success btn-sm" ng-click="uploadReport()">上传报告</button>
+                <!-- <button type="button" class="btn btn-success btn-sm">启动作业容器</button>
+                   
+                
+                        <button type="button" class="btn btn-success btn-sm">保存</button> -->
+
+                <!-- <button type="button" class="btn btn-success btn-sm" ng-click="commitWork()">提交作业</button> -->
+                <!-- <div class="input-group">
+                                                        <input type="text" placeholder="Search" class="input-sm form-control">
+                                                        <div class="input-group-btn">
+                                                            <button type="button" class="btn btn-sm btn-primary form-control">搜索</button> </div>
+                                                    </div> -->
+            </div>
+        </div>
+
+
+        <hr>
+
     </div>
+    <div class="row">
+
+
+        <div class="col-md-4" style="height:700px;overflow:auto;background-color:#fff" id="leftNav">
+            <div class="md markdown-body" id="ht" style="padding:15px;">
+                <h2>作业内容</h2>
+                <p>{{detail.homeworkDes}}</p>
+            </div>
+
+        </div>
+        <div ui-view></div>
+
+    </div>
+</div>
 </div>

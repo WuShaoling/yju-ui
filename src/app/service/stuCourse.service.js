@@ -13,27 +13,31 @@
 
         //获取我的选课
         function getSelfCourse() {
-            return $resource(reqUrl + "/student/studentCourse/:studentId.json", {
+            return $resource(reqUrl + "/student/course/all/:studentId", {
                 studentId: "@studentId"
             })
         }
         //获取选课详情
         this.getCourseDetail = function() {
-            return $resource(reqUrl + "/student/studentCourseDetail/:courseId.json", {
-                courseId: "@courseId"
+            return $resource(reqUrl + "/student/course/:classId/detail", {
+                classId: "@classId"
             })
         }
 
         this.getAllHomework = function() {
-            return $resource(reqUrl + "/student/studentHomework/:classId.json", {
+            return $resource(reqUrl + "/student/course/:classId/homework", {
                 classId: "@classId"
             })
         }
 
         this.getHomeworkDetail = function() {
-            return $resource(reqUrl + "/student/studentDoHomework/:homeworkId.json", {
+            return $resource(reqUrl + "/student/homework/:homeworkId", {
                 homeworkId: "@homeworkId"
             })
+        }
+
+        this.getExperimentDetail = function() {
+            return $resource(reqUrl + '/student/experiment/:experimentId')
         }
     }
 })();

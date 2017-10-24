@@ -6,7 +6,7 @@
         .controller('addCourseCtrl', addCourseCtrl)
         .controller('courseManagementCtrl', courseManagementCtrl);
 
-    addCourseCtrl.$inject = ['$scope', '$uibModalInstance', 'teacherManageSrv', 'courseManagementSrv', 'commonSrv'];
+    addCourseCtrl.$inject = ['$scope', '$uibModalInstance', 'teacherManageSrv', 'courseManagementSrv', 'commonSrv', 'reqUrl'];
 
     courseManagementCtrl.$inject = ['$scope', 'reqUrl', '$uibModal', '$state', 'courseManagementSrv'];
 
@@ -170,7 +170,7 @@
         }
     }
 
-    function addCourseCtrl($scope, $uibModalInstance, teacherManageSrv, courseManagementSrv, commonSrv) {
+    function addCourseCtrl($scope, $uibModalInstance, teacherManageSrv, courseManagementSrv, commonSrv, reqUrl) {
         $scope.course = {};
         teacherManageSrv.getAllTeachers().get().$promise.then(
             function(response) {
@@ -197,14 +197,35 @@
             console.log(file);
             var fileFormData = new FormData();
             fileFormData.append('file', file);
-            commonSrv.uploadImage().save({
-                file: fileFormData
-            }, function(response) {
-                console.log(response)
-            }, function(error) {
-                console.log(error);
-                toastr.error("上传失败")
-            })
+            // commonSrv.uploadImage().save({
+            //     file: fileFormData
+            // }, function(response) {
+            //     console.log(response)
+            // }, function(error) {
+            //     console.log(error);
+            //     toastr.error("上传失败")
+            // })
+            $.ajax({
+                type: 'POST',
+                url: reqUrl + '/admin/course/experiment/piclib',
+                dataType: 'json',
+                processData: false, // Dont process the files
+                contentType: false,
+                data: fileFormData,
+                success: function(res) {
+                    console.log(res)
+                    if (res.errorCode == 0) {
+                        toastr.success('上传图片成功');
+                        $scope.course.imageUrl = res.data;
+                        // qiniuImage = qiniuURL + res.fileName;
+                        // $scope.imageSrc = qiniuURL + res.fileName;
+                        // $scope.isUpload = true;
+                        // $scope.$apply();
+                    } else {
+                        toastr.error('啊哦，上传失败咯');
+                    }
+                }
+            });
             $scope.filename = file.name;
 
             $scope.$apply()
@@ -212,10 +233,10 @@
         $scope.ok = function() {
             $scope.course.teacher = $scope.person;
             console.log($scope.course);
-            // if (!$scope.course.imageUrl) {
-            //     toastr.error("课程图片不能为空")
-            //     return
-            // }
+            if (!$scope.course.imageUrl) {
+                toastr.error("课程图片不能为空，已设置为默认")
+                $scope.course.imageUrl = "https://picture.insight365.ai/phoenix/course-img1.jpg";
+            }
             if (!$scope.course.courseName) {
                 toastr.error("课程名称不能为空")
                 return

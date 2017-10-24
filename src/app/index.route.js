@@ -86,27 +86,39 @@
                 controller: "studentCourseCtrl"
             })
             .state('index.studentCourseDetail', {
-                url: "/student/:classId/course/:courseId/detail",
+                url: "/student/:classId/course/detail",
                 params: { courseId: null, classId: null },
                 templateUrl: "app/module/student/studentCourseDetail/studentCourseDetail.html",
                 controller: "studentCourseDetailCtrl"
             })
-            .state('index.cloudware.startExperiment', {
-                url: "/course/experiment",
-                templateUrl: "app/module/student/studentStartExperiment/studentStartExperiment.html",
-                controller: "studentStartExperimentCtrl"
-            })
-            .state('index.studentHomework', {
+
+        .state('index.studentHomework', {
                 url: "/student/:classId/homework",
                 params: { classId: null },
                 templateUrl: "app/module/student/studentHomework/studentHomework.html",
                 controller: "studentHomeworkCtrl"
             })
-            .state('index.cloudware.studentDoHomework', {
-                url: "/student/homework/:homeworkId/detail",
-                params: { homeworkId: null },
+            .state('index.studentDoHomework', {
+                url: "/student/homework/:homeworkId/:type/:studentId/detail",
+                params: { homeworkId: null, type: "0", studentId: null },
                 templateUrl: "app/module/student/studentDoHomework/studentDoHomework.html",
                 controller: "studentDoHomeworkCtrl"
+            })
+            .state('index.startExperiment', {
+                url: "/course/experiment/:experimentId/:type/:studentId",
+                params: { homeworkId: null, type: "1", studentId: null },
+                templateUrl: "app/module/student/studentStartExperiment/studentStartExperiment.html",
+                controller: "studentStartExperimentCtrl"
+            })
+            .state('index.studentDoHomework.cloudware', {
+                url: "/cloudware",
+                templateUrl: "app/module/cloudware/cloudware.html",
+                controller: "cloudwareCtrl"
+            })
+            .state('index.startExperiment.cloudware', {
+                url: "/cloudware",
+                templateUrl: "app/module/cloudware/cloudware.html",
+                controller: "cloudwareCtrl"
             })
             .state('index.test', {
                 url: "/test",
