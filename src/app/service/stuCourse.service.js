@@ -48,9 +48,22 @@
                 studentId: "@studentId"
             })
         }
+        this.getExCloudwareInfo = function() {
+            return $resource(reqUrl + '/student/experiment/:experimentId/:studentId/cloudware', {
+                experimentId: "@experimentId",
+                studentId: "@studentId"
+            })
+        }
 
         this.createHwCloudware = function() {
             return $resource(reqUrl + '/student/homework/creation')
+        }
+        this.createExCloudware = function() {
+            return $resource(reqUrl + '/student/experiment/creation')
+        }
+
+        this.submitHomework = function() {
+            return $resource(reqUrl + '/student/homework/submission')
         }
     }
 })();

@@ -19,8 +19,13 @@
                 console.log("start...")
                 console.log($scope.cloudwareInfo);
                 console.log($('#cloudware'));
-                return;
-                start($scope.cloudwareInfo.webSocket, $('#cloudware'))
+                // $('[data-cloudware-env]').each(function(index, el) {
+                //         console.log(el)
+                //         start($scope.cloudwareInfo.webSocket, el)
+
+                //     })
+                start($scope.cloudwareInfo.webSocket, $('#cloudware')[0])
+                    // return;
 
             } else {
                 console.log("start...service")
@@ -70,6 +75,25 @@
                         })
                     break;
                 case "1":
+                    stuCourseSrv.getExCloudwareInfo().get({
+                        experimentId: $stateParams.experimentId,
+                        studentId: $stateParams.studentId
+                    }).$promise.then(
+                        function(response) {
+                            console.log(response)
+                            if (response.errorCode == 0) {
+                                console.log("已启动过...")
+
+                                $scope.notFirst = true;
+                                $scope.cloudwareInfo = response.data;
+                            } else {
+                                console.log("未启动过...")
+
+                            }
+                        },
+                        function(error) {
+                            console.log(error);
+                        })
                     break;
                 default:
                     break;
@@ -170,8 +194,8 @@
                 canvas.id = "test"
                 el.appendChild(canvas);
                 $('#leftNav').height($('#design').height());
-
                 usSpinnerService.stop('ex-spinner');
+
                 canvas.onmousemove = function(e) {
                     var dom_left = canvas.offsetLeft + canvas.offsetParent.offsetLeft;
                     var dom_top = canvas.offsetTop + canvas.offsetParent.offsetTop;
@@ -285,7 +309,18 @@
                                             });
                                             break;
                                         case "1":
-
+                                            stuCourseSrv.createExCloudware().save({
+                                                "experimentId": $stateParams.experimentId,
+                                                "pulsarId": resp.pulsar_id,
+                                                "serviceId": resp.service_id,
+                                                "serviceName": resp.service_name,
+                                                "studentId": studentId,
+                                                "webSocket": resp.ws
+                                            }).$promise.then(function(response) {
+                                                console.log(response)
+                                            }, function(error) {
+                                                console.log(error);
+                                            });
                                             break;
 
                                         default:

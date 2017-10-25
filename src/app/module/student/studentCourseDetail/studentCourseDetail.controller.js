@@ -11,9 +11,9 @@
         $scope.checkCourseHomework = function() {
             $state.go('index.studentHomework', { classId: $stateParams.classId })
         }
-        $scope.startExp = function() {
+        $scope.startExp = function(item) {
 
-            $state.go('index.startExperiment.cloudware');
+            $state.go('index.startExperiment.cloudware', { experimentId: item.id, studentId: localStorage['userId'], cloudwareType: item.cloudwareType });
         }
         $scope.doHomework = function() {
             $state.go('index.studentDoHomework');

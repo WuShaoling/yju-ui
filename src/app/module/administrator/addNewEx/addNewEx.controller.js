@@ -65,6 +65,7 @@
 
     function addNewExCtrl($scope, $timeout, $uibModal, commonSrv, courseManagementSrv, $stateParams, reqUrl) {
         $scope.experiment = {};
+        $scope.text = "";
         $scope.ok = function() {
             if (!$scope.experiment.experimentName) {
                 toastr.error("作业名称不能为空");
@@ -84,6 +85,7 @@
             //     "experimentName": $scope.experiment.experimentName,
             //     "moduleId": $stateParams.moduleId
             // }
+            console.log($scope.text);
             courseManagementSrv.addExperiment().save({
                 "cloudwareType": $scope.experiment.cloudwareType,
                 "experimentContent": $scope.text,
@@ -220,7 +222,13 @@
                         var testEditor = editormd("test-editormd", {
                             path: 'markdownLib/',
                             height: 600,
-                            emoji: true
+                            emoji: true,
+                            onchange: function() {
+                                // console.log(this.getValue());
+                                $scope.text = this.getValue();
+                                $scope.$apply();
+                                console.log($scope.text);
+                            }
                         });
                     })
                     $('.footer').css({ 'position': '', 'bottom': "none" })

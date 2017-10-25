@@ -99,7 +99,7 @@
                 controller: "studentHomeworkCtrl"
             })
             .state('index.studentDoHomework', {
-                url: "/student/homework/:homeworkId/:type/:studentId/:cloudwareType/detail",
+                url: "/homework/:homeworkId/:type/:studentId/:cloudwareType/detail",
                 params: { homeworkId: null, type: "0", studentId: null, cloudwareType: null },
                 templateUrl: "app/module/student/studentDoHomework/studentDoHomework.html",
                 controller: "studentDoHomeworkCtrl"
@@ -147,11 +147,22 @@
                 templateUrl: "app/module/teacher/homeworkDetail/homeworkDetail.html",
                 controller: "homeworkDetailCtrl"
             })
-            .state('index.cloudware.checkHomework', {
-                url: "/teacher/homework/:id",
-                params: { courseId: null, id: null },
+            .state('index.teacherCheckHomework', {
+                url: "/checkHomework/:homeworkId/:type/:studentId/:cloudwareType",
+                params: { homeworkId: null, type: "0", studentId: null, cloudwareType: null },
                 templateUrl: "app/module/teacher/checkHomework/checkHomework.html",
                 controller: "checkHomeworkCtrl"
+            })
+            // .state('index.cloudware.checkHomework', {
+            //     url: "/teacher/homework/:id",
+            //     params: { courseId: null, id: null },
+            //     templateUrl: "app/module/teacher/checkHomework/checkHomework.html",
+            //     controller: "checkHomeworkCtrl"
+            // })
+            .state('index.teacherCheckHomework.cloudware', {
+                url: "/cloudware",
+                templateUrl: "app/module/cloudware/cloudware.html",
+                controller: "cloudwareCtrl"
             })
             //teacher end
 

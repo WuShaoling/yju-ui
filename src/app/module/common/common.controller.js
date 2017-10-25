@@ -147,7 +147,7 @@
                                 }, {
                                     name: "我的文件夹",
                                     class: 'fa fa-folder-open-o',
-                                    url: 'index.files({id:' + $scope.user.id + '})'
+                                    url: 'index.files({id:' + localStorage['userId'] + '})'
                                 }],
                                 role: $scope.user.type //0:student;1:teacher;2:administrator
                             }
@@ -160,6 +160,10 @@
                                     name: "我的课程",
                                     class: 'fa fa-table',
                                     url: 'index.teacherCourse'
+                                }, {
+                                    name: "我的文件夹",
+                                    class: 'fa fa-folder-open-o',
+                                    url: 'index.files({id:' + localStorage['userId'] + '})'
                                 }],
                                 role: $scope.user.type //0:student;1:teacher;2:administrator
                             }

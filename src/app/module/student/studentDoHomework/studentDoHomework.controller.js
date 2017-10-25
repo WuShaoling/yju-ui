@@ -7,15 +7,33 @@
         .controller('uploadReportModalCtrl', uploadReportModalCtrl);
 
     studentDoHomeworkCtrl.$inject = ['$scope', '$uibModal', '$timeout', 'stuCourseSrv', '$stateParams'];
-    uploadReportModalCtrl.$inject = ['$scope', '$uibModalInstance', '$timeout', 'reqUrl']
+    uploadReportModalCtrl.$inject = ['$scope', '$uibModalInstance', '$timeout', 'reqUrl', 'stuCourseSrv', '$stateParams']
 
-    function uploadReportModalCtrl($scope, $uibModalInstance, $timeout, reqUrl) {
+    function uploadReportModalCtrl($scope, $uibModalInstance, $timeout, reqUrl, stuCourseSrv, $stateParams) {
         $scope.cancel = function() {
             $uibModalInstance.dismiss('cancel');
         }
         $scope.ok = function() {
+            stuCourseSrv.submitHomework().save({
+                "homeworkId": $stateParams.homeworkId,
+                "homework_url": $scope.homeworkUrl,
+                "studentId": $stateParams.studentId
+            }).$promise.then(
+                function(response) {
+                    console.log(response)
+                    if (response.errorCode == 0) {
+                        toastr.success("提交成功")
+                        $uibModalInstance.close();
 
-            $uibModalInstance.close();
+                    } else {
+
+                        toastr.error(response.message)
+                    }
+                },
+                function(error) {
+                    console.log(error)
+                }
+            )
         }
         $scope.chooseFile = function() {
             $('#report').trigger('click');

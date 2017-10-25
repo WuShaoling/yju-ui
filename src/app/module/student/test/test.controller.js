@@ -39,8 +39,11 @@
                     $scope.show3 = false
 
                     var testEditor = editormd("test-editormd", {
-                        path: 'lib/',
+                        path: 'markdownLib/',
                         height: 600,
+                        onchange: function() {
+                            console.log(this.getValue());
+                        }
                     });
                     break;
                 case 2:
@@ -60,7 +63,9 @@
                     break;
             }
         }
-
+        $scope.test = function() {
+            console.log($scope.text)
+        }
         $scope.show(1);
         var converter = new showdown.Converter();
         converter.setOption('tasklists', true);
@@ -71,6 +76,7 @@
                 return
             }
             $scope.text = result;
+            console.log($scope.text);
             $scope.html = converter.makeHtml($scope.text);
             $timeout(function() {
                 console.log($('#ht').height())

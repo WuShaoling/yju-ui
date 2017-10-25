@@ -26,7 +26,12 @@
         teacherCourseSrv.getAllCourse().get({ teacherId: localStorage['userId'] },
             function(response) {
                 console.log(response)
-                $scope.courseContent = response.data.teacherClassList;
+                if (response.errorCode == 0) {
+                    $scope.courseContent = response.data.teacherClassList;
+
+                } else {
+                    toastr.error(response.message)
+                }
             },
             function(error) {
                 console.log(error)

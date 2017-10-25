@@ -5,10 +5,12 @@
         .module('phoenix')
         .controller('teacherCourseManagementCtrl', teacherCourseManagementCtrl);
 
-    teacherCourseManagementCtrl.$inject = ['$scope', '$uibModal', 'teacherCourseSrv', '$stateParams'];
+    teacherCourseManagementCtrl.$inject = ['$scope', '$uibModal', 'teacherCourseSrv', '$stateParams', '$state'];
 
-    function teacherCourseManagementCtrl($scope, $uibModal, teacherCourseSrv, $stateParams) {
-
+    function teacherCourseManagementCtrl($scope, $uibModal, teacherCourseSrv, $stateParams, $state) {
+        $scope.checkEx = function(item) {
+            $state.go('index.startExperiment.cloudware', { experimentId: item.id, studentId: localStorage['userId'], cloudwareType: item.cloudwareType })
+        }
         teacherCourseSrv.getCourseDetail().get({
                 classId: $stateParams.classId
             },

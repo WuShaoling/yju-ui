@@ -26,7 +26,7 @@
                 if (response.errorCode == 0) {
                     $scope.courseName = response.data.courseName;
                     $scope.moduleName = response.data.moduleName
-                    $scope.courseContent = response.data.homeworkSubmissionList;
+                    $scope.courseContent = response.data.homeworkList;
                     for (var i in $scope.courseContent) {
                         $scope.condition.push({
                             label: $scope.courseContent[i].homeworkName,

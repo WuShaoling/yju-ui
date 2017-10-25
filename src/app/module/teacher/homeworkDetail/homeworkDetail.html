@@ -44,7 +44,7 @@
                     </div>
                     <div class="col-sm-2">
                         <h5 style="margin-top:5px">
-                            已提交的作业：12/20</h5>
+                            已提交的作业：{{item.completedCount}}/{{item.homeworkSubmissionList.length}}</h5>
                     </div>
                     <div class="col-sm-2">
                         <!-- <select class="form-control" ng-model="q" ng-options="item.value as item.label for item in condition" ng-change="change()"></select> -->
@@ -69,7 +69,8 @@
                             <th>学号</th>
                             <th>是否提交</th>
 
-                            <th>提交日期</th>
+                            <th>最后提交日期</th>
+                            <th>截止日期</th>
                             <th>
                                 操作
                             </th>
@@ -77,18 +78,20 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="detail in item.student |filter:filterFunc">
+                        <tr ng-repeat="detail in item.homeworkSubmissionList |filter:filterFunc">
 
-                            <td>{{detail.name}}
+                            <td>{{detail.studentName}}
                             </td>
                             <td>{{detail.studentId}}</td>
-                            <td><a href=""><i class="fa fa-check " ng-class="{1:'fa-check text-navy',0:'fa-times text-danger'}[detail.completed]"></i></a></td>
+                            <td><a href=""><i class="fa fa-check " ng-class="{'true':'fa-check text-navy','false':'fa-times text-danger'}[detail.completed]"></i></a></td>
 
 
-                            <td>{{detail.date}}</td>
+                            <td>{{detail.lastEditDate}}</td>
+                            <td>{{detail.dueDate}}</td>
+
                             <td>
                                 <!-- <button type="button" class="btn btn-success btn-outline" ng-click="startExp()">启动</button> -->
-                                <button type="button" class="btn btn-success btn-outline" ui-sref="index.cloudware.checkHomework({id:detail.id})">查看作业</button>
+                                <button type="button" class="btn btn-success btn-outline" ng-disabled="!detail.completed" ui-sref="index.teacherCheckHomework.cloudware({ homeworkId: detail.homeworkId, studentId: detail.studentId, cloudwareType: item.cloudwareType })">查看作业</button>
 
                                 <button type="button" class="btn btn-success btn-outline" ng-click="grade()">评分</button>
 
