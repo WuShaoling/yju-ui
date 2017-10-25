@@ -135,8 +135,8 @@
                 controller: "teacherCourseCtrl"
             })
             .state('index.teacherCourseManagement', {
-                url: "/teacher/course/:courseId/management",
-                params: { courseId: null },
+                url: "/teacher/course/:classId/management",
+                params: { classId: null },
 
                 templateUrl: "app/module/teacher/teacherCourseManagement/teacherCourseManagement.html",
                 controller: "teacherCourseManagementCtrl"

@@ -59,11 +59,11 @@
         }
     }
 
-    addNewExCtrl.$inject = ['$scope', '$timeout', '$uibModal', 'commonSrv', 'courseManagementSrv', '$stateParams'];
+    addNewExCtrl.$inject = ['$scope', '$timeout', '$uibModal', 'commonSrv', 'courseManagementSrv', '$stateParams', 'reqUrl'];
 
 
 
-    function addNewExCtrl($scope, $timeout, $uibModal, commonSrv, courseManagementSrv, $stateParams) {
+    function addNewExCtrl($scope, $timeout, $uibModal, commonSrv, courseManagementSrv, $stateParams, reqUrl) {
         $scope.experiment = {};
         $scope.ok = function() {
             if (!$scope.experiment.experimentName) {
@@ -137,18 +137,54 @@
         $scope.getFile = function(file) {
             var formdata = new FormData();
             formdata.append('file', file);
-            commonSrv.uploadMarkdown().save({
-                file: formdata
-            }).$promise.then(function(response) {
-                console.log(response)
-                if (response.errorCode == 0) {
-                    toastr.success("上传成功")
-                } else {
-                    toastr.error(response.message)
+            $.ajax({
+                type: 'POST',
+                url: reqUrl + '/admin/course/experiment/markdown',
+                dataType: 'json',
+                processData: false, // Dont process the files
+                contentType: false,
+                data: formdata,
+                success: function(res) {
+                    console.log(res)
+                    if (res.errorCode == 0) {
+                        toastr.success('上传成功');
+                        $scope.markdownUrl = res.data;
+                        $.get($scope.markdownUrl + '', function(result) {
+                            // console.log(result)
+                            if (result == null) {
+                                return
+                            }
+                            $scope.text = result;
+                            $scope.html = converter.makeHtml($scope.text);
+                            // $timeout(function() {
+                            //     console.log($('#ht').height())
+                            //     $('#or').height($('#ht').height());
+                            // })
+
+                            // console.log(result.label_type)
+
+                        });
+                        // qiniuImage = qiniuURL + res.fileName;
+                        // $scope.imageSrc = qiniuURL + res.fileName;
+                        // $scope.isUpload = true;
+                        $scope.$apply();
+                    } else {
+                        toastr.error('啊哦，上传失败咯');
+                    }
                 }
-            }, function(error) {
-                toastr.error("上传失败，请稍后再试")
-            })
+            });
+            // commonSrv.uploadMarkdown().save({
+            //     file: formdata
+            // }).$promise.then(function(response) {
+            //     console.log(response)
+            //     if (response.errorCode == 0) {
+            //         toastr.success("上传成功")
+            //     } else {
+            //         toastr.error(response.message)
+            //     }
+            // }, function(error) {
+            //     toastr.error("上传失败，请稍后再试")
+            // })
         };
 
         $timeout(function() {
@@ -199,21 +235,7 @@
         };
 
 
-        $.get("app/module/teacher/teacherCourse/test.md", function(result) {
-            // console.log(result)
-            if (result == null) {
-                return
-            }
-            $scope.text = result;
-            $scope.html = converter.makeHtml($scope.text);
-            // $timeout(function() {
-            //     console.log($('#ht').height())
-            //     $('#or').height($('#ht').height());
-            // })
 
-            // console.log(result.label_type)
-
-        });
 
         activate();
 

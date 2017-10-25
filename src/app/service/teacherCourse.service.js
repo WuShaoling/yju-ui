@@ -10,12 +10,17 @@
     function teacherCourseSrv(reqUrl, $resource) {
 
         this.getAllCourse = function() {
-            return $resource(reqUrl + "/teacher/data/:teacherId.json", {
+            return $resource(reqUrl + "/teacher/:teacherId/course/all", {
                 teacherId: "@teacherId"
             })
         }
+        this.getCourseDetail = function() {
+            return $resource(reqUrl + "/teacher/course/:classId", {
+                classId: "@classId"
+            })
+        }
         this.getModuleHw = function() {
-            return $resource(reqUrl + "/teacher/data/:moduleId.json", {
+            return $resource(reqUrl + "/teacher/course/:moduleId/homework", {
                 moduleId: "@moduleId"
             })
         }
@@ -25,6 +30,8 @@
                 id: "@id"
             })
         }
+
+
 
     }
 })();

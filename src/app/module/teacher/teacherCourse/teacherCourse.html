@@ -46,7 +46,7 @@
                             <th>课程描述</th>
                             <!-- <th>Completed</th> -->
                             <th>授课教师</th>
-                            <th>上课时间</th>
+                            <th>上课时长</th>
                             <th>操作</th>
                         </tr>
                     </thead>
@@ -56,10 +56,10 @@
                             <td>{{item.courseName}}
                             </td>
                             <td>{{item.className}}</td>
-                            <td>{{item.courseDes}}</td>
+                            <td>{{item.courseDescription}}</td>
                             <!-- <td><a href=""><i class="fa fa-check text-navy"></i></a></td> -->
                             <td>{{item.teacherName}}</td>
-                            <td>{{item.date}}</td>
+                            <td>{{item.duration}}</td>
                             <td>
                                 <!-- <button type="button" class="btn btn-success btn-outline" ng-click="startExp()">查看详情</button> -->
                                 <button type="button" class="btn btn-primary btn-outline" ng-click="edit(item)">查看详情</button>

@@ -220,7 +220,7 @@
                         // qiniuImage = qiniuURL + res.fileName;
                         // $scope.imageSrc = qiniuURL + res.fileName;
                         // $scope.isUpload = true;
-                        // $scope.$apply();
+                        $scope.$apply();
                     } else {
                         toastr.error('啊哦，上传失败咯');
                     }

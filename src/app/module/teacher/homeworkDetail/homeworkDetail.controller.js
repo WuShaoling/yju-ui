@@ -23,7 +23,7 @@
         teacherCourseSrv.getModuleHw().get({ moduleId: $stateParams.moduleId },
             function(response) {
                 console.log(response);
-                $scope.courseContent = response.data.homeworks;
+                $scope.courseContent = response.data.homeworkSubmissionList;
                 for (var i in $scope.courseContent) {
                     $scope.condition.push({
                         label: $scope.courseContent[i].homeworkName,

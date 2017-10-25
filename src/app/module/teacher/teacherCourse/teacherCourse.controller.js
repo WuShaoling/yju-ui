@@ -11,7 +11,7 @@
 
 
         $scope.edit = function(item) {
-                $state.go('index.teacherCourseManagement', { courseId: item.id });
+                $state.go('index.teacherCourseManagement', { courseId: item.classId });
             }
             // $.get("app/module/teacher/teacherCourse/test.md", function(result) {
             //     // console.log(result)
@@ -23,10 +23,10 @@
             //         marked(result);
             // });
 
-        teacherCourseSrv.getAllCourse().get({ teacherId: JSON.parse(localStorage['user']).username },
+        teacherCourseSrv.getAllCourse().get({ teacherId: localStorage['userId'] },
             function(response) {
                 console.log(response)
-                $scope.courseContent = response.data;
+                $scope.courseContent = response.data.teacherClassList;
             },
             function(error) {
                 console.log(error)
