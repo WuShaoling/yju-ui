@@ -23,20 +23,27 @@
         teacherCourseSrv.getModuleHw().get({ moduleId: $stateParams.moduleId },
             function(response) {
                 console.log(response);
-                $scope.courseContent = response.data.homeworkSubmissionList;
-                for (var i in $scope.courseContent) {
-                    $scope.condition.push({
-                        label: $scope.courseContent[i].homeworkName,
-                        value: $scope.courseContent[i].homeworkName
-                    })
-                }
+                if (response.errorCode == 0) {
+                    $scope.courseName = response.data.courseName;
+                    $scope.moduleName = response.data.moduleName
+                    $scope.courseContent = response.data.homeworkSubmissionList;
+                    for (var i in $scope.courseContent) {
+                        $scope.condition.push({
+                            label: $scope.courseContent[i].homeworkName,
+                            value: $scope.courseContent[i].homeworkName
+                        })
+                    }
 
-                $scope.q = $scope.condition[0].value
-                $scope.p = $scope.condition1[0].value
+                    $scope.q = $scope.condition[0].value
+                    $scope.p = $scope.condition1[0].value
+                } else {
+                    toastr.error(response.message)
+                }
 
             },
             function(error) {
                 console.log(error)
+                toastr.error("获取详情失败，请稍后再试")
             })
         $scope.courseContent = [];
 

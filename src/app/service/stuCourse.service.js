@@ -37,7 +37,20 @@
         }
 
         this.getExperimentDetail = function() {
-            return $resource(reqUrl + '/student/experiment/:experimentId')
+            return $resource(reqUrl + '/student/experiment/:experimentId', {
+                experimentId: "@experimentId"
+            })
+        }
+
+        this.getHwCloudwareInfo = function() {
+            return $resource(reqUrl + '/student/homework/:homeworkId/:studentId/cloudware', {
+                homeworkId: "@homeworkId",
+                studentId: "@studentId"
+            })
+        }
+
+        this.createHwCloudware = function() {
+            return $resource(reqUrl + '/student/homework/creation')
         }
     }
 })();

@@ -7,9 +7,9 @@
         .controller('uploadReportModalCtrl', uploadReportModalCtrl);
 
     studentDoHomeworkCtrl.$inject = ['$scope', '$uibModal', '$timeout', 'stuCourseSrv', '$stateParams'];
-    uploadReportModalCtrl.$inject = ['$scope', '$uibModalInstance', '$timeout']
+    uploadReportModalCtrl.$inject = ['$scope', '$uibModalInstance', '$timeout', 'reqUrl']
 
-    function uploadReportModalCtrl($scope, $uibModalInstance, $timeout) {
+    function uploadReportModalCtrl($scope, $uibModalInstance, $timeout, reqUrl) {
         $scope.cancel = function() {
             $uibModalInstance.dismiss('cancel');
         }
@@ -21,14 +21,34 @@
             $('#report').trigger('click');
         }
         $scope.filename = "选择报告";
+        $scope.homeworkFile = new FormData();
+
         $scope.getFile = function(file) {
             console.log(file);
+            $scope.homeworkFile.append('file', file)
             $scope.filename = file.name;
             $scope.showBtn = true;
             $scope.$apply()
         };
         $scope.upload = function() {
-            toastr.success("上传成功,不要忘记提交！")
+            $.ajax({
+                type: 'POST',
+                url: reqUrl + '/admin/course/experiment/markdown',
+                dataType: 'json',
+                processData: false, // Dont process the files
+                contentType: false,
+                data: $scope.homeworkFile,
+                success: function(res) {
+                    console.log(res)
+                    if (res.errorCode == 0) {
+                        toastr.success('上传成功');
+                        $scope.homeworkUrl = res.data;
+                        $scope.$apply();
+                    } else {
+                        toastr.error('啊哦，上传失败咯');
+                    }
+                }
+            });
         }
 
         // $timeout(function() {

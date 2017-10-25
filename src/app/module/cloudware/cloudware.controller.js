@@ -5,9 +5,9 @@
         .module('phoenix')
         .controller('cloudwareCtrl', cloudwareCtrl);
 
-    cloudwareCtrl.$inject = ['$scope', '$timeout', 'usSpinnerService', 'commonSrv'];
+    cloudwareCtrl.$inject = ['$scope', '$timeout', 'usSpinnerService', 'commonSrv', 'stuCourseSrv', '$stateParams'];
 
-    function cloudwareCtrl($scope, $timeout, usSpinnerService, commonSrv) {
+    function cloudwareCtrl($scope, $timeout, usSpinnerService, commonSrv, stuCourseSrv, $stateParams) {
         var vm = this;
         $scope.leftControl = true;
         $scope.rightControl = true;
@@ -15,7 +15,18 @@
         $scope.rightText = "隐藏工具栏";
         $scope.hasStarted = false;
         $scope.startEx = function() {
-            startService();
+            if ($scope.notFirst) {
+                console.log("start...")
+                console.log($scope.cloudwareInfo);
+                console.log($('#cloudware'));
+                return;
+                start($scope.cloudwareInfo.webSocket, $('#cloudware'))
+
+            } else {
+                console.log("start...service")
+
+                startService($stateParams.studentId, $stateParams.cloudwareType, $stateParams.type);
+            }
             // commonSrv.startEx().save({
             //     secret: "123",
             //     cloudware_type: "rstudio",
@@ -34,6 +45,37 @@
             $scope.hasStarted = true;
 
         }
+        $scope.notFirst = false;
+        $scope.getCloudwareInfo = function() {
+            switch ($stateParams.type) {
+                case "0":
+                    stuCourseSrv.getHwCloudwareInfo().get({
+                        homeworkId: $stateParams.homeworkId,
+                        studentId: $stateParams.studentId
+                    }).$promise.then(
+                        function(response) {
+                            console.log(response)
+                            if (response.errorCode == 0) {
+                                console.log("已启动过...")
+
+                                $scope.notFirst = true;
+                                $scope.cloudwareInfo = response.data;
+                            } else {
+                                console.log("未启动过...")
+
+                            }
+                        },
+                        function(error) {
+                            console.log(error);
+                        })
+                    break;
+                case "1":
+                    break;
+                default:
+                    break;
+            }
+        }
+        $scope.getCloudwareInfo();
         $scope.flag = true;
         $scope.fullScreenDes = function() {
             if ($scope.flag) {
@@ -141,6 +183,7 @@
                     var x = Math.floor((e.pageX - dom_left) / bei);
                     var y = Math.floor((e.pageY - dom_top + scroll_top) / bei);
                     var buf = new ArrayBuffer(5);
+
                     var dv = new DataView(buf);
                     dv.setUint8(0, 0);
                     dv.setUint16(1, x, true);
@@ -190,7 +233,7 @@
             ws.binaryType = "arraybuffer";
             ws.onmessage = function(msg) {
                 var data = msg.data;
-                if (!data) {
+                if (!(data instanceof ArrayBuffer)) {
                     return
                 }
                 var dv = new DataView(data);
@@ -210,21 +253,44 @@
             };
         }
 
-        var startService = function() {
+        var startService = function(studentId, cloudware_type, type) {
                 setTimeout(function() {
                     if ($('[data-cloudware-env]').length > 0) {
                         $('[data-cloudware-env]').each(function(index, el) {
                             var env = $(el).attr('data-cloudware-env')
                             $.ajax({
                                 url: 'http://api.cloudwarehub.com/services',
-                                headers: { 'secret': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJpYXQiOjE1MDU4MTM0NTd9.Ftw1yHeUrqdNvymFZcIpuEoS0RHBFZqu4MfUZON9Zm0' },
+                                // headers: { 'secret': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJpYXQiOjE1MDU4MTM0NTd9.Ftw1yHeUrqdNvymFZcIpuEoS0RHBFZqu4MfUZON9Zm0' },
                                 method: 'post',
                                 data: {
-                                    cloudware_type: 'rstudio',
-                                    user_id: '1352890'
+                                    'secret': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJpYXQiOjE1MDU4MTM0NTd9.Ftw1yHeUrqdNvymFZcIpuEoS0RHBFZqu4MfUZON9Zm0',
+                                    cloudware_type: cloudware_type,
+                                    user_id: studentId
                                 },
                                 dataType: 'json',
                                 success: function(resp, textStatus, xhr) {
+                                    switch (type) {
+                                        case "0":
+                                            stuCourseSrv.createHwCloudware().save({
+                                                "homeworkId": $stateParams.homeworkId,
+                                                "pulsarId": resp.pulsar_id,
+                                                "serviceId": resp.service_id,
+                                                "serviceName": resp.service_name,
+                                                "studentId": studentId,
+                                                "webSocket": resp.ws
+                                            }).$promise.then(function(response) {
+                                                console.log(response)
+                                            }, function(error) {
+                                                console.log(error);
+                                            });
+                                            break;
+                                        case "1":
+
+                                            break;
+
+                                        default:
+                                            break;
+                                    }
                                     console.log(resp)
                                     start(resp.ws, el)
                                 }

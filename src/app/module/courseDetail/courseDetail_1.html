@@ -7,7 +7,7 @@
                     <div class="post single_post">
 
                         <!--end meta-->
-                        <h1>Python 与数据分析</h1>
+                        <h1>{{courseName}}</h1>
                         <div class="meta">
                             <span class="author">授课教师 : <a href="">安静的美男子</a></span>
                             <span class="category"> 班级数：<a href="">2</a></span>
@@ -41,18 +41,18 @@
                                     <input type="text" name="course-name" class="form-control" placeholder="Course Name">
 
                                 </div> -->
-                                <div class="col-md-4">
+                                <!-- <div class="col-md-4">
                                     <select name="guiest_id2" id="guiest_id2" class="form-control">
                                                 <option value="0">实验名称</option>
                                                 <option value="1">R基本环境</option>
                                                 <option value="2">R语言统计建模与分析基础实验</option>
-                                                <!-- <option value="3">Level_3</option> -->
+
                                             </select>
                                 </div>
                                 <div class="col-md-4">
                                     <button class="btn btn-success btn-block " type="submit">搜索</button>
 
-                                </div>
+                                </div> -->
 
                             </div>
 
@@ -65,68 +65,42 @@
                             <thead>
                                 <tr>
                                     <th>实验名称</th>
-                                    <th>领域方向</th>
-                                    <th>时长</th>
-                                    <th>Campus</th>
-                                    <th>操作</th>
+                                    <th>实验描述</th>
+                                    <th>创建日期</th>
+                                    <th>实验类型</th>
+                                    <!-- <th>操作</th> -->
 
 
                                 </tr>
                             </thead>
-                            <tbody>
+
+                            <tbody ng-repeat="item in moduleList">
                                 <tr class="option">
-                                    <td>R语言编程基础实验</td>
+                                    <td>{{item.moduleName}}</td>
                                     <td>&nbsp;</td>
                                     <td>&nbsp;</td>
                                     <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
+
                                 </tr>
-                                <tr>
+                                <tr ng-repeat="ex in item.moduleContent">
                                     <td>
                                         <ul>
                                             <li class="active">
-                                                <a href="">R基本环境</a>
+                                                <a href="">{{ex.experimentName}}</a>
                                             </li>
-                                            <li>
-                                                <a href="">计算机科学</a>
-                                            </li>
-                                            <li>
-                                                <a href="">数据分析</a>
-                                            </li>
+
                                         </ul>
                                     </td>
-                                    <td>软件工程</td>
-                                    <td>2小时</td>
-                                    <td>tongji</td>
-                                    <td>
+                                    <td>{{ex.experimentDes}}</td>
+                                    <td>{{ex.publishDate}}</td>
+                                    <td>{{ex.cloudwareType}}</td>
+                                    <!-- <td>
                                         <button class="btn btn-sm btn-success" type="button" ng-click="doEx()">开始实验</button>
 
-                                    </td>
+                                    </td> -->
 
                                 </tr>
-                                <tr>
-                                    <td>
-                                        <ul>
-                                            <li class="active">
-                                                <a href=""> R语言统计建模与分析基础实验</a>
-                                            </li>
-                                            <li>
-                                                <a href="">数据分析</a>
-                                            </li>
-                                            <li>
-                                                <!-- <a href="">Continuing Education</a> -->
-                                            </li>
-                                        </ul>
-                                    </td>
-                                    <td>嵌入式方向</td>
-                                    <td>1小时</td>
 
-                                    <td>tongji</td>
-                                    <td>
-                                        <button class="btn btn-sm btn-success" type="button">开始实验</button>
-
-                                    </td>
-                                </tr>
 
                             </tbody>
                         </table>

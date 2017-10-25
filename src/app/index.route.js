@@ -99,14 +99,14 @@
                 controller: "studentHomeworkCtrl"
             })
             .state('index.studentDoHomework', {
-                url: "/student/homework/:homeworkId/:type/:studentId/detail",
-                params: { homeworkId: null, type: "0", studentId: null },
+                url: "/student/homework/:homeworkId/:type/:studentId/:cloudwareType/detail",
+                params: { homeworkId: null, type: "0", studentId: null, cloudwareType: null },
                 templateUrl: "app/module/student/studentDoHomework/studentDoHomework.html",
                 controller: "studentDoHomeworkCtrl"
             })
             .state('index.startExperiment', {
-                url: "/course/experiment/:experimentId/:type/:studentId",
-                params: { homeworkId: null, type: "1", studentId: null },
+                url: "/course/experiment/:experimentId/:type/:studentId/:cloudwareType",
+                params: { homeworkId: null, type: "1", studentId: null, cloudwareType: null },
                 templateUrl: "app/module/student/studentStartExperiment/studentStartExperiment.html",
                 controller: "studentStartExperimentCtrl"
             })

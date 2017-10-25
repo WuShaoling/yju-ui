@@ -9,7 +9,7 @@
 
     function studentHomeworkCtrl($scope, $state, stuCourseSrv, $stateParams) {
         $scope.doHomework = function(item) {
-            $state.go('index.studentDoHomework.cloudware', { homeworkId: item.id });
+            $state.go('index.studentDoHomework.cloudware', { homeworkId: item.id, studentId: localStorage['userId'], cloudwareType: item.cloudwareType });
         }
         stuCourseSrv.getAllHomework().get({
                 classId: $stateParams.classId

@@ -5,51 +5,20 @@
         .module('phoenix')
         .controller('MainController', MainController);
 
-    MainController.$inject = ['$scope', '$timeout'];
+    MainController.$inject = ['$scope', '$timeout', 'commonSrv'];
 
-    function MainController($scope, $timeout) {
+    function MainController($scope, $timeout, commonSrv) {
 
         $scope.play = function() {
             $('video')[0].play();
         }
-
-        $scope.courses = [{
-            id: "1",
-            image: "img/hadoop.jpg",
-            duration: "1h20min",
-            name: "Hadoop + Spark的安装与示例",
-            teacher: "Jasper",
-            studentNum: "1100",
-            price: "70",
-            originPrice: "100"
-        }, {
-            id: "2",
-            image: "img/spss.jpg",
-            duration: "1h20min",
-            name: "SPSS统计分析与实践",
-            teacher: "Jane",
-            studentNum: "3000",
-            price: "80",
-            originPrice: "120"
-        }, {
-            id: "3",
-            image: "img/python.jpg",
-            duration: "1h20min",
-            name: "Python大数据分析",
-            teacher: "JUny1",
-            studentNum: "200",
-            price: "90",
-            originPrice: "1300"
-        }, {
-            id: "4",
-            image: "img/bigData.jpg",
-            duration: "2h20min",
-            name: "大数据原理与实践",
-            teacher: "Raymond",
-            studentNum: "2000",
-            price: "170",
-            originPrice: "400"
-        }]
+        commonSrv.getHotCourses().get().$promise.then(
+            function(response) {
+                console.log(response)
+                $scope.courses = response.data.courseList
+            },
+            function(error) {}
+        )
 
 
         $scope.change = function() {

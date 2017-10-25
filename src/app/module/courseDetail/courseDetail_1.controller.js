@@ -5,9 +5,9 @@
         .module('phoenix')
         .controller('courseDetail1Ctrl', courseDetail1Ctrl);
 
-    courseDetail1Ctrl.$inject = ['$scope', '$stateParams', 'courseSrv'];
+    courseDetail1Ctrl.$inject = ['$scope', '$stateParams', 'courseSrv', 'courseManagementSrv'];
 
-    function courseDetail1Ctrl($scope, $stateParams, courseSrv) {
+    function courseDetail1Ctrl($scope, $stateParams, courseSrv, courseManagementSrv) {
         var vm = this;
         $scope.doEx = function() {
             if (localStorage['logined'] == "1") {
@@ -16,11 +16,16 @@
                 $state.go('login');
             }
         }
-        courseSrv.getCourseDetail().get({
+        courseManagementSrv.getCourseDetail().get({
             courseId: $stateParams.courseId
         }).$promise.then(
             function(response) {
-                toastr.success("get it");
+                if (response.errorCode == 0) {
+                    toastr.success("get it");
+                    console.log(response)
+                    $scope.courseName = response.data.courseName;
+                    $scope.moduleList = response.data.moduleList;
+                }
             },
             function(error) {
                 toastr.error("not found");

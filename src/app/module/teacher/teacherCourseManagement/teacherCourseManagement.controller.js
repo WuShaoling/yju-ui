@@ -8,7 +8,7 @@
     teacherCourseManagementCtrl.$inject = ['$scope', '$uibModal', 'teacherCourseSrv', '$stateParams'];
 
     function teacherCourseManagementCtrl($scope, $uibModal, teacherCourseSrv, $stateParams) {
-        console.log($stateParams)
+
         teacherCourseSrv.getCourseDetail().get({
                 classId: $stateParams.classId
             },

@@ -11,7 +11,7 @@
 
 
         $scope.edit = function(item) {
-                $state.go('index.teacherCourseManagement', { courseId: item.classId });
+                $state.go('index.teacherCourseManagement', { classId: item.classId });
             }
             // $.get("app/module/teacher/teacherCourse/test.md", function(result) {
             //     // console.log(result)
