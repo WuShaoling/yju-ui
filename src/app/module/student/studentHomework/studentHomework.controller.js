@@ -48,19 +48,22 @@
                 studentId: localStorage['userId']
             }).$promise.then(function(response) {
                     console.log(response)
+                    if (response.errorCode == 0) {
+                        swal({
+                            title: response.data.score,
+                            text: response.data.comment,
+                            type: "success",
+                            showCancelButton: true,
+                            // confirmButtonColor: "#DD6B55",
+                            confirmButtonText: "确定",
+                            closeOnConfirm: true,
+                            cancelButtonText: "取消",
+                            closeOnCancel: true
+                        })
+                    }
                 },
                 function(error) { console.log(error) })
-            swal({
-                title: "确定要删除吗？",
-                text: "【" + item.id + "】" + "将被删除",
-                type: "success",
-                showCancelButton: true,
-                // confirmButtonColor: "#DD6B55",
-                confirmButtonText: "确定",
-                closeOnConfirm: true,
-                cancelButtonText: "取消",
-                closeOnCancel: true
-            })
+
         }
 
     }
