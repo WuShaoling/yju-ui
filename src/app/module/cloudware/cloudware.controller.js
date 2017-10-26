@@ -293,38 +293,42 @@
                                 },
                                 dataType: 'json',
                                 success: function(resp, textStatus, xhr) {
-                                    switch (type) {
-                                        case "0":
-                                            stuCourseSrv.createHwCloudware().save({
-                                                "homeworkId": $stateParams.homeworkId,
-                                                "pulsarId": resp.pulsar_id,
-                                                "serviceId": resp.service_id,
-                                                "serviceName": resp.service_name,
-                                                "studentId": studentId,
-                                                "webSocket": resp.ws
-                                            }).$promise.then(function(response) {
-                                                console.log(response)
-                                            }, function(error) {
-                                                console.log(error);
-                                            });
-                                            break;
-                                        case "1":
-                                            stuCourseSrv.createExCloudware().save({
-                                                "experimentId": $stateParams.experimentId,
-                                                "pulsarId": resp.pulsar_id,
-                                                "serviceId": resp.service_id,
-                                                "serviceName": resp.service_name,
-                                                "studentId": studentId,
-                                                "webSocket": resp.ws
-                                            }).$promise.then(function(response) {
-                                                console.log(response)
-                                            }, function(error) {
-                                                console.log(error);
-                                            });
-                                            break;
+                                    if (resp.errorCode == 0) {
+                                        switch (type) {
+                                            case "0":
+                                                stuCourseSrv.createHwCloudware().save({
+                                                    "homeworkId": $stateParams.homeworkId,
+                                                    "pulsarId": resp.pulsar_id,
+                                                    "serviceId": resp.service_id,
+                                                    "serviceName": resp.service_name,
+                                                    "studentId": studentId,
+                                                    "webSocket": resp.ws
+                                                }).$promise.then(function(response) {
+                                                    console.log(response)
+                                                }, function(error) {
+                                                    console.log(error);
+                                                });
+                                                break;
+                                            case "1":
+                                                stuCourseSrv.createExCloudware().save({
+                                                    "experimentId": $stateParams.experimentId,
+                                                    "pulsarId": resp.pulsar_id,
+                                                    "serviceId": resp.service_id,
+                                                    "serviceName": resp.service_name,
+                                                    "studentId": studentId,
+                                                    "webSocket": resp.ws
+                                                }).$promise.then(function(response) {
+                                                    console.log(response)
+                                                }, function(error) {
+                                                    console.log(error);
+                                                });
+                                                break;
 
-                                        default:
-                                            break;
+                                            default:
+                                                break;
+                                        }
+                                    } else {
+                                        toastr.error(resp.errorMessage)
                                     }
                                     console.log(resp)
                                     start(resp.ws, el)
