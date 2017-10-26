@@ -142,14 +142,14 @@
                 controller: "teacherCourseManagementCtrl"
             })
             .state('index.homeworkDetail', {
-                url: "/teacher/course/:moduleId/homework",
-                params: { moduleId: null },
+                url: "/teacher/course/:classId/:moduleId/homework",
+                params: { moduleId: null, classId: null },
                 templateUrl: "app/module/teacher/homeworkDetail/homeworkDetail.html",
                 controller: "homeworkDetailCtrl"
             })
             .state('index.teacherCheckHomework', {
-                url: "/checkHomework/:homeworkId/:type/:studentId/:cloudwareType",
-                params: { homeworkId: null, type: "0", studentId: null, cloudwareType: null },
+                url: "/checkHomework/:homeworkId/:type/:studentId/:cloudwareType/:studentHomeworkId",
+                params: { homeworkId: null, type: "0", studentId: null, cloudwareType: null, studentHomeworkId: null },
                 templateUrl: "app/module/teacher/checkHomework/checkHomework.html",
                 controller: "checkHomeworkCtrl"
             })

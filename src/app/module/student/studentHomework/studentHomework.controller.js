@@ -12,7 +12,8 @@
             $state.go('index.studentDoHomework.cloudware', { homeworkId: item.id, studentId: localStorage['userId'], cloudwareType: item.cloudwareType });
         }
         stuCourseSrv.getAllHomework().get({
-                classId: $stateParams.classId
+                classId: $stateParams.classId,
+                studentId: localStorage['userId']
             }, function(response) {
                 console.log(response)
                 if (response.errorCode == 0) {
@@ -41,7 +42,26 @@
             label: "全部",
             value: ""
         }]
-
+        $scope.checkGrade = function(item) {
+            stuCourseSrv.getHomeworkScore().get({
+                homeworkId: item.id,
+                studentId: localStorage['userId']
+            }).$promise.then(function(response) {
+                    console.log(response)
+                },
+                function(error) { console.log(error) })
+            swal({
+                title: "确定要删除吗？",
+                text: "【" + item.id + "】" + "将被删除",
+                type: "success",
+                showCancelButton: true,
+                // confirmButtonColor: "#DD6B55",
+                confirmButtonText: "确定",
+                closeOnConfirm: true,
+                cancelButtonText: "取消",
+                closeOnCancel: true
+            })
+        }
 
     }
 })();

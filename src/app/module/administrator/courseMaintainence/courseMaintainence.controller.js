@@ -103,9 +103,9 @@
 
     }
 
-    courseMaintainenceCtrl.$inject = ['$scope', '$uibModal', 'courseManagementSrv', '$stateParams'];
+    courseMaintainenceCtrl.$inject = ['$scope', '$uibModal', 'courseManagementSrv', '$stateParams', '$state'];
 
-    function courseMaintainenceCtrl($scope, $uibModal, courseManagementSrv, $stateParams) {
+    function courseMaintainenceCtrl($scope, $uibModal, courseManagementSrv, $stateParams, $state) {
         $scope.getEx = function() {
             courseManagementSrv.getCourseDetail().get({
                     courseId: $stateParams.courseId
@@ -156,7 +156,10 @@
                 console.log(reason);
             });
         }
+        $scope.checkEx = function(item) {
+            $state.go('index.startExperiment.cloudware', { experimentId: item.id, studentId: localStorage['userId'], cloudwareType: item.cloudwareType });
 
+        }
 
         $scope.deleteModule = function(item) {
             swal({

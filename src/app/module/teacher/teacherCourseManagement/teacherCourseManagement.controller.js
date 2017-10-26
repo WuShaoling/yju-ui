@@ -11,6 +11,7 @@
         $scope.checkEx = function(item) {
             $state.go('index.startExperiment.cloudware', { experimentId: item.id, studentId: localStorage['userId'], cloudwareType: item.cloudwareType })
         }
+        $scope.classId = $stateParams.classId
         teacherCourseSrv.getCourseDetail().get({
                 classId: $stateParams.classId
             },

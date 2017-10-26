@@ -8,11 +8,16 @@
     homeworkDetailCtrl.$inject = ['$scope', '$uibModal', 'teacherCourseSrv', '$stateParams'];
 
     function homeworkDetailCtrl($scope, $uibModal, teacherCourseSrv, $stateParams) {
-        $scope.grade = function() {
+        $scope.grade = function(homeworkId) {
             var modalInstance = $uibModal.open({
                 // size: "",
                 templateUrl: 'app/module/modal/gradeModal.html',
-                controller: 'gradeModalCtrl'
+                controller: 'gradeModalCtrl',
+                resolve: {
+                    homeworkId: function() {
+                        return angular.copy(homeworkId);
+                    }
+                }
 
             });
             modalInstance.result.then(function(result) {
@@ -20,7 +25,7 @@
             });
         }
 
-        teacherCourseSrv.getModuleHw().get({ moduleId: $stateParams.moduleId },
+        teacherCourseSrv.getModuleHw().get({ moduleId: $stateParams.moduleId, classId: $stateParams.classId },
             function(response) {
                 console.log(response);
                 if (response.errorCode == 0) {

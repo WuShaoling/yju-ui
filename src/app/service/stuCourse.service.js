@@ -25,8 +25,9 @@
         }
 
         this.getAllHomework = function() {
-            return $resource(reqUrl + "/student/course/:classId/homework", {
-                classId: "@classId"
+            return $resource(reqUrl + "/student/course/:classId/:studentId/homework", {
+                classId: "@classId",
+                studentId: "@studentId"
             })
         }
 
@@ -64,6 +65,13 @@
 
         this.submitHomework = function() {
             return $resource(reqUrl + '/student/homework/submission')
+        }
+
+        this.getHomeworkScore = function() {
+            return $resource(reqUrl + '/student/course/homework/:homeworkId/:studentId', {
+                homeworkId: "@homeworkId",
+                studentId: "@studentId"
+            })
         }
     }
 })();

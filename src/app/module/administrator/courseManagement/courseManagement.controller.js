@@ -207,7 +207,7 @@
             // })
             $.ajax({
                 type: 'POST',
-                url: reqUrl + '/admin/course/experiment/piclib',
+                url: 'http://www.x-lab.ac:13001' + '/admin/course/experiment/piclib',
                 dataType: 'json',
                 processData: false, // Dont process the files
                 contentType: false,
@@ -216,7 +216,7 @@
                     console.log(res)
                     if (res.errorCode == 0) {
                         toastr.success('上传图片成功');
-                        $scope.course.imageUrl = res.data;
+                        $scope.course.imageUrl = res.data.url;
                         // qiniuImage = qiniuURL + res.fileName;
                         // $scope.imageSrc = qiniuURL + res.fileName;
                         // $scope.isUpload = true;

@@ -12,8 +12,9 @@
             <div class="col-sm-5 m-b-xs">
             </div>
             <div class="col-sm-2 m-b-xs">
-                <button type="button" class="btn btn-success btn-sm" ng-click="checkReport()">查看报告</button>
-                <button type="button" class="btn btn-success btn-sm" ng-click="grade()">评分</button>
+                <a href="{{detail.homeworkUrl}}" download="{{detail.homeworkName}}"><button type="button" class="btn btn-success btn-sm" > 查看报告</button></a>
+
+                <button type="button" class="btn btn-success btn-sm" ng-click="grade(studentHomeworkId)">评分</button>
 
                 <!-- <button type="button" class="btn btn-success btn-sm">启动作业容器</button>
                        

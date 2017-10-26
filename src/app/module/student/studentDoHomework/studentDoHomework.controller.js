@@ -51,7 +51,7 @@
         $scope.upload = function() {
             $.ajax({
                 type: 'POST',
-                url: reqUrl + '/admin/course/experiment/markdown',
+                url: reqUrl + '/admin/course/experiment/report',
                 dataType: 'json',
                 processData: false, // Dont process the files
                 contentType: false,

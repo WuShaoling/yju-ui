@@ -6,15 +6,24 @@
         .controller('addNewExCtrl', addNewExCtrl)
         .controller('pictureLibCtrl', pictureLibCtrl);
 
-    pictureLibCtrl.$inject = ['$scope', '$timeout', '$uibModalInstance', 'photoswipeSrv'];
+    pictureLibCtrl.$inject = ['$scope', '$timeout', '$uibModalInstance', 'photoswipeSrv', 'courseManagementSrv', '$stateParams'];
 
 
 
-    function pictureLibCtrl($scope, $timeout, $uibModalInstance, photoswipeSrv) {
+    function pictureLibCtrl($scope, $timeout, $uibModalInstance, photoswipeSrv, courseManagementSrv, $stateParams) {
         $timeout(function() {
             photoswipeSrv.initPhotoSwipeFromDOM('.my-gallery');
 
         })
+        courseManagementSrv.getModuleLib().get({ moduleId: $stateParams.moduleId })
+            .$promise.then(
+                function(response) {
+                    console.log(response);
+                },
+                function(error) {
+                    console.log(error)
+                }
+            )
         $scope.getObjectURL = function(file) {
             var url = null;
             if (window.createObjectURL != undefined) { // basic
@@ -152,11 +161,13 @@
                         toastr.success('上传成功');
                         $scope.markdownUrl = res.data;
                         $.get($scope.markdownUrl + '', function(result) {
-                            // console.log(result)
+                            console.log(result)
                             if (result == null) {
                                 return
                             }
                             $scope.text = result;
+                            console.log($scope.text);
+
                             $scope.html = converter.makeHtml($scope.text);
                             // $timeout(function() {
                             //     console.log($('#ht').height())
@@ -228,7 +239,10 @@
                                 $scope.text = this.getValue();
                                 $scope.$apply();
                                 console.log($scope.text);
-                            }
+                            },
+                            imageUpload: true,
+                            imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+                            imageUploadURL: 'http://www.x-lab.ac:13001/admin/course/experiment/piclib',
                         });
                     })
                     $('.footer').css({ 'position': '', 'bottom': "none" })

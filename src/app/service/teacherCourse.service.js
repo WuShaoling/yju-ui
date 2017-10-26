@@ -20,8 +20,9 @@
             })
         }
         this.getModuleHw = function() {
-            return $resource(reqUrl + "/teacher/course/:moduleId/homework", {
-                moduleId: "@moduleId"
+            return $resource(reqUrl + "/teacher/course/:moduleId/:classId/homework", {
+                moduleId: "@moduleId",
+                classId: "@classId"
             })
         }
 
@@ -31,7 +32,16 @@
             })
         }
 
+        this.getStuHomeworkDetail = function() {
+            return $resource(reqUrl + '/teacher/course/homework/:studentHomeworkId', {
+                studentHomeworkId: "@studentHomeworkId"
+            })
+        }
 
+
+        this.grade = function() {
+            return $resource(reqUrl + '/teacher/course/homework/grade')
+        }
 
     }
 })();

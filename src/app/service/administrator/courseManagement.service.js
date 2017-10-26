@@ -42,5 +42,11 @@
         this.deleteExperiment = function() {
             return $resource(reqUrl + "/admin/course/experiment/deletion")
         }
+
+        this.getModuleLib = function() {
+            return $resource(reqUrl + '/admin/course/:moduleId/lib', {
+                moduleId: "@moduleId"
+            })
+        }
     }
 })();

@@ -2,7 +2,7 @@
     'use strict';
     angular.module('phoenix').value('reqUrl', "http://localhost:8080")
 
-    // angular.module('phoenix').value('reqUrl', "http://www.x-lab.ac:8080")
+    // angular.module('phoenix').value('reqUrl', "http://www.x-lab.ac:13001")
 
     //toastr配置
     toastr.options = {

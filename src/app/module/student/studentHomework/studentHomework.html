@@ -23,7 +23,10 @@
 
                             <th>{{item.moduleName}}</th>
                             <th>作业描述</th>
+                            <th>是否提交报告</th>
+
                             <th>作业类型</th>
+
                             <!-- <th>Completed</th> -->
                             <th>发布日期</th>
                             <th>截止日期</th>
@@ -37,6 +40,8 @@
                             <td>{{detail.homeworkName}}
                             </td>
                             <td>{{detail.homeworkDes}}</td>
+                            <td><a href=""><i class="fa fa-check " ng-class="{'true':'fa-check text-navy','false':'fa-times text-danger'}[detail.completed]"></i></a></td>
+
                             <td>{{detail.cloudwareType}}</td>
                             <!-- <td><a href=""><i class="fa fa-check text-navy"></i></a></td> -->
 
@@ -45,6 +50,8 @@
                             <td>
                                 <!-- <button type="button" class="btn btn-primary btn-outline" ng-click="startExp()">做作业</button> -->
                                 <button type="button" class="btn btn-primary btn-outline" ng-click="doHomework(detail)">做作业</button>
+                                <button type="button" class="btn btn-primary btn-outline" ng-disabled="!detail.completed" ng-click="checkGrade(detail)">查看分数</button>
+
 
                             </td>
 

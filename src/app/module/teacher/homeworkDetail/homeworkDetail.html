@@ -82,7 +82,7 @@
 
                             <td>{{detail.studentName}}
                             </td>
-                            <td>{{detail.studentId}}</td>
+                            <td>{{detail.studentNo}}</td>
                             <td><a href=""><i class="fa fa-check " ng-class="{'true':'fa-check text-navy','false':'fa-times text-danger'}[detail.completed]"></i></a></td>
 
 
@@ -91,9 +91,9 @@
 
                             <td>
                                 <!-- <button type="button" class="btn btn-success btn-outline" ng-click="startExp()">启动</button> -->
-                                <button type="button" class="btn btn-success btn-outline" ng-disabled="!detail.completed" ui-sref="index.teacherCheckHomework.cloudware({ homeworkId: detail.homeworkId, studentId: detail.studentId, cloudwareType: item.cloudwareType })">查看作业</button>
+                                <button type="button" class="btn btn-success btn-outline" ng-disabled="!detail.completed" ui-sref="index.teacherCheckHomework.cloudware({ homeworkId: detail.homeworkId, studentId: detail.studentId, cloudwareType: item.cloudwareType,studentHomeworkId:detail.studentHomeworkId })">查看作业</button>
 
-                                <button type="button" class="btn btn-success btn-outline" ng-click="grade()">评分</button>
+                                <button type="button" class="btn btn-success btn-outline" ng-disabled="!detail.completed" ng-click="grade(detail.studentHomeworkId)">评分</button>
 
 
                                 <!-- <button type="button" class="btn btn-primary btn-outline" ng-click="doHomework()">做作业</button> -->
