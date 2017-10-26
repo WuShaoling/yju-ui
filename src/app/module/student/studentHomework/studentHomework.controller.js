@@ -49,8 +49,14 @@
             }).$promise.then(function(response) {
                     console.log(response)
                     if (response.errorCode == 0) {
+                        var score;
+                        if (response.data.score) {
+                            score = response.data.score
+                        } else {
+                            score = "暂无分数"
+                        }
                         swal({
-                            title: response.data.score,
+                            title: score,
                             text: response.data.comment,
                             type: "success",
                             showCancelButton: true,

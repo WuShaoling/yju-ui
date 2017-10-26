@@ -48,5 +48,15 @@
                 moduleId: "@moduleId"
             })
         }
+
+        this.addModuleLib = function() {
+            return $resource(reqUrl + '/admin/course/lib/add')
+        }
+
+        this.deleteLibPic = function() {
+            return $resource(reqUrl + '/admin/course/lib/deletion')
+
+        }
+
     }
 })();

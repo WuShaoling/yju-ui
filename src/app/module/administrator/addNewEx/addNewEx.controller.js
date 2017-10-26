@@ -6,19 +6,23 @@
         .controller('addNewExCtrl', addNewExCtrl)
         .controller('pictureLibCtrl', pictureLibCtrl);
 
-    pictureLibCtrl.$inject = ['$scope', '$timeout', '$uibModalInstance', 'photoswipeSrv', 'courseManagementSrv', '$stateParams'];
+    pictureLibCtrl.$inject = ['$scope', '$timeout', '$uibModalInstance', 'photoswipeSrv', 'courseManagementSrv', '$stateParams', 'reqUrl'];
 
 
 
-    function pictureLibCtrl($scope, $timeout, $uibModalInstance, photoswipeSrv, courseManagementSrv, $stateParams) {
+    function pictureLibCtrl($scope, $timeout, $uibModalInstance, photoswipeSrv, courseManagementSrv, $stateParams, reqUrl) {
         $timeout(function() {
             photoswipeSrv.initPhotoSwipeFromDOM('.my-gallery');
 
         })
+
         courseManagementSrv.getModuleLib().get({ moduleId: $stateParams.moduleId })
             .$promise.then(
                 function(response) {
                     console.log(response);
+                    if (response.errorCode == 0) {
+                        $scope.pics = response.data.imageList;
+                    }
                 },
                 function(error) {
                     console.log(error)
@@ -35,15 +39,62 @@
             }
             return url;
         }
+
         $scope.getFile = function(file) {
-            var url = $scope.getObjectURL(file);
-            $scope.pics.push({ des: "new" + new Date().getTime(), url: url });
+            // var url = $scope.getObjectURL(file);
+            var formdata = new FormData();
+            formdata.append('file', file);
+            $.ajax({
+                type: 'POST',
+                url: reqUrl + '/admin/course/experiment/piclib',
+                dataType: 'json',
+                processData: false, // Dont process the files
+                contentType: false,
+                data: formdata,
+                success: function(res) {
+                    console.log(res)
+                    if (res.errorCode == 0) {
+                        toastr.success('上传成功');
+                        $scope.picInfo = res.data;
+                        console.log($scope.picInfo);
+                        courseManagementSrv.addModuleLib().save({
+                            height: $scope.picInfo.height,
+                            imageUrl: $scope.picInfo.url,
+                            moduleId: $stateParams.moduleId,
+                            name: $scope.picInfo.name,
+                            width: $scope.picInfo.width
+                        }).$promise.then(
+                            function(response) {
+                                if (response.errorCode == 0) {
+                                    toastr.success("上传成功")
+                                } else {
+                                    toastr.error(response.message)
+                                }
+                            },
+                            function(error) {
+                                toastr.error("上传失败，请稍后再试")
+                            })
+                        $scope.$apply();
+                    } else {
+                        toastr.error('啊哦，上传失败咯');
+                    }
+                }
+            });
+            // $scope.pics.push({ des: "new" + new Date().getTime(), url: url });
             $scope.$apply();
         };
         $scope.choosePic = function() {
             $('#picFile').trigger('click');
         }
-        $scope.deletePic = function(index) {
+        $scope.deletePic = function(index, item) {
+            courseManagementSrv.deleteLibPic().save({
+                "moduleId": $stateParams,
+                "resourceId": item.resourceId
+            }).$promise.then(function(response) {
+                console.log(response);
+            }, function(error) {
+                console.log(error);
+            })
             $scope.pics.splice(index, 1);
         }
         $scope.pics = [];
@@ -86,14 +137,6 @@
             }
 
 
-            //   {
-            //     "cloudwareType": $scope.experiment.cloudwareType,
-            //     "experimentContent": $scope.text,
-            //     "experimentCreateDate": new Date(),
-            //     // "experimentDueDate": $scope.experiment.dueDate,
-            //     "experimentName": $scope.experiment.experimentName,
-            //     "moduleId": $stateParams.moduleId
-            // }
             console.log($scope.text);
             courseManagementSrv.addExperiment().save({
                 "cloudwareType": $scope.experiment.cloudwareType,
@@ -186,18 +229,7 @@
                     }
                 }
             });
-            // commonSrv.uploadMarkdown().save({
-            //     file: formdata
-            // }).$promise.then(function(response) {
-            //     console.log(response)
-            //     if (response.errorCode == 0) {
-            //         toastr.success("上传成功")
-            //     } else {
-            //         toastr.error(response.message)
-            //     }
-            // }, function(error) {
-            //     toastr.error("上传失败，请稍后再试")
-            // })
+
         };
 
         $timeout(function() {
@@ -240,9 +272,9 @@
                                 $scope.$apply();
                                 console.log($scope.text);
                             },
-                            imageUpload: true,
-                            imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
-                            imageUploadURL: 'http://www.x-lab.ac:13001/admin/course/experiment/piclib',
+                            // imageUpload: true,
+                            // imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+                            // imageUploadURL: 'http://www.x-lab.ac:13001/admin/course/experiment/piclib',
                         });
                     })
                     $('.footer').css({ 'position': '', 'bottom': "none" })
@@ -257,7 +289,23 @@
         };
 
 
-
+        $("textarea").on(
+            'keydown',
+            function(e) {
+                $scope.change();
+                if (e.keyCode == 9) {
+                    e.preventDefault();
+                    var indent = '    ';
+                    var start = this.selectionStart;
+                    var end = this.selectionEnd;
+                    var selected = window.getSelection().toString();
+                    selected = indent + selected.replace(/\n/g, '\n' + indent);
+                    this.value = this.value.substring(0, start) + selected +
+                        this.value.substring(end);
+                    this.setSelectionRange(start + indent.length, start +
+                        selected.length);
+                }
+            })
 
         activate();
 

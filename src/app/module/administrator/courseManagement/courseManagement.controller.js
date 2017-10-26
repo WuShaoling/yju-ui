@@ -207,7 +207,7 @@
             // })
             $.ajax({
                 type: 'POST',
-                url: 'http://www.x-lab.ac:13001' + '/admin/course/experiment/piclib',
+                url: reqUrl + '/admin/course/experiment/piclib',
                 dataType: 'json',
                 processData: false, // Dont process the files
                 contentType: false,

@@ -43,7 +43,10 @@
                         height: 600,
                         onchange: function() {
                             console.log(this.getValue());
-                        }
+                        },
+                        imageUpload: true,
+                        imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+                        imageUploadURL: 'http://www.x-lab.ac:13001/admin/course/experiment/piclib',
                     });
                     break;
                 case 2:
