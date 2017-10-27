@@ -294,6 +294,8 @@
                                 dataType: 'json',
                                 success: function(resp, textStatus, xhr) {
                                     if (resp.errorCode == 0) {
+                                        start(resp.ws, el)
+
                                         switch (type) {
                                             case "0":
                                                 stuCourseSrv.createHwCloudware().save({
@@ -331,7 +333,6 @@
                                         toastr.error(resp.errorMessage)
                                     }
                                     console.log(resp)
-                                    start(resp.ws, el)
                                 }
                             });
                         });

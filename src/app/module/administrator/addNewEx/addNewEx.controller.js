@@ -54,7 +54,7 @@
                 success: function(res) {
                     console.log(res)
                     if (res.errorCode == 0) {
-                        toastr.success('上传成功');
+                        // toastr.success('上传成功');
                         $scope.picInfo = res.data;
                         console.log($scope.picInfo);
                         courseManagementSrv.addModuleLib().save({
@@ -67,6 +67,13 @@
                             function(response) {
                                 if (response.errorCode == 0) {
                                     toastr.success("上传成功")
+                                    $scope.pics.push({
+                                        height: $scope.picInfo.height,
+                                        imageUrl: $scope.picInfo.url,
+                                        name: $scope.picInfo.name,
+                                        width: $scope.picInfo.width
+                                    });
+
                                 } else {
                                     toastr.error(response.message)
                                 }
@@ -88,14 +95,20 @@
         }
         $scope.deletePic = function(index, item) {
             courseManagementSrv.deleteLibPic().save({
-                "moduleId": $stateParams,
+                "moduleId": $stateParams.moduleId,
                 "resourceId": item.resourceId
             }).$promise.then(function(response) {
                 console.log(response);
+                if (response.errorCode == 0) {
+                    toastr.success("删除成功");
+                    $scope.pics.splice(index, 1);
+
+                } else {
+                    toastr.error(response.message)
+                }
             }, function(error) {
                 console.log(error);
             })
-            $scope.pics.splice(index, 1);
         }
         $scope.pics = [];
         $scope.supported = false;

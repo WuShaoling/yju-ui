@@ -50,11 +50,11 @@
         }
 
         this.addModuleLib = function() {
-            return $resource(reqUrl + '/admin/course/lib/add')
+            return $resource(reqUrl + '/admin/module/lib/add')
         }
 
         this.deleteLibPic = function() {
-            return $resource(reqUrl + '/admin/course/lib/deletion')
+            return $resource(reqUrl + '/admin/module/lib/deletion')
 
         }
 

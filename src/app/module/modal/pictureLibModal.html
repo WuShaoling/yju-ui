@@ -30,13 +30,13 @@
                 <div class="row">
                     <div class="col-md-2" ng-repeat="pic in pics track by $index">
                         <i class="fa fa-times deletePic" tooltip-placement="right" uib-tooltip="删除图片" ng-click="deletePic($index,pic)"></i>
-                        <i class="fa fa-clipboard copyPic" tooltip-placement="top" uib-tooltip="复制图片地址" clipboard supported="supported" text="pic.url" on-copied="success(pic)" on-error="fail(err)"></i>
+                        <i class="fa fa-clipboard copyPic" tooltip-placement="top" uib-tooltip="复制图片地址" clipboard supported="supported" text="pic.imageUrl" on-copied="success(pic)" on-error="fail(err)"></i>
 
                         <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-                            <a href="{{pic.url}}" itemprop="contentUrl" data-size="600x600">
-                                <img src="{{pic.url}}" itemprop="thumbnail" alt="Image description" />
+                            <a href="{{pic.imageUrl}}" itemprop="contentUrl" data-size="{{pic.width}}x{{pic.height}}">
+                                <img src="{{pic.imageUrl}}" itemprop="thumbnail" alt="Image description" />
                             </a>
-                            <figcaption itemprop="caption description" style="text-align:center">{{pic.des}}</figcaption>
+                            <figcaption itemprop="caption description" style="text-align:center">{{pic.name}}</figcaption>
                         </figure>
 
                     </div>
