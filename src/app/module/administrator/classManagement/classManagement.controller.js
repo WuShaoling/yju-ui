@@ -8,11 +8,11 @@
         .controller('addClassCtrl', addClassCtrl);
 
 
-    classManagementCtrl.$inject = ['$scope', 'reqUrl', '$state', '$uibModal', 'classManagementSrv'];
+    classManagementCtrl.$inject = ['$scope', 'reqUrl', '$state', '$uibModal', 'classManagementSrv', '$rootScope'];
     editClassCtrl.$inject = ['$scope', '$uibModalInstance', 'classtemp', 'courseManagementSrv', 'semesterSrv', 'classManagementSrv'];
     addClassCtrl.$inject = ['$scope', '$uibModalInstance', 'courseManagementSrv', 'classManagementSrv', 'semesterSrv'];
 
-    function classManagementCtrl($scope, reqUrl, $state, $uibModal, classManagementSrv) {
+    function classManagementCtrl($scope, reqUrl, $state, $uibModal, classManagementSrv, $rootScope) {
         var vm = this;
 
         $scope.classList = []
@@ -33,7 +33,7 @@
 
                     "type": 'GET',
                     beforeSend: function(xhr) {
-                        // xhr.setRequestHeader('access_token', '1504751421487');
+                        xhr.setRequestHeader('Authorization', 'Bearer ' + (localStorage['token'] ? localStorage['token'] : ''));
                     },
                     "dataSrc": function(data) {
                         console.log(data);
@@ -94,8 +94,15 @@
             })
             .on('xhr.dt', function(e, settings, json, xhr) {
 
-                if (xhr.status == 401) {
-
+                if (xhr.status == 200) {
+                    console.log(xhr)
+                    if (xhr.responseJSON.errorCode == 45) {
+                        toastr.error("登录超时！");
+                        $rootScope.$broadcast('ok', 0);
+                    } else if (xhr.responseJSON.errorCode == 46) {
+                        toastr.error("请重新登录！");
+                        $rootScope.$broadcast('ok', 0)
+                    }
                 }
             });
 

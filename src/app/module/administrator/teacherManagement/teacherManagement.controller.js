@@ -31,6 +31,8 @@
                     "type": 'GET',
                     beforeSend: function(xhr) {
                         // xhr.setRequestHeader('access_token', '1504751421487');
+                        xhr.setRequestHeader('Authorization', 'Bearer ' + (localStorage['token'] ? localStorage['token'] : ''));
+
                     },
                     "dataSrc": function(data) {
 
@@ -79,14 +81,15 @@
                 responsive: true
             })
             .on('xhr.dt', function(e, settings, json, xhr) {
-                //localStorageSrv.log("e-------------------->" + JSON.stringify(e));
-                // localStorageSrv.log("settings-------------------->" + JSON.stringify(settings));
-                // localStorageSrv.log("json-------------------->" + JSON.stringify(json));
-                //localStorageSrv.log("xhr-------------------->" + JSON.stringify(xhr.status));
-                //angular-http-auth插件无法捕捉datatable内ajax发出请求后回复头中的status，所以这里单独捕捉
-                if (xhr.status == 401) {
-                    // $rootScope.$broadcast('event:auth-loginRequire');
-                    //localStorageSrv.log('401xhr');
+                if (xhr.status == 200) {
+                    console.log(xhr)
+                    if (xhr.responseJSON.errorCode == 45) {
+                        toastr.error("登录超时！");
+                        $rootScope.$broadcast('ok', 0);
+                    } else if (xhr.responseJSON.errorCode == 46) {
+                        toastr.error("请重新登录！");
+                        $rootScope.$broadcast('ok', 0)
+                    }
                 }
             });
 
@@ -266,6 +269,32 @@
         $scope.cancel = function() {
             $uibModalInstance.dismiss('cancel');
         }
+        var validatemobile = function(mobile) {
+            if (mobile.length == 0) {
+                toastr.error('请输入手机号码！');
+                return false;
+            }
+            if (mobile.length != 11) {
+                toastr.error('请输入有效的手机号码！');
+
+                return false;
+            }
+            var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(17[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+            if (!myreg.test(mobile)) {
+                toastr.error('请输入有效的手机号码！');
+                return false;
+            }
+
+            return true;
+        }
+        var validateEmail = function(email) {
+            var myreg = /(\S)+[@]{1}(\S)+[.]{1}(\w)+/;
+            if (!myreg.test(email)) {
+                toastr.error("请输入正确的邮箱地址");
+                return false;
+            }
+            return true;
+        }
         $scope.ok = function() {
             console.log($scope.teacher);
 
@@ -280,6 +309,8 @@
             if (!$scope.teacher.contact) {
                 toastr.error("教师联系方式不能为空");
                 return;
+            } else if (!validatemobile($scope.teacher.contact) && !validateEmail($scope.teacher.teacherContact)) {
+                return
             }
             teacherManageSrv.addNewTeacher().save({
                     "gender": $scope.teacher.gender,
@@ -343,6 +374,33 @@
         } else {
             $scope.teacher.gender = 2
         }
+
+        var validatemobile = function(mobile) {
+            if (mobile.length == 0) {
+                toastr.error('请输入手机号码！');
+                return false;
+            }
+            if (mobile.length != 11) {
+                toastr.error('请输入有效的手机号码！');
+
+                return false;
+            }
+            var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(17[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+            if (!myreg.test(mobile)) {
+                toastr.error('请输入有效的手机号码！');
+                return false;
+            }
+
+            return true;
+        }
+        var validateEmail = function(email) {
+            var myreg = /(\S)+[@]{1}(\S)+[.]{1}(\w)+/;
+            if (!myreg.test(email)) {
+                toastr.error("请输入正确的邮箱地址");
+                return false;
+            }
+            return true;
+        }
         $scope.ok = function() {
             console.log($scope.teacher);
             if (!$scope.teacher.teacherNo) {
@@ -356,6 +414,8 @@
             if (!$scope.teacher.teacherContact) {
                 toastr.error("教师联系方式不能为空");
                 return;
+            } else if (!validatemobile($scope.teacher.teacherContact) && !validateEmail($scope.teacher.teacherContact)) {
+                return
             }
             teacherManageSrv.editTeacher().save({
                     "id": $scope.teacher.id,

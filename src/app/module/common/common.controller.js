@@ -6,10 +6,10 @@
         .controller('commonCtrl', commonCtrl)
         .controller('loginCtrl', loginCtrl);
 
-    commonCtrl.$inject = ['$scope', '$uibModal', '$state'];
+    commonCtrl.$inject = ['$scope', '$uibModal', '$state', '$rootScope'];
     loginCtrl.$inject = ['$scope', '$uibModalInstance', '$uibModal', 'commonSrv'];
 
-    function commonCtrl($scope, $uibModal, $state) {
+    function commonCtrl($scope, $uibModal, $state, $rootScope) {
         var vm = this;
         $scope.test = function() {
             vm.searchData = $scope.searchData;
@@ -49,7 +49,13 @@
                 console.log(reason);
             });
         }
-
+        $rootScope.$on('ok', function(event, data) {
+            console.log(data);
+            if (!data) {
+                $scope.logout();
+                $scope.login();
+            }
+        })
         $scope.logout = function() {
                 localStorage.clear();
                 $scope.logined = false;
@@ -135,6 +141,7 @@
                     if (response.errorCode == 0) {
                         var params;
                         localStorage['userId'] = response.data.body.userId
+                        localStorage['token'] = response.data.body.token
                         if ($scope.user.type.label == "学生") {
                             params = {
                                 errorCode: "000",

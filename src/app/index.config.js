@@ -1,8 +1,8 @@
 (function() {
     'use strict';
-    // angular.module('phoenix').value('reqUrl', "http://localhost:8080")
+    angular.module('phoenix').value('reqUrl', "http://localhost:8080")
 
-    angular.module('phoenix').value('reqUrl', "http://www.x-lab.ac:13001")
+    // angular.module('phoenix').value('reqUrl', "http://www.x-lab.ac:13001")
 
     //toastr配置
     toastr.options = {
@@ -31,5 +31,46 @@
         // )
         usSpinnerConfigProvider.setTheme('classic', { color: 'black', radius: 25, width: 5, length: 20, zIndex: 10 });
     }]);
+
+    angular.module('phoenix').config(['$httpProvider', function($httpProvider) {
+        $httpProvider.interceptors.push(['$rootScope', '$q', function($rootScope, $q) {
+            return {
+                request: function(config) {
+
+                    // Header - Token
+                    config.headers = config.headers || {};
+                    if (localStorage['token']) {
+                        config.headers.Authorization = 'Bearer ' + localStorage['token'];
+                    };
+
+                    return config;
+                },
+
+                response: function(response) {
+
+                    if (response.status == 200) {
+                        if (response.data.errorCode == 45) {
+                            toastr.error("登录超时！");
+                            $rootScope.$broadcast('ok', 0)
+                            return $q.reject(response);
+
+                        } else if (response.data.errorCode == 46) {
+                            toastr.error("请重新登录！");
+                            $rootScope.$broadcast('ok', 0)
+
+                            return $q.reject(response);
+                        }
+                    }
+
+                    return response || $q.when(response);
+                },
+
+                responseError: function(response) {
+
+                    return $q.reject(response);
+                }
+            }
+        }])
+    }])
 
 })();
