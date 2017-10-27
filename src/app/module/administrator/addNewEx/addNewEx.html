@@ -40,10 +40,10 @@
                         <uib-tabset>
                             <uib-tab heading="上传markdown文件" ng-click="change(0)">
                                 <div class="panel-body">
-                                    <button class="btn btn-success" ng-click="chooseMarkdown()">选择文件</button>
+                                    <button class="btn btn-success" ng-click="chooseMarkdown()">上传</button>
                                     <input type="file" accept="*" ng-show="false" id="markdownFile" file-model>
 
-                                    <button class="btn btn-success" ng-click="uploadFile()">上传</button>
+                                    <!-- <button class="btn btn-success" ng-click="uploadFile()">上传</button> -->
                                 </div>
                             </uib-tab>
                             <uib-tab heading="在线编辑markdown" ng-click="change(1)">
