@@ -270,18 +270,18 @@
             $uibModalInstance.dismiss('cancel');
         }
         var validatemobile = function(mobile) {
-            if (mobile.length == 0) {
-                toastr.error('请输入手机号码！');
-                return false;
-            }
+            // if (mobile.length == 0) {
+            //     toastr.error('请输入手机号码或邮箱地址');
+            //     return false;
+            // }
             if (mobile.length != 11) {
-                toastr.error('请输入有效的手机号码！');
+                // toastr.error('请输入正确的电话格式或邮箱地址');
 
                 return false;
             }
             var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(17[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
             if (!myreg.test(mobile)) {
-                toastr.error('请输入有效的手机号码！');
+                // toastr.error('请输入正确的电话格式或邮箱地址');
                 return false;
             }
 
@@ -290,7 +290,7 @@
         var validateEmail = function(email) {
             var myreg = /(\S)+[@]{1}(\S)+[.]{1}(\w)+/;
             if (!myreg.test(email)) {
-                toastr.error("请输入正确的邮箱地址");
+                // toastr.error("请输入正确的电话格式或邮箱地址");
                 return false;
             }
             return true;
@@ -309,8 +309,10 @@
             if (!$scope.teacher.contact) {
                 toastr.error("教师联系方式不能为空");
                 return;
-            } else if (!validatemobile($scope.teacher.contact) && !validateEmail($scope.teacher.teacherContact)) {
-                return
+            } else if (!validatemobile($scope.teacher.contact) && !validateEmail($scope.teacher.contact)) {
+                toastr.error("请输入正确的电话格式或邮箱地址");
+
+                return;
             }
             teacherManageSrv.addNewTeacher().save({
                     "gender": $scope.teacher.gender,
@@ -376,18 +378,18 @@
         }
 
         var validatemobile = function(mobile) {
-            if (mobile.length == 0) {
-                toastr.error('请输入手机号码！');
-                return false;
-            }
+            // if (mobile.length == 0) {
+            //     // toastr.error('请输入手机号码！');
+            //     return false;
+            // }
             if (mobile.length != 11) {
-                toastr.error('请输入有效的手机号码！');
+                // toastr.error('请输入有效的手机号码！');
 
                 return false;
             }
             var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(17[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
             if (!myreg.test(mobile)) {
-                toastr.error('请输入有效的手机号码！');
+                // toastr.error('请输入有效的手机号码！');
                 return false;
             }
 
@@ -396,7 +398,7 @@
         var validateEmail = function(email) {
             var myreg = /(\S)+[@]{1}(\S)+[.]{1}(\w)+/;
             if (!myreg.test(email)) {
-                toastr.error("请输入正确的邮箱地址");
+                // toastr.error("请输入正确的邮箱地址");
                 return false;
             }
             return true;
@@ -415,6 +417,8 @@
                 toastr.error("教师联系方式不能为空");
                 return;
             } else if (!validatemobile($scope.teacher.teacherContact) && !validateEmail($scope.teacher.teacherContact)) {
+                toastr.error("请输入正确的电话格式或邮箱地址");
+
                 return
             }
             teacherManageSrv.editTeacher().save({

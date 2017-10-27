@@ -196,13 +196,17 @@
         }]
         $scope.semester.semester = 1;
         $scope.ok = function() {
+            var semesterYear = $scope.semester.semesterYear;
             if (!$scope.semester.semesterYear) {
                 toastr.error("学年不能为空")
                 return
+            } else {
+                semesterYear += '-' + (parseInt($scope.semester.semesterYear) + 1) + ''
+                console.log($scope.semester.semesterYear)
             }
             semesterSrv.addNewSemester().save({
                     "semester": $scope.semester.semester,
-                    "year": $scope.semester.semesterYear
+                    "year": semesterYear
 
                 }, function(response) {
                     console.log(response)
@@ -236,20 +240,24 @@
             "label": "第三学期",
             "value": 3,
         }]
-        console.log($scope.semester);
-
+        console.log($scope.semester.year.split('-')[1]);
+        $scope.semester.year = parseInt($scope.semester.year.split('-')[0])
         $scope.cancel = function() {
             $uibModalInstance.dismiss('cancel');
         }
         $scope.ok = function() {
+            var year = $scope.semester.year;
             if (!$scope.semester.year) {
                 toastr.error("学年不能为空")
                 return
+            } else {
+                year += '-' + (parseInt($scope.semester.year) + 1) + ''
+                console.log($scope.semester.year)
             }
             semesterSrv.editsemester().save({
                     "id": $scope.semester.id,
                     "semester": $scope.semester.semester,
-                    "year": $scope.semester.year
+                    "year": year
 
                 }, function(response) {
                     console.log(response)

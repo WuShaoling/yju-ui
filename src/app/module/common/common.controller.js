@@ -57,11 +57,17 @@
             }
         })
         $scope.logout = function() {
+            localStorage.clear();
+            $scope.logined = false;
+            $scope.navbar = [];
+            // $state.go('index.main')
+        }
+
+        $scope.logout_temp = function() {
                 localStorage.clear();
                 $scope.logined = false;
                 $scope.navbar = [];
                 $state.go('index.main')
-
             }
             // $scope.register = function() {
             //     toastr.success("res...");

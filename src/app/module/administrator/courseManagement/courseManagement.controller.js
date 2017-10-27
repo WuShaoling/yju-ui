@@ -214,6 +214,10 @@
                 processData: false, // Dont process the files
                 contentType: false,
                 data: fileFormData,
+                beforeSend: function(xhr) {
+                    // xhr.setRequestHeader('access_token', '1504751421487');
+                    xhr.setRequestHeader('Authorization', 'Bearer ' + (localStorage['token'] ? localStorage['token'] : ''));
+                },
                 success: function(res) {
                     console.log(res)
                     if (res.errorCode == 0) {
@@ -223,9 +227,15 @@
                         // $scope.imageSrc = qiniuURL + res.fileName;
                         // $scope.isUpload = true;
                         $scope.$apply();
-                    } else {
-                        toastr.error('啊哦，上传失败咯');
+                    } else if (res.errorCode == 45) {
+                        toastr.error("登录超时！");
+                        $rootScope.$broadcast('ok', 0);
+                    } else if (res.errorCode == 46) {
+                        toastr.error("请重新登录！");
+                        $rootScope.$broadcast('ok', 0)
                     }
+                    // toastr.error('啊哦，上传失败咯');
+
                 }
             });
             $scope.filename = file.name;

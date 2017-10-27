@@ -48,6 +48,10 @@
                 type: 'POST',
                 url: reqUrl + '/admin/course/experiment/piclib',
                 dataType: 'json',
+                beforeSend: function(xhr) {
+                    // xhr.setRequestHeader('access_token', '1504751421487');
+                    xhr.setRequestHeader('Authorization', 'Bearer ' + (localStorage['token'] ? localStorage['token'] : ''));
+                },
                 processData: false, // Dont process the files
                 contentType: false,
                 data: formdata,
@@ -82,8 +86,12 @@
                                 toastr.error("上传失败，请稍后再试")
                             })
                         $scope.$apply();
-                    } else {
-                        toastr.error('啊哦，上传失败咯');
+                    } else if (res.errorCode == 45) {
+                        toastr.error("登录超时！");
+                        $rootScope.$broadcast('ok', 0);
+                    } else if (res.errorCode == 46) {
+                        toastr.error("请重新登录！");
+                        $rootScope.$broadcast('ok', 0)
                     }
                 }
             });

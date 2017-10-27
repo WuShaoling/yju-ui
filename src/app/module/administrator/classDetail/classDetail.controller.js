@@ -28,6 +28,8 @@
                     "type": 'GET',
                     beforeSend: function(xhr) {
                         // xhr.setRequestHeader('access_token', '1504751421487');
+                        xhr.setRequestHeader('Authorization', 'Bearer ' + (localStorage['token'] ? localStorage['token'] : ''));
+
                     },
                     "dataSrc": function(data) {
 
@@ -88,14 +90,16 @@
                 responsive: true
             })
             .on('xhr.dt', function(e, settings, json, xhr) {
-                //localStorageSrv.log("e-------------------->" + JSON.stringify(e));
-                // localStorageSrv.log("settings-------------------->" + JSON.stringify(settings));
-                // localStorageSrv.log("json-------------------->" + JSON.stringify(json));
-                //localStorageSrv.log("xhr-------------------->" + JSON.stringify(xhr.status));
-                //angular-http-auth插件无法捕捉datatable内ajax发出请求后回复头中的status，所以这里单独捕捉
-
-                // $rootScope.$broadcast('event:auth-loginRequire');
-                //localStorageSrv.log('401xhr');
+                if (xhr.status == 200) {
+                    console.log(xhr)
+                    if (xhr.responseJSON.errorCode == 45) {
+                        toastr.error("登录超时！");
+                        $rootScope.$broadcast('ok', 0);
+                    } else if (xhr.responseJSON.errorCode == 46) {
+                        toastr.error("请重新登录！");
+                        $rootScope.$broadcast('ok', 0)
+                    }
+                }
 
             });
 

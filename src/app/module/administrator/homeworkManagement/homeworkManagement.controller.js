@@ -5,8 +5,61 @@
         .module('phoenix')
         .controller('homeworkManagementCtrl', homeworkManagementCtrl)
         .controller('addNewHomeworkCtrl', addNewHomeworkCtrl)
+        .controller('editHwModalCtrl', editHwModalCtrl);
+    editHwModalCtrl.$inject = ['$scope', '$uibModalInstance', 'homework', 'classManagementSrv', '$stateParams']
 
+    function editHwModalCtrl($scope, $uibModalInstance, homework, classManagementSrv, $stateParams) {
+        console.log(homework)
 
+        $scope.cloudwares = [{
+            label: "rstudio",
+            value: 1,
+        }, {
+            label: "python",
+            value: 2,
+        }, {
+            label: "base",
+            value: 3,
+        }, {
+            label: "hadoop",
+            value: 4,
+        }];
+        $scope.homework = homework
+
+        for (var i in $scope.cloudwares) {
+            if ($scope.homework.cloudwareType == $scope.cloudwares[i].label) {
+                $scope.homework.cloudwareType = $scope.cloudwares[i].value
+            }
+        }
+        $scope.ok = function() {
+            classManagementSrv.updateHomework().save({
+
+                "cloudwareType": $scope.homework.cloudwareType,
+                "homeworkDes": $scope.homework.homeworkDes,
+                "homeworkDueDate": $scope.homework.homeworkDueDate,
+                "homeworkName": $scope.homework.homeworkName,
+                "homeworkId": $scope.homework.homeworkId,
+            }).$promise.then(
+                function(response) {
+                    console.log(response)
+                    if (response.errorCode == 0) {
+                        toastr.success("更新成功")
+                        $uibModalInstance.close(1);
+
+                    } else {
+                        toastr.error(response.message);
+                    }
+                },
+                function(error) {
+                    toastr.error("更新失败，请稍后再试");
+                }
+            )
+        }
+        $scope.cancel = function() {
+
+            $uibModalInstance.dismiss('cancel');
+        }
+    }
 
 
 
@@ -104,7 +157,24 @@
         }
         $scope.getHomework();
 
+        $scope.editHw = function(item) {
+            console.log(item);
+            var modalInstance = $uibModal.open({
+                templateUrl: 'app/module/modal/editHomeworkModal.html',
+                controller: 'editHwModalCtrl',
+                resolve: {
+                    homework: function() { return angular.copy(item); }
+                }
+            });
 
+
+            modalInstance.result.then(function(result) {
+                if (result) {
+                    $scope.getHomework();
+                }
+
+            });
+        }
         $scope.addNewHw = function(item) {
             item['courseName'] = $scope.courseDetail.courseName;
             var modalInstance = $uibModal.open({

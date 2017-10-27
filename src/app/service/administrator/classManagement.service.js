@@ -52,6 +52,11 @@
             return $resource(reqUrl + "/admin/class/homework/deletion")
         }
 
+        this.updateHomework = function() {
+            return $resource(reqUrl + "/admin/class/homework/updation")
+
+        }
+
 
     }
 })();
