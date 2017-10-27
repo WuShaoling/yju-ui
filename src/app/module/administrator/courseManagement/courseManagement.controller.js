@@ -190,7 +190,7 @@
         $scope.cancel = function() {
             $uibModalInstance.dismiss('cancel');
         }
-        $scope.filename = "上传图片文件"
+        $scope.filename = "上传260 x 185的图片"
         $scope.chooseFile = function() {
             $('#courseImage').trigger('click');
         }
@@ -221,7 +221,22 @@
                 success: function(res) {
                     console.log(res)
                     if (res.errorCode == 0) {
+                        if (res.data.width > 265) {
+                            toastr.error("图片宽度过大，请调整后上传")
+                            return;
+                        } else if (res.data.width < 260) {
+                            toastr.error("图片宽度过小，请调整后上传")
+                            return;
+                        }
+                        if (res.data.height > 188) {
+                            toastr.error("图片高度过大，请调整后上传")
+                            return;
+                        } else if (res.data.height < 183) {
+                            toastr.error("图片高度过小，请调整后上传")
+                            return;
+                        }
                         toastr.success('上传图片成功');
+
                         $scope.course.imageUrl = res.data.url;
                         // qiniuImage = qiniuURL + res.fileName;
                         // $scope.imageSrc = qiniuURL + res.fileName;
