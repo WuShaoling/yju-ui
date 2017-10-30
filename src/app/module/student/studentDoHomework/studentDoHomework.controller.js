@@ -39,6 +39,7 @@
             $('#report').trigger('click');
         }
         $scope.filename = "选择报告";
+        $scope.submitted = false;
         $scope.homeworkFile = new FormData();
 
         $scope.getFile = function(file) {
@@ -65,6 +66,7 @@
                     if (res.errorCode == 0) {
                         toastr.success('上传成功');
                         $scope.homeworkUrl = res.data;
+                        $scope.submitted = true;
                         $scope.$apply();
                     } else if (res.errorCode == 45) {
                         toastr.error("登录超时！");
@@ -72,6 +74,8 @@
                     } else if (res.errorCode == 46) {
                         toastr.error("请重新登录！");
                         $rootScope.$broadcast('ok', 0)
+                    } else {
+                        toastr.error(res.message);
                     }
                 }
             });
