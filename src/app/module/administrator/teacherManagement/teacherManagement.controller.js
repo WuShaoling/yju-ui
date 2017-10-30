@@ -89,6 +89,8 @@
                     } else if (xhr.responseJSON.errorCode == 46) {
                         toastr.error("请重新登录！");
                         $rootScope.$broadcast('ok', 0)
+                    } else {
+                        toastr.error(res.message);
                     }
                 }
             });
