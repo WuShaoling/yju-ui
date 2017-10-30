@@ -5,9 +5,39 @@
         .module('phoenix')
         .controller('MainController', MainController);
 
-    MainController.$inject = ['$scope', '$timeout', 'commonSrv'];
+    MainController.$inject = ['$scope', '$timeout', 'commonSrv','stuCourseSrv', 'teacherCourseSrv','$rootScope'];
 
-    function MainController($scope, $timeout, commonSrv) {
+    function MainController($scope, $timeout, commonSrv,stuCourseSrv,teacherCourseSrv,$rootScope) {
+        $scope.show = false
+
+        $scope.getNotifications = function () {
+            if(localStorage['userRole'] == 1) {
+                stuCourseSrv.getNotifications().get({
+                    studentId: localStorage['userId']
+                }).$promise.then(function (response) {
+                    console.log(response);
+
+                    $scope.notifications = response.data.resHomeworkList;
+                    $scope.show = true
+
+                }, function (error) {
+                    console.log(error);
+                })
+            } else if(localStorage['userRole'] == 2){
+                teacherCourseSrv.getNotifications().get({
+                    teacherId: localStorage['userId']
+                }).$promise.then(function (response) {
+                    console.log(response);
+                    $scope.show = true
+
+                    $scope.notifications = response.data.resHomeworkList;
+
+                }, function (error) {
+
+                    console.log(error);
+                })
+            }
+        }
 
         $scope.play = function() {
             $('video')[0].play();
@@ -20,7 +50,21 @@
             function(error) {}
         )
 
+        $rootScope.$on('login',function (event,data) {
+            if(data=="1"){
+                $scope.getNotifications();
+                console.log(data);
 
+            }else{
+                $scope.show = false
+
+            }
+        })
+        $scope.getNotifications();
+
+        // if(localStorage['userRole']=="1" || localStorage['userRole']=="2"){
+        //             $scope.show = true
+        // }
         $scope.change = function() {
             $scope.searchCourseDetailType = $scope.searchCourseType.contain[0]
         }

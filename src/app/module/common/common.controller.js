@@ -7,7 +7,7 @@
         .controller('loginCtrl', loginCtrl);
 
     commonCtrl.$inject = ['$scope', '$uibModal', '$state', '$rootScope'];
-    loginCtrl.$inject = ['$scope', '$uibModalInstance', '$uibModal', 'commonSrv'];
+    loginCtrl.$inject = ['$scope', '$uibModalInstance', '$uibModal', 'commonSrv','$rootScope'];
 
     function commonCtrl($scope, $uibModal, $state, $rootScope) {
         var vm = this;
@@ -60,6 +60,7 @@
             localStorage.clear();
             $scope.logined = false;
             $scope.navbar = [];
+
             // $state.go('index.main')
         }
 
@@ -68,7 +69,9 @@
                 $scope.logined = false;
                 $scope.navbar = [];
                 $state.go('index.main')
-            }
+            $rootScope.$broadcast('login',0);
+
+        }
             // $scope.register = function() {
             //     toastr.success("res...");
             //     var modalInstance = $uibModal.open({
@@ -101,7 +104,7 @@
     }
 
 
-    function loginCtrl($scope, $uibModalInstance, $uibModal, commonSrv) {
+    function loginCtrl($scope, $uibModalInstance, $uibModal, commonSrv,$rootScope) {
         $scope.cancel = function() {
             $uibModalInstance.dismiss('cancel');
         };
@@ -148,7 +151,10 @@
                         var params;
                         localStorage['userId'] = response.data.body.userId
                         localStorage['token'] = response.data.body.token
-                        if ($scope.user.type.label == "学生") {
+                        localStorage['userRole'] = response.data.body.role
+                        $rootScope.$broadcast('login',1);
+
+                        if (localStorage['userRole'] == 1) {
                             params = {
                                 errorCode: "000",
                                 message: "success",
@@ -164,7 +170,7 @@
                                 }],
                                 role: $scope.user.type //0:student;1:teacher;2:administrator
                             }
-                        } else if ($scope.user.type.label == "老师") {
+                        } else if (localStorage['userRole'] == 2) {
                             params = {
                                 errorCode: "000",
                                 message: "success",
@@ -180,7 +186,7 @@
                                 }],
                                 role: $scope.user.type //0:student;1:teacher;2:administrator
                             }
-                        } else if ($scope.user.type.label == "教务") {
+                        } else if (localStorage['userRole'] == 3) {
                             params = {
                                 errorCode: "000",
                                 message: "success",

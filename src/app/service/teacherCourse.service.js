@@ -43,5 +43,10 @@
             return $resource(reqUrl + '/teacher/course/homework/grade')
         }
 
+        this.getNotifications = function () {
+            return $resource(reqUrl+'/teacher/course/homework/all/:teacherId',{
+                teacherId:"@teacherId"
+            })
+        }
     }
 })();

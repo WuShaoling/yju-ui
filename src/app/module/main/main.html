@@ -151,50 +151,27 @@
                 </div>
                 <!-- col-sm-8 col-xs-12 -->
 
-                <div class="col-sm-4 col-xs-12">
+                <div class="col-sm-4 col-xs-12" ng-if="show">
 
                     <!-- formArea -->
-                    <div class="list_block related_post_sec">
+                    <div class="list_block related_post_sec" >
                         <div class="upcoming_events">
                             <h3>最新通知</h3>
                             <ul>
-                                <li class="related_post_sec single_post">
+                                <li class="related_post_sec single_post" ng-repeat="item in notifications">
                                     <span class="date-wrapper">
-                          <span class="date"><span>27</span>9月</span>
+                          <span class="date"><span>{{item.publishDay}}</span>{{item.publishMonth}}月</span>
                                     </span>
                                     <div class="rel_right">
-                                        <h4><a href="">本科2016-2017学年国奖、上海市奖学金评选结果公示</a></h4>
+                                        <h4><a href="">{{item.name}}</a>
+                                        </h4>
+                                        <h5><span style="color: red;">截止日期：</span> {{item.deadlineDate}}</h5>
                                         <div class="meta">
                                             <!-- <span class="place"><i class="fa fa-map-marker"></i>Main Campus</span>
                                             <span class="event-time"><i class="fa fa-clock-o"></i>11.00 pm</span> -->
                                         </div>
                                     </div>
                                 </li>
-                                <li class="related_post_sec single_post">
-                                    <span class="date-wrapper">
-                                    <span class="date"><span>26</span>9月</span>
-                                    </span>
-                                    <div class="rel_right">
-                                        <h4><a href="">2016-2017学年软件学院研究生国家奖学金评审结果公示</a></h4>
-                                        <div class="meta">
-                                            <!-- <span class="place"><i class="fa fa-map-marker"></i>Main Campus</span>
-                                            <span class="event-time"><i class="fa fa-clock-o"></i>11.00 pm</span> -->
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="related_post_sec single_post">
-                                    <span class="date-wrapper">
-                                <span class="date"><span>24</span>9月</span>
-                                    </span>
-                                    <div class="rel_right">
-                                        <h4><a href="">关于2018届预计毕业生《就业推荐表》办理的通知</a></h4>
-                                        <div class="meta">
-                                            <!-- <span class="place"><i class="fa fa-map-marker"></i>Main Campus</span>
-                                            <span class="event-time"><i class="fa fa-clock-o"></i>11.00 pm</span> -->
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
                             <a ui-sref="index.notification" class="btn btn-success btn-block" style="width:100%">更多通知</a>
                         </div>
                     </div>

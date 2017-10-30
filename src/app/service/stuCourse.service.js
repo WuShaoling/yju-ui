@@ -9,7 +9,11 @@
 
     function stuCourseSrv($resource, reqUrl) {
         this.getSelfCourse = getSelfCourse;
-
+        this.getNotifications = function () {
+            return $resource(reqUrl+'/student/course/homework/all/:studentId',{
+                studentId:"@studentId"
+            })
+        }
 
         //获取我的选课
         function getSelfCourse() {
