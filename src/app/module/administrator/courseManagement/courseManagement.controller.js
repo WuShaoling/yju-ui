@@ -162,6 +162,8 @@
                                     }, function() {
                                         courseTable.ajax.reload();
                                     });
+                                } else {
+                                    toastr.error(response.message)
                                 }
                             },
                             function(error) {
