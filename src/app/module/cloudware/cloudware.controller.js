@@ -158,7 +158,15 @@
 
 
         function start(wsaddr, el) {
+            $(el).children().remove()
             var ws = new WebSocket(wsaddr);
+
+            var int = setInterval(function () {
+                if(ws.readyState === ws.CLOSED){
+                    start(wsaddr,el)
+                    clearInterval(int)
+                }
+            },1000)
             var instance = {
                 canvas: null,
                 isFullscreen: false,
