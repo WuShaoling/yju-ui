@@ -142,11 +142,11 @@
         }
     }
 
-    addNewExCtrl.$inject = ['$scope', '$timeout', '$uibModal', 'commonSrv', 'courseManagementSrv', '$stateParams', 'reqUrl'];
+    addNewExCtrl.$inject = ['$scope', '$timeout', '$uibModal', 'commonSrv', 'courseManagementSrv', '$stateParams', 'reqUrl', '$state'];
 
 
 
-    function addNewExCtrl($scope, $timeout, $uibModal, commonSrv, courseManagementSrv, $stateParams, reqUrl) {
+    function addNewExCtrl($scope, $timeout, $uibModal, commonSrv, courseManagementSrv, $stateParams, reqUrl, $state) {
         $scope.experiment = {};
         $scope.text = "";
         $scope.ok = function() {
@@ -175,6 +175,7 @@
                     console.log(response)
                     if (response.errorCode == 0) {
                         toastr.success("添加成功")
+                        $state.go('index.courseMaintainence', { courseId: $stateParams.courseId });
 
                     } else {
                         toastr.error(response.message);

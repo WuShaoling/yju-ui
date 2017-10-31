@@ -180,8 +180,8 @@
                 controller: "teacherManagementCtrl"
             })
             .state('index.addNewEx', {
-                url: "/administrator/:moduleId/addNewEx",
-                params: { moduleId: null },
+                url: "/administrator/:courseId/:moduleId/addNewEx",
+                params: { courseId: null, moduleId: null },
                 templateUrl: "app/module/administrator/addNewEx/addNewEx.html",
                 controller: "addNewExCtrl"
             })
