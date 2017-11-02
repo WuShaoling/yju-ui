@@ -30,5 +30,16 @@
         this.getHotCourses = function() {
             return $resource(reqUrl + '/common/hotCourses/all')
         }
+
+        this.getCourseExperimentDetail = function() {
+            return $resource(reqUrl + "/common/course/:courseId/experiments", {
+                courseId: "@courseId"
+            })
+        }
+        this.getCourseDetail = function() {
+            return $resource(reqUrl + "/common/course/:courseId/detail", {
+                courseId: "@courseId"
+            })
+        }
     }
 })();
