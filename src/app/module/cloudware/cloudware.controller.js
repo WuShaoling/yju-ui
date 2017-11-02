@@ -321,7 +321,7 @@
                                     if (resp.errorCode == 0) {
                                         start(resp.ws, el)
                                         $scope.notFirst = true
-                                        $scope.cloudwareInfo = {}
+                                        $scope.cloudwareInfo = $scope.cloudwareInfo || {}
                                         $scope.cloudwareInfo.webSocket = resp.ws
                                         switch (type) {
                                             case "0":
