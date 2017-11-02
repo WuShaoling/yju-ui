@@ -65,9 +65,10 @@
 
                                 $scope.notFirst = true;
                                 $scope.cloudwareInfo = response.data;
-                            } else {
+                            } else if (response.errorCode == 7 || response.errorCode == 47) {
                                 console.log("未启动过...")
-
+                            } else {
+                                toastr.error("获取作业云件信息失败，请重试")
                             }
                         },
                         function(error) {
@@ -86,9 +87,10 @@
 
                                 $scope.notFirst = true;
                                 $scope.cloudwareInfo = response.data;
-                            } else {
+                            } else if (response.errorCode == 35 || response.errorCode == 47) {
                                 console.log("未启动过...")
-
+                            } else {
+                                toastr.error("获取实验云件信息失败，请重试")
                             }
                         },
                         function(error) {
@@ -157,14 +159,31 @@
 
 
 
-        function start(wsaddr, el) {
+        function start(wsaddr, el, retryTime) {
+            var retryTime = retryTime || 0;
             $(el).children().remove()
             var ws = new WebSocket(wsaddr);
 
             var int = setInterval(function () {
                 if(ws.readyState === ws.CLOSED){
-                    start(wsaddr,el)
-                    clearInterval(int)
+                    if(retryTime > 10){
+                        toastr.error("启动云件失败，请重试")
+                        $scope.hasStarted = false
+                        usSpinnerService.stop('ex-spinner');
+                        if($stateParams.type == 1) { //如果是实验，删除改实验云件
+                            $scope.notFirst = false
+                            stuCourseSrv.deleteExCloudware().save({
+                                studentId: $stateParams.studentId,
+                                experimentId: $stateParams.experimentId
+                            })
+                        }
+                        $scope.$apply()
+                        clearInterval(int)
+                    } else {
+                        retryTime++
+                        clearInterval(int)
+                        start(wsaddr, el, retryTime)
+                    }
                 }
             },1000)
             var instance = {
@@ -182,10 +201,8 @@
                 ws: ws,
                 fsapi: ''
             };
-            ws.onerror = function() {
-                setTimeout(function() {
-                    start(wsaddr, el)
-                }, 2000)
+            ws.onerror = function(error) {
+                console.error(error);
             }
             ws.onopen = function() {
                 var canvas = document.createElement('canvas')
@@ -303,7 +320,9 @@
                                 success: function(resp, textStatus, xhr) {
                                     if (resp.errorCode == 0) {
                                         start(resp.ws, el)
-
+                                        $scope.notFirst = true
+                                        $scope.cloudwareInfo = {}
+                                        $scope.cloudwareInfo.webSocket = resp.ws
                                         switch (type) {
                                             case "0":
                                                 stuCourseSrv.createHwCloudware().save({
