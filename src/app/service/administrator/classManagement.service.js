@@ -57,6 +57,12 @@
 
         }
 
+        this.batchAddStudent = function() {
+            return $resource(reqUrl + '/admin/class/student/batchCreation')
+        }
+
+
+
 
     }
 })();

@@ -1,0 +1,33 @@
+<!-- 一个模态框有三部分构成:header、body、footer
+ -->
+<div class="modal-header">
+    <h4 class="modal-title">学生导入</h4>
+</div>
+
+<div class="modal-body">
+    <div class="row">
+        <!-- //http://localhost:5000/file -->
+        <form enctype="multipart/form-data">
+            <div class="form-group">
+
+                <input class="form-control" type="file" ng-model="selectedFile" name="sample" />
+                <!-- 
+                <input type="text" name="classId" value="{{classId}}" hidden>
+                <input type="text" name="Authorization" value="{{token}}" hidden> -->
+
+                <!--            <input type="submit" class="btn btn-primary" value="上传文件"  ng-click="importFile()"/>
+ -->
+            </div>
+            <div class="form-group">
+                <button type="button" class="btn btn-default" ng-click="close()">关闭</button>
+                <button type="submit" class="btn btn-info" ng-click="ok()">上传</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<!-- <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="close()">关闭</button>
+        <button type="submit" class="btn btn-info" ng-click="ok(username)">确定</button>
+</div> -->

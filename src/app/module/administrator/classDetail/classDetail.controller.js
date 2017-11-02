@@ -5,11 +5,82 @@
         .module('phoenix')
         .controller('classDetailCtrl', classDetailCtrl)
         .controller('editStudentCtrl', editStudentCtrl)
-        .controller('addStudentCtrl', addStudentCtrl);
+        .controller('addStudentCtrl', addStudentCtrl)
+        .controller('batchAddStudentCtrl', batchAddStudentCtrl);
 
     classDetailCtrl.$inject = ['$scope', 'reqUrl', '$uibModal', '$stateParams', 'commonSrv', 'classManagementSrv'];
     addStudentCtrl.$inject = ['$scope', '$uibModalInstance', 'classManagementSrv', '$stateParams'];
     editStudentCtrl.$inject = ['$scope', '$uibModalInstance', 'student', 'classManagementSrv'];
+    batchAddStudentCtrl.$inject = ['$scope', '$uibModalInstance', '$stateParams', 'reqUrl'];
+
+    function batchAddStudentCtrl($scope, $uibModalInstance, $stateParams, reqUrl) {
+        console.log($stateParams.classId);
+        $scope.classId = $stateParams.classId;
+        $scope.token = 'Bearer ' + (localStorage['token'] ? localStorage['token'] : '')
+        $scope.close = function() {
+            $uibModalInstance.close('dismiss')
+        }
+        $scope.ok = function() {
+            console.log($scope.selectedFile);
+            var formdata = new FormData();
+            formdata.append('file', $scope.selectedFile)
+            $.ajax({
+                type: 'POST',
+                url: $scope.importURL + '?classId=' + $scope.classId,
+                dataType: 'json',
+                beforeSend: function(xhr) {
+                    // xhr.setRequestHeader('access_token', '1504751421487');
+                    xhr.setRequestHeader('Authorization', 'Bearer ' + (localStorage['token'] ? localStorage['token'] : ''));
+                },
+                processData: false, // Dont process the files
+                contentType: false,
+                data: formdata,
+                success: function(res) {
+                    console.log(res)
+                    if (res.errorCode == 0) {
+                        toastr.success('上传成功');
+                        // $scope.markdownUrl = res.data;
+                        // $.get($scope.markdownUrl + '', function(result) {
+                        //     console.log(result)
+                        //     if (result == null) {
+                        //         return
+                        //     }
+                        //     $scope.text = result;
+                        //     console.log($scope.text);
+
+                        //     $scope.html = converter.makeHtml($scope.text);
+                        //     // $timeout(function() {
+                        //     //     console.log($('#ht').height())
+                        //     //     $('#or').height($('#ht').height());
+                        //     // })
+
+                        //     // console.log(result.label_type)
+
+                        // });
+                        // qiniuImage = qiniuURL + res.fileName;
+                        // $scope.imageSrc = qiniuURL + res.fileName;
+                        // $scope.isUpload = true;
+                        $scope.$apply();
+                    } else if (res.errorCode == 45) {
+                        toastr.error("登录超时！");
+                        $rootScope.$broadcast('ok', 0);
+                    } else if (res.errorCode == 46) {
+                        toastr.error("请重新登录！");
+                        $rootScope.$broadcast('ok', 0)
+                    } else {
+                        toastr.error(res.message);
+                    }
+                }
+            });
+            $uibModalInstance.close(1);
+
+        }
+        $scope.importURL = reqUrl + '/admin/class/student/batchCreation';
+
+        // $scope.trustSrc = function(src) {
+        //     return $sce.trustAsResourceUrl(src);
+        // }
+    }
 
     function classDetailCtrl($scope, reqUrl, $uibModal, $stateParams, commonSrv, classManagementSrv) {
 
@@ -77,7 +148,6 @@
                         text: '导入学生名单',
                         action: function(e, dt, node, config) {
                             batchAddStudent();
-
                         }
                     }, {
                         text: '添加学生',
@@ -117,6 +187,25 @@
             deleteStudent(studentTable.row($(this).parents('tr')).data());
         });
 
+
+        var batchAddStudent = function() {
+
+            var modalInstance = $uibModal.open({
+                size: "md",
+                templateUrl: 'app/module/modal/batchAddStudentModal.html',
+                controller: 'batchAddStudentCtrl',
+                // resolve: {
+                //     classId: function() { return angular.copy(item); }
+                // }
+            });
+
+            modalInstance.result.then(function(result) {
+                if (result) {
+                    studentTable.ajax.reload();
+                }
+
+            });
+        }
         var editStudent = function(item) {
             console.log(item);
 
