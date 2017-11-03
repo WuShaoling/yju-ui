@@ -45,7 +45,18 @@
         commonSrv.getHotCourses().get().$promise.then(
             function(response) {
                 console.log(response)
-                $scope.courses = response.data.courseList
+                if(response.errorCode == 0) {
+                    $scope.courses = response.data.courseList
+                }
+            },
+            function(error) {}
+        )
+        commonSrv.getStatistics().get().$promise.then(
+            function(response) {
+                console.log(response)
+                if(response.errorCode == 0) {
+                    $scope.statistics = response.data
+                }
             },
             function(error) {}
         )

@@ -41,5 +41,8 @@
                 courseId: "@courseId"
             })
         }
+        this.getStatistics = function() {
+            return $resource(reqUrl + "/common/statistics/")
+        }
     }
 })();
