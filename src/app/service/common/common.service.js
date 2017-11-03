@@ -23,6 +23,10 @@
             return $resource(reqUrl + '/auth/login');
         }
 
+        this.modifyPass = function() {
+            return $resource(reqUrl + '/auth/updatePassword');
+        }
+
         this.startEx = function() {
             return $resource("http://192.168.1.128:8080/services")
         }
