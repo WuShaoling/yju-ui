@@ -70,7 +70,8 @@
                 </div> -->
                 <!-- row -->
                 <div class="row">
-                    <div class="col-md-3 col-sm-6 col-xs-6" ng-repeat="course in courses|filter:common.searchData">
+
+                    <div class="col-md-4 col-sm-4 col-xs-6" ng-repeat="course in courses|filter:common.searchData">
                         <div class="imageBox">
                             <div class="productImage clearfix">
                                 <a ui-sref="index.courseDetail1({courseId:course.courseId})"><img src="{{course.imageUrl}}" alt="Image"></a>
@@ -82,14 +83,14 @@
                                     <span class="author">授课教师 : {{course.teacherName}}</span>
                                 </div>
                                 <div class="rating">
-                                    <span class="rating-star">
+                                    <!-- <span class="rating-star">
                                         <i class="fa fa-star" aria-hidden="true"></i>
                                         <i class="fa fa-star" aria-hidden="true"></i>
                                         <i class="fa fa-star" aria-hidden="true"></i>
                                         <i class="fa fa-star" aria-hidden="true"></i>
                                         <i class="fa fa-star-o" aria-hidden="true"></i>
-                                      </span>
-                                    <span class="rating-review">(推荐指数)</span>
+                                      </span> -->
+                                    <span class="rating-review">{{course.courseDes}}</span>
                                 </div>
                                 <div class="caption-bottom">
                                     <div class="price">
@@ -106,6 +107,7 @@
 
                         </div>
                     </div>
+
 
 
                 </div>
@@ -128,7 +130,7 @@
                             <h3>欢迎来到Phoenix</h3>
                             <div class="row">
                                 <div class="col-lg-8 col-md-7 col-xs-12 videoLeft">
-                                    <video src="http://101.227.216.159/vlive.qqvideo.tc.qq.com/ANZqXvUGVRqfdT9jVHMzAd7cfsPoNgi86fkIsp4Ak27c/f0024z1tler.p212.1.mp4?sdtfrom=v1010&guid=889582358d300a201697f0889cbb305a&vkey=1552CAEACF0AA5632B83B98A85E74DD1EAD9D1B2DC5BF1E7A44A79DCA2AB14F01D0C08F8B4E3013C053FA585A11238ABCBE6E9ED26077C578450923FBDC6D94163810B73262C5B27E6B2CEAECD8E9FF57F3E34332979DBB917386E53E5F0B2C864D8BF10DBC365D2F135CDBF1AA96E5478538A34CEE57CB3#t=124"
+                                    <video src="http://vali-dns.cp31.ott.cibntv.net/677559865CB3671532466428A/030008010059FB9EF5075108BD8A986D5130C6-A11F-174F-E439-BCDE833804BA.mp4?ccode=0502&duration=62&expire=18000&psid=f76c051cb8a45cfee90e23c3bd12a328&ups_client_netip=116.226.128.76&ups_ts=1509692066&ups_userid=&utid=his8EcXP3GgCAWVRUhFs35IT&vid=XMzEzMDUwNzYyOA%3D%3D&vkey=Af32eb8ff492c02d8769cb83ad896b809"
                                         poster="img/home/video/video_image.jpg" ng-click="play()"></video>
                                     <!-- <img src="img/home/video/video_image.jpg" data-video="https://www.youtube.com/embed/oOMcZoeEK0A?autoplay=1"> -->
                                 </div>
@@ -154,9 +156,9 @@
                 <div class="col-sm-4 col-xs-12" ng-if="show">
 
                     <!-- formArea -->
-                    <div class="list_block related_post_sec" >
+                    <div class="list_block related_post_sec">
                         <div class="upcoming_events">
-                            <h3>最新通知</h3>
+                            <h3>作业通知</h3>
                             <ul>
                                 <li class="related_post_sec single_post" ng-repeat="item in notifications">
                                     <span class="date-wrapper">
@@ -172,7 +174,7 @@
                                         </div>
                                     </div>
                                 </li>
-                            <a ui-sref="index.notification" class="btn btn-success btn-block" style="width:100%">更多通知</a>
+                                <a ui-sref="index.notification" class="btn btn-success btn-block" style="width:100%">更多通知</a>
                         </div>
                     </div>
                     <!-- end list_block -->

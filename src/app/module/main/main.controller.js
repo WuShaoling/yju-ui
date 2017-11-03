@@ -5,34 +5,36 @@
         .module('phoenix')
         .controller('MainController', MainController);
 
-    MainController.$inject = ['$scope', '$timeout', 'commonSrv','stuCourseSrv', 'teacherCourseSrv','$rootScope'];
+    MainController.$inject = ['$scope', '$timeout', 'commonSrv', 'stuCourseSrv', 'teacherCourseSrv', '$rootScope'];
 
-    function MainController($scope, $timeout, commonSrv,stuCourseSrv,teacherCourseSrv,$rootScope) {
+    function MainController($scope, $timeout, commonSrv, stuCourseSrv, teacherCourseSrv, $rootScope) {
         $scope.show = false
 
-        $scope.getNotifications = function () {
-            if(localStorage['userRole'] == 1) {
+        $scope.getNotifications = function() {
+            if (localStorage['userRole'] == 1) {
                 stuCourseSrv.getNotifications().get({
                     studentId: localStorage['userId']
-                }).$promise.then(function (response) {
+                }).$promise.then(function(response) {
                     console.log(response);
-
-                    $scope.notifications = response.data.resHomeworkList;
+                    localStorage['notifications'] = JSON.stringify(response.data.resHomeworkList)
+                    localStorage['currentRole'] = 0; //学生
+                    $scope.notifications = response.data.resHomeworkList.splice(0, 3);
                     $scope.show = true
-
-                }, function (error) {
+                }, function(error) {
                     console.log(error);
                 })
-            } else if(localStorage['userRole'] == 2){
+            } else if (localStorage['userRole'] == 2) {
                 teacherCourseSrv.getNotifications().get({
                     teacherId: localStorage['userId']
-                }).$promise.then(function (response) {
+                }).$promise.then(function(response) {
                     console.log(response);
                     $scope.show = true
+                    localStorage['notifications'] = JSON.stringify(response.data.resHomeworkList)
+                    localStorage['currentRole'] = 1; //老师
 
-                    $scope.notifications = response.data.resHomeworkList;
+                    $scope.notifications = response.data.resHomeworkList.splice(0, 3);
 
-                }, function (error) {
+                }, function(error) {
 
                     console.log(error);
                 })
@@ -45,7 +47,7 @@
         commonSrv.getHotCourses().get().$promise.then(
             function(response) {
                 console.log(response)
-                if(response.errorCode == 0) {
+                if (response.errorCode == 0) {
                     $scope.courses = response.data.courseList
                 }
             },
@@ -54,19 +56,19 @@
         commonSrv.getStatistics().get().$promise.then(
             function(response) {
                 console.log(response)
-                if(response.errorCode == 0) {
+                if (response.errorCode == 0) {
                     $scope.statistics = response.data
                 }
             },
             function(error) {}
         )
 
-        $rootScope.$on('login',function (event,data) {
-            if(data=="1"){
+        $rootScope.$on('login', function(event, data) {
+            if (data == "1") {
                 $scope.getNotifications();
                 console.log(data);
 
-            }else{
+            } else {
                 $scope.show = false
 
             }
