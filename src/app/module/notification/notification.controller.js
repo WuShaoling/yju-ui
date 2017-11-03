@@ -9,10 +9,12 @@
 
     function notificationCtrl($scope) {
         var vm = this;
-
-
+        $scope.notifications = JSON.parse(localStorage['notifications'])
+        console.log($scope.notifications)
         activate();
-
+        if (localStorage['currentRole'] == 0) {
+            $scope.show = true
+        }
         ////////////////
 
         function activate() {}

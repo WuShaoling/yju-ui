@@ -330,7 +330,9 @@
     function editCourseCtrl($scope, $uibModalInstance, teacherManageSrv, courseManagementSrv, commonSrv, reqUrl, courseinfo) {
         $scope.course = courseinfo;
         console.log(courseinfo)
-        $scope.person = {};
+        $scope.person = {
+            selected: null
+        };
 
         teacherManageSrv.getAllTeachers().get().$promise.then(
             function(response) {
@@ -417,19 +419,27 @@
             $scope.$apply()
         };
         $scope.ok = function() {
-            $scope.course.teacher = $scope.person;
+
             console.log($scope.course);
             if (!$scope.course.imageUrl) {
-                toastr.error("课程图片不能为空，已设置为默认")
+                toastr.warning("课程图片不能为空，已设置为默认")
                 $scope.course.imageUrl = "https://picture.insight365.ai/phoenix/course-img1.jpg";
             }
             if (!$scope.course.courseName) {
                 toastr.error("课程名称不能为空")
                 return
             }
-            if (!$scope.course.teacher.selected.id) {
+            // if (!$scope.course.teacher.selected.id) {
+            //     toastr.error("授课教师不能为空")
+            //     return
+            // }
+            console.log($scope.person)
+            if ($scope.person.selected) {
+                $scope.course.teacher = $scope.person;
+            } else {
                 toastr.error("授课教师不能为空")
                 return
+
             }
             courseManagementSrv.editCourse().save({
                 "id": $scope.course.id,
