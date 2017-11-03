@@ -22,7 +22,7 @@
         <small>点击右侧工具栏开始实验</small>
     </div>
     <span us-spinner="{ color: '#0060b1', radius: 10, width: 5, length: 10, zIndex: 10 ,top:'30%'}" spinner-key="ex-spinner" spinner-start-active="false"></span>
-    <div id="cloudware" data-cloudware-env="rstudio" style="height:100%;width:100%;z-index:100"></div>
+    <div id="cloudware" data-cloudware-env="rstudio" style="width:100%;z-index:100"></div>
 </div>
 <span minimaliza-Left style="position: fixed;top:100px;left:0;z-index:101"></span>
 <button style="position: fixed;top:132px;left:0;z-index:101" class="navbar-minimalize minimalize-styl-2 btn btn-success " tooltip-placement="left" uib-tooltip="教程全屏" ng-click="fullScreenDes()"><i class="fa fa-expand" ></i></button>
@@ -33,7 +33,7 @@
 <div style="position: fixed;top:132px;right:0;z-index:101;width:38px" id="rightNav">
 
     <button class="navbar-minimalize minimalize-styl-2 btn btn-primary " tooltip-placement="left" uib-tooltip="开始试验" ng-disabled="hasStarted" ng-click="startEx()"><i class="fa fa-play" ></i></button>
-    <button class="navbar-minimalize minimalize-styl-2 btn btn-danger " tooltip-placement="left" uib-tooltip="暂停实验" ng-click=""><i class="fa fa-times" ></i></button>
+    <button class="navbar-minimalize minimalize-styl-2 btn btn-danger " tooltip-placement="left" uib-tooltip="删除实验" ng-if="showDelete" ng-click="deleteEx()"><i class="fa fa-times" ></i></button>
     <!-- <button class="navbar-minimalize minimalize-styl-2 btn btn-default " tooltip-placement="left" uib-tooltip="剪切板" ng-click=""><i class="fa fa-cut" ></i></button> -->
     <!-- <button class="navbar-minimalize minimalize-styl-2 btn btn-default " tooltip-placement="left" uib-tooltip="共享" ng-click=""><i class="fa fa-share" ></i></button> -->
     <!-- <button class="navbar-minimalize minimalize-styl-2 btn btn-default " tooltip-placement="left" uib-tooltip="下载代码" ng-click=""><i class="fa fa-download" ></i></button> -->

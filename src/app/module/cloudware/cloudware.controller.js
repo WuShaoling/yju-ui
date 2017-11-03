@@ -9,6 +9,12 @@
 
     function cloudwareCtrl($scope, $timeout, usSpinnerService, commonSrv, stuCourseSrv, $stateParams) {
         var vm = this;
+
+        if ($stateParams.type == "1") {
+            $scope.showDelete = true
+        }
+
+
         $scope.leftControl = true;
         $scope.rightControl = true;
         $scope.leftText = "隐藏教程";
@@ -101,6 +107,26 @@
                     break;
             }
         }
+
+        $scope.deleteEx = function() {
+            stuCourseSrv.deleteExCloudware().save({
+                studentId: localStorage['userId'],
+                experimentId: $stateParams.experimentId
+            }).$promise.then(function(
+                response
+            ) {
+                console.log(response)
+                if (response.errorCode == 0) {
+                    toastr.success("删除成功")
+                    window.location.reload();
+                    // $scope.hideExText = false;
+                } else {
+                    toastr.error(response.message)
+                }
+            }, function(error) {
+                toastr.error("删除失败，请稍后再试")
+            })
+        }
         $scope.getCloudwareInfo();
         $scope.flag = true;
         $scope.fullScreenDes = function() {
@@ -164,28 +190,6 @@
             $(el).children().remove()
             var ws = new WebSocket(wsaddr);
 
-            var int = setInterval(function () {
-                if(ws.readyState === ws.CLOSED){
-                    if(retryTime > 10){
-                        toastr.error("启动云件失败，请重试")
-                        $scope.hasStarted = false
-                        usSpinnerService.stop('ex-spinner');
-                        if($stateParams.type == 1) { //如果是实验，删除改实验云件
-                            $scope.notFirst = false
-                            stuCourseSrv.deleteExCloudware().save({
-                                studentId: $stateParams.studentId,
-                                experimentId: $stateParams.experimentId
-                            })
-                        }
-                        $scope.$apply()
-                        clearInterval(int)
-                    } else {
-                        retryTime++
-                        clearInterval(int)
-                        start(wsaddr, el, retryTime)
-                    }
-                }
-            },1000)
             var instance = {
                 canvas: null,
                 isFullscreen: false,
@@ -202,7 +206,26 @@
                 fsapi: ''
             };
             ws.onerror = function(error) {
-                console.error(error);
+                var int = setInterval(function() {
+                    if (retryTime > 10) {
+                        toastr.error("启动云件失败，请重试")
+                        $scope.hasStarted = false
+                        usSpinnerService.stop('ex-spinner');
+                        if ($stateParams.type == 1) { //如果是实验，删除改实验云件
+                            $scope.notFirst = false
+                            stuCourseSrv.deleteExCloudware().save({
+                                studentId: $stateParams.studentId,
+                                experimentId: $stateParams.experimentId
+                            })
+                        }
+                        $scope.$apply()
+                        clearInterval(int)
+                    } else {
+                        retryTime++
+                        clearInterval(int)
+                        start(wsaddr, el, retryTime)
+                    }
+                }, 1000)
             }
             ws.onopen = function() {
                 var canvas = document.createElement('canvas')
