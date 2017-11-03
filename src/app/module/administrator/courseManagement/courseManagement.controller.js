@@ -9,7 +9,7 @@
 
     addCourseCtrl.$inject = ['$scope', '$uibModalInstance', 'teacherManageSrv', 'courseManagementSrv', 'commonSrv', 'reqUrl'];
     editCourseCtrl.$inject = ['$scope', '$uibModalInstance', 'teacherManageSrv', 'courseManagementSrv', 'commonSrv', 'reqUrl', 'courseinfo'];
-    w
+
 
     courseManagementCtrl.$inject = ['$scope', 'reqUrl', '$uibModal', '$state', 'courseManagementSrv'];
 
