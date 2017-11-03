@@ -1,0 +1,74 @@
+<div class="inmodal">
+    <div class="modal-header">
+        <button type="button" class="close pull-right" ng-click="cancel()">×</button>
+        <h5 class="modal-title">编辑课程</h5>
+        <!-- <small class="font-bold">Python语言与数据分析/课时1/张君义/作业1</small> -->
+
+    </div>
+    <div class="modal-body">
+
+        <form class="form-horizontal">
+            <div class="form-group"><label class="col-lg-3 control-label">课程图片</label>
+
+                <div class="col-lg-9"> <button class="btn btn-success btn-sm btn-block" ng-click="chooseFile()">{{filename}}</button>
+
+                    <input type="file" id="courseImage" ng-show="false" file-model accept="image/*">
+
+                </div>
+            </div>
+            <div class="form-group"><label class="col-lg-3 control-label">课程名称</label>
+
+                <div class="col-lg-9"><input type="text" placeholder="课程名称" ng-model="course.courseName" class="form-control">
+                </div>
+            </div>
+            <div class="form-group"><label class="col-lg-3 control-label">课程描述</label>
+
+                <div class="col-lg-9"><textarea type="text" placeholder="简单描述一下课程吧" ng-model="course.courseDes" style="resize:none" class="form-control"></textarea>
+                </div>
+            </div>
+            <!-- <div class="form-group"><label class="col-lg-3 control-label">授课教师编号</label>
+
+                <div class="col-lg-9">
+                    <select class="form-control" ng-model="teacher.gender" ng-options="item.value as item.label for item in gender">
+                                
+                                  </select>
+                </div>
+            </div> -->
+
+            <div class="form-group">
+                <label class="col-lg-3 control-label">授课教师</label>
+                <div class="col-lg-9">
+
+                    <ui-select ng-model="person.selected" theme="bootstrap">
+                        <ui-select-match placeholder="选择授课教师">{{$select.selected.teacherName}}</ui-select-match>
+                        <ui-select-choices repeat="item in people | filter: $select.search">
+                            <div ng-bind-html="item.teacherName | highlight: $select.search"></div>
+                            <small ng-bind-html="item.teacherNo | highlight: $select.search"></small>
+                            <small ng-bind-html="item.teacherTitle | highlight: $select.search"></small>
+                            <small ng-bind-html="item.teacherContact | highlight: $select.search"></small>
+
+
+                        </ui-select-choices>
+                    </ui-select>
+
+                </div>
+            </div>
+            <!-- <div class="form-group"><label class="col-lg-3 control-label">联系方式</label>
+
+                <div class="col-lg-9"><input type="text" ng-model="teacher.contact" placeholder="邮箱或者手机号码" class="form-control"></input>
+                </div>
+            </div> -->
+
+        </form>
+
+    </div>
+    <!-- <div class="panel-footer">
+                        <p style="text-align:center">? <a href="" ng-click="goLogin()">登录</a></p>
+                    </div> -->
+    <div class="modal-footer">
+        <button type="button" class="btn btn-white" ng-click="cancel()">取消</button>
+
+
+        <button type="submit" class="btn btn-success" ng-click="ok()">保存</button>
+    </div>
+</div>

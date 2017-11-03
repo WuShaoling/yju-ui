@@ -11,16 +11,19 @@
     classDetailCtrl.$inject = ['$scope', 'reqUrl', '$uibModal', '$stateParams', 'commonSrv', 'classManagementSrv'];
     addStudentCtrl.$inject = ['$scope', '$uibModalInstance', 'classManagementSrv', '$stateParams'];
     editStudentCtrl.$inject = ['$scope', '$uibModalInstance', 'student', 'classManagementSrv'];
-    batchAddStudentCtrl.$inject = ['$scope', '$uibModalInstance', '$stateParams', 'reqUrl'];
+    batchAddStudentCtrl.$inject = ['$scope', '$uibModalInstance', '$stateParams', 'reqUrl', 'usSpinnerService'];
 
-    function batchAddStudentCtrl($scope, $uibModalInstance, $stateParams, reqUrl) {
+    function batchAddStudentCtrl($scope, $uibModalInstance, $stateParams, reqUrl, usSpinnerService) {
         console.log($stateParams.classId);
         $scope.classId = $stateParams.classId;
         $scope.token = 'Bearer ' + (localStorage['token'] ? localStorage['token'] : '')
         $scope.close = function() {
             $uibModalInstance.close('dismiss')
         }
+
         $scope.ok = function() {
+            $scope.disableUpload = true;
+            usSpinnerService.spin('upload-spinner')
             console.log($scope.selectedFile);
             var formdata = new FormData();
             formdata.append('file', $scope.selectedFile)
@@ -39,6 +42,10 @@
                     console.log(res)
                     if (res.errorCode == 0) {
                         toastr.success('上传成功');
+                        usSpinnerService.stop('upload-teacher');
+
+                        $uibModalInstance.close(1);
+
                         // $scope.markdownUrl = res.data;
                         // $.get($scope.markdownUrl + '', function(result) {
                         //     console.log(result)
@@ -63,16 +70,21 @@
                         $scope.$apply();
                     } else if (res.errorCode == 45) {
                         toastr.error("登录超时！");
+                        usSpinnerService.stop('upload-teacher');
+
                         $rootScope.$broadcast('ok', 0);
                     } else if (res.errorCode == 46) {
                         toastr.error("请重新登录！");
+                        usSpinnerService.stop('upload-teacher');
+
                         $rootScope.$broadcast('ok', 0)
                     } else {
                         toastr.error(res.message);
+                        usSpinnerService.stop('upload-teacher');
+
                     }
                 }
             });
-            $uibModalInstance.close(1);
 
         }
         $scope.importURL = reqUrl + '/admin/class/student/batchCreation';

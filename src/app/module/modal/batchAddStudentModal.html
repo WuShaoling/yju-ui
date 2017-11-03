@@ -17,10 +17,12 @@
 
                 <!--            <input type="submit" class="btn btn-primary" value="上传文件"  ng-click="importFile()"/>
  -->
+                <span us-spinner="{ color: '#0060b1', radius: 10, width: 5, length: 10, zIndex: 10 ,top:'30%'}" spinner-key="upload-spinner" spinner-start-active="false"></span>
+
             </div>
             <div class="form-group">
-                <button type="button" class="btn btn-default" ng-click="close()">关闭</button>
-                <button type="submit" class="btn btn-info" ng-click="ok()">上传</button>
+                <button type="button" class="btn btn-danger dim btn-outline" ng-click="close()"><i class="fa fa-times"></i> 关闭</button>
+                <button type="submit" class="btn btn-info dim btn-outline" ng-click="ok()" ng-disabled="disableUpload"><i class="fa fa-upload"></i>上传</button>
             </div>
         </form>
     </div>

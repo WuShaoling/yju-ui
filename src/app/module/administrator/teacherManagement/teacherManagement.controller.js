@@ -8,17 +8,19 @@
         .controller('editTeacherCtrl', editTeacherCtrl)
         .controller('batchAddTeacherCtrl', batchAddTeacherCtrl);
 
-    batchAddTeacherCtrl.$inject = ['$scope', '$uibModalInstance', '$stateParams', 'reqUrl'];
+    batchAddTeacherCtrl.$inject = ['$scope', '$uibModalInstance', '$stateParams', 'reqUrl', 'usSpinnerService'];
 
     teacherManagementCtrl.$inject = ['$scope', 'reqUrl', '$uibModal', 'teacherManageSrv', 'commonSrv'];
     addTeacherCtrl.$inject = ['$scope', '$uibModalInstance', 'teacherManageSrv'];
     editTeacherCtrl.$inject = ['$scope', '$uibModalInstance', 'teacher', 'teacherManageSrv'];
 
-    function batchAddTeacherCtrl($scope, $uibModalInstance, $stateParams, reqUrl) {
+    function batchAddTeacherCtrl($scope, $uibModalInstance, $stateParams, reqUrl, usSpinnerService) {
         $scope.close = function() {
             $uibModalInstance.close('dismiss')
         };
         $scope.ok = function() {
+            $scope.disableUpload = true;
+            usSpinnerService.spin('upload-teacher');
             console.log($scope.selectedFile);
             var formdata = new FormData();
             formdata.append('file', $scope.selectedFile)
@@ -37,6 +39,9 @@
                     console.log(res)
                     if (res.errorCode == 0) {
                         toastr.success('上传成功');
+                        usSpinnerService.stop('upload-teacher');
+                        $uibModalInstance.close(1);
+
                         // $scope.markdownUrl = res.data;
                         // $.get($scope.markdownUrl + '', function(result) {
                         //     console.log(result)
@@ -61,16 +66,21 @@
                         $scope.$apply();
                     } else if (res.errorCode == 45) {
                         toastr.error("登录超时！");
+                        usSpinnerService.stop('upload-teacher');
+
                         $rootScope.$broadcast('ok', 0);
                     } else if (res.errorCode == 46) {
                         toastr.error("请重新登录！");
+                        usSpinnerService.stop('upload-teacher');
+
                         $rootScope.$broadcast('ok', 0)
                     } else {
                         toastr.error(res.message);
+                        usSpinnerService.stop('upload-teacher');
+
                     }
                 }
             });
-            $uibModalInstance.close(1);
 
         }
         $scope.importURL = reqUrl + '/admin//teacher/batchCreation';

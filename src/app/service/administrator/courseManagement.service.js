@@ -15,7 +15,7 @@
         this.getAllCourse = function() {
             return $resource(reqUrl + '/admin/course/all')
         }
-        this.editcourse = function() {
+        this.editCourse = function() {
             return $resource(reqUrl + "/admin/course/updation")
         }
         this.deletecourse = function() {
@@ -57,6 +57,8 @@
             return $resource(reqUrl + '/admin/module/lib/deletion')
 
         }
+
+
 
     }
 })();

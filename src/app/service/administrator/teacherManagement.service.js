@@ -29,5 +29,7 @@
         this.batchAddTeacher = function() {
             return $resource(reqUrl + '/admin/teacher/batchCreation')
         }
+
+
     }
 })();
