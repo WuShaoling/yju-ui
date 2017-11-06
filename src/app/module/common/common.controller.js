@@ -57,14 +57,6 @@
             }
         })
         $scope.logout = function() {
-            localStorage.clear();
-            $scope.logined = false;
-            $scope.navbar = [];
-
-            // $state.go('index.main')
-        }
-
-        $scope.logout_temp = function() {
                 localStorage.clear();
                 $scope.logined = false;
                 $scope.navbar = [];
@@ -88,18 +80,6 @@
                 size: "sm"
                     // windowClass: "animated flipInY"
             });
-
-
-            modalInstance.result.then(function(result) {
-                console.log(result);
-                if (result.errorCode === "000") {
-                    toastr.success("修改成功");
-
-
-                }
-            }, function(reason) {
-                console.log(reason);
-            });
         }
     }
 
@@ -109,26 +89,29 @@
             $uibModalInstance.dismiss('cancel');
         };
         $scope.modifyPass = function() {
-            $uibModalInstance.close();
+            var oldPassword = $scope.oldPassword;
+            var newPassword = $scope.newPassword;
+            var confirmPassword = $scope.confirmPassword;
 
-            var modalInstance = $uibModal.open({
-                templateUrl: 'app/module/modal/modifyPassModal.html',
-                controller: loginCtrl,
-                size: "sm"
-                    // windowClass: "animated flipInY"
-            });
-
-
-            modalInstance.result.then(function(result) {
-                console.log(result);
-                if (result.errorCode === "000") {
-                    toastr.success("修改成功");
-
-
+            commonSrv.modifyPass().save({
+                "userId": localStorage["userId"],
+                "oldPassword": oldPassword,
+                "newPassword": newPassword,
+                "confirmPassword": confirmPassword
+            }).$promise.then(
+                function (response) {
+                    if (response.errorCode == 0) {
+                        toastr.success('修改成功！请重新登录')
+                        $uibModalInstance.close()
+                        $rootScope.$broadcast('ok')
+                    } else {
+                        toastr.error(response.message)
+                    }
+                },
+                function() {
+                    toastr.error("修改失败，请稍后再试")
                 }
-            }, function(reason) {
-                console.log(reason);
-            });
+            )
         }
         $scope.login = function() {
 

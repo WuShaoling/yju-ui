@@ -106,7 +106,7 @@
             })
             .state('index.startExperiment', {
                 url: "/course/experiment/:experimentId/:type/:studentId/:cloudwareType",
-                params: { homeworkId: null, type: "1", studentId: null, cloudwareType: null },
+                params: { experimentId: null, type: "1", studentId: null, cloudwareType: null },
                 templateUrl: "app/module/student/studentStartExperiment/studentStartExperiment.html",
                 controller: "studentStartExperimentCtrl"
             })

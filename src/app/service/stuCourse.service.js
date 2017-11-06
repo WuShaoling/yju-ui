@@ -77,5 +77,12 @@
                 studentId: "@studentId"
             })
         }
+
+        this.deleteExCloudware = function() {
+            return $resource(reqUrl + '/student/experiment/delete', {
+                studentId: "@studentId",
+                experimentId: "@experimentId"
+            })
+        }
     }
 })();

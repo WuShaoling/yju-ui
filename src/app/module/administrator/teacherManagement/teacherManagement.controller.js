@@ -5,11 +5,87 @@
         .module('phoenix')
         .controller('teacherManagementCtrl', teacherManagementCtrl)
         .controller('addTeacherCtrl', addTeacherCtrl)
-        .controller('editTeacherCtrl', editTeacherCtrl);
+        .controller('editTeacherCtrl', editTeacherCtrl)
+        .controller('batchAddTeacherCtrl', batchAddTeacherCtrl);
+
+    batchAddTeacherCtrl.$inject = ['$scope', '$uibModalInstance', '$stateParams', 'reqUrl', 'usSpinnerService'];
 
     teacherManagementCtrl.$inject = ['$scope', 'reqUrl', '$uibModal', 'teacherManageSrv', 'commonSrv'];
     addTeacherCtrl.$inject = ['$scope', '$uibModalInstance', 'teacherManageSrv'];
     editTeacherCtrl.$inject = ['$scope', '$uibModalInstance', 'teacher', 'teacherManageSrv'];
+
+    function batchAddTeacherCtrl($scope, $uibModalInstance, $stateParams, reqUrl, usSpinnerService) {
+        $scope.close = function() {
+            $uibModalInstance.close('dismiss')
+        };
+        $scope.ok = function() {
+            $scope.disableUpload = true;
+            usSpinnerService.spin('upload-teacher');
+            console.log($scope.selectedFile);
+            var formdata = new FormData();
+            formdata.append('file', $scope.selectedFile)
+            $.ajax({
+                type: 'POST',
+                url: $scope.importURL,
+                dataType: 'json',
+                beforeSend: function(xhr) {
+                    // xhr.setRequestHeader('access_token', '1504751421487');
+                    xhr.setRequestHeader('Authorization', 'Bearer ' + (localStorage['token'] ? localStorage['token'] : ''));
+                },
+                processData: false, // Dont process the files
+                contentType: false,
+                data: formdata,
+                success: function(res) {
+                    console.log(res)
+                    if (res.errorCode == 0) {
+                        toastr.success('上传成功');
+                        usSpinnerService.stop('upload-teacher');
+                        $uibModalInstance.close(1);
+
+                        // $scope.markdownUrl = res.data;
+                        // $.get($scope.markdownUrl + '', function(result) {
+                        //     console.log(result)
+                        //     if (result == null) {
+                        //         return
+                        //     }
+                        //     $scope.text = result;
+                        //     console.log($scope.text);
+
+                        //     $scope.html = converter.makeHtml($scope.text);
+                        //     // $timeout(function() {
+                        //     //     console.log($('#ht').height())
+                        //     //     $('#or').height($('#ht').height());
+                        //     // })
+
+                        //     // console.log(result.label_type)
+
+                        // });
+                        // qiniuImage = qiniuURL + res.fileName;
+                        // $scope.imageSrc = qiniuURL + res.fileName;
+                        // $scope.isUpload = true;
+                        $scope.$apply();
+                    } else if (res.errorCode == 45) {
+                        toastr.error("登录超时！");
+                        usSpinnerService.stop('upload-teacher');
+
+                        $rootScope.$broadcast('ok', 0);
+                    } else if (res.errorCode == 46) {
+                        toastr.error("请重新登录！");
+                        usSpinnerService.stop('upload-teacher');
+
+                        $rootScope.$broadcast('ok', 0)
+                    } else {
+                        toastr.error(res.message);
+                        usSpinnerService.stop('upload-teacher');
+
+                    }
+                }
+            });
+
+        }
+        $scope.importURL = reqUrl + '/admin//teacher/batchCreation';
+
+    }
 
     function teacherManagementCtrl($scope, reqUrl, $uibModal, teacherManageSrv, commonSrv) {
         var vm = this;
@@ -70,6 +146,12 @@
                         }
                     },
                     {
+                        text: '导入教师名单',
+                        action: function(e, dt, node, config) {
+                            batchAddTeacher();
+                        }
+                    },
+                    {
                         text: '新增教师',
                         action: function(e, dt, node, config) {
                             addTeacher();
@@ -108,6 +190,25 @@
             resetPass(teacherTable.row($(this).parents('tr')).data());
         });
 
+
+        var batchAddTeacher = function() {
+
+            var modalInstance = $uibModal.open({
+                size: "md",
+                templateUrl: 'app/module/modal/batchAddTeacherModal.html',
+                controller: 'batchAddTeacherCtrl',
+                // resolve: {
+                //     classId: function() { return angular.copy(item); }
+                // }
+            });
+
+            modalInstance.result.then(function(result) {
+                if (result) {
+                    teacherTable.ajax.reload();
+                }
+
+            });
+        }
         var editTeacher = function(item) {
             console.log(item);
 

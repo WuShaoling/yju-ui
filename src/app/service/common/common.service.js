@@ -23,12 +23,30 @@
             return $resource(reqUrl + '/auth/login');
         }
 
+        this.modifyPass = function() {
+            return $resource(reqUrl + '/auth/updatePassword');
+        }
+
         this.startEx = function() {
             return $resource("http://192.168.1.128:8080/services")
         }
 
         this.getHotCourses = function() {
             return $resource(reqUrl + '/common/hotCourses/all')
+        }
+
+        this.getCourseExperimentDetail = function() {
+            return $resource(reqUrl + "/common/course/:courseId/experiments", {
+                courseId: "@courseId"
+            })
+        }
+        this.getCourseDetail = function() {
+            return $resource(reqUrl + "/common/course/:courseId/detail", {
+                courseId: "@courseId"
+            })
+        }
+        this.getStatistics = function() {
+            return $resource(reqUrl + "/common/statistics/")
         }
     }
 })();

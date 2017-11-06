@@ -26,5 +26,10 @@
         this.deleteTeacher = function() {
             return $resource(reqUrl + "/admin/teacher/deletion")
         }
+        this.batchAddTeacher = function() {
+            return $resource(reqUrl + '/admin/teacher/batchCreation')
+        }
+
+
     }
 })();

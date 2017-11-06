@@ -4,9 +4,12 @@
     angular
         .module('phoenix')
         .controller('addCourseCtrl', addCourseCtrl)
+        .controller('editCourseCtrl', editCourseCtrl)
         .controller('courseManagementCtrl', courseManagementCtrl);
 
     addCourseCtrl.$inject = ['$scope', '$uibModalInstance', 'teacherManageSrv', 'courseManagementSrv', 'commonSrv', 'reqUrl'];
+    editCourseCtrl.$inject = ['$scope', '$uibModalInstance', 'teacherManageSrv', 'courseManagementSrv', 'commonSrv', 'reqUrl', 'courseinfo'];
+
 
     courseManagementCtrl.$inject = ['$scope', 'reqUrl', '$uibModal', '$state', 'courseManagementSrv'];
 
@@ -67,7 +70,7 @@
                     "targets": -1,
                     "data": null,
                     'className': "lsr-body-center",
-                    "defaultContent": "<div class='btn-group'><button class='btn btn-info btn-outline courseMaintain'>课程实验维护</button><button class='btn btn-danger btn-outline deleteCourse'>删除课程</button></div>"
+                    "defaultContent": "<div class='btn-group'><button class='btn btn-info btn-outline courseMaintain'>课程实验维护</button><button class='btn btn-info btn-outline updateCourse'>更新课程</button><button class='btn btn-danger btn-outline deleteCourse'>删除课程</button></div>"
                 }],
                 //自定义Button
                 buttons: [{
@@ -111,7 +114,25 @@
         $('#Course tbody').on('click', '.deleteCourse', function() {
             deleteCourse(courseTable.row($(this).parents('tr')).data());
         });
+        $('#Course tbody').on('click', '.updateCourse', function() {
+            updateCourse(courseTable.row($(this).parents('tr')).data());
+        });
 
+        var updateCourse = function(item) {
+            var modalInstance = $uibModal.open({
+                size: "md",
+                templateUrl: 'app/module/modal/editCourseModal.html',
+                controller: 'editCourseCtrl',
+                resolve: {
+                    courseinfo: function() { return angular.copy(item) }
+                }
+            });
+            modalInstance.result.then(function(result) {
+                if (result) {
+                    courseTable.ajax.reload();
+                }
+            });
+        }
         var addCourse = function() {
             var modalInstance = $uibModal.open({
                 size: "md",
@@ -162,6 +183,8 @@
                                     }, function() {
                                         courseTable.ajax.reload();
                                     });
+                                } else {
+                                    toastr.error(response.message)
                                 }
                             },
                             function(error) {
@@ -301,6 +324,148 @@
 
 
         $scope.person = {};
+
+    }
+
+    function editCourseCtrl($scope, $uibModalInstance, teacherManageSrv, courseManagementSrv, commonSrv, reqUrl, courseinfo) {
+        $scope.course = courseinfo;
+        console.log(courseinfo)
+        $scope.person = {
+            selected: null
+        };
+
+        teacherManageSrv.getAllTeachers().get().$promise.then(
+            function(response) {
+                console.log(response);
+                if (response.errorCode == 0) {
+                    $scope.people = response.data.teacherInfoList;
+                } else {
+                    toastr.error(response.message)
+                }
+            },
+            function(error) {
+                console.log("获取教师列表失败，请稍后再试");
+            }
+        )
+        $scope.cancel = function() {
+            $uibModalInstance.dismiss('cancel');
+        }
+        $scope.filename = "上传260 x 185的图片"
+        $scope.chooseFile = function() {
+            $('#courseImage').trigger('click');
+        }
+
+        $scope.getFile = function(file) {
+            console.log(file);
+            var fileFormData = new FormData();
+            fileFormData.append('file', file);
+            // commonSrv.uploadImage().save({
+            //     file: fileFormData
+            // }, function(response) {
+            //     console.log(response)
+            // }, function(error) {
+            //     console.log(error);
+            //     toastr.error("上传失败")
+            // })
+            $.ajax({
+                type: 'POST',
+                url: reqUrl + '/admin/course/experiment/piclib',
+                dataType: 'json',
+                processData: false, // Dont process the files
+                contentType: false,
+                data: fileFormData,
+                beforeSend: function(xhr) {
+                    // xhr.setRequestHeader('access_token', '1504751421487');
+                    xhr.setRequestHeader('Authorization', 'Bearer ' + (localStorage['token'] ? localStorage['token'] : ''));
+                },
+                success: function(res) {
+                    console.log(res)
+                    if (res.errorCode == 0) {
+                        if (res.data.width > 265) {
+                            toastr.error("图片宽度过大，请调整后上传")
+                            return;
+                        } else if (res.data.width < 260) {
+                            toastr.error("图片宽度过小，请调整后上传")
+                            return;
+                        }
+                        if (res.data.height > 188) {
+                            toastr.error("图片高度过大，请调整后上传")
+                            return;
+                        } else if (res.data.height < 183) {
+                            toastr.error("图片高度过小，请调整后上传")
+                            return;
+                        }
+                        toastr.success('上传图片成功');
+
+                        $scope.course.imageUrl = res.data.url;
+                        // qiniuImage = qiniuURL + res.fileName;
+                        // $scope.imageSrc = qiniuURL + res.fileName;
+                        // $scope.isUpload = true;
+                        $scope.$apply();
+                    } else if (res.errorCode == 45) {
+                        toastr.error("登录超时！");
+                        $rootScope.$broadcast('ok', 0);
+                    } else if (res.errorCode == 46) {
+                        toastr.error("请重新登录！");
+                        $rootScope.$broadcast('ok', 0)
+                    } else {
+                        toastr.error(res.message);
+                    }
+
+                }
+            });
+            $scope.filename = file.name;
+
+            $scope.$apply()
+        };
+        $scope.ok = function() {
+
+            console.log($scope.course);
+            if (!$scope.course.imageUrl) {
+                toastr.warning("课程图片不能为空，已设置为默认")
+                $scope.course.imageUrl = "https://picture.insight365.ai/phoenix/course-img1.jpg";
+            }
+            if (!$scope.course.courseName) {
+                toastr.error("课程名称不能为空")
+                return
+            }
+            // if (!$scope.course.teacher.selected.id) {
+            //     toastr.error("授课教师不能为空")
+            //     return
+            // }
+            console.log($scope.person)
+            if ($scope.person.selected) {
+                $scope.course.teacher = $scope.person;
+            } else {
+                toastr.error("授课教师不能为空")
+                return
+
+            }
+            courseManagementSrv.editCourse().save({
+                "id": $scope.course.id,
+                "description": $scope.course.courseDes,
+                "imageName": $scope.course.imageName,
+                "imageUrl": $scope.course.imageUrl,
+                "name": $scope.course.courseName,
+                "teacherId": $scope.course.teacher.selected.id
+            }, function(response) {
+                console.log(response)
+                if (response.errorCode == 0) {
+                    toastr.success("更新成功")
+                    $uibModalInstance.close(1);
+
+                } else {
+                    toastr.error(response.message)
+
+                }
+            }, function(error) {
+                toastr.error("更新失败")
+
+            })
+
+
+        }
+
 
     }
 
