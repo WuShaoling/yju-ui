@@ -143,13 +143,35 @@
         }
     }
 
-    addNewExCtrl.$inject = ['$scope', '$timeout', '$uibModal', 'commonSrv', 'courseManagementSrv', '$stateParams', 'reqUrl', '$state'];
+    addNewExCtrl.$inject = ['$scope', '$timeout', '$uibModal', 'commonSrv', 'courseManagementSrv', '$stateParams', 'reqUrl', '$state', 'stuCourseSrv'];
 
-
-
-    function addNewExCtrl($scope, $timeout, $uibModal, commonSrv, courseManagementSrv, $stateParams, reqUrl, $state) {
+    function addNewExCtrl($scope, $timeout, $uibModal, commonSrv, courseManagementSrv, $stateParams, reqUrl, $state, stuCourseSrv) {
         $scope.experiment = {};
         $scope.text = "";
+        $scope.disableSave = false;
+        $scope.loadEx = function () {
+            if($stateParams.experimentId != 0) {
+                $scope.disableSave = true;
+                stuCourseSrv.getExperimentDetail().get({
+                        experimentId: $stateParams.experimentId
+                    }, function(response) {
+                        console.log(response);
+                        if (response.errorCode == 0) {
+                            $scope.experiment = response.data
+                            $scope.text = response.data.experimentContent
+                            $scope.experiment.cloudwareType = response.data.cloudwareTypeId
+                            $scope.disableSave = false
+                            $scope.$apply()
+                        } else {
+                            toastr.error(response.message)
+                        }
+                    },
+                    function(error) {
+                        toastr.error("获取实验详情失败，请稍后再试")
+                    })
+            }
+        }()
+
         $scope.ok = function() {
             if (!$scope.experiment.experimentName) {
                 toastr.error("作业名称不能为空");
@@ -162,30 +184,55 @@
 
 
             console.log($scope.text);
-            courseManagementSrv.addExperiment().save({
-                "cloudwareType": $scope.experiment.cloudwareType,
-                "experimentContent": $scope.text,
-                "experimentDes": $scope.experiment.experimentDes,
-                "experimentCreateDate": new Date(),
-                // "experimentDueDate": "2017-10-24T07:10:27.269Z",
-                "experimentName": $scope.experiment.experimentName,
-                // "experimentUrl": "string",
-                "moduleId": $stateParams.moduleId
-            }).$promise.then(
-                function(response) {
-                    console.log(response)
-                    if (response.errorCode == 0) {
-                        toastr.success("添加成功")
-                        $state.go('index.courseMaintainence', { courseId: $stateParams.courseId });
+            if($stateParams.experimentId == 0) {
+                courseManagementSrv.addExperiment().save({
+                    "cloudwareType": $scope.experiment.cloudwareType,
+                    "experimentContent": $scope.text,
+                    "experimentDes": $scope.experiment.experimentDes,
+                    "experimentCreateDate": new Date(),
+                    // "experimentDueDate": "2017-10-24T07:10:27.269Z",
+                    "experimentName": $scope.experiment.experimentName,
+                    // "experimentUrl": "string",
+                    "moduleId": $stateParams.moduleId
+                }).$promise.then(
+                    function (response) {
+                        console.log(response)
+                        if (response.errorCode == 0) {
+                            toastr.success("添加成功")
+                            $state.go('index.courseMaintainence', {courseId: $stateParams.courseId});
 
-                    } else {
-                        toastr.error(response.message);
+                        } else {
+                            toastr.error(response.message);
+                        }
+                    },
+                    function (error) {
+                        toastr.error("添加失败，请稍后再试");
                     }
-                },
-                function(error) {
-                    toastr.error("添加失败，请稍后再试");
-                }
-            )
+                )
+            } else {
+                courseManagementSrv.updateExperiment().save({
+                    "id": $scope.experiment.id,
+                    "cloudwareType": $scope.experiment.cloudwareType,
+                    "experimentContent": $scope.text,
+                    "experimentDes": $scope.experiment.experimentDes,
+                    "experimentName": $scope.experiment.experimentName,
+                    "moduleId": $stateParams.moduleId
+                }).$promise.then(
+                    function (response) {
+                        console.log(response)
+                        if (response.errorCode == 0) {
+                            toastr.success("更新成功")
+                            $state.go('index.courseMaintainence', {courseId: $stateParams.courseId});
+
+                        } else {
+                            toastr.error(response.message);
+                        }
+                    },
+                    function (error) {
+                        toastr.error("更新失败，请稍后再试");
+                    }
+                )
+            }
         }
         $scope.cloudwares = [{
             label: "Rstudio",

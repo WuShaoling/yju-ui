@@ -96,6 +96,7 @@
                                     <!-- <button type="button" class="btn btn-success btn-outline btn-sm" ng-click="startExp()">查看详情</button> -->
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-success btn-outline btn-sm" ng-click="checkEx(ex)">查看实验</button>
+                                        <button type="button" class="btn btn-success btn-outline btn-sm" ui-sref="index.addNewEx({courseId:courseDetail.courseId, moduleId:item.moduleId, experimentId:ex.id})">更新实验</button>
                                         <button type="button" class="btn btn-danger btn-outline btn-sm" ng-click="deleteEx(ex,item.moduleId,$index)">删除实验</button>
 
                                     </div>
