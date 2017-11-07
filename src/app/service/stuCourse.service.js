@@ -9,9 +9,9 @@
 
     function stuCourseSrv($resource, reqUrl) {
         this.getSelfCourse = getSelfCourse;
-        this.getNotifications = function () {
-            return $resource(reqUrl+'/student/course/homework/all/:studentId',{
-                studentId:"@studentId"
+        this.getNotifications = function() {
+            return $resource(reqUrl + '/student/course/homework/all/:studentId', {
+                studentId: "@studentId"
             })
         }
 
@@ -84,5 +84,6 @@
                 experimentId: "@experimentId"
             })
         }
+
     }
 })();
