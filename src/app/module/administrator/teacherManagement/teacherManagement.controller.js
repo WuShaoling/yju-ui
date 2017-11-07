@@ -38,10 +38,16 @@
                 success: function(res) {
                     console.log(res)
                     if (res.errorCode == 0) {
-                        toastr.success('上传成功');
-                        usSpinnerService.stop('upload-teacher');
-                        $uibModalInstance.close(1);
 
+                        usSpinnerService.stop('upload-teacher');
+
+                        if (res.data.failure == 0) {
+                            $uibModalInstance.close(1);
+                            toastr.success('上传成功');
+
+                        } else {
+                            $scope.failureList = res.data.failureReasonList
+                        }
                         // $scope.markdownUrl = res.data;
                         // $.get($scope.markdownUrl + '', function(result) {
                         //     console.log(result)

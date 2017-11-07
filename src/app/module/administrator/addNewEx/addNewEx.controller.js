@@ -75,7 +75,8 @@
                                         height: $scope.picInfo.height,
                                         imageUrl: $scope.picInfo.url,
                                         name: $scope.picInfo.name,
-                                        width: $scope.picInfo.width
+                                        width: $scope.picInfo.width,
+                                        resourceId: response.data
                                     });
 
                                 } else {

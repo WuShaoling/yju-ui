@@ -25,6 +25,43 @@
                 <button type="submit" class="btn btn-info dim btn-outline" ng-click="ok()" ng-disabled="disableUpload"><i class="fa fa-upload"></i>上传</button>
             </div>
         </form>
+        <div class="table-responsive" ng-show="failureList.length>0">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+
+                        <th>失败列表</th>
+                        <th>学号</th>
+
+                        <th>学生姓名</th>
+                        <!-- 
+                            <th>实验描述</th>
+                            <th>实验类型</th>
+                            <th>创建日期</th>
+                            <th>
+                                <button type="button" class="btn btn-success btn-sm " ui-sref="index.addNewEx({courseId:courseDetail.courseId, moduleId:item.moduleId})">添加实验</button>
+
+                            </th> -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in failureList track by $index">
+                        <td>{{$index+1}}</td>
+                        <td>{{item.studentNum}}
+                        </td>
+                        <td>{{item.studentName}}</td>
+
+
+
+
+                    </tr>
+
+                </tbody>
+            </table>
+
+        </div>
+
+
     </div>
 </div>
 
