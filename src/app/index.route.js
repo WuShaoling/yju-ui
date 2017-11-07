@@ -10,7 +10,7 @@
         $stateProvider
 
             .state('index', {
-                url: "/index",
+                url: "",
                 templateUrl: "app/module/common/common.html",
                 controller: "commonCtrl as common"
             })
@@ -19,11 +19,11 @@
                 templateUrl: "app/module/login/login.html",
                 controller: "loginCtrl"
             })
-            .state('intro', {
-                url: "",
-                templateUrl: "app/module/intro/intro.html",
-                controller: "introCtrl"
-            })
+            // .state('intro', {
+            //     url: "",
+            //     templateUrl: "app/module/intro/intro.html",
+            //     controller: "introCtrl"
+            // })
             .state('index.main', {
                 url: "/main",
                 templateUrl: "app/module/main/main.html",
@@ -181,7 +181,7 @@
             })
             .state('index.addNewEx', {
                 url: "/administrator/:courseId/:moduleId/:experimentId/addNewEx",
-                params: { courseId: null, moduleId: null, experimentId: "0"},
+                params: { courseId: null, moduleId: null, experimentId: "0" },
                 templateUrl: "app/module/administrator/addNewEx/addNewEx.html",
                 controller: "addNewExCtrl"
             })
