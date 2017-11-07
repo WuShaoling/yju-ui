@@ -39,6 +39,9 @@
         this.addExperiment = function() {
             return $resource(reqUrl + '/admin/course/module/experiment/creation')
         }
+        this.updateExperiment = function() {
+            return $resource(reqUrl + '/admin/course/module/experiment/updation')
+        }
         this.deleteExperiment = function() {
             return $resource(reqUrl + "/admin/course/experiment/deletion")
         }
