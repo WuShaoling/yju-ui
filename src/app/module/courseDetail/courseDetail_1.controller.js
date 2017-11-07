@@ -41,6 +41,7 @@
                     $scope.teacherName = response.data.teacherName;
                     $scope.classNum = response.data.classNum;
                     $scope.studentNum = response.data.studentNum;
+                    $scope.courseDescription = response.data.courseDescription;
                 }
             },
             function(error) {
