@@ -5,9 +5,9 @@
         .module('phoenix')
         .controller('cloudwareCtrl', cloudwareCtrl);
 
-    cloudwareCtrl.$inject = ['$scope', '$timeout', 'usSpinnerService', 'commonSrv', 'stuCourseSrv', '$stateParams'];
+    cloudwareCtrl.$inject = ['$scope', '$timeout', 'usSpinnerService', 'commonSrv', 'stuCourseSrv', '$stateParams', 'cloudwareUrl'];
 
-    function cloudwareCtrl($scope, $timeout, usSpinnerService, commonSrv, stuCourseSrv, $stateParams) {
+    function cloudwareCtrl($scope, $timeout, usSpinnerService, commonSrv, stuCourseSrv, $stateParams, cloudwareUrl) {
         var vm = this;
 
         if ($stateParams.type == "1") {
@@ -331,7 +331,7 @@
                         $('[data-cloudware-env]').each(function(index, el) {
                             var env = $(el).attr('data-cloudware-env')
                             $.ajax({
-                                url: 'http://api.cloudwarehub.com/services',
+                                url: cloudwareUrl + '/services',
                                 // headers: { 'secret': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJpYXQiOjE1MDU4MTM0NTd9.Ftw1yHeUrqdNvymFZcIpuEoS0RHBFZqu4MfUZON9Zm0' },
                                 method: 'post',
                                 data: {

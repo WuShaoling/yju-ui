@@ -5,9 +5,9 @@
         .module('phoenix')
         .controller('adCheckExCtrl', adCheckExCtrl);
 
-    adCheckExCtrl.$inject = ['$scope', '$timeout', 'usSpinnerService'];
+    adCheckExCtrl.$inject = ['$scope', '$timeout', 'usSpinnerService', 'cloudwareUrl'];
 
-    function adCheckExCtrl($scope, $timeout, usSpinnerService) {
+    function adCheckExCtrl($scope, $timeout, usSpinnerService, cloudwareUrl) {
         var vm = this;
         $scope.leftControl = true;
         $scope.rightControl = true;
@@ -195,7 +195,7 @@
                         $('[data-cloudware-env]').each(function(index, el) {
                             var env = $(el).attr('data-cloudware-env')
                             $.ajax({
-                                url: 'http://api.cloudwarehub.com/instances',
+                                url: cloudwareUrl + '/instances',
                                 method: 'post',
                                 data: {
                                     cloudware: env
