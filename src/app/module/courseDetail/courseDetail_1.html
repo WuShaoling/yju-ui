@@ -252,22 +252,15 @@
                         <div ui-sref="profile">
                             <div class="col-sm-4">
                                 <div class="text-center">
-                                    <img alt="image" class="img-circle m-t-xs img-responsive" src="https://dn-simplecloud.shiyanlou.com/gravatar37f0e884fbad9667e38940169d0a3c95.png?imageView2/1/w/100/h/100">
-
-                                    <div class="m-t-xs font-bold">数据分析师</div>
+                                    <i class="fa fa-id-card-o"></i>
+                                    <div class="m-t-xs font-bold">{{teacherTitle}}</div>
                                 </div>
                             </div>
                             <div class="col-sm-8">
                                 <h3><strong>{{teacherName}}</strong></h3>
 
-                                <p><i class="fa fa-map-marker"></i> 中国</p>
-                                <address>
-                                                    <strong>上海信息有限公司, Inc.</strong><br>
-                                                    上海市 静安区<br>
-                                                    北京东路666号666室<br>
-                                                    <abbr title="Phone">E:</abbr> bennet@qq.com
-                                                </address>
-                                <button class="btn btn-success btn-outline btn-rounded" type="button">查看老师全部课程 &nbsp;<i class="fa fa-arrow-right"></i></button>
+                                <p><i class="fa " ng-class="{'男':'fa-male','女':'fa-female'}[gender]" aria-hidden="true"></i> {{gender}}</p>
+                                <p><i class="fa fa-address-book" ></i> {{teacherContact}}</p>
 
                             </div>
 
