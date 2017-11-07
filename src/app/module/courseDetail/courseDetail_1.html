@@ -16,7 +16,7 @@
 
                         <div class="post_desc">
                             <div class="block_quate">
-                                <p>基于杨春敏与黄毅的ABS译文制作，一本深入学习 shell 脚本艺术的书籍。原版链接：http://www.tldp.org/LDP/abs/html/。</p>
+                                <p>{{courseDescription}}</p>
 
                             </div>
                             <!-- <button class="btn btn-success btn-rounded btn-lg" type="button">开始实验</button> -->
@@ -252,22 +252,20 @@
                         <div ui-sref="profile">
                             <div class="col-sm-4">
                                 <div class="text-center">
-                                    <img alt="image" class="img-circle m-t-xs img-responsive" src="https://dn-simplecloud.shiyanlou.com/gravatar37f0e884fbad9667e38940169d0a3c95.png?imageView2/1/w/100/h/100">
+                                    <!-- <i class="fa fa-id-card-o"></i> -->
+                                    <img alt="image" class="img-circle m-t-xs img-responsive" src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3245246320,3520849533&fm=27&gp=0.jpg">
 
-                                    <div class="m-t-xs font-bold">数据分析师</div>
+                                    <div class="m-t-xs font-bold"></div>
                                 </div>
                             </div>
                             <div class="col-sm-8">
                                 <h3><strong>{{teacherName}}</strong></h3>
 
-                                <p><i class="fa fa-map-marker"></i> 中国</p>
-                                <address>
-                                                    <strong>上海信息有限公司, Inc.</strong><br>
-                                                    上海市 静安区<br>
-                                                    北京东路666号666室<br>
-                                                    <abbr title="Phone">E:</abbr> bennet@qq.com
-                                                </address>
-                                <button class="btn btn-success btn-outline btn-rounded" type="button">查看老师全部课程 &nbsp;<i class="fa fa-arrow-right"></i></button>
+                                <p><i class="fa " ng-class="{'男':'fa-male','女':'fa-female'}[gender]" aria-hidden="true"></i> {{gender}}</p>
+                                <p>
+                                    <i class="fa fa-bookmark"></i> {{teacherTitle}}
+                                </p>
+                                <p><i class="fa fa-phone-square"></i> {{teacherContact}}</p>
 
                             </div>
 

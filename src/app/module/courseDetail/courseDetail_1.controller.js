@@ -38,9 +38,13 @@
                 if (response.errorCode == 0) {
                     //toastr.success("get it");
                     console.log(response)
-                    $scope.teacherName = response.data.teacherName;
+                    $scope.teacherName = response.data.teacherInfo.teacherName;
+                    $scope.teacherTitle = response.data.teacherInfo.teacherTitle;
+                    $scope.gender = response.data.teacherInfo.gender;
+                    $scope.teacherContact = response.data.teacherInfo.teacherContact;
                     $scope.classNum = response.data.classNum;
                     $scope.studentNum = response.data.studentNum;
+                    $scope.courseDescription = response.data.courseDescription;
                 }
             },
             function(error) {
@@ -49,7 +53,5 @@
         )
 
         ////////////////
-
-
     }
 })();

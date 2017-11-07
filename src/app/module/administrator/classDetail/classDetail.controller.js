@@ -23,7 +23,7 @@
 
         $scope.ok = function() {
             $scope.disableUpload = true;
-            usSpinnerService.spin('upload-spinner')
+            usSpinnerService.spin('upload-student')
             console.log($scope.selectedFile);
             var formdata = new FormData();
             formdata.append('file', $scope.selectedFile)
@@ -41,7 +41,7 @@
                 success: function(res) {
                     console.log(res)
                     if (res.errorCode == 0) {
-                        usSpinnerService.stop('upload-teacher');
+                        usSpinnerService.stop('upload-student');
 
                         if (res.data.failure == 0) {
                             $uibModalInstance.close(1);
@@ -74,17 +74,17 @@
                         $scope.$apply();
                     } else if (res.errorCode == 45) {
                         toastr.error("登录超时！");
-                        usSpinnerService.stop('upload-teacher');
+                        usSpinnerService.stop('upload-student');
 
                         $rootScope.$broadcast('ok', 0);
                     } else if (res.errorCode == 46) {
                         toastr.error("请重新登录！");
-                        usSpinnerService.stop('upload-teacher');
+                        usSpinnerService.stop('upload-student');
 
                         $rootScope.$broadcast('ok', 0)
                     } else {
                         toastr.error(res.message);
-                        usSpinnerService.stop('upload-teacher');
+                        usSpinnerService.stop('upload-student');
 
                     }
                 }

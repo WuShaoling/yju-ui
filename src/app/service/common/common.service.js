@@ -48,5 +48,10 @@
         this.getStatistics = function() {
             return $resource(reqUrl + "/common/statistics/")
         }
+        this.getTeacherDetail = function() {
+            return $resource(reqUrl + "/common/teacher/:teacherId", {
+                teacherId: "@teacherId"
+            })
+        }
     }
 })();
