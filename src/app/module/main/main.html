@@ -71,14 +71,14 @@
                 <!-- row -->
                 <div class="row">
 
-                    <div class="col-md-4 col-sm-4 col-xs-6" ng-repeat="course in courses|filter:common.searchData">
+                    <div class="col-md-3 col-sm-3 col-xs-6" ng-repeat="course in courses|filter:common.searchData">
                         <div class="imageBox">
                             <div class="productImage clearfix">
                                 <a ui-sref="index.courseDetail1({courseId:course.courseId})"><img src="{{course.imageUrl}}" alt="Image"></a>
                                 <!-- <span class="sticker"><i class="fa fa-clock-o" aria-hidden="true"></i>{{course.duration}}</span> -->
                             </div>
                             <div class="productCaption clearfix">
-                                <h3 style="text-align: center"><a ui-sref="index.courseDetail1({courseId:course.courseId})">{{course.courseName}}</a></h3>
+                                <h3><a ui-sref="index.courseDetail1({courseId:course.courseId})">{{course.courseName}}</a></h3>
                                 <!--<div class="product-meta">-->
                                 <!--<span class="author" style="text-align: center">授课教师 : {{course.teacherName}}</span>-->
                                 <!--</div>-->
@@ -92,7 +92,10 @@
                                       </span> -->
                                 <!--<span class="rating-review">{{course.courseDes}}</span>-->
                                 <!--</div>-->
-                                <h3 style="text-align: center">{{course.courseDes}}</a>
+                                <div class="product-meta">
+                                    <span class="author">关键词 : {{course.courseDes}}</span>
+                                </div>
+                                <!-- <h3 style="text-align: center">{{course.courseDes}}</a> -->
                                 </h3>
                                 <div class="caption-bottom">
                                     <div class="price">
@@ -100,8 +103,8 @@
                                         <!-- <span class="regular-price"><del>￥{{course.originPrice}}</del></span> -->
                                     </div>
                                     <div class="user">
-                                        <i class="fa fa-user">&nbsp;&nbsp;{{course.teacherName}}</i>
-                                        <span class="course-user"></span>
+                                        <i class="fa fa-user"></i>
+                                        <span class="course-user">{{course.teacherName}}</span>
                                     </div>
 
                                 </div>
@@ -125,7 +128,7 @@
         <div class="container">
             <div class="row clearfix">
 
-                <div class="col-sm-8 col-xs-12">
+                <div class="col-sm-7 col-xs-12">
                     <div class="videoNine clearfix">
 
                         <div class="videoArea clearfix">
@@ -182,7 +185,7 @@
                     <!-- end list_block -->
                 </div>
 
-                <div class="col-sm-4 col-xs-12" ng-if="!show">
+                <div class="col-sm-5 col-xs-12" ng-if="!show">
                     <img src="https://picture.insight365.ai/%E9%80%8F%E6%98%8E%EF%BC%88%E5%A4%A7%EF%BC%89.png" width="100%" height="" alt="">
                 </div>
                 <!-- col-sm-4 col-xs-12 -->

@@ -15,7 +15,7 @@
             console.log(123);
             $timeout(function() {
 
-                $('.imgctrl').height($(window).height())
+                // $('.imgctrl').height($(window).height())
 
             }, 500)
         });

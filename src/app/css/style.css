@@ -3325,10 +3325,10 @@ li.language.dropdown>a:focus {
     font-weight: 400;
     font-size: 13px;
     color: rgba(0, 0, 0, 0.5);
-    line-height: 14px;
+    line-height: 50px;
     display: table-cell;
     text-align: left;
-    padding-top: 10px;
+    /* padding-top: 10px; */
     padding-left: 7px;
 }
 
