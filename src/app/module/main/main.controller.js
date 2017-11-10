@@ -9,7 +9,9 @@
 
     function MainController($scope, $timeout, commonSrv, stuCourseSrv, teacherCourseSrv, $rootScope) {
         $scope.show = false
-
+        $scope.final = function() {
+            toastr.success("敬请期待...")
+        }
         $scope.getNotifications = function() {
             if (localStorage['userRole'] == 1) {
                 stuCourseSrv.getNotifications().get({

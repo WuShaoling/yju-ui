@@ -78,25 +78,27 @@
                                 <!-- <span class="sticker"><i class="fa fa-clock-o" aria-hidden="true"></i>{{course.duration}}</span> -->
                             </div>
                             <div class="productCaption clearfix">
-                                <h3><a ui-sref="index.courseDetail1({courseId:course.courseId})">{{course.courseName}}</a></h3>
-                                <!--<div class="product-meta">-->
-                                <!--<span class="author" style="text-align: center">授课教师 : {{course.teacherName}}</span>-->
-                                <!--</div>-->
-                                <!--<div class="rating">-->
-                                <!-- <span class="rating-star">
+                                <div style="height:103px;overflow:auto">
+                                    <h3><a ui-sref="index.courseDetail1({courseId:course.courseId})">{{course.courseName}}</a></h3>
+                                    <!--<div class="product-meta">-->
+                                    <!--<span class="author" style="text-align: center">授课教师 : {{course.teacherName}}</span>-->
+                                    <!--</div>-->
+                                    <!--<div class="rating">-->
+                                    <!-- <span class="rating-star">
                                         <i class="fa fa-star" aria-hidden="true"></i>
                                         <i class="fa fa-star" aria-hidden="true"></i>
                                         <i class="fa fa-star" aria-hidden="true"></i>
                                         <i class="fa fa-star" aria-hidden="true"></i>
                                         <i class="fa fa-star-o" aria-hidden="true"></i>
                                       </span> -->
-                                <!--<span class="rating-review">{{course.courseDes}}</span>-->
-                                <!--</div>-->
-                                <div class="product-meta">
-                                    <span class="author">关键词 : {{course.courseDes}}</span>
+                                    <!--<span class="rating-review">{{course.courseDes}}</span>-->
+                                    <!--</div>-->
+                                    <div class="product-meta">
+                                        <span class="author">关键词 : {{course.courseDes}}</span>
+                                    </div>
+                                    <!-- <h3 style="text-align: center">{{course.courseDes}}</a> -->
+                                    </h3>
                                 </div>
-                                <!-- <h3 style="text-align: center">{{course.courseDes}}</a> -->
-                                </h3>
                                 <div class="caption-bottom">
                                     <div class="price">
                                         <span class="offer-price"> <i class="fa fa-users"></i>  {{course.actualStudentNum}}</span>
@@ -113,7 +115,49 @@
                         </div>
                     </div>
 
+                    <div class="col-md-3 col-sm-3 col-xs-6">
+                        <div class="imageBox">
+                            <div class="productImage clearfix">
+                                <a ng-click="final()"><img src="http://www.x-lab.ac:13001/image/Picture2_20171110081253.053.png" alt="Image"></a>
+                                <!-- <span class="sticker"><i class="fa fa-clock-o" aria-hidden="true"></i>{{course.duration}}</span> -->
+                            </div>
+                            <div class="productCaption clearfix">
+                                <div style="height:103px;overflow:auto">
+                                    <h3><a ng-click="final()" S>更多课程敬请期待...</a></h3>
+                                    <!--<div class="product-meta">-->
+                                    <!--<span class="author" style="text-align: center">授课教师 : {{course.teacherName}}</span>-->
+                                    <!--</div>-->
+                                    <!--<div class="rating">-->
+                                    <!-- <span class="rating-star">
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                          </span> -->
+                                    <!--<span class="rating-review">{{course.courseDes}}</span>-->
+                                    <!--</div>-->
+                                    <div class="product-meta">
+                                        <span class="author">关键词 : <a href="http://guanshantech.com" target="_blank">观山科技</a>,<a href="http://insight365.ai" target="_blank">洞见365</a>    </span>
+                                    </div>
+                                    <!-- <h3 style="text-align: center">{{course.courseDes}}</a> -->
+                                    </h3>
+                                </div>
+                                <div class="caption-bottom">
+                                    <div class="price">
+                                        <span class="offer-price"> <i class="fa fa-users"></i> 999+</span>
+                                        <!-- <span class="regular-price"><del>￥{{course.originPrice}}</del></span> -->
+                                    </div>
+                                    <div class="user">
+                                        <i class="fa fa-user"></i>
+                                        <span class="course-user">凤凰实验室ZJY</span>
+                                    </div>
 
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
 
                 </div>
             </div>
