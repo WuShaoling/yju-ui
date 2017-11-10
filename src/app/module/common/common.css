@@ -19,3 +19,21 @@
  textarea {
      resize: none;
  }
+ 
+ @media (min-width: 768px) {
+     .window-height {
+         min-height: 620px
+     }
+ }
+ 
+ @media (min-width: 992px) {
+     .window-height1 {
+         min-height: 620px;
+     }
+ }
+ 
+ @media (min-width: 1300px) {
+     .window-height2 {
+         min-height: 900px;
+     }
+ }

@@ -5,15 +5,17 @@
         .module('phoenix')
         .controller('courseDetail1Ctrl', courseDetail1Ctrl);
 
-    courseDetail1Ctrl.$inject = ['$scope', '$stateParams', 'courseSrv', 'commonSrv'];
+    courseDetail1Ctrl.$inject = ['$scope', '$stateParams', 'courseSrv', 'commonSrv', '$rootScope'];
 
-    function courseDetail1Ctrl($scope, $stateParams, courseSrv, commonSrv) {
+    function courseDetail1Ctrl($scope, $stateParams, courseSrv, commonSrv, $rootScope) {
         var vm = this;
         $scope.doEx = function() {
-            if (localStorage['logined'] == "1") {
-                toastr.success("dodododo")
+            if (localStorage['logined']) {
+                toastr.warning("请到我的课程中查看相关实验")
             } else {
-                $state.go('login');
+                // $state.go('login');
+                $rootScope.$broadcast('ok', 0)
+
             }
         }
         commonSrv.getCourseExperimentDetail().get({
@@ -52,6 +54,10 @@
             }
         )
 
+
+        // $scope.login = function() {
+
+        //     }
         ////////////////
     }
 })();

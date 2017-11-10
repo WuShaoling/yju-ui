@@ -7,7 +7,7 @@
         .controller('loginCtrl', loginCtrl);
 
     commonCtrl.$inject = ['$scope', '$uibModal', '$state', '$rootScope'];
-    loginCtrl.$inject = ['$scope', '$uibModalInstance', '$uibModal', 'commonSrv','$rootScope'];
+    loginCtrl.$inject = ['$scope', '$uibModalInstance', '$uibModal', 'commonSrv', '$rootScope'];
 
     function commonCtrl($scope, $uibModal, $state, $rootScope) {
         var vm = this;
@@ -39,7 +39,7 @@
             modalInstance.result.then(function(result) {
                 console.log(result);
                 if (result.errorCode === "000") {
-                    toastr.success("welcome!" + result.username);
+                    toastr.success("欢迎" + result.username);
                     $scope.navbar = result.navbar;
                     $scope.username = result.username;
                     $scope.logined = true;
@@ -61,9 +61,9 @@
                 $scope.logined = false;
                 $scope.navbar = [];
                 $state.go('index.main')
-            $rootScope.$broadcast('login',0);
+                $rootScope.$broadcast('login', 0);
 
-        }
+            }
             // $scope.register = function() {
             //     toastr.success("res...");
             //     var modalInstance = $uibModal.open({
@@ -84,7 +84,7 @@
     }
 
 
-    function loginCtrl($scope, $uibModalInstance, $uibModal, commonSrv,$rootScope) {
+    function loginCtrl($scope, $uibModalInstance, $uibModal, commonSrv, $rootScope) {
         $scope.cancel = function() {
             $uibModalInstance.dismiss('cancel');
         };
@@ -99,7 +99,7 @@
                 "newPassword": newPassword,
                 "confirmPassword": confirmPassword
             }).$promise.then(
-                function (response) {
+                function(response) {
                     if (response.errorCode == 0) {
                         toastr.success('修改成功！请重新登录')
                         $uibModalInstance.close()
@@ -135,7 +135,7 @@
                         localStorage['userId'] = response.data.body.userId
                         localStorage['token'] = response.data.body.token
                         localStorage['userRole'] = response.data.body.role
-                        $rootScope.$broadcast('login',1);
+                        $rootScope.$broadcast('login', 1);
 
                         if (localStorage['userRole'] == 1) {
                             params = {
