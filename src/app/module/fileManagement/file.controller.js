@@ -5,9 +5,9 @@
         .module('phoenix')
         .controller('FileManagerCtrl', FileManagerCtrl);
 
-    FileManagerCtrl.$inject = ['$scope', '$http', '$location', '$stateParams'];
+    FileManagerCtrl.$inject = ['$scope', '$http', '$location', '$stateParams', 'fileManagementUrl'];
 
-    function FileManagerCtrl($scope, $http, $location, $stateParams) {
-        $('#fileSystem').attr('src', 'http://117.50.1.134:8090/files#/?uid=' + $stateParams.id)
+    function FileManagerCtrl($scope, $http, $location, $stateParams, fileManagementUrl) {
+        $('#fileSystem').attr('src', fileManagementUrl + '/files#/?uid=' + $stateParams.id)
     }
 })();
