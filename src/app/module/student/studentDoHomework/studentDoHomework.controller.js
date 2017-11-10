@@ -40,10 +40,10 @@
         }
         $scope.filename = "选择报告";
         $scope.submitted = false;
-        $scope.homeworkFile = new FormData();
 
         $scope.getFile = function(file) {
             console.log(file);
+            $scope.homeworkFile = new FormData();
             $scope.homeworkFile.append('file', file)
             $scope.filename = file.name;
             $scope.showBtn = true;
