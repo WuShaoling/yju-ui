@@ -5,15 +5,15 @@
         .module('phoenix')
         .controller('cloudwareCtrl', cloudwareCtrl);
 
-    cloudwareCtrl.$inject = ['$scope', '$timeout', 'usSpinnerService', 'commonSrv', 'stuCourseSrv', '$stateParams', 'cloudwareUrl'];
+    cloudwareCtrl.$inject = ['$scope', '$timeout', 'usSpinnerService', 'commonSrv', 'stuCourseSrv', '$stateParams', 'cloudwareUrl', '$window'];
 
-    function cloudwareCtrl($scope, $timeout, usSpinnerService, commonSrv, stuCourseSrv, $stateParams, cloudwareUrl) {
+    function cloudwareCtrl($scope, $timeout, usSpinnerService, commonSrv, stuCourseSrv, $stateParams, cloudwareUrl, $window) {
         var vm = this;
+        var ws = null;
 
         if ($stateParams.type == "1") {
             $scope.showDelete = true
         }
-
 
         $scope.leftControl = true;
         $scope.rightControl = true;
@@ -188,7 +188,7 @@
         function start(wsaddr, el, retryTime) {
             var retryTime = retryTime || 0;
             $(el).children().remove()
-            var ws = new WebSocket(wsaddr);
+            ws = new WebSocket(wsaddr);
 
             var instance = {
                 canvas: null,
@@ -229,7 +229,7 @@
             }
             ws.onopen = function() {
                 var canvas = document.createElement('canvas')
-
+                var canvasOnFocus = false
                 canvas.oncontextmenu = function(e) {
                     return false;
                 }
@@ -240,6 +240,8 @@
                 canvas.style.width = '100%';
                 canvas.style.height = '100%';
                 canvas.id = "test"
+                canvas.tabIndex = 0
+                canvas.focus()
                 el.appendChild(canvas);
                 $('#leftNav').height($('#design').height());
                 usSpinnerService.stop('ex-spinner');
@@ -260,15 +262,21 @@
                     dv.setUint8(0, 0);
                     dv.setUint16(1, x, true);
                     dv.setUint16(3, y, true);
-                    if (ws.readyState == 1)
+                    if (ws.readyState == 1 && canvasOnFocus)
                         ws.send(buf);
                 };
+                canvas.onblur = function (e) {
+                    canvasOnFocus = false;
+                }
+                canvas.onfocus = function (e) {
+                    canvasOnFocus = true;
+                }
                 canvas.onmousedown = function(e) {
                     var buf = new ArrayBuffer(5);
                     var dv = new DataView(buf);
                     dv.setUint8(0, 1);
                     dv.setUint32(1, e.which, true);
-                    if (ws.readyState == 1)
+                    if (ws.readyState == 1 && canvasOnFocus)
                         ws.send(buf);
                 };
                 canvas.onmouseup = function(e) {
@@ -276,7 +284,7 @@
                     var dv = new DataView(buf);
                     dv.setUint8(0, 2);
                     dv.setUint32(1, e.which, true);
-                    if (ws.readyState == 1)
+                    if (ws.readyState == 1 && canvasOnFocus)
                         ws.send(buf);
                 };
                 document.onkeydown = function(e) {
@@ -287,7 +295,7 @@
                     var dv = new DataView(buf);
                     dv.setUint8(0, 3);
                     dv.setUint32(1, mapKey(e.which), true);
-                    if (ws.readyState == 1)
+                    if (ws.readyState == 1 && canvasOnFocus)
                         ws.send(buf);
                 };
                 document.onkeyup = function(e) {
@@ -298,7 +306,7 @@
                     var dv = new DataView(buf);
                     dv.setUint8(0, 4);
                     dv.setUint32(1, mapKey(e.which), true);
-                    if (ws.readyState == 1)
+                    if (ws.readyState == 1 && canvasOnFocus)
                         ws.send(buf);
                 };
             };
@@ -324,6 +332,19 @@
                 img.src = url;
             };
         }
+
+        $scope.$on('$destroy', function() {
+            if(ws){
+                ws.close()
+            }
+        });
+        $scope.onExit = function() {
+            if(ws){
+                ws.close()
+            }
+        };
+
+        $window.onbeforeunload =  $scope.onExit;
 
         var startService = function(studentId, cloudware_type, type) {
                 setTimeout(function() {
