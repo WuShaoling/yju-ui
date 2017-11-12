@@ -84,5 +84,11 @@
                 experimentId: "@experimentId"
             })
         }
+
+        this.getLastExperiment = function () {
+            return $resource(reqUrl + '/student/experiment/last/:studentId', {
+                studentId: "@studentId",
+            })
+        }
     }
 })();
