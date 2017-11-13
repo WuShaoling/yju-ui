@@ -350,7 +350,7 @@
         $scope.cancel = function() {
             $uibModalInstance.dismiss('cancel');
         }
-        $scope.filename = "上传260 x 185的图片"
+        $scope.filename = "上传260 x 185的图片，可留空"
         $scope.chooseFile = function() {
             $('#courseImage').trigger('click');
         }
@@ -421,10 +421,6 @@
         $scope.ok = function() {
 
             console.log($scope.course);
-            if (!$scope.course.imageUrl) {
-                toastr.warning("课程图片不能为空，已设置为默认")
-                $scope.course.imageUrl = "https://picture.insight365.ai/phoenix/course-img1.jpg";
-            }
             if (!$scope.course.courseName) {
                 toastr.error("课程名称不能为空")
                 return
