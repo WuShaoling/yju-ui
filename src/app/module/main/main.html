@@ -15,60 +15,7 @@
             <!-- row clearfix -->
 
             <div class="about_inner clearfix">
-                <!-- <div class="row"> -->
-                <!-- <div class="col-xs-6 col-sm-3">
-                        <div class="aboutImage">
-                            <a href="single-course-right-sidebar.html">
-                                <img src="img/home/learn/learn_1.jpg" alt="" class="img-responsive" />
-                                <div class="overlay">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean consectetur ante volutpat sem aliquam lobortis.</p>
-                                </div>
-                                <span class="captionLink">English Literature<span></span></span>
-                            </a>
-                        </div>
 
-                    </div>
-
-                    <div class="col-xs-6 col-sm-3">
-                        <div class="aboutImage">
-                            <a href="single-course-right-sidebar.html">
-                                <img src="img/home/learn/learn_2.jpg" alt="" class="img-responsive" />
-                                <div class="overlay">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean consectetur ante volutpat sem aliquam lobortis.</p>
-                                </div>
-                                <span class="captionLink">Business Administration<span></span></span>
-                            </a>
-                        </div>
-
-                    </div>
-
-                    <div class="col-xs-6 col-sm-3">
-                        <div class="aboutImage">
-                            <a href="single-course-right-sidebar.html">
-                                <img src="img/home/learn/learn_3.jpg" alt="" class="img-responsive" />
-                                <div class="overlay">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean consectetur ante volutpat sem aliquam lobortis.</p>
-                                </div>
-                                <span class="captionLink">Computer Science<span></span></span>
-                            </a>
-                        </div>
-
-                    </div>
-
-                    <div class="col-xs-6 col-sm-3">
-                        <div class="aboutImage">
-                            <a href="single-course-right-sidebar.html">
-                                <img src="img/home/learn/learn_4.jpg" alt="" class="img-responsive" />
-                                <div class="overlay">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean consectetur ante volutpat sem aliquam lobortis.</p>
-                                </div>
-                                <span class="captionLink">Mathematics<span></span></span>
-                            </a>
-                        </div>
-
-                    </div>
-                </div> -->
-                <!-- row -->
                 <div class="row">
 
                     <div class="col-md-4 col-sm-4 col-xs-6" ng-repeat="course in courses|filter:common.searchData">
@@ -78,22 +25,16 @@
                                 <!-- <span class="sticker"><i class="fa fa-clock-o" aria-hidden="true"></i>{{course.duration}}</span> -->
                             </div>
                             <div class="productCaption clearfix">
-                                <h3 style="text-align: center"><a ui-sref="index.courseDetail1({courseId:course.courseId})">{{course.courseName}}</a></h3>
-                                <!--<div class="product-meta">-->
-                                <!--<span class="author" style="text-align: center">授课教师 : {{course.teacherName}}</span>-->
-                                <!--</div>-->
-                                <!--<div class="rating">-->
-                                <!-- <span class="rating-star">
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                                      </span> -->
-                                <!--<span class="rating-review">{{course.courseDes}}</span>-->
-                                <!--</div>-->
-                                <h3 style="text-align: center">{{course.courseDes}}</a>
-                                </h3>
+                                <div style="height:103px;overflow:auto">
+                                    <h3><a ui-sref="index.courseDetail1({courseId:course.courseId})">{{course.courseName}}</a></h3>
+
+                                    <div class="product-meta">
+                                        <span class="author">关键词 : {{course.courseDes}}</span>
+                                    </div>
+
+
+                                </div>
+
                                 <div class="caption-bottom">
                                     <div class="price">
                                         <span class="offer-price"> <i class="fa fa-users"></i>  {{course.actualStudentNum}}</span>
