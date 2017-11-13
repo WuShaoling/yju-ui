@@ -1,8 +1,11 @@
 (function() {
     'use strict';
-    angular.module('phoenix').value('reqUrl', "http://10.2.253.122:81")
-    angular.module('phoenix').value('cloudwareUrl', "http://10.2.253.122:82")
-    angular.module('phoenix').value('fileManagementUrl', "http://10.2.253.121:8090")
+    // angular.module('phoenix').value('reqUrl', "http://10.2.253.122:81")
+    // angular.module('phoenix').value('cloudwareUrl', "http://10.2.253.122:82")
+    // angular.module('phoenix').value('fileManagementUrl', "http://10.2.253.121:8090")
+    angular.module('phoenix').value('reqUrl', "http://www.x-lab.ac:13001")
+    angular.module('phoenix').value('cloudwareUrl', "http://api.cloudwarehub.com")
+    angular.module('phoenix').value('fileManagementUrl', "http://117.50.1.134:8090")
 
     //toastr配置
     toastr.options = {
