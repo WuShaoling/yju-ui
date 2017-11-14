@@ -348,72 +348,118 @@
         $window.onbeforeunload =  $scope.onExit;
 
         var startService = function(studentId, cloudware_type, type) {
-                setTimeout(function() {
-                    if ($('[data-cloudware-env]').length > 0) {
-                        $('[data-cloudware-env]').each(function(index, el) {
-                            var env = $(el).attr('data-cloudware-env')
-                            $.ajax({
-                                url: cloudwareUrl + '/services',
-                                // headers: { 'secret': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJpYXQiOjE1MDU4MTM0NTd9.Ftw1yHeUrqdNvymFZcIpuEoS0RHBFZqu4MfUZON9Zm0' },
-                                method: 'post',
-                                data: {
-                                    'secret': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJpYXQiOjE1MDU4MTM0NTd9.Ftw1yHeUrqdNvymFZcIpuEoS0RHBFZqu4MfUZON9Zm0',
-                                    cloudware_type: cloudware_type,
-                                    user_id: studentId
+            if(type == "1") {
+                stuCourseSrv.getLastExperiment().get({
+                    studentId: localStorage['userId']
+                }, function (response) {
+                    if (response.errorCode == 0) {
+                        //如果上次实验存在且与本次实验id不一致，提醒用户删除上一次实验容器
+                        if (response.data.lastExperimentId != 0 &&
+                            response.data.lastExperimentId != $stateParams.experimentId) {
+                            swal({
+                                    title: "注意",
+                                    text: "上一次实验【" + response.data.lastModuleName + "/" + response.data.lastExperimentName + "】还未关闭。\n目前一个用户仅能同时打开1个实验容器\n是否关闭上一个实验容器？",
+                                    type: "warning",
+                                    showCancelButton: true,
+                                    confirmButtonColor: "#DD6B55",
+                                    confirmButtonText: "确定",
+                                    closeOnConfirm: true,
+                                    cancelButtonText: "取消",
+                                    closeOnCancel: true
                                 },
-                                dataType: 'json',
-                                success: function(resp, textStatus, xhr) {
-                                    if (resp.errorCode == 0) {
-                                        start(resp.ws, el)
-                                        $scope.notFirst = true
-                                        $scope.cloudwareInfo = $scope.cloudwareInfo || {}
-                                        $scope.cloudwareInfo.webSocket = resp.ws
-                                        switch (type) {
-                                            case "0":
-                                                stuCourseSrv.createHwCloudware().save({
-                                                    "homeworkId": $stateParams.homeworkId,
-                                                    "pulsarId": resp.pulsar_id,
-                                                    "serviceId": resp.service_id,
-                                                    "serviceName": resp.service_name,
-                                                    "studentId": studentId,
-                                                    "webSocket": resp.ws
-                                                }).$promise.then(function(response) {
-                                                    console.log(response)
-                                                }, function(error) {
-                                                    console.log(error);
-                                                });
-                                                break;
-                                            case "1":
-                                                stuCourseSrv.createExCloudware().save({
-                                                    "experimentId": $stateParams.experimentId,
-                                                    "pulsarId": resp.pulsar_id,
-                                                    "serviceId": resp.service_id,
-                                                    "serviceName": resp.service_name,
-                                                    "studentId": studentId,
-                                                    "webSocket": resp.ws
-                                                }).$promise.then(function(response) {
-                                                    console.log(response)
-                                                }, function(error) {
-                                                    console.log(error);
-                                                });
-                                                break;
-
-                                            default:
-                                                break;
-                                        }
+                                function (isConfirm) {
+                                    if (isConfirm) {
+                                        stuCourseSrv.deleteExCloudware().save({
+                                            studentId: localStorage['userId'],
+                                            experimentId: response.data.lastExperimentId
+                                        }, function (response) {
+                                            if (response.errorCode == 0) {
+                                                toastr.success("删除上次实验成功")
+                                                createCloudware(studentId, cloudware_type, type)
+                                            } else {
+                                                toastr.error("删除上次实验失败，请重试")
+                                            }
+                                        })
                                     } else {
-                                        toastr.error(resp.errorMessage)
+                                        history.go(-1)
                                     }
-                                    console.log(resp)
-                                }
-                            });
-                        });
-                        return;
-                    } else {
-                        startService();
+                                });
+                        } else {
+                            //如果上次实验存在且与本次实验id一致或没做过实验，直接开启
+                            createCloudware(studentId, cloudware_type, type)
+                        }
                     }
-                }, 1000);
+                })
+            } else {
+                createCloudware(studentId, cloudware_type, type)
             }
+        }
+
+        function createCloudware(studentId, cloudware_type, type) {
+            if ($('[data-cloudware-env]').length > 0) {
+                $('[data-cloudware-env]').each(function(index, el) {
+                    var env = $(el).attr('data-cloudware-env')
+                    $.ajax({
+                        url: cloudwareUrl + '/services',
+                        // headers: { 'secret': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJpYXQiOjE1MDU4MTM0NTd9.Ftw1yHeUrqdNvymFZcIpuEoS0RHBFZqu4MfUZON9Zm0' },
+                        method: 'post',
+                        data: {
+                            'secret': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJpYXQiOjE1MDU4MTM0NTd9.Ftw1yHeUrqdNvymFZcIpuEoS0RHBFZqu4MfUZON9Zm0',
+                            cloudware_type: cloudware_type,
+                            user_id: studentId
+                        },
+                        dataType: 'json',
+                        success: function(resp, textStatus, xhr) {
+                            if (resp.errorCode == 0) {
+                                start(resp.ws, el)
+                                $scope.notFirst = true
+                                $scope.cloudwareInfo = $scope.cloudwareInfo || {}
+                                $scope.cloudwareInfo.webSocket = resp.ws
+                                switch (type) {
+                                    case "0":
+                                        stuCourseSrv.createHwCloudware().save({
+                                            "homeworkId": $stateParams.homeworkId,
+                                            "pulsarId": resp.pulsar_id,
+                                            "serviceId": resp.service_id,
+                                            "serviceName": resp.service_name,
+                                            "studentId": studentId,
+                                            "webSocket": resp.ws
+                                        }).$promise.then(function(response) {
+                                            console.log(response)
+                                        }, function(error) {
+                                            console.log(error);
+                                        });
+                                        break;
+                                    case "1":
+                                        stuCourseSrv.createExCloudware().save({
+                                            "experimentId": $stateParams.experimentId,
+                                            "pulsarId": resp.pulsar_id,
+                                            "serviceId": resp.service_id,
+                                            "serviceName": resp.service_name,
+                                            "studentId": studentId,
+                                            "webSocket": resp.ws
+                                        }).$promise.then(function(response) {
+                                            console.log(response)
+                                        }, function(error) {
+                                            console.log(error);
+                                        });
+                                        break;
+
+                                    default:
+                                        break;
+                                }
+                            } else {
+                                toastr.error(resp.errorMessage)
+                            }
+                            console.log(resp)
+                        }
+                    });
+                });
+                return;
+            } else {
+                startService();
+            }
+        }
             //startService();
         function mapKey(keyCode) {
             var xkm = [
