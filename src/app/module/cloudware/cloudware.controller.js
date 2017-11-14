@@ -253,11 +253,12 @@
                     if (instance.isFullscreen) {
                         scroll_top = 0;
                     }
-                    var bei = canvas.offsetWidth / 1440;
-                    var x = Math.floor((e.pageX - dom_left) / bei);
-                    var y = Math.floor((e.pageY - dom_top + scroll_top) / bei);
+                    var xbei = canvas.offsetWidth / 1440;
+                    var ybei = canvas.offsetHeight / 900;
+                    var x = Math.floor((e.pageX - dom_left) / xbei);
+                    var y = Math.floor((e.pageY - dom_top + scroll_top) / ybei);
                     var buf = new ArrayBuffer(5);
-
+                    console.log("x: " + x + " y: " + y);
                     var dv = new DataView(buf);
                     dv.setUint8(0, 0);
                     dv.setUint16(1, x, true);
