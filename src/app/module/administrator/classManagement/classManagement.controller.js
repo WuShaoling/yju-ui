@@ -9,8 +9,8 @@
 
 
     classManagementCtrl.$inject = ['$scope', 'reqUrl', '$state', '$uibModal', 'classManagementSrv', '$rootScope'];
-    editClassCtrl.$inject = ['$scope', '$uibModalInstance', 'classtemp', 'courseManagementSrv', 'semesterSrv', 'classManagementSrv'];
-    addClassCtrl.$inject = ['$scope', '$uibModalInstance', 'courseManagementSrv', 'classManagementSrv', 'semesterSrv'];
+    editClassCtrl.$inject = ['$scope', '$uibModalInstance', 'classtemp', 'courseManagementSrv', 'semesterSrv', 'classManagementSrv', 'teacherManageSrv'];
+    addClassCtrl.$inject = ['$scope', '$uibModalInstance', 'courseManagementSrv', 'classManagementSrv', 'semesterSrv', 'teacherManageSrv'];
 
     function classManagementCtrl($scope, reqUrl, $state, $uibModal, classManagementSrv, $rootScope) {
         var vm = this;
@@ -212,7 +212,7 @@
         }
     }
 
-    function addClassCtrl($scope, $uibModalInstance, courseManagementSrv, classManagementSrv, semesterSrv) {
+    function addClassCtrl($scope, $uibModalInstance, courseManagementSrv, classManagementSrv, semesterSrv, teacherManageSrv) {
         $scope.class = {}
 
         $scope.cancel = function() {
@@ -232,10 +232,15 @@
                 toastr.error("课程不能为空");
                 return;
             }
+            if (!$scope.class.teacherId) {
+                toastr.error("授课教师不能为空");
+                return;
+            }
             classManagementSrv.addclass().save({
                 "className": $scope.class.className,
                 "courseId": $scope.class.course.id,
-                "termId": $scope.class.semester.id
+                "termId": $scope.class.semester.id,
+                "teacherId": $scope.class.teacherId
             }, function(response) {
                 console.log(response)
                 if (response.errorCode == 0) {
@@ -258,7 +263,6 @@
                     $scope.semesters = response.data.semesterList
                 } else {
                     toastr.error(response.message)
-
                 }
             },
             function(error) {
@@ -277,10 +281,24 @@
                 toastr.error("获取课程信息失败，请稍后再试")
             })
 
+        teacherManageSrv.getAllTeachers().get().$promise.then(
+            function(response) {
+                console.log(response);
+                if (response.errorCode == 0) {
+                    $scope.teachers = response.data.teacherInfoList;
+                } else {
+                    toastr.error(response.message)
+                }
+            },
+            function(error) {
+                console.log("获取教师列表失败，请稍后再试");
+            }
+        )
 
+        $scope.teachers = []
     }
 
-    function editClassCtrl($scope, $uibModalInstance, classtemp, courseManagementSrv, semesterSrv, classManagementSrv) {
+    function editClassCtrl($scope, $uibModalInstance, classtemp, courseManagementSrv, semesterSrv, classManagementSrv, teacherManageSrv) {
         $scope.cancel = function() {
             $uibModalInstance.dismiss('cancel');
         }
@@ -329,6 +347,23 @@
             function(error) {
                 toastr.error("获取课程信息失败，请稍后再试")
             })
+
+        teacherManageSrv.getAllTeachers().get().$promise.then(
+            function(response) {
+                console.log(response);
+                if (response.errorCode == 0) {
+                    $scope.teachers = response.data.teacherInfoList;
+                } else {
+                    toastr.error(response.message)
+                }
+            },
+            function(error) {
+                console.log("获取教师列表失败，请稍后再试");
+            }
+        )
+
+        $scope.teachers = []
+
         $scope.ok = function() {
             console.log($scope.class)
             if (!$scope.class.className) {
@@ -343,11 +378,16 @@
                 toastr.error("课程不能为空");
                 return;
             }
+            if (!$scope.class.teacherId) {
+                toastr.error("授课教师不能为空");
+                return;
+            }
             classManagementSrv.editclass().save({
                 "classId": $scope.class.classId,
                 "className": $scope.class.className,
                 "courseId": $scope.class.course.id,
-                "termId": $scope.class.semester.id
+                "termId": $scope.class.semester.id,
+                "teacherId": $scope.class.teacher.id
             }, function(response) {
                 console.log(response)
                 if (response.errorCode == 0) {

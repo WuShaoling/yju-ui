@@ -203,7 +203,7 @@
             function(response) {
                 console.log(response);
                 if (response.errorCode == 0) {
-                    $scope.people = response.data.teacherInfoList;
+                    $scope.teachers = response.data.teacherInfoList;
                 } else {
                     toastr.error(response.message)
                 }
@@ -284,7 +284,6 @@
             $scope.$apply()
         };
         $scope.ok = function() {
-            $scope.course.teacher = $scope.person;
             console.log($scope.course);
             if (!$scope.course.imageUrl) {
                 toastr.error("课程图片不能为空，已设置为默认")
@@ -294,7 +293,7 @@
                 toastr.error("课程名称不能为空")
                 return
             }
-            if (!$scope.course.teacher.selected.id) {
+            if (!$scope.course.teacherId) {
                 toastr.error("授课教师不能为空")
                 return
             }
@@ -303,7 +302,7 @@
                 "imageName": $scope.course.imageName,
                 "imageUrl": $scope.course.imageUrl,
                 "name": $scope.course.courseName,
-                "teacherId": $scope.course.teacher.selected.id
+                "teacherId": $scope.course.teacherId
             }, function(response) {
                 console.log(response)
                 if (response.errorCode == 0) {
@@ -322,23 +321,17 @@
 
         }
 
-
-        $scope.person = {};
-
     }
 
     function editCourseCtrl($scope, $uibModalInstance, teacherManageSrv, courseManagementSrv, commonSrv, reqUrl, courseinfo) {
         $scope.course = courseinfo;
         console.log(courseinfo)
-        $scope.person = {
-            selected: null
-        };
 
         teacherManageSrv.getAllTeachers().get().$promise.then(
             function(response) {
                 console.log(response);
                 if (response.errorCode == 0) {
-                    $scope.people = response.data.teacherInfoList;
+                    $scope.teachers = response.data.teacherInfoList;
                 } else {
                     toastr.error(response.message)
                 }
@@ -425,17 +418,10 @@
                 toastr.error("课程名称不能为空")
                 return
             }
-            // if (!$scope.course.teacher.selected.id) {
-            //     toastr.error("授课教师不能为空")
-            //     return
-            // }
-            console.log($scope.person)
-            if ($scope.person.selected) {
-                $scope.course.teacher = $scope.person;
-            } else {
+
+            if (!$scope.course.teacherId) {
                 toastr.error("授课教师不能为空")
                 return
-
             }
             courseManagementSrv.editCourse().save({
                 "id": $scope.course.id,
@@ -443,7 +429,7 @@
                 "imageName": $scope.course.imageName,
                 "imageUrl": $scope.course.imageUrl,
                 "name": $scope.course.courseName,
-                "teacherId": $scope.course.teacher.selected.id
+                "teacherId": $scope.course.teacherId
             }, function(response) {
                 console.log(response)
                 if (response.errorCode == 0) {
