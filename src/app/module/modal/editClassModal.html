@@ -38,16 +38,29 @@
                         <ui-select-match placeholder="选择课程">{{$select.selected.courseName}}</ui-select-match>
                         <ui-select-choices repeat="item in courses | filter: $select.search">
                             <div ng-bind-html="item.courseName | highlight: $select.search"></div>
-                            <small ng-bind-html="item.teacherName | highlight: $select.search"></small>
-                            <small ng-bind-html="item.teacherContact | highlight: $select.search"></small>
-
                         </ui-select-choices>
                     </ui-select>
 
                 </div>
             </div>
 
+            <div class="form-group">
+                <label class="col-lg-2 control-label">授课教师</label>
+                <div class="col-lg-10">
 
+                    <ui-select ng-model="class.teacherId" theme="bootstrap">
+                        <ui-select-match placeholder="选择授课教师">{{$select.selected.teacherName}}</ui-select-match>
+                        <ui-select-choices repeat="teacher.id as teacher in teachers | filter: $select.search" >
+                            <div ng-bind-html="teacher.teacherName | highlight: $select.search"></div>
+                            <small ng-bind-html="teacher.teacherNo | highlight: $select.search"></small>
+                            <small ng-bind-html="teacher.teacherTitle | highlight: $select.search"></small>
+                            <small ng-bind-html="teacher.teacherContact | highlight: $select.search"></small>
+
+                        </ui-select-choices>
+                    </ui-select>
+
+                </div>
+            </div>
         </form>
 
     </div>

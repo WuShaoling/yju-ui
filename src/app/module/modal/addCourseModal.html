@@ -36,17 +36,16 @@
             </div> -->
 
             <div class="form-group">
-                <label class="col-lg-3 control-label">授课教师</label>
+                <label class="col-lg-3 control-label">主讲教师</label>
                 <div class="col-lg-9">
 
-                    <ui-select ng-model="person.selected" theme="bootstrap">
-                        <ui-select-match placeholder="选择授课教师">{{$select.selected.teacherName}}</ui-select-match>
-                        <ui-select-choices repeat="item in people | filter: $select.search">
-                            <div ng-bind-html="item.teacherName | highlight: $select.search"></div>
-                            <small ng-bind-html="item.teacherNo | highlight: $select.search"></small>
-                            <small ng-bind-html="item.teacherTitle | highlight: $select.search"></small>
-                            <small ng-bind-html="item.teacherContact | highlight: $select.search"></small>
-
+                    <ui-select ng-model="course.teacherId" theme="bootstrap">
+                        <ui-select-match placeholder="选择主讲教师">{{$select.selected.teacherName}}</ui-select-match>
+                        <ui-select-choices repeat="teacher.id as teacher in teachers | filter: $select.search">
+                            <div ng-bind-html="teacher.teacherName | highlight: $select.search"></div>
+                            <small ng-bind-html="teacher.teacherNo | highlight: $select.search"></small>
+                            <small ng-bind-html="teacher.teacherTitle | highlight: $select.search"></small>
+                            <small ng-bind-html="teacher.teacherContact | highlight: $select.search"></small>
 
                         </ui-select-choices>
                     </ui-select>
