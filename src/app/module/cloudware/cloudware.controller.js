@@ -258,7 +258,6 @@
                     var x = Math.floor((e.pageX - dom_left) / xbei);
                     var y = Math.floor((e.pageY - dom_top + scroll_top) / ybei);
                     var buf = new ArrayBuffer(5);
-                    console.log("x: " + x + " y: " + y);
                     var dv = new DataView(buf);
                     dv.setUint8(0, 0);
                     dv.setUint16(1, x, true);
