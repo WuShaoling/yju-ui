@@ -32,7 +32,7 @@
 
 <div style="position: fixed;top:132px;right:0;z-index:101;width:38px" id="rightNav">
 
-    <button class="navbar-minimalize minimalize-styl-2 btn btn-primary " tooltip-placement="left" uib-tooltip="开始实验" ng-disabled="hasStarted" ng-click="startEx()"><i class="fa fa-play" ></i></button>
+    <button class="navbar-minimalize minimalize-styl-2 btn btn-primary " tooltip-placement="left" uib-tooltip="开始实验" ng-disabled="hasStarted || loading" ng-click="startEx()"><i ng-class="{'true':'fa fa-spinner fa-pulse fa-1x','false':'fa fa-play'}[loading]"></i></button>
 
     <button class="navbar-minimalize minimalize-styl-2 btn btn-danger " style="position: fixed;top:164px;right:0;z-index:101;width:38px" tooltip-placement="left" uib-tooltip="删除实验" ng-if="showDelete" ng-click="deleteEx()"><i class="fa fa-times" ></i></button>
 

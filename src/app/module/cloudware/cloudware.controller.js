@@ -20,6 +20,7 @@
         $scope.leftText = "隐藏教程";
         $scope.rightText = "隐藏工具栏";
         $scope.hasStarted = false;
+        $scope.loading = true;
         $scope.startEx = function() {
             if ($scope.notFirst) {
                 console.log("start...")
@@ -70,15 +71,17 @@
                                 console.log("已启动过...")
 
                                 $scope.notFirst = true;
+                                $scope.loading = false
                                 $scope.cloudwareInfo = response.data;
                             } else if (response.errorCode == 7 || response.errorCode == 47) {
                                 console.log("未启动过...")
+                                $scope.loading = false
                             } else {
                                 toastr.error("获取作业云件信息失败，请重试")
                             }
                         },
                         function(error) {
-                            console.log(error);
+                            toastr.error("获取作业云件信息失败，请重试")
                         })
                     break;
                 case "1":
@@ -92,15 +95,17 @@
                                 console.log("已启动过...")
 
                                 $scope.notFirst = true;
+                                $scope.loading = false
                                 $scope.cloudwareInfo = response.data;
                             } else if (response.errorCode == 35 || response.errorCode == 47) {
                                 console.log("未启动过...")
+                                $scope.loading = false
                             } else {
                                 toastr.error("获取实验云件信息失败，请重试")
                             }
                         },
                         function(error) {
-                            console.log(error);
+                            toastr.error("获取实验云件信息失败，请重试")
                         })
                     break;
                 default:
