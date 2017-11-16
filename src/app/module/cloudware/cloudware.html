@@ -32,12 +32,14 @@
 
 <div style="position: fixed;top:132px;right:0;z-index:101;width:38px" id="rightNav">
 
-    <button class="navbar-minimalize minimalize-styl-2 btn btn-primary " tooltip-placement="left" uib-tooltip="开始试验" ng-disabled="hasStarted" ng-click="startEx()"><i class="fa fa-play" ></i></button>
-    <button class="navbar-minimalize minimalize-styl-2 btn btn-danger " tooltip-placement="left" uib-tooltip="删除实验" ng-if="showDelete" ng-click="deleteEx()"><i class="fa fa-times" ></i></button>
+    <button class="navbar-minimalize minimalize-styl-2 btn btn-primary " tooltip-placement="left" uib-tooltip="开始实验" ng-disabled="hasStarted || loading" ng-click="startEx()"><i ng-class="{'true':'fa fa-spinner fa-pulse fa-1x','false':'fa fa-play'}[loading]"></i></button>
+
+    <button class="navbar-minimalize minimalize-styl-2 btn btn-danger " style="position: fixed;top:164px;right:0;z-index:101;width:38px" tooltip-placement="left" uib-tooltip="删除实验" ng-if="showDelete" ng-click="deleteEx()"><i class="fa fa-times" ></i></button>
+
     <!-- <button class="navbar-minimalize minimalize-styl-2 btn btn-default " tooltip-placement="left" uib-tooltip="剪切板" ng-click=""><i class="fa fa-cut" ></i></button> -->
     <!-- <button class="navbar-minimalize minimalize-styl-2 btn btn-default " tooltip-placement="left" uib-tooltip="共享" ng-click=""><i class="fa fa-share" ></i></button> -->
     <!-- <button class="navbar-minimalize minimalize-styl-2 btn btn-default " tooltip-placement="left" uib-tooltip="下载代码" ng-click=""><i class="fa fa-download" ></i></button> -->
-    <button class="navbar-minimalize minimalize-styl-2 btn btn-default " tooltip-placement="left" uib-tooltip="全屏" ng-click="fullScreen()"><i class="fa fa-expand" ></i></button>
+    <button class="navbar-minimalize minimalize-styl-2 btn btn-default " style="position: fixed;top:196px;right:0;z-index:101;width:38px" tooltip-placement="left" uib-tooltip="全屏" ng-click="fullScreen()"><i class="fa fa-expand" ></i></button>
 
 
 </div>
