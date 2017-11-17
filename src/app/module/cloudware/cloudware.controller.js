@@ -21,6 +21,7 @@
         $scope.rightText = "隐藏工具栏";
         $scope.hasStarted = false;
         $scope.loading = true;
+        $scope.leavePage = false;
         $scope.startEx = function() {
             if ($scope.notFirst) {
                 console.log("start...")
@@ -232,6 +233,12 @@
                     }
                 }, 1000)
             }
+            ws.onclose = function () {
+                console.log("close and restart")
+                if(!$scope.leavePage) {
+                    start(wsaddr, el)
+                }
+            }
             ws.onopen = function() {
                 var canvas = document.createElement('canvas')
                 var canvasOnFocus = false
@@ -342,11 +349,13 @@
             if(ws){
                 ws.close()
             }
+            $scope.leavePage = true
         });
         $scope.onExit = function() {
             if(ws){
                 ws.close()
             }
+            $scope.leavePage = true
         };
 
         $window.onbeforeunload =  $scope.onExit;
