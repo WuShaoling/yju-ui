@@ -11,9 +11,9 @@
     editCourseCtrl.$inject = ['$scope', '$uibModalInstance', 'teacherManageSrv', 'courseManagementSrv', 'commonSrv', 'reqUrl', 'courseinfo'];
 
 
-    courseManagementCtrl.$inject = ['$scope', 'reqUrl', '$uibModal', '$state', 'courseManagementSrv'];
+    courseManagementCtrl.$inject = ['$scope', '$rootScope', 'reqUrl', '$uibModal', '$state', 'courseManagementSrv'];
 
-    function courseManagementCtrl($scope, reqUrl, $uibModal, $state, courseManagementSrv) {
+    function courseManagementCtrl($scope, $rootScope, reqUrl, $uibModal, $state, courseManagementSrv) {
         var vm = this;
 
         var courseTable = $('#Course').DataTable({
