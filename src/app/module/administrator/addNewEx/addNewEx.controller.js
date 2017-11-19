@@ -163,7 +163,6 @@
                             $scope.text = response.data.experimentContent
                             $scope.experiment.cloudwareType = response.data.cloudwareTypeId
                             $scope.disableSave = false
-                            $scope.$apply()
                         } else {
                             toastr.error(response.message)
                         }
