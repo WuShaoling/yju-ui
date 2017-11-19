@@ -7,7 +7,7 @@
         .controller('loginCtrl', loginCtrl);
 
     commonCtrl.$inject = ['$scope', '$uibModal', '$state', '$rootScope'];
-    loginCtrl.$inject = ['$scope', '$uibModalInstance', '$uibModal', 'commonSrv', '$rootScope'];
+    loginCtrl.$inject = ['$scope', '$uibModalInstance', '$uibModal', 'commonSrv', '$rootScope', '$state', '$location'];
 
     function commonCtrl($scope, $uibModal, $state, $rootScope) {
         var vm = this;
@@ -15,18 +15,6 @@
             vm.searchData = $scope.searchData;
 
         }
-
-        if (localStorage['logined']) {
-            var user = JSON.parse(localStorage['user'])
-            $scope.username = user.username;
-            $scope.logined = true;
-            $scope.navbar = user.navbar;
-        }
-        $scope.search = function(data) {
-            toastr.success("正在搜索" + data + "...");
-        }
-        $scope.phone = "17612157384";
-        $scope.email = "juny12324@gmail.com";
         $scope.login = function() {
             // toastr.success("login...");
             var modalInstance = $uibModal.open({
@@ -43,27 +31,41 @@
                     $scope.navbar = result.navbar;
                     $scope.username = result.username;
                     $scope.logined = true;
-
                 }
             }, function(reason) {
                 console.log(reason);
             });
         }
-        $rootScope.$on('ok', function(event, data) {
-            console.log(data);
-            if (!data) {
-                $scope.logout();
-                $scope.login();
-            }
-        })
         $scope.logout = function() {
-                localStorage.clear();
-                $scope.logined = false;
-                $scope.navbar = [];
-                $state.go('index.main')
-                $rootScope.$broadcast('login', 0);
-
+            var previousRef = localStorage['previousRef']
+            localStorage.clear();
+            if(previousRef){
+                localStorage['previousRef'] = previousRef
             }
+            $scope.logined = false;
+            $scope.navbar = [];
+            $state.go('index.main')
+            $rootScope.$broadcast('login');
+        }
+
+        if (localStorage['logined'] === 'true') {
+            var user = JSON.parse(localStorage['user'])
+            $scope.username = user.username;
+            $scope.logined = true;
+            $scope.navbar = user.navbar;
+        } else {
+            if(localStorage['requireLogin'] === 'true'){
+                localStorage['requireLogin'] = false
+                $scope.logout();
+                $scope.login()
+            }
+        }
+        $scope.search = function(data) {
+            toastr.success("正在搜索" + data + "...");
+        }
+        $scope.phone = "17612157384";
+        $scope.email = "juny12324@gmail.com";
+
             // $scope.register = function() {
             //     toastr.success("res...");
             //     var modalInstance = $uibModal.open({
@@ -84,7 +86,7 @@
     }
 
 
-    function loginCtrl($scope, $uibModalInstance, $uibModal, commonSrv, $rootScope) {
+    function loginCtrl($scope, $uibModalInstance, $uibModal, commonSrv, $rootScope, $state, $location) {
         $scope.cancel = function() {
             $uibModalInstance.dismiss('cancel');
         };
@@ -103,7 +105,9 @@
                     if (response.errorCode == 0) {
                         toastr.success('修改成功！请重新登录')
                         $uibModalInstance.close()
-                        $rootScope.$broadcast('ok')
+                        localStorage['requireLogin'] = true
+                        localStorage['logined'] = false
+                        $state.go("index.main", null, { reload: true })
                     } else {
                         toastr.error(response.message)
                     }
@@ -114,6 +118,9 @@
             )
         }
         $scope.login = function() {
+
+            var previousRef = localStorage['previousRef']
+            localStorage.removeItem('previousRef')
 
             if ($scope.user.id == "") {
                 toastr.error("不能为空");
@@ -135,7 +142,7 @@
                         localStorage['userId'] = response.data.body.userId
                         localStorage['token'] = response.data.body.token
                         localStorage['userRole'] = response.data.body.role
-                        $rootScope.$broadcast('login', 1);
+                        $rootScope.$broadcast('login');
 
                         if (localStorage['userRole'] == 1) {
                             params = {
@@ -196,6 +203,9 @@
                         }
                         localStorage['logined'] = true;
                         localStorage['user'] = JSON.stringify(params);
+                        if(previousRef){
+                            $location.path(previousRef)
+                        }
                         $uibModalInstance.close(params);
 
                     } else {

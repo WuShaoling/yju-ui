@@ -9,9 +9,9 @@
 
     addSemesterCtrl.$inject = ['$scope', '$uibModalInstance', 'semesterSrv'];
     editSemesterCtrl.$inject = ['$scope', '$uibModalInstance', 'semester', 'semesterSrv']
-    semesterManagementCtrl.$inject = ['$scope', 'reqUrl', '$uibModal', 'semesterSrv'];
+    semesterManagementCtrl.$inject = ['$scope', 'reqUrl', '$uibModal', 'semesterSrv', '$state'];
 
-    function semesterManagementCtrl($scope, reqUrl, $uibModal, semesterSrv) {
+    function semesterManagementCtrl($scope, reqUrl, $uibModal, semesterSrv, $state) {
         var vm = this;
 
 
@@ -79,10 +79,12 @@
                     console.log(xhr)
                     if (xhr.responseJSON.errorCode == 45) {
                         toastr.error("登录超时！");
-                        $rootScope.$broadcast('ok', 0);
+                        localStorage['requireLogin'] = true
+                        $state.go("index.main", null, { reload: true })
                     } else if (xhr.responseJSON.errorCode == 46) {
                         toastr.error("请重新登录！");
-                        $rootScope.$broadcast('ok', 0)
+                        localStorage['requireLogin'] = true
+                        $state.go("index.main", null, { reload: true })
                     } else if (xhr.responseJSON.errorCode != 0) {
                         toastr.error(xhr.responseJSON.message);
                     }

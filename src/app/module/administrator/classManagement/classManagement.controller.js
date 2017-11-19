@@ -8,11 +8,11 @@
         .controller('addClassCtrl', addClassCtrl);
 
 
-    classManagementCtrl.$inject = ['$scope', 'reqUrl', '$state', '$uibModal', 'classManagementSrv', '$rootScope'];
+    classManagementCtrl.$inject = ['$scope', 'reqUrl', '$state', '$uibModal', 'classManagementSrv'];
     editClassCtrl.$inject = ['$scope', '$uibModalInstance', 'classtemp', 'courseManagementSrv', 'semesterSrv', 'classManagementSrv', 'teacherManageSrv'];
     addClassCtrl.$inject = ['$scope', '$uibModalInstance', 'courseManagementSrv', 'classManagementSrv', 'semesterSrv', 'teacherManageSrv'];
 
-    function classManagementCtrl($scope, reqUrl, $state, $uibModal, classManagementSrv, $rootScope) {
+    function classManagementCtrl($scope, reqUrl, $state, $uibModal, classManagementSrv) {
         var vm = this;
 
         $scope.classList = []
@@ -98,10 +98,12 @@
                     console.log(xhr)
                     if (xhr.responseJSON.errorCode == 45) {
                         toastr.error("登录超时！");
-                        $rootScope.$broadcast('ok', 0);
+                        localStorage['requireLogin'] = true
+                        $state.go("index.main", null, { reload: true })
                     } else if (xhr.responseJSON.errorCode == 46) {
                         toastr.error("请重新登录！");
-                        $rootScope.$broadcast('ok', 0)
+                        localStorage['requireLogin'] = true
+                        $state.go("index.main", null, { reload: true })
                     } else if (xhr.responseJSON.errorCode != 0) {
                         toastr.error(xhr.responseJSON.message);
                     }

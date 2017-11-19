@@ -8,12 +8,12 @@
         .controller('addStudentCtrl', addStudentCtrl)
         .controller('batchAddStudentCtrl', batchAddStudentCtrl);
 
-    classDetailCtrl.$inject = ['$scope', 'reqUrl', '$uibModal', '$stateParams', 'commonSrv', 'classManagementSrv'];
+    classDetailCtrl.$inject = ['$scope', 'reqUrl', '$uibModal', '$stateParams', 'commonSrv', 'classManagementSrv', '$state'];
     addStudentCtrl.$inject = ['$scope', '$uibModalInstance', 'classManagementSrv', '$stateParams'];
     editStudentCtrl.$inject = ['$scope', '$uibModalInstance', 'student', 'classManagementSrv'];
-    batchAddStudentCtrl.$inject = ['$scope', '$uibModalInstance', '$stateParams', 'reqUrl', 'usSpinnerService'];
+    batchAddStudentCtrl.$inject = ['$scope', '$uibModalInstance', '$stateParams', 'reqUrl', 'usSpinnerService', '$state'];
 
-    function batchAddStudentCtrl($scope, $uibModalInstance, $stateParams, reqUrl, usSpinnerService) {
+    function batchAddStudentCtrl($scope, $uibModalInstance, $stateParams, reqUrl, usSpinnerService, $state) {
         console.log($stateParams.classId);
         $scope.classId = $stateParams.classId;
         $scope.token = 'Bearer ' + (localStorage['token'] ? localStorage['token'] : '')
@@ -75,13 +75,13 @@
                     } else if (res.errorCode == 45) {
                         toastr.error("登录超时！");
                         usSpinnerService.stop('upload-student');
-
-                        $rootScope.$broadcast('ok', 0);
+                        localStorage['requireLogin'] = true
+                        $state.go("index.main", null, { reload: true })
                     } else if (res.errorCode == 46) {
                         toastr.error("请重新登录！");
                         usSpinnerService.stop('upload-student');
-
-                        $rootScope.$broadcast('ok', 0)
+                        localStorage['requireLogin'] = true
+                        $state.go("index.main", null, { reload: true })
                     } else {
                         toastr.error(res.message);
                         usSpinnerService.stop('upload-student');
@@ -98,7 +98,7 @@
         // }
     }
 
-    function classDetailCtrl($scope, reqUrl, $uibModal, $stateParams, commonSrv, classManagementSrv) {
+    function classDetailCtrl($scope, reqUrl, $uibModal, $stateParams, commonSrv, classManagementSrv, $state) {
 
         var studentTable = $('#Student').DataTable({
                 //控制各个控件的位置
@@ -180,10 +180,12 @@
                     console.log(xhr)
                     if (xhr.responseJSON.errorCode == 45) {
                         toastr.error("登录超时！");
-                        $rootScope.$broadcast('ok', 0);
+                        localStorage['requireLogin'] = true
+                        $state.go("index.main", null, { reload: true })
                     } else if (xhr.responseJSON.errorCode == 46) {
                         toastr.error("请重新登录！");
-                        $rootScope.$broadcast('ok', 0)
+                        localStorage['requireLogin'] = true
+                        $state.go("index.main", null, { reload: true })
                     } else if (xhr.responseJSON.errorCode != 0) {
                         toastr.error(xhr.responseJSON.message);
                     }

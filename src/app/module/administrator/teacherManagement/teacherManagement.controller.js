@@ -8,13 +8,13 @@
         .controller('editTeacherCtrl', editTeacherCtrl)
         .controller('batchAddTeacherCtrl', batchAddTeacherCtrl);
 
-    batchAddTeacherCtrl.$inject = ['$scope', '$uibModalInstance', '$stateParams', 'reqUrl', 'usSpinnerService'];
+    batchAddTeacherCtrl.$inject = ['$scope', '$uibModalInstance', '$stateParams', 'reqUrl', 'usSpinnerService', '$state'];
 
-    teacherManagementCtrl.$inject = ['$scope', 'reqUrl', '$uibModal', 'teacherManageSrv', 'commonSrv'];
+    teacherManagementCtrl.$inject = ['$scope', 'reqUrl', '$uibModal', 'teacherManageSrv', 'commonSrv', '$state'];
     addTeacherCtrl.$inject = ['$scope', '$uibModalInstance', 'teacherManageSrv'];
     editTeacherCtrl.$inject = ['$scope', '$uibModalInstance', 'teacher', 'teacherManageSrv'];
 
-    function batchAddTeacherCtrl($scope, $uibModalInstance, $stateParams, reqUrl, usSpinnerService) {
+    function batchAddTeacherCtrl($scope, $uibModalInstance, $stateParams, reqUrl, usSpinnerService, $state) {
         $scope.close = function() {
             $uibModalInstance.close('dismiss')
         };
@@ -73,13 +73,13 @@
                     } else if (res.errorCode == 45) {
                         toastr.error("登录超时！");
                         usSpinnerService.stop('upload-teacher');
-
-                        $rootScope.$broadcast('ok', 0);
+                        localStorage['requireLogin'] = true
+                        $state.go("index.main", null, { reload: true })
                     } else if (res.errorCode == 46) {
                         toastr.error("请重新登录！");
                         usSpinnerService.stop('upload-teacher');
-
-                        $rootScope.$broadcast('ok', 0)
+                        localStorage['requireLogin'] = true
+                        $state.go("index.main", null, { reload: true })
                     } else {
                         toastr.error(res.message);
                         usSpinnerService.stop('upload-teacher');
@@ -93,7 +93,7 @@
 
     }
 
-    function teacherManagementCtrl($scope, reqUrl, $uibModal, teacherManageSrv, commonSrv) {
+    function teacherManagementCtrl($scope, reqUrl, $uibModal, teacherManageSrv, commonSrv, $state) {
         var vm = this;
 
 
@@ -173,10 +173,12 @@
                     console.log(xhr)
                     if (xhr.responseJSON.errorCode == 45) {
                         toastr.error("登录超时！");
-                        $rootScope.$broadcast('ok', 0);
+                        localStorage['requireLogin'] = true
+                        $state.go("index.main", null, { reload: true })
                     } else if (xhr.responseJSON.errorCode == 46) {
                         toastr.error("请重新登录！");
-                        $rootScope.$broadcast('ok', 0)
+                        localStorage['requireLogin'] = true
+                        $state.go("index.main", null, { reload: true })
                     } else if (xhr.responseJSON.errorCode != 0) {
                         toastr.error(xhr.responseJSON.message);
                     }
