@@ -7,13 +7,13 @@
         .controller('editCourseCtrl', editCourseCtrl)
         .controller('courseManagementCtrl', courseManagementCtrl);
 
-    addCourseCtrl.$inject = ['$scope', '$uibModalInstance', 'teacherManageSrv', 'courseManagementSrv', 'commonSrv', 'reqUrl'];
-    editCourseCtrl.$inject = ['$scope', '$uibModalInstance', 'teacherManageSrv', 'courseManagementSrv', 'commonSrv', 'reqUrl', 'courseinfo'];
+    addCourseCtrl.$inject = ['$scope', '$uibModalInstance', 'teacherManageSrv', 'courseManagementSrv', 'commonSrv', 'reqUrl', '$state'];
+    editCourseCtrl.$inject = ['$scope', '$uibModalInstance', 'teacherManageSrv', 'courseManagementSrv', 'commonSrv', 'reqUrl', 'courseinfo', '$state'];
 
 
-    courseManagementCtrl.$inject = ['$scope', 'reqUrl', '$uibModal', '$state', 'courseManagementSrv'];
+    courseManagementCtrl.$inject = ['$scope', '$rootScope', 'reqUrl', '$uibModal', '$state', 'courseManagementSrv'];
 
-    function courseManagementCtrl($scope, reqUrl, $uibModal, $state, courseManagementSrv) {
+    function courseManagementCtrl($scope, $rootScope, reqUrl, $uibModal, $state, courseManagementSrv) {
         var vm = this;
 
         var courseTable = $('#Course').DataTable({
@@ -116,10 +116,12 @@
                     console.log(xhr)
                     if (xhr.responseJSON.errorCode == 45) {
                         toastr.error("登录超时！");
-                        $rootScope.$broadcast('ok', 0);
+                        localStorage['requireLogin'] = true
+                        $state.go("index.main", null, { reload: true })
                     } else if (xhr.responseJSON.errorCode == 46) {
                         toastr.error("请重新登录！");
-                        $rootScope.$broadcast('ok', 0)
+                        localStorage['requireLogin'] = true
+                        $state.go("index.main", null, { reload: true })
                     } else if (xhr.responseJSON.errorCode != 0) {
                         toastr.error(xhr.responseJSON.message);
                     }
@@ -218,7 +220,7 @@
         }
     }
 
-    function addCourseCtrl($scope, $uibModalInstance, teacherManageSrv, courseManagementSrv, commonSrv, reqUrl) {
+    function addCourseCtrl($scope, $uibModalInstance, teacherManageSrv, courseManagementSrv, commonSrv, reqUrl, $state) {
         $scope.course = {};
         teacherManageSrv.getAllTeachers().get().$promise.then(
             function(response) {
@@ -290,10 +292,12 @@
                         $scope.$apply();
                     } else if (res.errorCode == 45) {
                         toastr.error("登录超时！");
-                        $rootScope.$broadcast('ok', 0);
+                        localStorage['requireLogin'] = true
+                        $state.go("index.main", null, { reload: true })
                     } else if (res.errorCode == 46) {
                         toastr.error("请重新登录！");
-                        $rootScope.$broadcast('ok', 0)
+                        localStorage['requireLogin'] = true
+                        $state.go("index.main", null, { reload: true })
                     } else {
                         toastr.error(res.message);
                     }
@@ -344,7 +348,7 @@
 
     }
 
-    function editCourseCtrl($scope, $uibModalInstance, teacherManageSrv, courseManagementSrv, commonSrv, reqUrl, courseinfo) {
+    function editCourseCtrl($scope, $uibModalInstance, teacherManageSrv, courseManagementSrv, commonSrv, reqUrl, courseinfo, $state) {
         $scope.course = courseinfo;
         console.log(courseinfo)
 
@@ -418,10 +422,12 @@
                         $scope.$apply();
                     } else if (res.errorCode == 45) {
                         toastr.error("登录超时！");
-                        $rootScope.$broadcast('ok', 0);
+                        localStorage['requireLogin'] = true
+                        $state.go("index.main", null, { reload: true })
                     } else if (res.errorCode == 46) {
                         toastr.error("请重新登录！");
-                        $rootScope.$broadcast('ok', 0)
+                        localStorage['requireLogin'] = true
+                        $state.go("index.main", null, { reload: true })
                     } else {
                         toastr.error(res.message);
                     }

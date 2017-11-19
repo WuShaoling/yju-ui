@@ -6,11 +6,11 @@
         .controller('addNewExCtrl', addNewExCtrl)
         .controller('pictureLibCtrl', pictureLibCtrl);
 
-    pictureLibCtrl.$inject = ['$scope', '$timeout', '$uibModalInstance', 'photoswipeSrv', 'courseManagementSrv', '$stateParams', 'reqUrl'];
+    pictureLibCtrl.$inject = ['$scope', '$timeout', '$uibModalInstance', 'photoswipeSrv', 'courseManagementSrv', '$stateParams', 'reqUrl', '$state'];
 
 
 
-    function pictureLibCtrl($scope, $timeout, $uibModalInstance, photoswipeSrv, courseManagementSrv, $stateParams, reqUrl) {
+    function pictureLibCtrl($scope, $timeout, $uibModalInstance, photoswipeSrv, courseManagementSrv, $stateParams, reqUrl, $state) {
         $timeout(function() {
             photoswipeSrv.initPhotoSwipeFromDOM('.my-gallery');
 
@@ -89,10 +89,12 @@
                         $scope.$apply();
                     } else if (res.errorCode == 45) {
                         toastr.error("登录超时！");
-                        $rootScope.$broadcast('ok', 0);
+                        localStorage['requireLogin'] = true
+                        $state.go("index.main", null, { reload: true })
                     } else if (res.errorCode == 46) {
                         toastr.error("请重新登录！");
-                        $rootScope.$broadcast('ok', 0)
+                        localStorage['requireLogin'] = true
+                        $state.go("index.main", null, { reload: true })
                     } else {
                         toastr.error(res.message);
                     }
@@ -302,10 +304,12 @@
                         $scope.$apply();
                     } else if (res.errorCode == 45) {
                         toastr.error("登录超时！");
-                        $rootScope.$broadcast('ok', 0);
+                        localStorage['requireLogin'] = true
+                        $state.go("index.main", null, { reload: true })
                     } else if (res.errorCode == 46) {
                         toastr.error("请重新登录！");
-                        $rootScope.$broadcast('ok', 0)
+                        localStorage['requireLogin'] = true
+                        $state.go("index.main", null, { reload: true })
                     } else {
                         toastr.error(res.message);
                     }

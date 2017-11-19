@@ -38,6 +38,8 @@
 
                     console.log(error);
                 })
+            } else {
+                $scope.show = false
             }
         }
 
@@ -64,14 +66,7 @@
         )
 
         $rootScope.$on('login', function(event, data) {
-            if (data == "1") {
-                $scope.getNotifications();
-                console.log(data);
-
-            } else {
-                $scope.show = false
-
-            }
+            $scope.getNotifications();
         })
         $scope.getNotifications();
 

@@ -7,9 +7,9 @@
         .controller('uploadReportModalCtrl', uploadReportModalCtrl);
 
     studentDoHomeworkCtrl.$inject = ['$scope', '$uibModal', '$timeout', 'stuCourseSrv', '$stateParams'];
-    uploadReportModalCtrl.$inject = ['$scope', '$uibModalInstance', '$timeout', 'reqUrl', 'stuCourseSrv', '$stateParams']
+    uploadReportModalCtrl.$inject = ['$scope', '$uibModalInstance', '$timeout', 'reqUrl', 'stuCourseSrv', '$stateParams', '$state']
 
-    function uploadReportModalCtrl($scope, $uibModalInstance, $timeout, reqUrl, stuCourseSrv, $stateParams) {
+    function uploadReportModalCtrl($scope, $uibModalInstance, $timeout, reqUrl, stuCourseSrv, $stateParams, $state) {
         $scope.cancel = function() {
             $uibModalInstance.dismiss('cancel');
         }
@@ -70,10 +70,12 @@
                         $scope.$apply();
                     } else if (res.errorCode == 45) {
                         toastr.error("登录超时！");
-                        $rootScope.$broadcast('ok', 0);
+                        localStorage['requireLogin'] = true
+                        $state.go("index.main", null, { reload: true })
                     } else if (res.errorCode == 46) {
                         toastr.error("请重新登录！");
-                        $rootScope.$broadcast('ok', 0)
+                        localStorage['requireLogin'] = true
+                        $state.go("index.main", null, { reload: true })
                     } else {
                         toastr.error(res.message);
                     }
