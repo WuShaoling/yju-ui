@@ -33,7 +33,7 @@
 
                 //     })
                 start($scope.cloudwareInfo.webSocket, $('#cloudware')[0])
-                    // return;
+                // return;
 
             } else {
                 console.log("start...service")
@@ -159,7 +159,7 @@
 
         // var term = new Terminal();
         // term.open(document.getElementById('terminal'));
-        // var socket = new WebSocket('ws://117.50.1.134:8080/v1/exec/?token=eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJjYXR0bGUiLCJob3N0VXVpZCI6ImRhMGI1NDNlLWMwNTEtNDZlOC01NGUyLWY3OGE2YWUzNmEyMCIsImtpZCI6ImRlZmF1bHQiLCJpc3MiOiJodHRwOlwvXC9jYXR0bGUuaW8iLCJleHAiOjE1MDY1ODUwMjQsImlhdCI6MTUwNjU4NDcyNCwiZXhlYyI6eyJBdHRhY2hTdGRpbiI6dHJ1ZSwiQXR0YWNoU3Rkb3V0Ijp0cnVlLCJUdHkiOnRydWUsIkNtZCI6WyJcL2Jpblwvc2giLCItYyIsIlRFUk09eHRlcm0tMjU2Y29sb3I7IGV4cG9ydCBURVJNOyBbIC14IFwvYmluXC9iYXNoIF0gJiYgKFsgLXggXC91c3JcL2Jpblwvc2NyaXB0IF0gJiYgXC91c3JcL2Jpblwvc2NyaXB0IC1xIC1jIFwiXC9iaW5cL2Jhc2hcIiBcL2RldlwvbnVsbCB8fCBleGVjIFwvYmluXC9iYXNoKSB8fCBleGVjIFwvYmluXC9zaCJdLCJDb250YWluZXIiOiJjYTQ4MDQwNDE3ODFjNjNmNDQ1ZGJlZmNiODg4MzQ3OGQ3NDg3OWIzMjJkYWM0NTZlNDZkZjNhZTA3NzNiMDdjIn19.x0YWSaiXPVJ-FHACFRkW-LEOsRuKb9iqmzV95uF4h0GYZcRWqaru0ZunFKC7pghJUuh6qxP4YKZosb2fP6D34jH1WE0d5Vl5-t2-x5ATCIQ32fetc0xCLVdSsH4cvOtRjM-0FH3HPK5InzUMNyEJbnuK3bkI0aM0vytnbrkJKqfAeEcnaq8iFuhiPfxSGOSuQRiFWFGyD-hBrOyxrmFnjd-WIZ6nkXD18BMcCHb9HYhtSd-jkgtSCGn3sm7b7jGM92ueJ92p9Us385RfaxG7_vmFVCzfWsyg1y_-i_rXJwmR9LD03tTTx8TuFFkTmBzX_cQoHMY40b8tlZlvwKiqiQ')
+        // var socket = new WebSocket('ws://*****:8080/v1/exec/?token=eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJjYXR0bGUiLCJob3N0VXVpZCI6ImRhMGI1NDNlLWMwNTEtNDZlOC01NGUyLWY3OGE2YWUzNmEyMCIsImtpZCI6ImRlZmF1bHQiLCJpc3MiOiJodHRwOlwvXC9jYXR0bGUuaW8iLCJleHAiOjE1MDY1ODUwMjQsImlhdCI6MTUwNjU4NDcyNCwiZXhlYyI6eyJBdHRhY2hTdGRpbiI6dHJ1ZSwiQXR0YWNoU3Rkb3V0Ijp0cnVlLCJUdHkiOnRydWUsIkNtZCI6WyJcL2Jpblwvc2giLCItYyIsIlRFUk09eHRlcm0tMjU2Y29sb3I7IGV4cG9ydCBURVJNOyBbIC14IFwvYmluXC9iYXNoIF0gJiYgKFsgLXggXC91c3JcL2Jpblwvc2NyaXB0IF0gJiYgXC91c3JcL2Jpblwvc2NyaXB0IC1xIC1jIFwiXC9iaW5cL2Jhc2hcIiBcL2RldlwvbnVsbCB8fCBleGVjIFwvYmluXC9iYXNoKSB8fCBleGVjIFwvYmluXC9zaCJdLCJDb250YWluZXIiOiJjYTQ4MDQwNDE3ODFjNjNmNDQ1ZGJlZmNiODg4MzQ3OGQ3NDg3OWIzMjJkYWM0NTZlNDZkZjNhZTA3NzNiMDdjIn19.x0YWSaiXPVJ-FHACFRkW-LEOsRuKb9iqmzV95uF4h0GYZcRWqaru0ZunFKC7pghJUuh6qxP4YKZosb2fP6D34jH1WE0d5Vl5-t2-x5ATCIQ32fetc0xCLVdSsH4cvOtRjM-0FH3HPK5InzUMNyEJbnuK3bkI0aM0vytnbrkJKqfAeEcnaq8iFuhiPfxSGOSuQRiFWFGyD-hBrOyxrmFnjd-WIZ6nkXD18BMcCHb9HYhtSd-jkgtSCGn3sm7b7jGM92ueJ92p9Us385RfaxG7_vmFVCzfWsyg1y_-i_rXJwmR9LD03tTTx8TuFFkTmBzX_cQoHMY40b8tlZlvwKiqiQ')
         // term.on('key', (key, ev) => { socket.send(btoa(key)) })
         // socket.onmessage = function(msg) {
         //     term.write(atob(msg.data))
@@ -193,7 +193,6 @@
 
         function start(wsaddr, el, retryTime) {
             var retryTime = retryTime || 0;
-            $(el).children().remove()
             ws = new WebSocket(wsaddr);
 
             var instance = {
@@ -240,23 +239,27 @@
                 }
             }
             ws.onopen = function() {
-                var canvas = document.createElement('canvas')
-                var canvasOnFocus = false
+                var canvas = document.getElementById("theCanvas")
+                if(!canvas) {
+                    canvas = document.createElement('canvas')
+                    el.appendChild(canvas);
+                    canvas.width = 1440;
+                    canvas.height = 900;
+                    canvas.style.width = '100%';
+                    canvas.style.height = '100%';
+                    canvas.id = "theCanvas"
+                    canvas.tabIndex = 0
+                }
+
+                var canvasOnFocus = true
                 canvas.oncontextmenu = function(e) {
                     return false;
                 }
                 $('#design').css('height', 'initial');
-                instance.canvas = canvas
-                canvas.width = 1440;
-                canvas.height = 900;
-                canvas.style.width = '100%';
-                canvas.style.height = '100%';
-                canvas.id = "test"
-                canvas.tabIndex = 0
                 canvas.focus()
-                el.appendChild(canvas);
                 $('#leftNav').height($('#design').height());
                 usSpinnerService.stop('ex-spinner');
+                instance.canvas = canvas
 
                 canvas.onmousemove = function(e) {
                     var dom_left = canvas.offsetLeft + canvas.offsetParent.offsetLeft;
@@ -473,7 +476,7 @@
                 startService();
             }
         }
-            //startService();
+        //startService();
         function mapKey(keyCode) {
             var xkm = [
                 [65406, 0, 65406, 0, 0, 0, 0],
