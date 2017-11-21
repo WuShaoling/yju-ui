@@ -193,7 +193,6 @@
 
         function start(wsaddr, el, retryTime) {
             var retryTime = retryTime || 0;
-            $(el).children().remove()
             ws = new WebSocket(wsaddr);
 
             var instance = {
@@ -240,23 +239,27 @@
                 }
             }
             ws.onopen = function() {
-                var canvas = document.createElement('canvas')
+                var canvas = document.getElementById("theCanvas")
+                if(!canvas) {
+                    canvas = document.createElement('canvas')
+                    el.appendChild(canvas);
+                    canvas.width = 1440;
+                    canvas.height = 900;
+                    canvas.style.width = '100%';
+                    canvas.style.height = '100%';
+                    canvas.id = "theCanvas"
+                    canvas.tabIndex = 0
+                }
+
                 var canvasOnFocus = false
                 canvas.oncontextmenu = function(e) {
                     return false;
                 }
                 $('#design').css('height', 'initial');
-                instance.canvas = canvas
-                canvas.width = 1440;
-                canvas.height = 900;
-                canvas.style.width = '100%';
-                canvas.style.height = '100%';
-                canvas.id = "test"
-                canvas.tabIndex = 0
                 canvas.focus()
-                el.appendChild(canvas);
                 $('#leftNav').height($('#design').height());
                 usSpinnerService.stop('ex-spinner');
+                instance.canvas = canvas
 
                 canvas.onmousemove = function(e) {
                     var dom_left = canvas.offsetLeft + canvas.offsetParent.offsetLeft;
