@@ -211,31 +211,29 @@
                 fsapi: ''
             };
             ws.onerror = function(error) {
-                var int = setInterval(function() {
-                    if (retryTime > 10) {
-                        toastr.error("启动云件失败，请重试")
-                        $scope.hasStarted = false
-                        usSpinnerService.stop('ex-spinner');
-                        if ($stateParams.type == 1) { //如果是实验，删除改实验云件
-                            $scope.notFirst = false
-                            stuCourseSrv.deleteExCloudware().save({
-                                studentId: $stateParams.studentId,
-                                experimentId: $stateParams.experimentId
-                            })
-                        }
-                        $scope.$apply()
-                        clearInterval(int)
-                    } else {
-                        retryTime++
-                        clearInterval(int)
-                        start(wsaddr, el, retryTime)
-                    }
-                }, 1000)
+                console.log("error occurred")
             }
             ws.onclose = function () {
                 console.log("close and restart")
                 if(!$scope.leavePage) {
-                    start(wsaddr, el)
+                    setTimeout(function() {
+                        if (retryTime > 10) {
+                            toastr.error("启动云件失败，请重试")
+                            $scope.hasStarted = false
+                            usSpinnerService.stop('ex-spinner');
+                            if ($stateParams.type == 1) { //如果是实验，删除改实验云件
+                                $scope.notFirst = false
+                                stuCourseSrv.deleteExCloudware().save({
+                                    studentId: $stateParams.studentId,
+                                    experimentId: $stateParams.experimentId
+                                })
+                            }
+                            $scope.$apply()
+                        } else {
+                            retryTime++
+                            start(wsaddr, el, retryTime)
+                        }
+                    }, 1000)
                 }
             }
             ws.onopen = function() {
