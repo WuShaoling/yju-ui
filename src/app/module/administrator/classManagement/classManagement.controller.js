@@ -410,7 +410,7 @@
                 "className": $scope.class.className,
                 "courseId": $scope.class.course.id,
                 "termId": $scope.class.semester.id,
-                "teacherId": $scope.class.teacher.id
+                "teacherId": $scope.class.teacherId
             }, function(response) {
                 console.log(response)
                 if (response.errorCode == 0) {

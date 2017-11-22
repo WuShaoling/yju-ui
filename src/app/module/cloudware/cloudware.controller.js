@@ -33,7 +33,7 @@
 
                 //     })
                 start($scope.cloudwareInfo.webSocket, $('#cloudware')[0])
-                    // return;
+                // return;
 
             } else {
                 console.log("start...service")
@@ -251,7 +251,7 @@
                     canvas.tabIndex = 0
                 }
 
-                var canvasOnFocus = false
+                var canvasOnFocus = true
                 canvas.oncontextmenu = function(e) {
                     return false;
                 }
@@ -476,7 +476,7 @@
                 startService();
             }
         }
-            //startService();
+        //startService();
         function mapKey(keyCode) {
             var xkm = [
                 [65406, 0, 65406, 0, 0, 0, 0],
