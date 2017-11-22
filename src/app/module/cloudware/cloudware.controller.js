@@ -170,7 +170,7 @@
             // $('body').width($(window).width());
             // $('#design').height($(window).height());
             // $('#design').width($(window).width());
-            var canvas = document.getElementById('test')
+            var canvas = document.getElementById('theCanvas')
             var docElm = document.documentElement;
             if (docElm.requestFullscreen) {
                 canvas.requestFullscreen();
