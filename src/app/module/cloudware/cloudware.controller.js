@@ -5,9 +5,9 @@
         .module('phoenix')
         .controller('cloudwareCtrl', cloudwareCtrl);
 
-    cloudwareCtrl.$inject = ['$scope', '$timeout', 'usSpinnerService', 'commonSrv', 'stuCourseSrv', '$stateParams', 'cloudwareUrl', '$window'];
+    cloudwareCtrl.$inject = ['$scope', '$timeout', 'usSpinnerService', '$state', 'stuCourseSrv', '$stateParams', 'cloudwareUrl', '$window', '$rootScope'];
 
-    function cloudwareCtrl($scope, $timeout, usSpinnerService, commonSrv, stuCourseSrv, $stateParams, cloudwareUrl, $window) {
+    function cloudwareCtrl($scope, $timeout, usSpinnerService, $state, stuCourseSrv, $stateParams, cloudwareUrl, $window, $rootScope) {
         var vm = this;
         var ws = null;
 
@@ -20,8 +20,18 @@
         $scope.leftText = "隐藏教程";
         $scope.rightText = "隐藏工具栏";
         $scope.hasStarted = false;
-        $scope.loading = true;
         $scope.leavePage = false;
+        $scope.isLogin = localStorage["logined"] === 'true';
+
+        if(!$scope.isLogin){
+            $scope.loading = false;
+            return;
+        } else {
+            if($stateParams.studentId == 0){
+                $state.go('index.main');
+            }
+        }
+
         $scope.startEx = function() {
             if ($scope.notFirst) {
                 console.log("start...")
@@ -135,6 +145,7 @@
         }
         $scope.getCloudwareInfo();
         $scope.flag = true;
+        $scope.loading = true;
         $scope.fullScreenDes = function() {
             if ($scope.flag) {
                 angular.element('#design').hide(500, function() {

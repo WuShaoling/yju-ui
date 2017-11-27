@@ -27,10 +27,6 @@
             return $resource(reqUrl + '/auth/updatePassword');
         }
 
-        this.startEx = function() {
-            return $resource("http://192.168.1.128:8080/services")
-        }
-
         this.getHotCourses = function() {
             return $resource(reqUrl + '/common/hotCourses/all')
         }
@@ -51,6 +47,11 @@
         this.getTeacherDetail = function() {
             return $resource(reqUrl + "/common/teacher/:teacherId", {
                 teacherId: "@teacherId"
+            })
+        }
+        this.getExperimentDetail = function() {
+            return $resource(reqUrl + '/common/experiment/:experimentId', {
+                experimentId: "@experimentId"
             })
         }
     }

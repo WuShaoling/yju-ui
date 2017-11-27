@@ -203,6 +203,11 @@
                         }
                         localStorage['logined'] = true;
                         localStorage['user'] = JSON.stringify(params);
+                        if($state.current.name === 'index.startExperiment.cloudware'){
+                            $state.params.studentId = localStorage['userId'];
+                            $state.go($state.current.name, $state.params, {reload: true});
+                        }
+                        //if($st)
                         if(previousRef){
                             $location.path(previousRef)
                         }

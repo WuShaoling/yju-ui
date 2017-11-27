@@ -41,12 +41,6 @@
             })
         }
 
-        this.getExperimentDetail = function() {
-            return $resource(reqUrl + '/student/experiment/:experimentId', {
-                experimentId: "@experimentId"
-            })
-        }
-
         this.getHwCloudwareInfo = function() {
             return $resource(reqUrl + '/student/homework/:homeworkId/:studentId/cloudware', {
                 homeworkId: "@homeworkId",

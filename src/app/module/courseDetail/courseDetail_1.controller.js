@@ -9,15 +9,11 @@
 
     function courseDetail1Ctrl($scope, $stateParams, courseSrv, commonSrv, $state) {
         var vm = this;
-        $scope.doEx = function() {
-            if (localStorage['logined']) {
-                toastr.warning("请到我的课程中查看相关实验")
-            } else {
-                localStorage['requireLogin'] = true
-                $state.go("index.main", null, { reload: true })
-
-            }
+        $scope.doEx = function(experiment) {
+            $state.go("index.startExperiment.cloudware",
+                {experimentId: experiment.id, studentId: localStorage['userId'] || 0, cloudwareType: experiment.cloudwareType})
         }
+
         commonSrv.getCourseExperimentDetail().get({
             courseId: $stateParams.courseId
         }).$promise.then(

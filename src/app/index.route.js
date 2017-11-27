@@ -84,10 +84,7 @@
         .state('index.cloudware', {
                 url: "/cloudware",
                 templateUrl: "app/module/cloudware/cloudware.html",
-                controller: "cloudwareCtrl",
-                onEnter: function ($state, $location) {
-                    validateLoginState($state, $location)
-                }
+                controller: "cloudwareCtrl"
             })
             .state('index.cloudware.experiment', {
                 url: "/cloudware/experiment",
@@ -139,10 +136,7 @@
                 url: "/course/experiment/:experimentId/:type/:studentId/:cloudwareType",
                 params: { experimentId: null, type: "1", studentId: null, cloudwareType: null },
                 templateUrl: "app/module/student/studentStartExperiment/studentStartExperiment.html",
-                controller: "studentStartExperimentCtrl",
-                onEnter: function ($state, $location) {
-                    validateLoginState($state, $location)
-                }
+                controller: "studentStartExperimentCtrl"
             })
             .state('index.studentDoHomework.cloudware', {
                 url: "/cloudware",
@@ -155,10 +149,7 @@
             .state('index.startExperiment.cloudware', {
                 url: "/cloudware",
                 templateUrl: "app/module/cloudware/cloudware.html",
-                controller: "cloudwareCtrl",
-                onEnter: function ($state, $location) {
-                    validateLoginState($state, $location)
-                }
+                controller: "cloudwareCtrl"
             })
             .state('index.test', {
                 url: "/test",

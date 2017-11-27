@@ -5,14 +5,14 @@
         .module('phoenix')
         .controller('studentStartExperimentCtrl', studentStartExperimentCtrl);
 
-    studentStartExperimentCtrl.$inject = ['$scope', '$timeout', 'stuCourseSrv', '$stateParams'];
+    studentStartExperimentCtrl.$inject = ['$scope', '$timeout', 'commonSrv', '$stateParams'];
 
-    function studentStartExperimentCtrl($scope, $timeout, stuCourseSrv, $stateParams) {
+    function studentStartExperimentCtrl($scope, $timeout, commonSrv, $stateParams) {
         var converter = new showdown.Converter();
         converter.setOption('tasklists', true);
         converter.setOption('tables', true);
 
-        stuCourseSrv.getExperimentDetail().get({
+        commonSrv.getExperimentDetail().get({
                 experimentId: $stateParams.experimentId
             }, function(response) {
                 console.log(response);
