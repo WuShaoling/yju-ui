@@ -145,16 +145,16 @@
         }
     }
 
-    addNewExCtrl.$inject = ['$scope', '$timeout', '$uibModal', 'commonSrv', 'courseManagementSrv', '$stateParams', 'reqUrl', '$state', 'stuCourseSrv'];
+    addNewExCtrl.$inject = ['$scope', '$timeout', '$uibModal', 'commonSrv', 'courseManagementSrv', '$stateParams', 'reqUrl', '$state'];
 
-    function addNewExCtrl($scope, $timeout, $uibModal, commonSrv, courseManagementSrv, $stateParams, reqUrl, $state, stuCourseSrv) {
+    function addNewExCtrl($scope, $timeout, $uibModal, commonSrv, courseManagementSrv, $stateParams, reqUrl, $state) {
         $scope.experiment = {};
         $scope.text = "";
         $scope.disableSave = false;
         $scope.loadEx = function () {
             if($stateParams.experimentId != 0) {
                 $scope.disableSave = true;
-                stuCourseSrv.getExperimentDetail().get({
+                commonSrv.getExperimentDetail().get({
                         experimentId: $stateParams.experimentId
                     }, function(response) {
                         console.log(response);
@@ -163,7 +163,6 @@
                             $scope.text = response.data.experimentContent
                             $scope.experiment.cloudwareType = response.data.cloudwareTypeId
                             $scope.disableSave = false
-                            $scope.$apply()
                         } else {
                             toastr.error(response.message)
                         }
