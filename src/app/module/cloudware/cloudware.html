@@ -20,9 +20,8 @@
      ng-mousedown="resizeMouseDown($event)" ></div>
 <div style="background-color: #F5f5f5; z-index:9; height:570px; width:66%; float:right" id="design">
     <div class="row" style="text-align:center;margin-top:250px" ng-hide="hideExText">
-            <h1 style="font-size:80px">实验区域</h1>
-            <small ng-if="isLogin">点击右侧工具栏开始实验</small>
-            <small ng-if="!isLogin"><i class="fa fa-warning"></i> 登录后可以启动实验</small>
+        <h1 style="font-size:80px">实验区域</h1>
+        <small>点击右侧工具栏开始实验</small>
     </div>
     <span us-spinner="{ color: '#0060b1', radius: 10, width: 5, length: 10, zIndex: 10 ,top:'50%'}" spinner-key="ex-spinner" spinner-start-active="false"></span>
     <div id="cloudware" data-cloudware-env="rstudio" style="width:100%;z-index:100"></div>
@@ -35,9 +34,9 @@
 
 <div style="position: fixed;top:132px;right:0;z-index:101;width:38px" id="rightNav">
 
-    <button class="navbar-minimalize minimalize-styl-2 btn btn-primary " tooltip-placement="left" uib-tooltip="开始实验" ng-disabled="hasStarted || loading || !isLogin" ng-click="startEx()"><i ng-class="{'true':'fa fa-spinner fa-pulse fa-1x','false':'fa fa-play'}[loading]"></i></button>
+    <button class="navbar-minimalize minimalize-styl-2 btn btn-primary " tooltip-placement="left" uib-tooltip="开始实验" ng-disabled="hasStarted || loading" ng-click="startEx()"><i ng-class="{'true':'fa fa-spinner fa-pulse fa-1x','false':'fa fa-play'}[loading]"></i></button>
 
-    <button class="navbar-minimalize minimalize-styl-2 btn btn-danger " style="position: fixed;top:164px;right:0;z-index:101;width:38px" tooltip-placement="left" uib-tooltip="删除实验" ng-disabled="!isLogin" ng-if="showDelete" ng-click="deleteEx()"><i class="fa fa-times" ></i></button>
+    <button class="navbar-minimalize minimalize-styl-2 btn btn-danger " style="position: fixed;top:164px;right:0;z-index:101;width:38px" tooltip-placement="left" uib-tooltip="删除实验" ng-if="showDelete" ng-click="deleteEx()"><i class="fa fa-times" ></i></button>
 
     <!-- <button class="navbar-minimalize minimalize-styl-2 btn btn-default " tooltip-placement="left" uib-tooltip="剪切板" ng-click=""><i class="fa fa-cut" ></i></button> -->
     <!-- <button class="navbar-minimalize minimalize-styl-2 btn btn-default " tooltip-placement="left" uib-tooltip="共享" ng-click=""><i class="fa fa-share" ></i></button> -->
