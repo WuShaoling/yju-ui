@@ -48,18 +48,20 @@
             $rootScope.$broadcast('login');
         }
 
+        if(localStorage['requireLogin'] === 'true'){
+            localStorage['requireLogin'] = false
+            $scope.logout();
+            $scope.login();
+            return;
+        }
+
         if (localStorage['logined'] === 'true') {
             var user = JSON.parse(localStorage['user'])
             $scope.username = user.username;
             $scope.logined = true;
             $scope.navbar = user.navbar;
-        } else {
-            if(localStorage['requireLogin'] === 'true'){
-                localStorage['requireLogin'] = false
-                $scope.logout();
-                $scope.login()
-            }
         }
+
         $scope.search = function(data) {
             toastr.success("正在搜索" + data + "...");
         }

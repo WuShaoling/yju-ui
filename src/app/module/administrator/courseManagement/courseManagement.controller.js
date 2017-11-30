@@ -115,11 +115,11 @@
                 if (xhr.status == 200) {
                     console.log(xhr)
                     if (xhr.responseJSON.errorCode == 45) {
-                        toastr.error("登录超时！");
+                        toastr.warning("登录超时！");
                         localStorage['requireLogin'] = true
                         $state.go("index.main", null, { reload: true })
                     } else if (xhr.responseJSON.errorCode == 46) {
-                        toastr.error("请重新登录！");
+                        toastr.warning("请重新登录！");
                         localStorage['requireLogin'] = true
                         $state.go("index.main", null, { reload: true })
                     } else if (xhr.responseJSON.errorCode != 0) {
@@ -291,11 +291,11 @@
                         // $scope.isUpload = true;
                         $scope.$apply();
                     } else if (res.errorCode == 45) {
-                        toastr.error("登录超时！");
+                        toastr.warning("登录超时！");
                         localStorage['requireLogin'] = true
                         $state.go("index.main", null, { reload: true })
                     } else if (res.errorCode == 46) {
-                        toastr.error("请重新登录！");
+                        toastr.warning("请重新登录！");
                         localStorage['requireLogin'] = true
                         $state.go("index.main", null, { reload: true })
                     } else {
@@ -421,11 +421,11 @@
                         // $scope.isUpload = true;
                         $scope.$apply();
                     } else if (res.errorCode == 45) {
-                        toastr.error("登录超时！");
+                        toastr.warning("登录超时！");
                         localStorage['requireLogin'] = true
                         $state.go("index.main", null, { reload: true })
                     } else if (res.errorCode == 46) {
-                        toastr.error("请重新登录！");
+                        toastr.warning("请重新登录！");
                         localStorage['requireLogin'] = true
                         $state.go("index.main", null, { reload: true })
                     } else {

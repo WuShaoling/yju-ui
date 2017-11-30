@@ -41,25 +41,27 @@
                 request: function(config) {
 
                     // Header - Token
-                    config.headers = config.headers || {};
-                    if (localStorage['token']) {
-                        config.headers.Authorization = 'Bearer ' + localStorage['token'];
-                    };
-
+                    if(config.url.indexOf('/common/') == -1) {
+                        config.headers = config.headers || {};
+                        if (localStorage['token']) {
+                            config.headers.Authorization = 'Bearer ' + localStorage['token'];
+                        }
+                    }
                     return config;
                 },
-
                 response: function(response) {
 
                     if (response.status == 200) {
                         if (response.data.errorCode == 45) {
-                            toastr.error("登录超时！");
+                            toastr.warning("登录超时！");
+                            localStorage.clear();
                             localStorage['requireLogin'] = true
                             $injector.get('$state').transitionTo("index.main", null, { reload: true })
                             return $q.reject(response);
 
                         } else if (response.data.errorCode == 46) {
-                            toastr.error("请重新登录！");
+                            toastr.warning("请重新登录！");
+                            localStorage.clear();
                             localStorage['requireLogin'] = true
                             $injector.get('$state').transitionTo("index.main", null, { reload: true })
                             return $q.reject(response);

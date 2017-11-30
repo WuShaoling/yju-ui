@@ -5,9 +5,9 @@
         .module('phoenix')
         .controller('cloudwareCtrl', cloudwareCtrl);
 
-    cloudwareCtrl.$inject = ['$scope', '$timeout', 'usSpinnerService', 'commonSrv', 'stuCourseSrv', '$stateParams', 'cloudwareUrl', '$window'];
+    cloudwareCtrl.$inject = ['$scope', '$timeout', 'usSpinnerService', '$state', 'stuCourseSrv', '$stateParams', 'cloudwareUrl', '$window', '$rootScope'];
 
-    function cloudwareCtrl($scope, $timeout, usSpinnerService, commonSrv, stuCourseSrv, $stateParams, cloudwareUrl, $window) {
+    function cloudwareCtrl($scope, $timeout, usSpinnerService, $state, stuCourseSrv, $stateParams, cloudwareUrl, $window, $rootScope) {
         var vm = this;
         var ws = null;
 
@@ -20,8 +20,37 @@
         $scope.leftText = "隐藏教程";
         $scope.rightText = "隐藏工具栏";
         $scope.hasStarted = false;
-        $scope.loading = true;
         $scope.leavePage = false;
+        $scope.isLogin = localStorage["logined"] === 'true';
+
+        var startMoving;
+        $scope.resizeMouseDown = function ($event) {
+            startMoving = true;
+        }
+
+        $(document).mouseup(function () {
+            startMoving = false;
+        })
+
+        $(document).mousemove(function (e) {
+            if(startMoving) {
+                var originalLeftWidth = $($('#leftNav')[0]).width();
+                var currentDesignWidth = $($('#design')[0]).width();
+                $($('#leftNav')[0]).width(e.clientX + 10);
+                $($('#design')[0]).width(currentDesignWidth - ($($('#leftNav')[0]).width() - originalLeftWidth));
+                e.preventDefault();
+            }
+        })
+
+        if(!$scope.isLogin){
+            $scope.loading = false;
+            return;
+        } else {
+            if($stateParams.studentId == 0){
+                $state.go('index.main');
+            }
+        }
+
         $scope.startEx = function() {
             if ($scope.notFirst) {
                 console.log("start...")
@@ -135,6 +164,7 @@
         }
         $scope.getCloudwareInfo();
         $scope.flag = true;
+        $scope.loading = true;
         $scope.fullScreenDes = function() {
             if ($scope.flag) {
                 angular.element('#design').hide(500, function() {
@@ -776,24 +806,5 @@
             }
             return key;
         }
-
-        var startMoving;
-        $scope.resizeMouseDown = function ($event) {
-            startMoving = true;
-        }
-
-        $(document).mouseup(function () {
-            startMoving = false;
-        })
-
-        $(document).mousemove(function (e) {
-            if(startMoving) {
-                var originalLeftWidth = $($('#leftNav')[0]).width();
-                var currentDesignWidth = $($('#design')[0]).width();
-                $($('#leftNav')[0]).width(e.clientX + 10);
-                $($('#design')[0]).width(currentDesignWidth - ($($('#leftNav')[0]).width() - originalLeftWidth));
-                e.preventDefault();
-            }
-        })
     }
 })();
