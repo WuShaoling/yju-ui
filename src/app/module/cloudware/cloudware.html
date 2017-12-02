@@ -16,9 +16,9 @@
             <div ng-bind-html="html" class="md markdown-body" id="ht" style="padding:15px;"></div>
 
         </div> -->
-<div style="width:5px; background-color: #0060b1; height:570px;float: left;cursor: e-resize;" id="resizeDiv"
+<div style="width:5px; background-color: #0060b1; height:700px; float: left;cursor: ew-resize;" id="resizeDiv"
      ng-mousedown="resizeMouseDown($event)" ></div>
-<div style="background-color: #F5f5f5; z-index:9; height:570px; width:66%; float:right" id="design">
+<div style="background-color: #F5f5f5; z-index:9; height:700px; width:66%; float:right;" id="design">
     <div class="row" style="text-align:center;margin-top:250px" ng-hide="hideExText">
         <h1 style="font-size:80px">实验区域</h1>
         <small>点击右侧工具栏开始实验</small>
@@ -26,9 +26,7 @@
     <span us-spinner="{ color: '#0060b1', radius: 10, width: 5, length: 10, zIndex: 10 ,top:'50%'}" spinner-key="ex-spinner" spinner-start-active="false"></span>
     <div id="cloudware" data-cloudware-env="rstudio" style="width:100%;z-index:100"></div>
 </div>
-<!--<span minimaliza-Left style="position: fixed;top:100px;left:0;z-index:101"></span>-->
-<!--<button style="position: fixed;top:132px;left:0;z-index:101" class="navbar-minimalize minimalize-styl-2 btn btn-success " tooltip-placement="left" uib-tooltip="教程全屏" ng-click="fullScreenDes()"><i class="fa fa-expand" ></i></button>-->
-
+<div left-Bar ></div>
 
 <span minimaliza-Right style="position: fixed;top:100px;right:0;z-index:101"></span>
 
