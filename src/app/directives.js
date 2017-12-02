@@ -16,89 +16,60 @@ angular.module('phoenix')
             }
         };
     })
-    .directive('minimalizaLeft', ['$timeout', function($timeout) {
+    .directive('leftBar', function () {
+        var originalRightWidth;
+        var originalLeftWidth;
         return {
             restrict: 'A',
             // template: '<a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="" ng-click="minimalize()">题库</a>',
-            template: '<span class="navbar-minimalize minimalize-styl-2 btn btn-success " tooltip-placement="right" uib-tooltip="{{leftText}}" ng-click="minimalizeLeft()"><i class="fa " ng-class="{true:\'fa-arrow-left\',false:\'fa-arrow-right\'}[leftControl]"></i></span>',
+            template: '<button style="position: fixed;top:100px;left:0;z-index:101" class="navbar-minimalize minimalize-styl-2 btn btn-success " tooltip-placement="right" uib-tooltip="{{leftText}}" ng-disabled="maximized" ng-click="minimalizeLeft()"><i class="fa " ng-class="{true:\'fa-arrow-right\',false:\'fa-arrow-left\'}[minimized]"></i></button>' +
+                      '<button style="position: fixed;top:132px;left:0;z-index:101" class="navbar-minimalize minimalize-styl-2 btn btn-success " tooltip-placement="left" uib-tooltip="教程全屏" ng-disabled="minimized" ng-click="fullScreenDes()"><i class="fa fa-expand" ></i></button>',
             controller: function($scope) {
+                $scope.minimized = false;
+                $scope.maximized = false;
                 $scope.minimalizeLeft = function() {
 
                     angular.element('#leftNav').toggleClass('mini-navbar');
                     if (angular.element('#leftNav').hasClass('mini-navbar')) {
-                        if (angular.element('#design').hasClass('col-md-8')) {
-
-                            // Hide menu in order to smoothly turn on when maximize menu
-                            angular.element('#leftNav').hide(500, function() {
-                                angular.element('#design').removeClass('col-md-8');
-                                angular.element('#design').addClass('col-md-12');
-
-                                angular.element('#cloudware').css('width', "100%");
-                                $scope.$apply();
+                        originalRightWidth = $($('#design')[0]).width();
+                        angular.element('#resizeDiv').hide();
+                        $($('#leftNav')[0]).css({"min-width": "0%"});
+                        angular.element('#leftNav').hide(200, function() {
+                            $($('#design')[0]).width("100%");
+                        });
 
 
-                            });
-                            $scope.leftControl = false;
+                        $scope.leftText = "显示教程";
 
-                            $scope.leftText = "显示教程";
-
-                        } else {
-                            angular.element('#leftNav').hide(500, function() {
-                                angular.element('#design').removeClass('col-md-12');
-                                angular.element('#design').addClass('col-md-9');
-
-                                angular.element('#cloudware').css('width', "100%");
-                                $scope.$apply();
-                            })
-                            $scope.leftControl = false;
-
-                            $scope.leftText = "显示教程";
-
-                        }
-
-
-                        // $scope.refreshTest();
                     } else {
-                        if (angular.element('#design').hasClass('col-md-9')) {
-
-                            angular.element('#design').removeClass('col-md-9');
-                            angular.element('#design').addClass('col-md-8');
-                            angular.element('#leftNav').show(500, function() {
-
-
-                                angular.element('#cloudware').css('width', "100%");
-                                $scope.$apply();
-
-                            });
-                            $scope.leftControl = true;
-
-                            $scope.leftText = "隐藏教程";
-
-                        } else {
-                            angular.element('#design').removeClass('col-md-12');
-                            angular.element('#design').addClass('col-md-8');
-                            $scope.leftText = "隐藏教程";
-                            $scope.leftControl = true;
-
-                            angular.element('#leftNav').show(500, function() {
-
-
-                                angular.element('#cloudware').css('width', "100%");
-                                $scope.$apply();
-
-
-                            })
-                        }
-                        // Remove all inline style from jquery fadeIn function to reset menu state
-                        // angular.element('#lib').removeAttr('style');
-
-                        //刷新
-                        // $scope.refreshTest();
+                        $($('#design')[0]).width(originalRightWidth);
+                        angular.element('#leftNav').show(200, function () {
+                            angular.element('#resizeDiv').show();
+                            $($('#leftNav')[0]).css({"min-width": "33%"});
+                        });
+                        $scope.leftText = "隐藏教程";
                     }
+                    $scope.minimized = !$scope.minimized;
                 };
+                $scope.fullScreenDes = function() {
+                    if (!$scope.maximized) {
+                        originalLeftWidth = $($('#leftNav')[0]).width();
+                        angular.element('#resizeDiv').hide(500);
+                        angular.element('#design').hide(500, function() {
+                            $($('#leftNav')[0]).css({"max-width": "100%"});
+                            $($('#leftNav')[0]).width("100%");
+                        });
+                    } else {
+                        $($('#leftNav')[0]).css({"max-width": "66%"});
+                        $($('#leftNav')[0]).width(originalLeftWidth);
+                        angular.element('#resizeDiv').show(500);
+                        angular.element('#design').show(500);
+                    }
+                    $scope.maximized = !$scope.maximized;
+                }
             }
         };
-    }])
+    })
     .directive('minimalizaRight', ['$timeout', function($timeout) {
         return {
             restrict: 'A',

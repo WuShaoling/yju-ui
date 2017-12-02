@@ -36,7 +36,7 @@
             if(startMoving) {
                 var originalLeftWidth = $($('#leftNav')[0]).width();
                 var currentDesignWidth = $($('#design')[0]).width();
-                $($('#leftNav')[0]).width(e.clientX + 10);
+                $($('#leftNav')[0]).width(e.clientX);
                 $($('#design')[0]).width(currentDesignWidth - ($($('#leftNav')[0]).width() - originalLeftWidth));
                 e.preventDefault();
             }
@@ -163,29 +163,7 @@
             })
         }
         $scope.getCloudwareInfo();
-        $scope.flag = true;
         $scope.loading = true;
-        $scope.fullScreenDes = function() {
-            if ($scope.flag) {
-                angular.element('#design').hide(500, function() {
-                    angular.element('#leftNav').removeClass('col-md-4');
-                    angular.element('#leftNav').addClass('col-md-12');
-                    $scope.flag = false;
-
-                    $scope.$apply();
-
-                });
-            } else {
-                angular.element('#design').show(200, function() {
-                    angular.element('#leftNav').removeClass('col-md-12');
-                    angular.element('#leftNav').addClass('col-md-4');
-                    $scope.flag = true;
-
-                    $scope.$apply();
-
-                });
-            }
-        }
 
         // var term = new Terminal();
         // term.open(document.getElementById('terminal'));
