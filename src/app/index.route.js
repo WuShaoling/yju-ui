@@ -308,7 +308,7 @@
                 // controller: "mainController"
             });
 
-        // $urlRouterProvider.otherwise('/pageNotFound');
+            $urlRouterProvider.otherwise('/index/main');
     }
 
 })();
