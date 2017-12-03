@@ -317,7 +317,7 @@
                 // controller: "mainController"
             });
 
-            $urlRouterProvider.otherwise('/index/main');
+            $urlRouterProvider.otherwise('/main');
     }
 
 })();
