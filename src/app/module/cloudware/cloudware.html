@@ -18,13 +18,13 @@
         </div> -->
 <div style="width:5px; background-color: #0060b1; height:700px; float: left;cursor: ew-resize;" id="resizeDiv"
      ng-mousedown="resizeMouseDown($event)" ></div>
-<div style="background-color: #F5f5f5; z-index:9; height:700px; width:66%; float:right;" id="design">
-    <div class="row" style="text-align:center;margin-top:250px" ng-hide="hideExText">
+<div style="background-color: #F5f5f5; z-index:9; height:700px; width:66%; float:right; margin-left:auto; margin-right:auto; position: relative " id="design">
+    <div style="text-align:center;padding-top:250px" ng-hide="hideExText">
             <h1 style="font-size:80px">实验区域</h1>
             <small ng-if="isLogin">点击右侧工具栏开始实验</small>
             <small ng-if="!isLogin"><i class="fa fa-warning"></i> 登录后可以启动实验</small>
     </div>
-    <span us-spinner="{ color: '#0060b1', radius: 10, width: 5, length: 10, zIndex: 10 ,top:'50%'}" spinner-key="ex-spinner" spinner-start-active="false"></span>
+    <span us-spinner="{ color: '#0060b1', radius: 10, width: 5, length: 10, zIndex: 10 ,top:'250px'}" spinner-key="ex-spinner" spinner-start-active="false"></span>
     <div id="cloudware" data-cloudware-env="rstudio" style="width:100%;z-index:100"></div>
 </div>
 <div left-Bar ></div>
