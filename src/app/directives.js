@@ -35,13 +35,14 @@ angular.module('phoenix')
                         angular.element('#resizeDiv').hide();
                         $($('#leftNav')[0]).css({"min-width": "0%"});
                         angular.element('#leftNav').hide(200, function() {
-                            $($('#design')[0]).width("100%");
+                            $($('#design')[0]).css({"float": ""});
+                            $($('#design')[0]).width("85%");
                         });
-
 
                         $scope.leftText = "显示教程";
 
                     } else {
+                        $($('#design')[0]).css({"float": "right"});
                         $($('#design')[0]).width(originalRightWidth);
                         angular.element('#leftNav').show(200, function () {
                             angular.element('#resizeDiv').show();
