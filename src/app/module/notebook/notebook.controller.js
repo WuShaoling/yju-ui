@@ -3,14 +3,16 @@
 
     angular
         .module('phoenix')
-        .controller('notebookCtrl', notebookCtrl)
-        .config(notebookConfig);
-
-    function notebookConfig($sceDelegateProvider) {
-        $sceDelegateProvider.resourceUrlWhitelist([
-            "https://www.baidu.com"
-        ]);
-    }
+        .controller('notebookCtrl', notebookCtrl);
+    //     .config(notebookConfig);
+    //
+    // function notebookConfig($sceDelegateProvider) {
+    //     $sceDelegateProvider.resourceUrlWhitelist([
+    //         "app/**",
+    //         "app/module/common/footer.html",
+    //         "https://www.baidu.com"
+    //     ]);
+    // }
 
     notebookCtrl.$inject = ['$scope', '$timeout', 'usSpinnerService', '$state', 'stuCourseSrv', '$stateParams', 'cloudwareUrl', '$window', '$rootScope'];
     function notebookCtrl($scope, $timeout, usSpinnerService, $state, stuCourseSrv, $stateParams, cloudwareUrl, $window, $rootScope) {
