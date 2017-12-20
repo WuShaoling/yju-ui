@@ -8,9 +8,6 @@
     notebookCtrl.$inject = ['$scope', '$timeout', 'usSpinnerService', '$state', 'stuCourseSrv', '$stateParams', 'cloudwareUrl', '$window', '$rootScope'];
     function notebookCtrl($scope, $timeout, usSpinnerService, $state, stuCourseSrv, $stateParams, cloudwareUrl, $window, $rootScope) {
 
-        $scope.notebookUrl = function () {
-            return "http://www.baidu.com";
-        }
         $scope.isLogin = localStorage["logined"] === 'true';
 
         var startMoving;
