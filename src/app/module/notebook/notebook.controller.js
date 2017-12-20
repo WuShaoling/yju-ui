@@ -4,21 +4,12 @@
     angular
         .module('phoenix')
         .controller('notebookCtrl', notebookCtrl);
-    //     .config(notebookConfig);
-    //
-    // function notebookConfig($sceDelegateProvider) {
-    //     $sceDelegateProvider.resourceUrlWhitelist([
-    //         "app/**",
-    //         "app/module/common/footer.html",
-    //         "https://www.baidu.com"
-    //     ]);
-    // }
 
     notebookCtrl.$inject = ['$scope', '$timeout', 'usSpinnerService', '$state', 'stuCourseSrv', '$stateParams', 'cloudwareUrl', '$window', '$rootScope'];
     function notebookCtrl($scope, $timeout, usSpinnerService, $state, stuCourseSrv, $stateParams, cloudwareUrl, $window, $rootScope) {
 
         $scope.notebookUrl = function () {
-            return "https://www.baidu.com";
+            return "http://www.baidu.com";
         }
         $scope.isLogin = localStorage["logined"] === 'true';
 
