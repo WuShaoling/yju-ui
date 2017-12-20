@@ -247,6 +247,9 @@
         }, {
             label: "Hadoop",
             value: 4,
+        }, {
+            label: "NoteBook",
+            value: 5,
         }];
         $scope.$on("$destroy", function() {
 

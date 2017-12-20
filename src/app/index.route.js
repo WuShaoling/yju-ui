@@ -151,6 +151,11 @@
                 templateUrl: "app/module/cloudware/cloudware.html",
                 controller: "cloudwareCtrl"
             })
+            .state('index.startExperiment.notebook', {
+                url: "/notebook",
+                templateUrl: "app/module/notebook/notebook.html",
+                controller: "notebookCtrl"
+            })
             .state('index.test', {
                 url: "/test",
                 templateUrl: "app/module/student/test/test.html",

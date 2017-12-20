@@ -1,6 +1,8 @@
 (function() {
     'use strict';
-    //angular.module('phoenix').value('reqUrl', "http://localhost:8080")
+    // angular.module('phoenix').value('reqUrl', "http://127.0.0.1:8080")
+    // angular.module('phoenix').value('cloudwareUrl', "http://api.cloudwarehub.com")
+    // angular.module('phoenix').value('fileManagementUrl', "http://127.0.0.1:8080")
 
     angular.module('phoenix').value('reqUrl', "http://www.x-lab.ac:13001")
     angular.module('phoenix').value('cloudwareUrl', "http://api.cloudwarehub.com")
@@ -77,5 +79,15 @@
             }
         }])
     }])
+
+    // 跨域白名单
+    angular.module('phoenix').config(function($sceDelegateProvider) {
+        $sceDelegateProvider.resourceUrlWhitelist([
+            // Allow same origin resource loads.
+            'self',
+            // Allow loading from our assets domain.  Notice the difference between * and **.
+            // 'http://www.baidu.com'
+        ]);
+    });
 
 })();
