@@ -157,7 +157,7 @@
             });
         }
         $scope.checkEx = function(item) {
-            if (true) {
+            if (item.cloudwareType === 'notebook') {
                 $state.go('index.startExperiment.notebook', { experimentId: item.id, studentId: localStorage['userId'], cloudwareType: item.cloudwareType });
 
             } else {
