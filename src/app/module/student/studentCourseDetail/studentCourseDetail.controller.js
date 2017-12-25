@@ -12,8 +12,15 @@
             $state.go('index.studentHomework', { classId: $stateParams.classId })
         }
         $scope.startExp = function(item) {
-
-            $state.go('index.startExperiment.cloudware', { experimentId: item.id, studentId: localStorage['userId'], cloudwareType: item.cloudwareType });
+            if (item.cloudwareType === 'notebook') {
+                $state.go('index.startExperiment.notebook', { experimentId: item.id, studentId: localStorage['userId'], cloudwareType: item.cloudwareType });
+            } else {
+                $state.go('index.startExperiment.cloudware', {
+                    experimentId: item.id,
+                    studentId: localStorage['userId'],
+                    cloudwareType: item.cloudwareType
+                });
+            }
         }
         $scope.doHomework = function() {
             $state.go('index.studentDoHomework');
