@@ -78,6 +78,8 @@
                 dataType: 'json',
                 success: function (response) {
                     $scope.notebookUrl = response.ws
+                    $scope.notebookServiceId = response.service_id
+                    $scope.notebookServiceName = response.service_name
 
                     // store note book to db
                     // Homework
@@ -120,7 +122,23 @@
             });
         }
 
-        var deleteExCloudware = function () {
+        var deleteNotebook= function () {
+            $.ajax({
+                url: cloudwareUrl + '/homeworks',
+                method: 'post',
+                data: {
+                    'secret': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJpYXQiOjE1MDU4MTM0NTd9.Ftw1yHeUrqdNvymFZcIpuEoS0RHBFZqu4MfUZON9Zm0',
+                    service_name: $scope.notebookServiceName,
+                    service_id: $scope.notebookServiceId,
+                },
+                dataType: 'json',
+                success: function (response) {
+                },
+                error: function (response) {
+                    console.log(response)
+                }
+            })
+
             stuCourseSrv.deleteExCloudware().save({
                 studentId: $stateParams.studentId,
                 experimentId: $stateParams.experimentId
@@ -131,11 +149,13 @@
         var init = function () {
             getNotebookInfo();
 
+            // todo: 同步等待上个函数结果。
             if ($scope.firstload === true) {
                 getNewNotebookInfo();
             }
 
-            $window.onbeforeunload =  $scope.deleteExCloudware;
+            // todo: 离开页面事件生效？
+            $window.onbeforeunload =  $scope.deleteNotebook;
         }
 
         init();
