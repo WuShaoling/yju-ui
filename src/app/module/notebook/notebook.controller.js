@@ -8,6 +8,41 @@
     notebookCtrl.$inject = ['$scope', '$timeout', 'usSpinnerService', '$state', 'stuCourseSrv', '$stateParams', 'cloudwareUrl', '$window', '$rootScope'];
     function notebookCtrl($scope, $timeout, usSpinnerService, $state, stuCourseSrv, $stateParams, cloudwareUrl, $window, $rootScope) {
 
+
+        
+        let getNotebook = () => {
+            console.log('rain2')
+            console.log('sid:' + $stateParams.studentId)
+            console.log('type: ' + $stateParams.cloudware_type)
+            $.ajax({
+                url: cloudwareUrl + '/services',
+                method: 'post',
+                data: {
+                    'secret': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJpYXQiOjE1MDU4MTM0NTd9.Ftw1yHeUrqdNvymFZcIpuEoS0RHBFZqu4MfUZON9Zm0',
+                    cloudware_type: $stateParams.cloudware_type,
+                    user_id: $stateParams.studentId
+                },
+                dataType: 'json',
+                success: function (response) {
+                    console.log('rain: success')
+                    console.log(response)
+                },
+                error: function (response) {
+                    console.log('rain: erros')
+                    console.log(response)
+                }
+            });
+        }
+
+        let init = () => {
+            console.log('rain1')
+
+            getNotebook();
+
+        }
+
+        init();
+
         $scope.isLogin = localStorage["logined"] === 'true';
 
         var startMoving;

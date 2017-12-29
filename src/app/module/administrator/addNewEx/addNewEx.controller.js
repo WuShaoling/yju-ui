@@ -248,7 +248,7 @@
             label: "Hadoop",
             value: 4,
         }, {
-            label: "NoteBook",
+            label: "jupyter_python",
             value: 5,
         }];
         $scope.$on("$destroy", function() {
