@@ -1,5 +1,5 @@
 (function() {
-    'use strict';
+    // 'use strict';
 
     angular
         .module('phoenix')
@@ -11,7 +11,7 @@
         $scope.notebookUrl = null
         $scope.firstload = true
 
-        let getNotebookInfo = () => {
+        let getNotebookInfo = function () {
             // Homework
             if ($stateParams.type === '0') {
                 stuCourseSrv.getHwCloudwareInfo().get({
@@ -57,7 +57,7 @@
             }
         }
         
-        let getNewNotebookInfo = () => {
+        let getNewNotebookInfo = function () {
             // get notebook info
             $.ajax({
                 url: cloudwareUrl + '/services',
@@ -69,7 +69,7 @@
                 },
                 dataType: 'json',
                 success: function (response) {
-                    $scope.notebookUrl = response.ws
+                    $scope.notebookUrl = "http://" + response.ws
 
                     // store note book to db
                     // Homework
@@ -80,7 +80,7 @@
                             "serviceId": response.service_id,
                             "serviceName": response.service_name,
                             "studentId": $stateParams.studentId,
-                            "webSocket": response.ws
+                            "webSocket": "http://" + response.ws
                         }
                         stuCourseSrv.createHwCloudware().save(param).$promise.then(function(response) {
                             // console.log(response)
@@ -97,7 +97,7 @@
                             "serviceId": response.service_id,
                             "serviceName": response.service_name,
                             "studentId": $stateParams.studentId,
-                            "webSocket": response.ws
+                            "webSocket": "http://" + response.ws
                         }
                         stuCourseSrv.createExCloudware().save(param).$promise.then(function(response) {
                             // console.log(response)
@@ -112,7 +112,7 @@
             });
         }
 
-        let deleteExCloudware = () => {
+        let deleteExCloudware = function () {
             stuCourseSrv.deleteExCloudware().save({
                 studentId: $stateParams.studentId,
                 experimentId: $stateParams.experimentId
@@ -120,7 +120,7 @@
         }
 
 
-        let init = () => {
+        let init = function () {
             getNotebookInfo();
 
             if ($scope.firstload === true) {
