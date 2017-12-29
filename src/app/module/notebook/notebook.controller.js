@@ -8,40 +8,130 @@
     notebookCtrl.$inject = ['$scope', '$timeout', 'usSpinnerService', '$state', 'stuCourseSrv', '$stateParams', 'cloudwareUrl', '$window', '$rootScope'];
     function notebookCtrl($scope, $timeout, usSpinnerService, $state, stuCourseSrv, $stateParams, cloudwareUrl, $window, $rootScope) {
 
+        $scope.notebookUrl = null
+        $scope.firstload = true
 
+        let getNotebookInfo = () => {
+            // Homework
+            if ($stateParams.type === '0') {
+                stuCourseSrv.getHwCloudwareInfo().get({
+                    homeworkId: $stateParams.homeworkId,
+                    studentId: $stateParams.studentId
+                }).$promise.then(
+                    function(response) {
+                        if (response.errorCode === 0) {
+                            // existed
+                            $scope.firstload = false
+                            $scope.notebookUrl = response.data.webSocket;
+                        } else if (response.errorCode === 7 || response.errorCode === 47) {
+                            // not existed
+                            $scope.loading = false
+                        } else {
+                            toastr.error("获取作业信息失败，请重试")
+                        }
+                    },
+                    function(error) {
+                        toastr.error("获取作业信息失败，请重试")
+                    })
+            }
+
+            // Experiment
+            if ($stateParams.type === '1') {
+                stuCourseSrv.getExCloudwareInfo().get({
+                    experimentId: $stateParams.experimentId,
+                    studentId: $stateParams.studentId
+                }).$promise.then(
+                    function(response) {
+                        if (response.errorCode === 0) {
+                            $scope.firstload = false
+                            $scope.notebookUrl = response.data.webSocket;
+                        } else if (response.errorCode === 35 || response.errorCode === 47) {
+                            $scope.loading = false
+                        } else {
+                            toastr.error("获取实验信息失败，请重试")
+                        }
+                    },
+                    function(error) {
+                        toastr.error("获取实验信息失败，请重试")
+                    })
+            }
+        }
         
-        let getNotebook = () => {
-            console.log('rain2')
-            console.log('sid:' + $stateParams.studentId)
-            console.log('type: ' + $stateParams.cloudware_type)
+        let getNewNotebookInfo = () => {
+            // get notebook info
             $.ajax({
                 url: cloudwareUrl + '/services',
                 method: 'post',
                 data: {
                     'secret': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJpYXQiOjE1MDU4MTM0NTd9.Ftw1yHeUrqdNvymFZcIpuEoS0RHBFZqu4MfUZON9Zm0',
-                    cloudware_type: $stateParams.cloudware_type,
+                    cloudware_type: $stateParams.cloudwareType,
                     user_id: $stateParams.studentId
                 },
                 dataType: 'json',
                 success: function (response) {
-                    console.log('rain: success')
-                    console.log(response)
+                    $scope.notebookUrl = response.ws
+
+                    // store note book to db
+                    // Homework
+                    if ($stateParams.type === '0') {
+                        let param = {
+                            "homeworkId": $stateParams.homeworkId,
+                            "pulsarId": response.pulsar_id,
+                            "serviceId": response.service_id,
+                            "serviceName": response.service_name,
+                            "studentId": $stateParams.studentId,
+                            "webSocket": response.ws
+                        }
+                        stuCourseSrv.createHwCloudware().save(param).$promise.then(function(response) {
+                            // console.log(response)
+                        }, function(error) {
+                            console.log(error);
+                        });
+                    }
+
+                    // Experiment
+                    if ($stateParams.type === '1') {
+                        let param = {
+                            "experimentId": $stateParams.experimentId,
+                            "pulsarId": response.pulsar_id,
+                            "serviceId": response.service_id,
+                            "serviceName": response.service_name,
+                            "studentId": $stateParams.studentId,
+                            "webSocket": response.ws
+                        }
+                        stuCourseSrv.createExCloudware().save(param).$promise.then(function(response) {
+                            // console.log(response)
+                        }, function(error) {
+                            console.log(error);
+                        });
+                    }
                 },
                 error: function (response) {
-                    console.log('rain: erros')
                     console.log(response)
                 }
             });
         }
 
+        let deleteExCloudware = () => {
+            stuCourseSrv.deleteExCloudware().save({
+                studentId: $stateParams.studentId,
+                experimentId: $stateParams.experimentId
+            })
+        }
+
+
         let init = () => {
-            console.log('rain1')
+            getNotebookInfo();
 
-            getNotebook();
+            if ($scope.firstload === true) {
+                getNewNotebookInfo();
+            }
 
+            $window.onbeforeunload =  $scope.deleteExCloudware;
         }
 
         init();
+        
 
         $scope.isLogin = localStorage["logined"] === 'true';
 
