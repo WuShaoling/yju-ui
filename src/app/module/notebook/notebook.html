@@ -4,15 +4,11 @@
 
 
 <div style="background-color: #F5f5f5; z-index:9; height:800px; width:66%; float:right; margin-left:auto; margin-right:auto; position: relative " id="design">
-    <!--<div style="text-align:center;padding-top:250px" ng-include={{notebookUrl}}></div>-->
-    <div id="notebook"  style="width:100%;z-index:100">
-        <p>{{notebookUrl}}</p>
-        <iframe src="http://api.cloudwarehub.com:81" style="height:100%;width:100%" allowfullscreen>
 
-        </iframe>
+    <div style="height: 700px">
+            <iframe src="{{notebookUrl| trustAsResourceUrl }}" style="height:100%;width:100%" allowfullscreen>
+            </iframe>
     </div>
-
-
 
     <span us-spinner="{ color: '#0060b1', radius: 10, width: 5, length: 10, zIndex: 10 ,top:'250px'}" spinner-key="ex-spinner" spinner-start-active="false"></span>
 
@@ -20,9 +16,3 @@
 
 
 <div left-Bar ></div>
-
-
-<!--<span minimaliza-Right style="position: fixed;top:100px;right:0;z-index:101"></span>-->
-<!--<div style="position: fixed;top:132px;right:0;z-index:101;width:38px" id="rightNav">-->
-<!--<button class="navbar-minimalize minimalize-styl-2 btn btn-default " style="" tooltip-placement="left" uib-tooltip="全屏" ng-click="fullScreen()"><i class="fa fa-expand" ></i></button>-->
-<!--</div>-->

@@ -3,7 +3,15 @@
 
     angular
         .module('phoenix')
-        .controller('notebookCtrl', notebookCtrl);
+        .controller('notebookCtrl', notebookCtrl)
+        .filter('trustAsResourceUrl', ['$sce', function($sce) {
+            return function(val) {
+                val = "http://" + val + "/tree?"
+                // console.log(val)
+                // console.log($sce.trustAsResourceUrl(val))
+                return $sce.trustAsResourceUrl(val);
+            };
+        }])
 
     notebookCtrl.$inject = ['$scope', '$timeout', 'usSpinnerService', '$state', 'stuCourseSrv', '$stateParams', 'cloudwareUrl', '$window', '$rootScope'];
     function notebookCtrl($scope, $timeout, usSpinnerService, $state, stuCourseSrv, $stateParams, cloudwareUrl, $window, $rootScope) {
@@ -11,7 +19,7 @@
         $scope.notebookUrl = null
         $scope.firstload = true
 
-        let getNotebookInfo = function () {
+        var getNotebookInfo = function () {
             // Homework
             if ($stateParams.type === '0') {
                 stuCourseSrv.getHwCloudwareInfo().get({
@@ -57,7 +65,7 @@
             }
         }
         
-        let getNewNotebookInfo = function () {
+        var getNewNotebookInfo = function () {
             // get notebook info
             $.ajax({
                 url: cloudwareUrl + '/services',
@@ -69,18 +77,18 @@
                 },
                 dataType: 'json',
                 success: function (response) {
-                    $scope.notebookUrl = "http://" + response.ws
+                    $scope.notebookUrl = response.ws
 
                     // store note book to db
                     // Homework
                     if ($stateParams.type === '0') {
-                        let param = {
+                        var param = {
                             "homeworkId": $stateParams.homeworkId,
                             "pulsarId": response.pulsar_id,
                             "serviceId": response.service_id,
                             "serviceName": response.service_name,
                             "studentId": $stateParams.studentId,
-                            "webSocket": "http://" + response.ws
+                            "webSocket": response.ws
                         }
                         stuCourseSrv.createHwCloudware().save(param).$promise.then(function(response) {
                             // console.log(response)
@@ -91,13 +99,13 @@
 
                     // Experiment
                     if ($stateParams.type === '1') {
-                        let param = {
+                        var param = {
                             "experimentId": $stateParams.experimentId,
                             "pulsarId": response.pulsar_id,
                             "serviceId": response.service_id,
                             "serviceName": response.service_name,
                             "studentId": $stateParams.studentId,
-                            "webSocket": "http://" + response.ws
+                            "webSocket": response.ws
                         }
                         stuCourseSrv.createExCloudware().save(param).$promise.then(function(response) {
                             // console.log(response)
@@ -112,7 +120,7 @@
             });
         }
 
-        let deleteExCloudware = function () {
+        var deleteExCloudware = function () {
             stuCourseSrv.deleteExCloudware().save({
                 studentId: $stateParams.studentId,
                 experimentId: $stateParams.experimentId
@@ -120,7 +128,7 @@
         }
 
 
-        let init = function () {
+        var init = function () {
             getNotebookInfo();
 
             if ($scope.firstload === true) {
