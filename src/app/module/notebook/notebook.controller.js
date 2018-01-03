@@ -17,7 +17,6 @@
     function notebookCtrl($scope, $timeout, usSpinnerService, $state, stuCourseSrv, $stateParams, cloudwareUrl, $window, $rootScope) {
 
         $scope.notebookUrl = null
-        $scope.firstload = true
 
         var getNotebookInfo = function () {
             // Homework
@@ -29,11 +28,11 @@
                     function(response) {
                         if (response.errorCode === 0) {
                             // existed
-                            $scope.firstload = false
                             $scope.notebookUrl = response.data.webSocket;
                         } else if (response.errorCode === 7 || response.errorCode === 47) {
                             // not existed
                             $scope.loading = false
+                            getNewNotebookInfo();
                         } else {
                             toastr.error("获取作业信息失败，请重试")
                         }
@@ -51,10 +50,10 @@
                 }).$promise.then(
                     function(response) {
                         if (response.errorCode === 0) {
-                            $scope.firstload = false
                             $scope.notebookUrl = response.data.webSocket;
                         } else if (response.errorCode === 35 || response.errorCode === 47) {
                             $scope.loading = false
+                            getNewNotebookInfo();
                         } else {
                             toastr.error("获取实验信息失败，请重试")
                         }
@@ -148,14 +147,7 @@
 
         var init = function () {
             getNotebookInfo();
-
-            // todo: 同步等待上个函数结果。
-            if ($scope.firstload === true) {
-                getNewNotebookInfo();
-            }
-
-            // todo: 离开页面事件生效？
-            $window.onbeforeunload =  $scope.deleteNotebook;
+            $window.onbeforeunload =  deleteNotebook;
         }
 
         init();
