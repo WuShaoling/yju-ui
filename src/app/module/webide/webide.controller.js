@@ -3,7 +3,14 @@
 
     angular
         .module('phoenix')
-        .controller('webideCtrl', webideCtrl);
+        .controller('webideCtrl', webideCtrl)
+        .filter('showFilename', [function() {
+                return function(value) {
+                    var array = value.split("/");
+                    var filename = array[array.length-1]
+                    return filename;
+                };
+            }]);
 
     webideCtrl.$inject = ['$scope', '$timeout', 'usSpinnerService', '$state', 'stuCourseSrv', '$stateParams', 'cloudwareUrl', '$window', '$rootScope'];
     function webideCtrl($scope, $timeout, usSpinnerService, $state, stuCourseSrv, $stateParams, cloudwareUrl, $window, $rootScope) {
@@ -13,71 +20,77 @@
         $scope.cmOption = {
             lineNumbers: true,
             indentWithTabs: true,
-            mode: 'javascript'
+            lineWrapping: true,
+            viewportMargin: 30,
+            mode: 'javascript',
+        //    todo: bind change event to sync file context
         };
 
         $scope.cmModel = 'function myScript(){return 100;}\n';
 
         $scope.fileList = [
             {
-                name: 'hello1.java',
+                name: '/directory1/filename1',
                 context: 'I am hello1.java',
             },
             {
-                name: 'hello2.java',
+                name: '/directory1/filename2',
                 context: 'I am hello2.java',
+            },
+            {
+                name: '/filename3',
+                context: 'I am hello3.java',
+            },
+            {
+                name: '/filename4',
+                context: 'I am hello4.java',
             },
         ];
 
-        $scope.currentFilename = 'hello.java';
-
+        $scope.currentfile = '';
         $scope.runResult = 'resultresultresultresultresultresultresultresultresultresult';
 
         $scope.treeOptions = {
             nodeChildren: "children",
-            dirSelectable: true,
+            dirSelectable: false,
             injectClasses: {
-                ul: "a1",
-                li: "a2",
-                liSelected: "a7",
-                iExpanded: "a3",
-                iCollapsed: "a4",
-                iLeaf: "a5",
-                label: "a6",
-                labelSelected: "a8"
             }
         }
+
+        // todo: 动态生成
         $scope.dataForTheTree =
             [
-                { "name" : "Joe", "age" : "21", "children" : [
-                    { "name" : "Smith", "age" : "42", "children" : [] },
-                    { "name" : "Gary", "age" : "21", "children" : [
-                        { "name" : "Jenifer", "age" : "23", "children" : [
-                            { "name" : "Dani", "age" : "32", "children" : [] },
-                            { "name" : "Max", "age" : "34", "children" : [] }
-                        ]}
-                    ]}
+                { "name" : "/directory1", "children" : [
+                    { "name" : "/directory1/filename1"},
+                    { "name" : "/directory1/filename2"},
                 ]},
-                { "name" : "Albert", "age" : "33", "children" : [] },
-                { "name" : "Ron", "age" : "29", "children" : [] }
+                { "name" : "/filename3"},
+                { "name" : "/filename4"}
             ];
 
         // method
-        var getContext = function () {
-            return $scope.cmModel;
-        }
+        $scope.renderContext = function(node) {
+            console.log(node);
+            filename = node.name;
+            $scope.currentfile = filename;
+            for (let i=0; i<$scope.fileList.length; i++) {
+                if (filename === $scope.fileList[i].name) {
+                    $scope.cmModel = $scope.fileList[i].context;
+                }
+            }
+        };
 
-        var setContext = function (context) {
-            $scope.cmModel = context
-        }
+        $scope.$watch('cmModel',function(newValue,oldValue, scope){
+            for(var i = 0;i < $scope.fileList.length; i++){
+                if($scope.currentfile === $scope.fileList[i].name){
+                    console.log('rain22')
+                    $scope.fileList[i].context = newValue;
+                }
+            }
 
+        });
 
-        // init
-        var init = function () {
-            // setContext("kalsjflasdjflaskf")
-            // $scope.cmOption.lineNumbers = false
-        }
-        init();
+        // rain ----end----
 
 
         $scope.isLogin = localStorage["logined"] === 'true';

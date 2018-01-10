@@ -9,14 +9,13 @@
         <treecontrol class="tree-classic"
                      tree-model="dataForTheTree"
                      options="treeOptions"
-                     on-selection="showSelected(node)"
-                     selected-node="node1">
-            employee: {{node.name}} age {{node.age}}
+                     on-selection="renderContext(node)">
+                    {{node.name | showFilename}}
         </treecontrol>
     </div>
 
     <div style="height: 500px; width: 630px; display: inline-block">
-        <p> File name: {{currentFilename}}</p>
+        <p> File name:  {{currentfile | showFilename}}</p>
         <!--<div ui-codemirror="cmOption" ng-model="cmModel"></div>-->
         <textarea ui-codemirror="cmOption" ng-model="cmModel"></textarea>
 
