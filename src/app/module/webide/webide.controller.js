@@ -15,15 +15,12 @@
     webideCtrl.$inject = ['$scope', '$timeout', 'usSpinnerService', '$state', 'stuCourseSrv', '$stateParams', 'cloudwareUrl', '$window', '$rootScope'];
     function webideCtrl($scope, $timeout, usSpinnerService, $state, stuCourseSrv, $stateParams, cloudwareUrl, $window, $rootScope) {
 
-
-        // initialization var
         $scope.cmOption = {
             lineNumbers: true,
             indentWithTabs: true,
             lineWrapping: true,
             viewportMargin: 30,
             mode: 'javascript',
-        //    todo: bind change event to sync file context
         };
 
         $scope.cmModel = 'function myScript(){return 100;}\n';
@@ -83,14 +80,29 @@
         $scope.$watch('cmModel',function(newValue,oldValue, scope){
             for(var i = 0;i < $scope.fileList.length; i++){
                 if($scope.currentfile === $scope.fileList[i].name){
-                    console.log('rain22')
                     $scope.fileList[i].context = newValue;
                 }
             }
 
         });
 
-        // rain ----end----
+        $scope.addFile = function () {
+            console.log('rain1')
+        }
+
+        $scope.deleteFile = function () {
+            console.log('rain2')
+        }
+
+        $scope.runProgram = function () {
+            console.log('rain3')
+        }
+
+        var init = function () {
+            console.log('rain0')
+        }
+
+        init();
 
 
         $scope.isLogin = localStorage["logined"] === 'true';
