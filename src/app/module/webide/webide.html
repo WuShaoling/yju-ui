@@ -3,11 +3,21 @@
 <div style="width:5px; background-color: #0060b1; height:800px; float: left; cursor: ew-resize;" id="resizeDiv" ng-mousedown="resizeMouseDown($event)" ></div>
 
 
-<div style="background-color: #F5f5f5; z-index:9; height:800px; width:66%; float:right; margin-left:auto; margin-right:auto; position: relative " id="design">
+<div style="background-color: #F5f5f5; z-index:9; height:800px; width:66%; float:right; margin-left:auto; margin-right:auto; position: relative; " id="design">
 
-    <div style="height: 700px">
-        <!--<div ui-codemirror></div>-->
-        <p> web ide here</p>
+    <div style="height: 500px; width: 300px; display: inline-block;">
+        ttttttttttt
+    </div>
+
+    <div style="height: 500px; width: 630px; display: inline-block">
+        <p> File name: {{currentFilename}}</p>
+        <!--<div ui-codemirror="cmOption" ng-model="cmModel"></div>-->
+        <textarea ui-codemirror="cmOption" ng-model="cmModel"></textarea>
+
+    </div>
+
+    <div style="height: 200px; ">
+        {{runResult}}
     </div>
 
     <span us-spinner="{ color: '#0060b1', radius: 10, width: 5, length: 10, zIndex: 10 ,top:'250px'}" spinner-key="ex-spinner" spinner-start-active="false"></span>
@@ -16,3 +26,4 @@
 
 
 <div left-Bar ></div>
+

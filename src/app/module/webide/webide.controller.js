@@ -5,17 +5,51 @@
         .module('phoenix')
         .controller('webideCtrl', webideCtrl);
 
-    // var myAppModule = angular.module('phoenix', ['ui.codemirror']);
-
     webideCtrl.$inject = ['$scope', '$timeout', 'usSpinnerService', '$state', 'stuCourseSrv', '$stateParams', 'cloudwareUrl', '$window', '$rootScope'];
     function webideCtrl($scope, $timeout, usSpinnerService, $state, stuCourseSrv, $stateParams, cloudwareUrl, $window, $rootScope) {
 
-        init = function () {
-            console.log('rain')
+
+        // initialization var
+        $scope.cmOption = {
+            lineNumbers: true,
+            indentWithTabs: true,
+            mode: 'javascript'
+        };
+
+        $scope.cmModel = 'function myScript(){return 100;}\n';
+
+        $scope.fileList = [
+            {
+                name: 'hello1.java',
+                context: 'I am hello1.java',
+            },
+            {
+                name: 'hello2.java',
+                context: 'I am hello2.java',
+            },
+        ];
+
+        $scope.currentFilename = 'hello.java';
+
+        $scope.runResult = 'resultresultresultresultresultresultresultresultresultresult';
+
+        // method
+        var getContext = function () {
+            return $scope.cmModel;
         }
 
+        var setContext = function (context) {
+            $scope.cmModel = context
+        }
+
+
+        // init
+        var init = function () {
+            // setContext("kalsjflasdjflaskf")
+            // $scope.cmOption.lineNumbers = false
+        }
         init();
-        
+
 
         $scope.isLogin = localStorage["logined"] === 'true';
 
