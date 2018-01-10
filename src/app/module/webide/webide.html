@@ -6,7 +6,13 @@
 <div style="background-color: #F5f5f5; z-index:9; height:800px; width:66%; float:right; margin-left:auto; margin-right:auto; position: relative; " id="design">
 
     <div style="height: 500px; width: 300px; display: inline-block;">
-        ttttttttttt
+        <treecontrol class="tree-classic"
+                     tree-model="dataForTheTree"
+                     options="treeOptions"
+                     on-selection="showSelected(node)"
+                     selected-node="node1">
+            employee: {{node.name}} age {{node.age}}
+        </treecontrol>
     </div>
 
     <div style="height: 500px; width: 630px; display: inline-block">
