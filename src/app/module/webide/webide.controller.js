@@ -12,8 +12,8 @@
                 };
             }]);
 
-    webideCtrl.$inject = ['$scope', '$timeout', 'usSpinnerService', '$state', 'stuCourseSrv', '$stateParams', 'cloudwareUrl', '$window', '$rootScope'];
-    function webideCtrl($scope, $timeout, usSpinnerService, $state, stuCourseSrv, $stateParams, cloudwareUrl, $window, $rootScope) {
+    webideCtrl.$inject = ['$scope', '$timeout', 'usSpinnerService', '$state', 'stuCourseSrv', 'webideSrv', '$stateParams', 'cloudwareUrl', '$window', '$rootScope'];
+    function webideCtrl($scope, $timeout, usSpinnerService, $state, stuCourseSrv, webideSrv, $stateParams, cloudwareUrl, $window, $rootScope) {
 
         $scope.cmOption = {
             lineNumbers: true,
@@ -67,14 +67,54 @@
 
         $scope.addFile = function () {
             console.log('rain1')
+            webideSrv.addFile().save({
+                    // userId: item.id,
+                    // userId: item.id
+                }, function(response) {
+                    console.log(response)
+                },
+                function(error) {
+                    console.log(error)
+                })
         }
 
         $scope.deleteFile = function () {
             console.log('rain2')
+            webideSrv.deleteFile().save({
+                    // userId: item.id,
+                    // userId: item.id
+                }, function(response) {
+                    console.log(response)
+                },
+                function(error) {
+                    console.log(error)
+                })
+        }
+
+        $scope.getFiles = function () {
+            console.log('rain3')
+            let param = {};
+            webideSrv.getFiles().get(param).$promise.then(
+                function(response) {
+                    console.log(response)
+                },
+                function(error) {
+                    console.log(error)
+                }
+            )
         }
 
         $scope.runProgram = function () {
-            console.log('rain3')
+            console.log('rain4')
+            webideSrv.runProgram().save({
+                    // userId: item.id,
+                    // userId: item.id
+                }, function(response) {
+                    console.log(response)
+                },
+                function(error) {
+                    console.log(error)
+                })
         }
 
         var init = function () {
