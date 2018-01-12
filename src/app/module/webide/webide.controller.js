@@ -33,37 +33,36 @@
             dirSelectable: false
         }
 
-        // todo: 动态生成
         $scope.dataForTheTree =
             [
-                { "name" : "/directory1", context: 'I am hello1.java', "children" : [
+                { "name" : "/directory1", "children" : [
                     { "name" : "/directory1/filename1", context: 'I am hello1.java'},
                     { "name" : "/directory1/filename2", context: 'I am hello2.java'},
                 ]},
                 { "name" : "/filename3", context: 'I am hello3.java'},
-                { "name" : "/filename4", context: 'I am hello4.java',}
+                { "name" : "/filename4", context: 'I am hello4.java'}
             ];
 
         // method
         $scope.renderContext = function(node) {
-            console.log(node);
-            filename = node.name;
-            $scope.currentfile = filename;
-            for (let i=0; i<$scope.fileList.length; i++) {
-                if (filename === $scope.fileList[i].name) {
-                    $scope.cmModel = $scope.fileList[i].context;
+            $scope.currentfile = node.name;
+            $scope.cmModel = node.context;
+        };
+
+        let updateContext = function (obj, context) {
+            for (let i=0; i<obj.length; i++) {
+                if (obj[i].children === undefined) {
+                    if (obj[i].name === $scope.currentfile) {
+                        obj[i].context = context;
+                    }
+                } else {
+                    updateContext(obj[i].children, context);
                 }
             }
         };
 
         $scope.$watch('cmModel',function(newValue,oldValue, scope){
-            console.log(newValue)
-            // for(var i = 0;i < $scope.fileList.length; i++){
-            //     if($scope.currentfile === $scope.fileList[i].name){
-            //         $scope.fileList[i].context = newValue;
-            //     }
-            // }
-
+            updateContext($scope.dataForTheTree, newValue)
         });
 
         $scope.addFile = function () {
