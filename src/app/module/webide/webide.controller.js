@@ -35,12 +35,14 @@
 
         $scope.dataForTheTree =
             [
-                { "name" : "/directory1", "children" : [
-                    { "name" : "/directory1/filename1", context: 'I am hello1.java'},
-                    { "name" : "/directory1/filename2", context: 'I am hello2.java'},
-                ]},
-                { "name" : "/filename3", context: 'I am hello3.java'},
-                { "name" : "/filename4", context: 'I am hello4.java'}
+                { "name" : "/", "children" : [
+                    { "name" : "/directory1", "children" : [
+                        { "name" : "/directory1/filename1", context: 'I am hello1.java'},
+                        { "name" : "/directory1/filename2", context: 'I am hello2.java'},
+                    ]},
+                    { "name" : "/filename3", context: 'I am hello3.java'},
+                    { "name" : "/filename4", context: 'I am hello4.java'}
+                ]}
             ];
 
         // method
@@ -61,39 +63,26 @@
             }
         };
 
-        $scope.$watch('cmModel',function(newValue,oldValue, scope){
+        $scope.$watch('cmModel',function(newValue, oldValue, scope){
             updateContext($scope.dataForTheTree, newValue)
         });
 
         $scope.addFile = function () {
             console.log('rain1')
-            webideSrv.addFile().save({
-                    // userId: item.id,
-                    // userId: item.id
-                }, function(response) {
-                    console.log(response)
-                },
-                function(error) {
-                    console.log(error)
-                })
+
         }
 
         $scope.deleteFile = function () {
             console.log('rain2')
-            webideSrv.deleteFile().save({
-                    // userId: item.id,
-                    // userId: item.id
-                }, function(response) {
-                    console.log(response)
-                },
-                function(error) {
-                    console.log(error)
-                })
+
         }
 
         $scope.getFiles = function () {
             console.log('rain3')
-            let param = {};
+            let param = {
+                studentId: $stateParams.studentId,
+                experimentId: $stateParams.experimentId,
+            };
             webideSrv.getFiles().get(param).$promise.then(
                 function(response) {
                     console.log(response)
@@ -106,9 +95,13 @@
 
         $scope.runProgram = function () {
             console.log('rain4')
+            console.log($stateParams)
+
+
             webideSrv.runProgram().save({
-                    // userId: item.id,
-                    // userId: item.id
+                    studentId: $stateParams.studentId,
+                    experimentId: $stateParams.experimentId,
+                    files: $scope.dataForTheTree,
                 }, function(response) {
                     console.log(response)
                 },

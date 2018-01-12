@@ -15,13 +15,5 @@
         this.runProgram = function() {
             return $resource(cloudwareUrl + '/runProgram');
         }
-
-        this.addFile = function () {
-            return $resource(cloudwareUrl + '/addFile');
-        }
-
-        this.deleteFile = function () {
-            return $resource(cloudwareUrl + '/deleteFile');
-        }
     }
 })();
