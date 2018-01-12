@@ -19,8 +19,9 @@
         <button ng-click="deleteFile()">删除</button>
         <button ng-click="runProgram()">运行</button>
         <p> File name:  {{currentfile | showFilename}}</p>
-        <textarea ui-codemirror="cmOption" ng-model="cmModel"></textarea>
-
+        <section>
+            <textarea ui-codemirror="cmOption" ng-model="cmModel"></textarea>
+        </section>
     </div>
 
     <div style="height: 200px; ">

@@ -20,49 +20,28 @@
             indentWithTabs: true,
             lineWrapping: true,
             viewportMargin: 30,
-            mode: 'javascript',
+            mode: 'javascript'
         };
 
         $scope.cmModel = 'function myScript(){return 100;}\n';
 
-        $scope.fileList = [
-            {
-                name: '/directory1/filename1',
-                context: 'I am hello1.java',
-            },
-            {
-                name: '/directory1/filename2',
-                context: 'I am hello2.java',
-            },
-            {
-                name: '/filename3',
-                context: 'I am hello3.java',
-            },
-            {
-                name: '/filename4',
-                context: 'I am hello4.java',
-            },
-        ];
-
         $scope.currentfile = '';
-        $scope.runResult = 'resultresultresultresultresultresultresultresultresultresult';
+        $scope.runResult = 'result result result result result result result result result result ';
 
         $scope.treeOptions = {
             nodeChildren: "children",
-            dirSelectable: false,
-            injectClasses: {
-            }
+            dirSelectable: false
         }
 
         // todo: 动态生成
         $scope.dataForTheTree =
             [
-                { "name" : "/directory1", "children" : [
-                    { "name" : "/directory1/filename1"},
-                    { "name" : "/directory1/filename2"},
+                { "name" : "/directory1", context: 'I am hello1.java', "children" : [
+                    { "name" : "/directory1/filename1", context: 'I am hello1.java'},
+                    { "name" : "/directory1/filename2", context: 'I am hello2.java'},
                 ]},
-                { "name" : "/filename3"},
-                { "name" : "/filename4"}
+                { "name" : "/filename3", context: 'I am hello3.java'},
+                { "name" : "/filename4", context: 'I am hello4.java',}
             ];
 
         // method
@@ -78,11 +57,12 @@
         };
 
         $scope.$watch('cmModel',function(newValue,oldValue, scope){
-            for(var i = 0;i < $scope.fileList.length; i++){
-                if($scope.currentfile === $scope.fileList[i].name){
-                    $scope.fileList[i].context = newValue;
-                }
-            }
+            console.log(newValue)
+            // for(var i = 0;i < $scope.fileList.length; i++){
+            //     if($scope.currentfile === $scope.fileList[i].name){
+            //         $scope.fileList[i].context = newValue;
+            //     }
+            // }
 
         });
 

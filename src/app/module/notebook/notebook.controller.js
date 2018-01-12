@@ -7,8 +7,6 @@
         .filter('trustAsResourceUrl', ['$sce', function($sce) {
             return function(val) {
                 val = "http://" + val + "/tree?"
-                // console.log(val)
-                // console.log($sce.trustAsResourceUrl(val))
                 return $sce.trustAsResourceUrl(val);
             };
         }])
