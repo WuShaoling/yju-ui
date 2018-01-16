@@ -77,6 +77,9 @@
             indentWithTabs: true,
             lineWrapping: false,
             viewportMargin: 100,
+            height:300,
+            styleActiveLine: true,
+            matchBrackets: true,
             mode: 'javascript',
             theme:"default"
         };

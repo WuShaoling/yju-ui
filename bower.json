@@ -87,9 +87,11 @@
     "codemirror": {
       "main": [
         "lib/codemirror.js",
-        "mode/*/*.js",        
+        "mode/*/*.js",
+        "addon/selection/active-line.js",
+        "addon/edit/matchbrackets.js",
+        "keymap/vim.js",
         "lib/codemirror.css",
-        
         "theme/*.css"
       ]
     }
