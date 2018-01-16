@@ -251,7 +251,7 @@
             label: "jupyter_python",
             value: 5,
         }, {
-            label: "webide",
+            label: "ide/java",
             value: 6,
         }];
         $scope.$on("$destroy", function() {

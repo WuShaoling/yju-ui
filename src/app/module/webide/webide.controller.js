@@ -15,25 +15,10 @@
     webideCtrl.$inject = ['$scope', '$timeout', 'usSpinnerService', '$state', 'stuCourseSrv', '$stateParams', 'cloudwareUrl', '$window', '$rootScope'];
     function webideCtrl($scope, $timeout, usSpinnerService, $state, stuCourseSrv, $stateParams, cloudwareUrl, $window, $rootScope) {
 
+        $scope.webidUrl = null;
 
         /* INIT FILE TREE */
         $(function () {
-            let data = [
-                { "text" : "Root directory", "children" : [
-                    { "text" : "helloWorld.js", "data": "I am code .....", "type":"js" },
-                    { "text" : "helloWorld.svg ", "data": "I am code .....", "type":"svg"},
-                    { "text" : "helloWorld.html", "data": "I am code .....", "type":"html"},
-                    { "text" : "helloWorld.css ", "data": "I am code .....", "type":"css"},
-                    { "text" : "helloWorld.img ", "data": "I am code .....", "type":"img"},
-                    { "text" : "Child directory ", "children":[
-                        { "text" : "helloWorld.svg", "data": "I am code .....", "type":"svg"},
-                        { "text" : "helloWorld.html", "data": "I am code .....", "type":"html"},
-                        { "text" : "helloWorld.css", "data": "I am code .....", "type":"css"},
-                        { "text" : "helloWorld.img", "data": "I am code .....", "type":"img"},
-                    ]}
-                ]}
-            ]
-
             $('#container').jstree({
                 'types' : {
                     'default' : {
@@ -42,7 +27,7 @@
                     'html' : {
                         'icon' : 'fa fa-file-code-o'
                     },
-                    'svg' : {
+                    'java' : {
                         'icon' : 'fa fa-file-picture-o'
                     },
                     'css' : {
@@ -64,7 +49,7 @@
                         }
                         return true; // allow everything else
                     },
-                    'data' : data,
+                    'data' : [{"text" : "Application.java", "type": "java", "data": "I am a java."}],
                 },
                 "plugins" : [
                     "unique",
@@ -116,23 +101,160 @@
             console.log(newValue)
         });
 
+        $scope.updateFileTree = function (newDate) {
+            $('#container').jstree(true).settings.core.data = newDate;
+            $('#container').jstree(true).refresh();
+        }
+
+        $scope.getFiles = function () {
+            console.log('rain33')
+            $.ajax({
+                // url: $scope.webidUrl + "srcfiles/" + $stateParams.studentId,
+                url: "http://192.168.1.118:8080/srcfiles/4",
+                method: 'get',
+                dataType: 'json',
+                success: function (response) {
+                    $scope.updateFileTree(response.files)
+                },
+                error: function (response) {
+                    console.log(response)
+                }
+            })
+
+        }
 
         $scope.saveFiles = function () {
             console.log('rain1')
+            $.ajax({
+                // url: $scope.webidUrl + "srcfiles"
+                url: "http://192.168.1.118:8080/srcfiles",
+                method: 'post',
+                dataType: 'json',
+                data: {
+                    experimentId: $stateParams.experimentId,
+                    files: [{"text":"/dir","children":[{"text":"/dir/ClassB.java","data":"package dir;public class ClassB {public ClassB(){System.out.println(\"this is ClassB\");}}"}]},{"text":"/Application2.java","data":"import dir.ClassB;public class Application {public static void main(String[] args){ClassA a = new ClassA();ClassB b = new ClassB();System.out.println(\"hello world from main！\");}}"},{"text":"/ClassA.java","data":"public class ClassA {public ClassA(){System.out.println(\"this is ClassA\");}}"}]
+                },
+                success: function (response) {
+                    console.log(response)
+                },
+                error: function (response) {
+                    console.log(response)
+                }
+            })
         }
 
         $scope.runFiles = function () {
             console.log('rain2')
+            // todo run program & get result
+            $.ajax({
+                // url: $scope.webidUrl + "srcfiles/" + $stateParams.studentId,
+                url: "http://syyxm7svz.cloudwarehub.com:84/srcfiles/4",
+                method: 'post',
+                dataType: 'json',
+                success: function (response) {
+                    console.log(response)
+                },
+                error: function (response) {
+                    console.log(response)
+                }
+            })
+        }
+
+        var deleteWebide= function () {
+            $.ajax({
+                url: cloudwareUrl + '/homeworks',
+                method: 'post',
+                data: {
+                    'secret': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJpYXQiOjE1MDU4MTM0NTd9.Ftw1yHeUrqdNvymFZcIpuEoS0RHBFZqu4MfUZON9Zm0',
+                    serviceName: $scope.webideServiceName,
+                    serviceId: $scope.webideServiceId,
+                },
+                dataType: 'json',
+                success: function (response) {
+                },
+                error: function (response) {
+                    console.log(response)
+                }
+            })
+
+            stuCourseSrv.deleteExCloudware().save({
+                studentId: $stateParams.studentId,
+                experimentId: $stateParams.experimentId
+            })
         }
 
         $scope.test = function () {
             console.log('rain test')
-            alert($scope.currentFile)
+            // alert($scope.currentFile)
             // alert($scope.currentCode)
+
+            // $scope.getFiles();
+            $scope.saveFiles();
+
+
+            // let data = [{"text":"/dir","children":[{"text":"/dir/ClassB.java","data":"package dir;public class ClassB {public ClassB(){System.out.println(\"this is ClassB\");}}"}]},{"text":"/Application.java","data":"import dir.ClassB;public class Application {public static void main(String[] args){ClassA a = new ClassA();ClassB b = new ClassB();System.out.println(\"hello world from main！\");}}"},{"text":"/ClassA.java","data":"public class ClassA {public ClassA(){System.out.println(\"this is ClassA\");}}"}]
+            // $scope.updateFileTree(data)
         }
 
+        let initRequest = function () {
+            $.ajax({
+                // url: cloudwareUrl + '/services',
+                url: 'http://192.168.1.118:8080' + '/services',    // todo test to delete
+                method: 'post',
+                data: {
+                    'secret': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJpYXQiOjE1MDU4MTM0NTd9.Ftw1yHeUrqdNvymFZcIpuEoS0RHBFZqu4MfUZON9Zm0',
+                    cloudwareType: $stateParams.cloudwareType,
+                    userId: $stateParams.studentId
+                },
+                dataType: 'json',
+                success: function (response) {
+                    $scope.webidUrl = response.ws
+                    $scope.webideServiceId = response.service_id
+                    $scope.webideServiceName = response.service_name
+
+                    // store note book to db
+                    // Homework
+                    if ($stateParams.type === '0') {
+                        var param = {
+                            "homeworkId": $stateParams.homeworkId,
+                            "pulsarId": response.pulsar_id,
+                            "serviceId": response.service_id,
+                            "serviceName": response.service_name,
+                            "studentId": $stateParams.studentId,
+                            "webSocket": response.ws
+                        }
+                        stuCourseSrv.createHwCloudware().save(param).$promise.then(function(response) {
+                        }, function(error) {
+                            console.log(error);
+                        });
+                    }
+
+                    // Experiment
+                    if ($stateParams.type === '1') {
+                        var param = {
+                            "experimentId": $stateParams.experimentId,
+                            "pulsarId": response.pulsar_id,
+                            "serviceId": response.service_id,
+                            "serviceName": response.service_name,
+                            "studentId": $stateParams.studentId,
+                            "webSocket": response.ws
+                        }
+                        stuCourseSrv.createExCloudware().save(param).$promise.then(function(response) {
+                            // console.log(response)
+                        }, function(error) {
+                            console.log(error);
+                        });
+                    }
+                },
+                error: function (response) {
+                    console.log(response)
+                }
+            });
+        }
 
         let init = function () {
+            // initRequest()
+
             $timeout(function(){
                 $("#codeFolder").css("position","absolute");
             })
