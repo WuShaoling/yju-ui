@@ -156,6 +156,11 @@
                 templateUrl: "app/module/notebook/notebook.html",
                 controller: "notebookCtrl"
             })
+            .state('index.startExperiment.webide', {
+                url: "/webide",
+                templateUrl: "app/module/webide/webide.html",
+                controller: "webideCtrl"
+            })
             .state('index.test', {
                 url: "/test",
                 templateUrl: "app/module/student/test/test.html",
