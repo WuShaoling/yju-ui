@@ -86,12 +86,16 @@
         $scope.changeTheme = function(){
             $scope.cmOption.theme = $scope.theme
         }
-        // CodeMirror.fromTextArea(document.getElementById("code"), {
+        // CodeMirror.commands.autocomplete = function(cm) {
+        //     cm.showHint({hint: CodeMirror.hint.javascript});
+        //   }
+        //   var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
         //     lineNumbers: true,
-        //     mode: "javascript",
-        //     theme:"3024-night",
-        //     workTime:0,
-        //   });
+        //     mode: 'javascript',
+        //     theme:"default",
+        //     extraKeys: {"Alt-Space": "autocomplete"}
+        //   }); 
+    
         $scope.cmModel = 'function findSequence(goal) {\nfunction find(start, history) {\nif (start == goal)\nreturn history;\nelse if (start > goal)\nreturn null;\nelse\nreturn find(start + 5, "(" + history + " + 5)") ||\nfind(start * 3, "(" + history + " * 3)");\n}\nreturn find(1, "1");\n}';
 
         $scope.currentfile = '';

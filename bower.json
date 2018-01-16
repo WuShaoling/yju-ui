@@ -90,7 +90,9 @@
         "mode/*/*.js",
         "addon/selection/active-line.js",
         "addon/edit/matchbrackets.js",
-        "keymap/vim.js",
+        "addon/edit/matchtags.js",
+        "addon/edit/closetag.js",
+        "addon/hint/*.js",
         "lib/codemirror.css",
         "theme/*.css"
       ]
