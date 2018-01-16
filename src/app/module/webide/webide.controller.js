@@ -85,6 +85,9 @@
             indentWithTabs: true,
             lineWrapping: false,
             viewportMargin: 100,
+            height:300,
+            styleActiveLine: true,
+            matchBrackets: true,
             mode: 'javascript',
             theme:"default"
         };
@@ -95,6 +98,18 @@
         $scope.fileTreeData = null;
         $scope.currentFile = null;
         $scope.currentCode = 'function findSequence(goal) {\nfunction find(start, history) {\nif (start == goal)\nreturn history;\nelse if (start > goal)\nreturn null;\nelse\nreturn find(start + 5, "(" + history + " + 5)") ||\nfind(start * 3, "(" + history + " * 3)");\n}\nreturn find(1, "1");\n}';
+
+
+        // CodeMirror.commands.autocomplete = function(cm) {
+        //     cm.showHint({hint: CodeMirror.hint.javascript});
+        //   }
+        //   var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+        //     lineNumbers: true,
+        //     mode: 'javascript',
+        //     theme:"default",
+        //     extraKeys: {"Alt-Space": "autocomplete"}
+        //   }); 
+
         $scope.runResult = 'result result result result result result result result result result ';
 
         $scope.$watch('cmModel',function(newValue, oldValue, scope){
