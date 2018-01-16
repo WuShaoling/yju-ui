@@ -14,9 +14,27 @@
 
     webideCtrl.$inject = ['$scope', '$timeout', 'usSpinnerService', '$state', 'stuCourseSrv', '$stateParams', 'cloudwareUrl', '$window', '$rootScope'];
     function webideCtrl($scope, $timeout, usSpinnerService, $state, stuCourseSrv, $stateParams, cloudwareUrl, $window, $rootScope) {
-        $(function() {
+
+
+        /* INIT FILE TREE */
+        $(function () {
+            let data = [
+                { "text" : "Root directory", "children" : [
+                    { "text" : "helloWorld.js", "data": "I am code .....", "type":"js" },
+                    { "text" : "helloWorld.svg ", "data": "I am code .....", "type":"svg"},
+                    { "text" : "helloWorld.html", "data": "I am code .....", "type":"html"},
+                    { "text" : "helloWorld.css ", "data": "I am code .....", "type":"css"},
+                    { "text" : "helloWorld.img ", "data": "I am code .....", "type":"img"},
+                    { "text" : "Child directory ", "children":[
+                        { "text" : "helloWorld.svg", "data": "I am code .....", "type":"svg"},
+                        { "text" : "helloWorld.html", "data": "I am code .....", "type":"html"},
+                        { "text" : "helloWorld.css", "data": "I am code .....", "type":"css"},
+                        { "text" : "helloWorld.img", "data": "I am code .....", "type":"img"},
+                    ]}
+                ]}
+            ]
+
             $('#container').jstree({
-                'plugins' : [ 'types', 'dnd' ],
                 'types' : {
                     'default' : {
                         'icon' : 'fa fa-folder'
@@ -35,39 +53,46 @@
                     },
                     'js' : {
                         'icon' : 'fa fa-file-text-o'
-                    }
-        
+                    },
                 },
-              'core' : {
-                  
-                'data' : [
-                  { "text" : "Root node", "children" : [
-                      { "text" : "Child node 1.js","type":"js" },
-                      { "text" : "svg " ,"type":"svg"},
-                      { "text" : "html" ,"type":"html"},
-                      { "text" : "css " ,"type":"css"},
-                      { "text" : "img " ,"type":"img"},
-                      { "text" : "Child node folder " ,"type":"","children":[
-                        { "text" : "Child node " ,"type":"svg"},
-                        { "text" : "Child node 2.html" ,"type":"html"},
-                        { "text" : "Child node " ,"type":"css"},
-                        { "text" : "Child node " ,"type":"img"},
-                      ]}
-                    ]
-                  }
+                'core' : {
+                    "check_callback" : function (operation, node, parent, position, more) {
+                        if(operation === "copy_node" || operation === "move_node") {
+                            if(parent.id === "#") {
+                                return false; // prevent moving a child above or below the root
+                            }
+                        }
+                        return true; // allow everything else
+                    },
+                    'data' : data,
+                },
+                "plugins" : [
+                    "unique",
+                    "dnd",
+                    "sort",
+                    "wholerow",
+                    "types",
+                    // "contextmenu",  // todo bug 右键不生效
+                    // "checkbox",     // todo 增加控件可控
                 ]
-              }
             });
-          });
-          
 
-          $timeout(function(){
-            $("#codeFolder").css("position","absolute");
-
-        
+            $('#container').on("changed.jstree", function (e, data) {
+                console.log('rain')
+                let node = data.instance.get_node(data.selected[0])
+                if (node !== undefined) {
+                    $scope.currentFile = node.text;
+                    $scope.currentCode = node.data;
+                }
+            })
         })
- 
-     
+        // todo bugs    搜索不生效
+        $scope.selectFile = function() {
+            $("#container").jstree(true).search($scope.searchValue);
+        }
+
+
+        /* INIT WEB EDITOR */
         $scope.themes = ['default',"3024-day",'3024-night','neat','solarized','monokai']
         $scope.theme = $scope.themes[0];
         $scope.cmOption = {
@@ -82,61 +107,37 @@
             $scope.cmOption.theme = $scope.theme
         }
 
-        $scope.cmModel = 'function findSequence(goal) {\nfunction find(start, history) {\nif (start == goal)\nreturn history;\nelse if (start > goal)\nreturn null;\nelse\nreturn find(start + 5, "(" + history + " + 5)") ||\nfind(start * 3, "(" + history + " * 3)");\n}\nreturn find(1, "1");\n}';
-
-        $scope.currentfile = '';
+        $scope.fileTreeData = null;
+        $scope.currentFile = null;
+        $scope.currentCode = 'function findSequence(goal) {\nfunction find(start, history) {\nif (start == goal)\nreturn history;\nelse if (start > goal)\nreturn null;\nelse\nreturn find(start + 5, "(" + history + " + 5)") ||\nfind(start * 3, "(" + history + " * 3)");\n}\nreturn find(1, "1");\n}';
         $scope.runResult = 'result result result result result result result result result result ';
 
-        // todo: 动态生成
-        // $scope.dataForTheTree =
-        //     [
-        //         { "name" : "/directory1", context: 'I am hello1.java', "children" : [
-        //             { "name" : "/directory1/filename1", context: 'I am hello1.java'},
-        //             { "name" : "/directory1/filename2", context: 'I am hello2.java'},
-        //         ]},
-        //         { "name" : "/filename3", context: 'I am hello3.java'},
-        //         { "name" : "/filename4", context: 'I am hello4.java',}
-        //     ];
-
-        // method
-        $scope.renderContext = function(node) {
-            console.log(node);
-            filename = node.name;
-            $scope.currentfile = filename;
-            for (let i=0; i<$scope.fileList.length; i++) {
-                if (filename === $scope.fileList[i].name) {
-                    $scope.cmModel = $scope.fileList[i].context;
-                }
-            }
-        };
-     
-        $scope.$watch('cmModel',function(newValue,oldValue, scope){
+        $scope.$watch('cmModel',function(newValue, oldValue, scope){
             console.log(newValue)
-            // for(var i = 0;i < $scope.fileList.length; i++){
-            //     if($scope.currentfile === $scope.fileList[i].name){
-            //         $scope.fileList[i].context = newValue;
-            //     }
-            // }
-
         });
 
-        $scope.addFile = function () {
+
+        $scope.saveFiles = function () {
             console.log('rain1')
         }
 
-        $scope.deleteFile = function () {
+        $scope.runFiles = function () {
             console.log('rain2')
         }
 
-        $scope.runProgram = function () {
-            console.log('rain3')
+        $scope.test = function () {
+            console.log('rain test')
+            alert($scope.currentFile)
+            // alert($scope.currentCode)
         }
 
-        var init = function () {
-            console.log('rain0')
-        }
 
-        init();
+        let init = function () {
+            $timeout(function(){
+                $("#codeFolder").css("position","absolute");
+            })
+        }
+        init()
 
 
         $scope.isLogin = localStorage["logined"] === 'true';

@@ -5,18 +5,19 @@
 
 <div style="background-color: #F5f5f5; z-index:9; height:800px; width:66%; float:right; margin-left:auto; margin-right:auto; position: relative; " id="design">
 
-    <div style="height: 500px; width: 30%; display: inline-block;">
-            <div id="container"></div>
+    <div style="height: 500px; width: 30%; display: inline-block; ">
+        <input type="search" ng-model="searchValue" style="margin-left: 5px; margin-top: 13px;"/>
+        <button ng-click="selectFile()" class="btn btn-default" style="margin-top: -4px;">搜索</button>
+        <div id="container"></div>
     </div>
 
     <div style="height: 500px; width: 60%; display: inline-block" id="codeFolder" >
         <div class="row">
             <div class="col-md-6">
                     <div class="btn btn-group">
-                            <button ng-click="addFile()" class="btn btn-default">新建</button>
-                            <button ng-click="deleteFile()" class="btn btn-default">删除</button>
-                            <button ng-click="runProgram()" class="btn btn-default">运行</button>
-                            
+                        <button ng-click="saveFiles()" class="btn btn-default">保存</button>
+                        <button ng-click="runFiles()" class="btn btn-default">运行</button>
+                        <button ng-click="test()" class="btn btn-default">Test</button>
                     </div>
             </div>
          <div class="col-md-6">
@@ -28,7 +29,7 @@
                 
         </div>
         <section>
-            <textarea ui-codemirror="cmOption" ng-model="cmModel" class=""></textarea>
+            <textarea ui-codemirror="cmOption" ng-model="currentCode" class=""></textarea>
         </section>
     </div>
 
