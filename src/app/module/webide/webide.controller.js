@@ -12,102 +12,124 @@
                 };
             }]);
 
-    webideCtrl.$inject = ['$scope', '$timeout', 'usSpinnerService', '$state', 'stuCourseSrv', 'webideSrv', '$stateParams', 'cloudwareUrl', '$window', '$rootScope'];
-    function webideCtrl($scope, $timeout, usSpinnerService, $state, stuCourseSrv, webideSrv, $stateParams, cloudwareUrl, $window, $rootScope) {
+    webideCtrl.$inject = ['$scope', '$timeout', 'usSpinnerService', '$state', 'stuCourseSrv', '$stateParams', 'cloudwareUrl', '$window', '$rootScope'];
+    function webideCtrl($scope, $timeout, usSpinnerService, $state, stuCourseSrv, $stateParams, cloudwareUrl, $window, $rootScope) {
+        $(function() {
+            $('#container').jstree({
+                'plugins' : [ 'types', 'dnd' ],
+                'types' : {
+                    'default' : {
+                        'icon' : 'fa fa-folder'
+                    },
+                    'html' : {
+                        'icon' : 'fa fa-file-code-o'
+                    },
+                    'svg' : {
+                        'icon' : 'fa fa-file-picture-o'
+                    },
+                    'css' : {
+                        'icon' : 'fa fa-file-code-o'
+                    },
+                    'img' : {
+                        'icon' : 'fa fa-file-image-o'
+                    },
+                    'js' : {
+                        'icon' : 'fa fa-file-text-o'
+                    }
+        
+                },
+              'core' : {
+                  
+                'data' : [
+                  { "text" : "Root node", "children" : [
+                      { "text" : "Child node 1.js","type":"js" },
+                      { "text" : "svg " ,"type":"svg"},
+                      { "text" : "html" ,"type":"html"},
+                      { "text" : "css " ,"type":"css"},
+                      { "text" : "img " ,"type":"img"},
+                      { "text" : "Child node folder " ,"type":"","children":[
+                        { "text" : "Child node " ,"type":"svg"},
+                        { "text" : "Child node 2.html" ,"type":"html"},
+                        { "text" : "Child node " ,"type":"css"},
+                        { "text" : "Child node " ,"type":"img"},
+                      ]}
+                    ]
+                  }
+                ]
+              }
+            });
+          });
+          
 
+          $timeout(function(){
+            $("#codeFolder").css("position","absolute");
+
+        
+        })
+ 
+     
+        $scope.themes = ['default',"3024-day",'3024-night','neat','solarized','monokai']
+        $scope.theme = $scope.themes[0];
         $scope.cmOption = {
             lineNumbers: true,
             indentWithTabs: true,
-            lineWrapping: true,
-            viewportMargin: 30,
-            mode: 'javascript'
+            lineWrapping: false,
+            viewportMargin: 100,
+            mode: 'javascript',
+            theme:"default"
         };
+        $scope.changeTheme = function(){
+            $scope.cmOption.theme = $scope.theme
+        }
 
-        $scope.cmModel = 'function myScript(){return 100;}\n';
+        $scope.cmModel = 'function findSequence(goal) {\nfunction find(start, history) {\nif (start == goal)\nreturn history;\nelse if (start > goal)\nreturn null;\nelse\nreturn find(start + 5, "(" + history + " + 5)") ||\nfind(start * 3, "(" + history + " * 3)");\n}\nreturn find(1, "1");\n}';
 
         $scope.currentfile = '';
         $scope.runResult = 'result result result result result result result result result result ';
 
-        $scope.treeOptions = {
-            nodeChildren: "children",
-            dirSelectable: false
-        }
-
-        $scope.dataForTheTree =
-            [
-                { "name" : "/", "children" : [
-                    { "name" : "/directory1", "children" : [
-                        { "name" : "/directory1/filename1", context: 'I am hello1.java'},
-                        { "name" : "/directory1/filename2", context: 'I am hello2.java'},
-                    ]},
-                    { "name" : "/filename3", context: 'I am hello3.java'},
-                    { "name" : "/filename4", context: 'I am hello4.java'}
-                ]}
-            ];
+        // todo: 动态生成
+        // $scope.dataForTheTree =
+        //     [
+        //         { "name" : "/directory1", context: 'I am hello1.java', "children" : [
+        //             { "name" : "/directory1/filename1", context: 'I am hello1.java'},
+        //             { "name" : "/directory1/filename2", context: 'I am hello2.java'},
+        //         ]},
+        //         { "name" : "/filename3", context: 'I am hello3.java'},
+        //         { "name" : "/filename4", context: 'I am hello4.java',}
+        //     ];
 
         // method
         $scope.renderContext = function(node) {
-            $scope.currentfile = node.name;
-            $scope.cmModel = node.context;
-        };
-
-        let updateContext = function (obj, context) {
-            for (let i=0; i<obj.length; i++) {
-                if (obj[i].children === undefined) {
-                    if (obj[i].name === $scope.currentfile) {
-                        obj[i].context = context;
-                    }
-                } else {
-                    updateContext(obj[i].children, context);
+            console.log(node);
+            filename = node.name;
+            $scope.currentfile = filename;
+            for (let i=0; i<$scope.fileList.length; i++) {
+                if (filename === $scope.fileList[i].name) {
+                    $scope.cmModel = $scope.fileList[i].context;
                 }
             }
         };
+     
+        $scope.$watch('cmModel',function(newValue,oldValue, scope){
+            console.log(newValue)
+            // for(var i = 0;i < $scope.fileList.length; i++){
+            //     if($scope.currentfile === $scope.fileList[i].name){
+            //         $scope.fileList[i].context = newValue;
+            //     }
+            // }
 
-        $scope.$watch('cmModel',function(newValue, oldValue, scope){
-            updateContext($scope.dataForTheTree, newValue)
         });
 
         $scope.addFile = function () {
             console.log('rain1')
-
         }
 
         $scope.deleteFile = function () {
             console.log('rain2')
-
-        }
-
-        $scope.getFiles = function () {
-            console.log('rain3')
-            let param = {
-                studentId: $stateParams.studentId,
-                experimentId: $stateParams.experimentId,
-            };
-            webideSrv.getFiles().get(param).$promise.then(
-                function(response) {
-                    console.log(response)
-                },
-                function(error) {
-                    console.log(error)
-                }
-            )
         }
 
         $scope.runProgram = function () {
-            console.log('rain4')
-            console.log($stateParams)
-
-
-            webideSrv.runProgram().save({
-                    studentId: $stateParams.studentId,
-                    experimentId: $stateParams.experimentId,
-                    files: $scope.dataForTheTree,
-                }, function(response) {
-                    console.log(response)
-                },
-                function(error) {
-                    console.log(error)
-                })
+            console.log('rain3')
         }
 
         var init = function () {
