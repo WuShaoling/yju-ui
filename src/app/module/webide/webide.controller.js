@@ -66,6 +66,8 @@
                 if (node !== undefined) {
                     $scope.currentFile = node.text;
                     $scope.currentCode = node.data;
+                    console.log($scope.currentFile)
+                    console.log($scope.currentCode)
                 }
             })
         })
@@ -119,6 +121,7 @@
         }
 
         $scope.saveFiles = function () {
+            let files = $('#container').jstree(true).get_json('#', {flat:true})
             $.ajax({
                 // url: $scope.webidUrl + "/srcfiles"
                 url: "http://192.168.1.114:8080/srcfiles",
@@ -127,7 +130,7 @@
                 data: {
                     experimentId: 4,
                     // experimentId: $stateParams.experimentId,
-                    files: [{"text":"/dir","children":[{"text":"/dir/ClassB222.java","data":"package dir;public class ClassB {public ClassB(){System.out.println(\"this is ClassB\");}}"}]},{"text":"/Application2.java","data":"import dir.ClassB;public class Application {public static void main(String[] args){ClassA a = new ClassA();ClassB b = new ClassB();System.out.println(\"hello world from main！\");}}"},{"text":"/ClassA.java","data":"public class ClassA {public ClassA(){System.out.println(\"this is ClassA\");}}"}]
+                    files: files,
                 },
                 success: function (response) {
                     console.log(response)
@@ -185,8 +188,8 @@
             $scope.getFiles();
 
 
-            // let data = [{"text":"/dir","children":[{"text":"/dir/ClassB.java","data":"package dir;public class ClassB {public ClassB(){System.out.println(\"this is ClassB\");}}"}]},{"text":"/Application.java","data":"import dir.ClassB;public class Application {public static void main(String[] args){ClassA a = new ClassA();ClassB b = new ClassB();System.out.println(\"hello world from main！\");}}"},{"text":"/ClassA.java","data":"public class ClassA {public ClassA(){System.out.println(\"this is ClassA\");}}"}]
-            // $scope.updateFileTree(data)
+            let data = [{"text":"/dir","children":[{"text":"/dir/ClassB.java","data":"package dir;public class ClassB {public ClassB(){System.out.println(\"this is ClassB\");}}"}]},{"text":"/Application.java","data":"import dir.ClassB;public class Application {public static void main(String[] args){ClassA a = new ClassA();ClassB b = new ClassB();System.out.println(\"hello world from main！\");}}"},{"text":"/ClassA.java","data":"public class ClassA {public ClassA(){System.out.println(\"this is ClassA\");}}"}]
+            $scope.updateFileTree(data)
         }
 
         let initRequest = function () {
