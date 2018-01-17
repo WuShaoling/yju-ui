@@ -4,16 +4,46 @@
     angular
         .module('phoenix')
         .controller('webideCtrl', webideCtrl)
-        .filter('showFilename', [function() {
-                return function(value) {
-                    var array = value.split("/");
-                    var filename = array[array.length-1]
-                    return filename;
-                };
-            }]);
+        .controller('webide_addfile_ctrl', webide_addfile_ctrl);
 
-    webideCtrl.$inject = ['$scope', '$timeout', 'usSpinnerService', '$state', 'stuCourseSrv', '$stateParams', 'cloudwareUrl', '$window', '$rootScope'];
-    function webideCtrl($scope, $timeout, usSpinnerService, $state, stuCourseSrv, $stateParams, cloudwareUrl, $window, $rootScope) {
+    webideCtrl.$inject = ['$scope', '$timeout', 'usSpinnerService', '$uibModal', '$state', 'stuCourseSrv', '$stateParams', 'cloudwareUrl', '$window', '$rootScope'];
+    webide_addfile_ctrl.$inject = ['param', '$scope', '$uibModalInstance', 'classManagementSrv', '$stateParams'];
+
+    function webide_addfile_ctrl(param, $scope, $uibModalInstance, classManagementSrv, $stateParams, ) {
+        if (param.type === 0) {
+            $scope.title = "新建目录"
+        } else if (param.type === 1) {
+            $scope.title = "新建文件"
+        }
+
+        if (param.filePath.includes(".")) {
+            var arr = param.filePath.split("/");
+            delete arr[arr.length-1];
+            $scope.filePath = arr.join("/");
+        } else {
+            if (param.filePath !== "/") {
+                $scope.filePath = param.filePath + "/";
+            } else {
+                $scope.filePath = param.filePath;
+            }
+
+        }
+
+        $scope.cancel = function() {
+            $uibModalInstance.dismiss('cancel');
+        }
+        
+        $scope.sure = function () {
+            // todo 正则校验 文件名
+            $uibModalInstance.close({
+                data: {"text":$scope.newFile, "type":param.type?"file":"directory"}
+            });
+        }
+
+
+    }
+
+    function webideCtrl($scope, $timeout, usSpinnerService, $uibModal, $state, stuCourseSrv, $stateParams, cloudwareUrl, $window, $rootScope) {
 
         $scope.webidUrl = null;
         $scope.runResult = 'result result result result result result result result result result ';
@@ -49,31 +79,34 @@
                 },
                 "plugins" : [
                     "unique",
-                    // "dnd",
                     "sort",
                     "wholerow",
                     "types",
-                    // "contextmenu",
-                    // "checkbox",     // todo 增加控件可控
                 ],
             });
 
             $('#container').on("changed.jstree", function (e, data) {
                 if (data.selected[0] !== undefined) {
                     $scope.currentFileId = data.selected[0];
-                    $scope.currentFilePath = data.instance.get_path(data.selected[0]);
+
+                    let temp = "";
+                    for (i=0; i<data.instance.get_path(data.selected[0]).length; i++) {
+                        temp += data.instance.get_path(data.selected[0])[i];
+                        if (i>0) {
+                            temp += "/";
+                        }
+                    }
+                    if (temp !== "/") {
+                        temp = temp.substring(0, temp.length-1);
+                    }
+                    $scope.currentFilePath = temp;
+
                     $scope.currentFileData = data.instance.get_node(data.selected[0]).data;
 
-                    console.log($scope.currentFileId)
-                    console.log($scope.currentFilePath)
-                    console.log($scope.currentFileData)
+                    $scope.currentFileType = data.instance.get_type(data.selected[0]);
                 }
             })
         })
-        // todo bugs    搜索不生效
-        // $scope.selectFile = function() {
-        //     $("#container").jstree(true).search($scope.searchValue);
-        // }
 
         /* INIT WEB EDITOR */
         $scope.themes = ['default',"3024-day",'3024-night','neat','solarized','monokai']
@@ -89,7 +122,7 @@
             mode: 'javascript',
             theme:"default"
         };
-        $scope.changeTheme = function(){
+        $scope.changeTheme = function() {
             $scope.cmOption.theme = $scope.theme
         }
 
@@ -103,7 +136,36 @@
             $('#container').jstree(true).refresh();
         }
 
-        
+        $scope.addFiles = function(type) {
+            if ($scope.currentFileType === "file") {
+                $scope.targetId = $('#container').jstree('get_parent', $scope.currentFileId);
+            } else {
+                $scope.targetId = $scope.currentFileId;
+            }
+
+            console.log("targetId  " + $scope.targetId)
+            let obj = {
+                filePath: $scope.currentFilePath,
+                type: type
+            }
+
+            var modalInstance = $uibModal.open({
+                size: "md",
+                templateUrl: 'app/module/webide/modal/addfile.html',
+                controller: webide_addfile_ctrl,
+                resolve: {
+                    param: function() { return angular.copy(obj); }
+                }
+            });
+
+            modalInstance.result.then(function(result) {
+                console.log(result);
+
+                //todo rain
+                $('#container').jstree('create_node', $scope.targetId, result.data, "last", false, false);
+
+            });
+        }
         
         $scope.getFiles = function () {
             $.ajax({
@@ -196,7 +258,6 @@
 
 
         $scope.test = function () {
-            console.log('rain test');
             // $scope.getFiles();
 
             let file = [ {"text":"/", "type":"directory", "children": [

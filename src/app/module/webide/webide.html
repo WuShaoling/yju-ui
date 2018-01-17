@@ -21,12 +21,12 @@
 <!--right bar-->
 <button style="position: fixed;top:100px;right:0;z-index:101; height: 30px; width: 38px" class="navbar-minimalize minimalize-styl-2 btn btn-success " uib-tooltip="隐藏" ng-show="display_rightbar" ng-click="toggleRightBar()"><i class="fa fa-arrow-right"></i></button>
 <button style="position: fixed;top:100px;right:0;z-index:101; height: 30px; width: 38px" class="navbar-minimalize minimalize-styl-2 btn btn-success " uib-tooltip="显示" ng-show="!display_rightbar" ng-click="toggleRightBar()"><i class="fa fa-arrow-left"></i></button>
-<button style="position: fixed;top:140px;right:0;z-index:101; height: 30px; width: 38px" class="navbar-minimalize minimalize-styl-2 btn btn-success " uib-tooltip="新建" ng-show="display_rightbar" ng-click="addFile()"><i class="fa fa-file-code-o"></i></button>
-<button style="position: fixed;top:172px;right:0;z-index:101; height: 30px; width: 38px" class="navbar-minimalize minimalize-styl-2 btn btn-success " uib-tooltip="删除" ng-show="display_rightbar" ng-click="deleteFile()"><i class="fa fa-recycle"></i></button>
-<button style="position: fixed;top:212px;right:0;z-index:101; height: 30px; width: 38px" class="navbar-minimalize minimalize-styl-2 btn btn-success " uib-tooltip="保存" ng-show="display_rightbar" ng-click="saveFiles()"><i class="fa fa-floppy-o"></i></button>
-<button style="position: fixed;top:246px;right:0;z-index:101; height: 30px; width: 38px" class="navbar-minimalize minimalize-styl-2 btn btn-success " uib-tooltip="运行" ng-show="display_rightbar" ng-click="runFiles()"><i class="fa fa-play"></i></button>
-<button style="position: fixed;top:290px;right:0;z-index:101; height: 30px; width: 38px" class="navbar-minimalize minimalize-styl-2 btn btn-success " uib-tooltip="test" ng-show="display_rightbar" ng-click="test()"><i class="fa fa-fighter-jet"></i></button>
-<button style="position: fixed;top:322px;right:0;z-index:101; height: 30px; width: 38px" class="navbar-minimalize minimalize-styl-2 btn btn-success " uib-tooltip="test" ng-show="display_rightbar" ng-click="showYesNo()"><i class="fa fa-fighter-jet"></i></button>
+<button style="position: fixed;top:140px;right:0;z-index:101; height: 30px; width: 38px" class="navbar-minimalize minimalize-styl-2 btn btn-success " uib-tooltip="新建" ng-show="display_rightbar" ng-click="addFiles(0)"><i class="fa fa-file-code-o"></i></button>
+<button style="position: fixed;top:172px;right:0;z-index:101; height: 30px; width: 38px" class="navbar-minimalize minimalize-styl-2 btn btn-success " uib-tooltip="新建" ng-show="display_rightbar" ng-click="addFiles(1)"><i class="fa fa-file-code-o"></i></button>
+<button style="position: fixed;top:204px;right:0;z-index:101; height: 30px; width: 38px" class="navbar-minimalize minimalize-styl-2 btn btn-success " uib-tooltip="删除" ng-show="display_rightbar" ng-click="deleteFile()"><i class="fa fa-recycle"></i></button>
+<button style="position: fixed;top:312px;right:0;z-index:101; height: 30px; width: 38px" class="navbar-minimalize minimalize-styl-2 btn btn-success " uib-tooltip="保存" ng-show="display_rightbar" ng-click="saveFiles()"><i class="fa fa-floppy-o"></i></button>
+<button style="position: fixed;top:346px;right:0;z-index:101; height: 30px; width: 38px" class="navbar-minimalize minimalize-styl-2 btn btn-success " uib-tooltip="运行" ng-show="display_rightbar" ng-click="runFiles()"><i class="fa fa-play"></i></button>
+<button style="position: fixed;top:390px;right:0;z-index:101; height: 30px; width: 38px" class="navbar-minimalize minimalize-styl-2 btn btn-success " uib-tooltip="test" ng-show="display_rightbar" ng-click="test()"><i class="fa fa-fighter-jet"></i></button>
 
 
-<p style="position: absolute; top: 200px; left: 50px;"> {{currentPath}}</p>
+<p style="position: absolute; top: 200px; left: 50px;"> {{currentFilePath}}</p>

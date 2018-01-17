@@ -2,6 +2,7 @@
   "name": "phoenix",
   "version": "0.0.0",
   "dependencies": {
+    "angular-modal-service": "^0.13.0",
     "marked": "^0.3.6"
   },
   "scripts": {
