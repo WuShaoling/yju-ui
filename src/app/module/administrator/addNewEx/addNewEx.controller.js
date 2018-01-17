@@ -248,10 +248,10 @@
             label: "Hadoop",
             value: 4,
         }, {
-            label: "jupyter_python",
+            label: "JupyterPython",
             value: 5,
         }, {
-            label: "ide/java",
+            label: "IdeJava",   // just display
             value: 6,
         }];
         $scope.$on("$destroy", function() {

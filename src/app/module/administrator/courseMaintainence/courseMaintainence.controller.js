@@ -159,7 +159,7 @@
         $scope.checkEx = function(item) {
             if (item.cloudwareType === 'jupyter_python') {
                 $state.go('index.startExperiment.notebook', { experimentId: item.id, studentId: localStorage['userId'], cloudwareType: item.cloudwareType });
-            } else if (item.cloudwareType === 'webide') {
+            } else if (item.cloudwareType === 'ide_java') {
                 $state.go('index.startExperiment.webide', { experimentId: item.id, studentId: localStorage['userId'], cloudwareType: item.cloudwareType });
             } else {
                 $state.go('index.startExperiment.cloudware', { experimentId: item.id, studentId: localStorage['userId'], cloudwareType: item.cloudwareType });
