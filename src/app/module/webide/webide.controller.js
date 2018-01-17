@@ -16,6 +16,11 @@
     function webideCtrl($scope, $timeout, usSpinnerService, $state, stuCourseSrv, $stateParams, cloudwareUrl, $window, $rootScope) {
 
         $scope.webidUrl = null;
+        $scope.runResult = 'result result result result result result result result result result ';
+        $scope.fileTreeData = null;
+        $scope.currentFile = null;
+        $scope.currentCode = '\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n';
+        $scope.display_rightbar = true;
 
         /* INIT FILE TREE */
         $(function () {
@@ -57,13 +62,12 @@
                     "sort",
                     "wholerow",
                     "types",
-                    // "contextmenu",  // todo bug 右键不生效
+                    "contextmenu",
                     // "checkbox",     // todo 增加控件可控
                 ]
             });
 
             $('#container').on("changed.jstree", function (e, data) {
-                console.log('rain')
                 let node = data.instance.get_node(data.selected[0])
                 if (node !== undefined) {
                     $scope.currentFile = node.text;
@@ -76,14 +80,13 @@
             $("#container").jstree(true).search($scope.searchValue);
         }
 
-
         /* INIT WEB EDITOR */
         $scope.themes = ['default',"3024-day",'3024-night','neat','solarized','monokai']
         $scope.theme = $scope.themes[0];
         $scope.cmOption = {
             lineNumbers: true,
             indentWithTabs: true,
-            lineWrapping: false,
+            lineWrapping: true,
             viewportMargin: 100,
             height:300,
             styleActiveLine: true,
@@ -95,9 +98,6 @@
             $scope.cmOption.theme = $scope.theme
         }
 
-        $scope.fileTreeData = null;
-        $scope.currentFile = null;
-        $scope.currentCode = 'function findSequence(goal) {\nfunction find(start, history) {\nif (start == goal)\nreturn history;\nelse if (start > goal)\nreturn null;\nelse\nreturn find(start + 5, "(" + history + " + 5)") ||\nfind(start * 3, "(" + history + " * 3)");\n}\nreturn find(1, "1");\n}';
 
 
         // CodeMirror.commands.autocomplete = function(cm) {
@@ -110,9 +110,9 @@
         //     extraKeys: {"Alt-Space": "autocomplete"}
         //   }); 
 
-        $scope.runResult = 'result result result result result result result result result result ';
 
-        $scope.$watch('cmModel',function(newValue, oldValue, scope){
+
+        $scope.$watch('currentCode',function(newValue, oldValue, scope){
             console.log(newValue)
         });
 
@@ -122,7 +122,6 @@
         }
 
         $scope.getFiles = function () {
-            console.log('rain33')
             $.ajax({
                 // url: $scope.webidUrl + "srcfiles/" + $stateParams.studentId,
                 url: "http://192.168.1.118:8080/srcfiles/4",
@@ -139,7 +138,6 @@
         }
 
         $scope.saveFiles = function () {
-            console.log('rain1')
             $.ajax({
                 // url: $scope.webidUrl + "srcfiles"
                 url: "http://192.168.1.118:8080/srcfiles",
@@ -159,7 +157,6 @@
         }
 
         $scope.runFiles = function () {
-            console.log('rain2')
             // todo run program & get result
             $.ajax({
                 // url: $scope.webidUrl + "srcfiles/" + $stateParams.studentId,
@@ -198,17 +195,21 @@
             })
         }
 
+        $scope.toggleRightBar = function () {
+            $scope.display_rightbar = !$scope.display_rightbar;
+        }
+
         $scope.test = function () {
             console.log('rain test')
             // alert($scope.currentFile)
             // alert($scope.currentCode)
 
             // $scope.getFiles();
-            $scope.saveFiles();
+            // $scope.saveFiles();
 
 
-            // let data = [{"text":"/dir","children":[{"text":"/dir/ClassB.java","data":"package dir;public class ClassB {public ClassB(){System.out.println(\"this is ClassB\");}}"}]},{"text":"/Application.java","data":"import dir.ClassB;public class Application {public static void main(String[] args){ClassA a = new ClassA();ClassB b = new ClassB();System.out.println(\"hello world from main！\");}}"},{"text":"/ClassA.java","data":"public class ClassA {public ClassA(){System.out.println(\"this is ClassA\");}}"}]
-            // $scope.updateFileTree(data)
+            let data = [{"text":"/dir","children":[{"text":"/dir/ClassB.java","data":"package dir;public class ClassB {public ClassB(){System.out.println(\"this is ClassB\");}}"}]},{"text":"/Application.java","data":"import dir.ClassB;public class Application {public static void main(String[] args){ClassA a = new ClassA();ClassB b = new ClassB();System.out.println(\"hello world from main！\");}}"},{"text":"/ClassA.java","data":"public class ClassA {public ClassA(){System.out.println(\"this is ClassA\");}}"}]
+            $scope.updateFileTree(data)
         }
 
         let initRequest = function () {

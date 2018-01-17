@@ -3,58 +3,25 @@
 <div style="width:5px; background-color: #0060b1; height:800px; float: left; cursor: ew-resize;" id="resizeDiv" ng-mousedown="resizeMouseDown($event)" ></div>
 
 
-<div style="background-color: #F5f5f5; z-index:9; height:800px; width:66%; float:right; margin-left:auto; margin-right:auto; position: relative; " id="design">
-
-    <div style="height: 500px; width: 30%; display: inline-block;">
-            <div id="container"></div>
-            <!-- <div js-tree="treeConfig" ng-model="treeData" tree="treeInstance"></div> -->
-            <!-- <div js-tree="treeConfig" ng-model="treeData" should-apply="ignoreModelChanges()" tree="treeInstance" tree-events="ready:readyCB;create_node:createNodeCB"></div> -->
-        <!-- <treecontrol class="tree-classic"
-                     tree-model="dataForTheTree"
-                     options="treeOptions"
-                     on-selection="renderContext(node)" style="position:absolute">
-                    {{node.name | showFilename}}
-            
-        </treecontrol> -->
-    </div>
-
-    <div style="height: 500px; width: 60%; display: inline-block" id="codeFolder" >
-        <div class="row">
-            <div class="col-md-6">
-                    <div class="btn btn-group">
-                            <button ng-click="addFile()" class="btn btn-default">新建</button>
-                            <button ng-click="deleteFile()" class="btn btn-default">删除</button>
-                            <button ng-click="runProgram()" class="btn btn-default">运行</button>
-                            
-                    </div>
-            </div>
-            <div class="col-md-3"></div>
-         <div class="col-md-3">
-                <div class="btn btn-group full-width">
-             
-        <select class="form-control" ng-options="themeName  for themeName in themes" ng-model="theme" ng-change="changeTheme()"></select>
+<div style="background-color: #F5f5f5; z-index:9; height:800px; width:20%; float:left; margin-left:auto; margin-right:auto;" id="container_box">
+    <div id="container"></div>
 </div>
-         </div>
-                
-        </div>
- 
-      
-        <!-- <p> File name:  {{currentfile | showFilename}}</p> -->
-        <form>
-            <textarea ui-codemirror="cmOption" ng-model="cmModel"  class=""></textarea>
-            <!-- <textarea  class="" id="code" ></textarea> -->
-            
-        </form>
-    </div>
 
-    <div style="height: 200px; ">
-        {{runResult}}
-    </div>
+<div style="background-color: #F5f5f5; z-index:9; height:800px; width:46%; float:right; margin-left:auto; margin-right:auto;" id="design">
 
-    <span us-spinner="{ color: '#0060b1', radius: 10, width: 5, length: 10, zIndex: 10 ,top:'250px'}" spinner-key="ex-spinner" spinner-start-active="false"></span>
+    <textarea ui-codemirror="cmOption"  ng-model="currentCode"></textarea>
 
 </div>
 
-
+<!--<div style="height: 200px; ">-->
+    <!--{{runResult}}-->
+<!--</div>-->
 <div left-Bar ></div>
+
+<!--right bar-->
+<button style="position: fixed;top:100px;right:0;z-index:101" class="navbar-minimalize minimalize-styl-2 btn btn-success " uib-tooltip="隐藏" ng-show="display_rightbar" ng-click="toggleRightBar()"><i class="fa fa-arrow-right"></i></button>
+<button style="position: fixed;top:100px;right:0;z-index:101" class="navbar-minimalize minimalize-styl-2 btn btn-success " uib-tooltip="显示" ng-show="!display_rightbar" ng-click="toggleRightBar()"><i class="fa fa-arrow-left"></i></button>
+<button style="position: fixed;top:132px;right:0;z-index:101" class="navbar-minimalize minimalize-styl-2 btn btn-success " uib-tooltip="保存" ng-show="display_rightbar" ng-click="saveFiles()"><i class="fa fa-floppy-o"></i></button>
+<button style="position: fixed;top:164px;right:0;z-index:101" class="navbar-minimalize minimalize-styl-2 btn btn-success " uib-tooltip="运行" ng-show="display_rightbar" ng-click="runFiles()"><i class="fa fa-play"></i></button>'
+<button style="position: fixed;top:196px;right:0;z-index:101" class="navbar-minimalize minimalize-styl-2 btn btn-success " uib-tooltip="test" ng-show="display_rightbar" ng-click="test()"><i class="fa fa-play"></i></button>'
 
