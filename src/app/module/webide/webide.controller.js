@@ -18,26 +18,21 @@
         $scope.webidUrl = null;
         $scope.runResult = 'result result result result result result result result result result ';
         $scope.fileTreeData = null;
-        $scope.currentFile = null;
-        $scope.currentCode = '';
+        $scope.currentFilePath = '/';
+        $scope.currentFileId = null;
+        $scope.currentFileData = '';
         $scope.display_rightbar = true;
 
         /* INIT FILE TREE */
         $(function () {
             $('#container').jstree({
                 'types' : {
-                    'default' : {
+                    'directory' : {
                         'icon' : 'fa fa-folder-o'
                     },
-                    'java' : {
+                    'file' : {
                         'icon' : 'fa fa-file-code-o'
-                    },
-                    'c' : {
-                        'icon' : 'fa fa-file-code-o'
-                    },
-                    'c++' : {
-                        'icon' : 'fa fa-file-code-o'
-                    },
+                    }
                 },
                 'core' : {
                     "check_callback" : function (operation, node, parent, position, more) {
@@ -48,7 +43,9 @@
                         }
                         return true; // allow everything else
                     },
-                    'data' : [{"text" : "Application.java", "type": "java", "data": "I am a java."}],
+                    'data' : [{"text" : "/", "type": "directory", "children": [
+                        {"text" : "Application.java", "type": "file", "data": "I am a java."}
+                    ]}],
                 },
                 "plugins" : [
                     "unique",
@@ -62,12 +59,14 @@
             });
 
             $('#container').on("changed.jstree", function (e, data) {
-                let node = data.instance.get_node(data.selected[0])
-                if (node !== undefined) {
-                    $scope.currentFile = node.text;
-                    $scope.currentCode = node.data;
-                    console.log($scope.currentFile)
-                    console.log($scope.currentCode)
+                if (data.selected[0] !== undefined) {
+                    $scope.currentFileId = data.selected[0];
+                    $scope.currentFilePath = data.instance.get_path(data.selected[0]);
+                    $scope.currentFileData = data.instance.get_node(data.selected[0]).data;
+
+                    console.log($scope.currentFileId)
+                    console.log($scope.currentFilePath)
+                    console.log($scope.currentFileData)
                 }
             })
         })
@@ -95,7 +94,7 @@
         }
 
 
-        $scope.$watch('currentCode',function(newValue, oldValue, scope){
+        $scope.$watch('currentFileData',function(newValue, oldValue, scope){
             console.log(newValue)
         });
 
@@ -124,13 +123,14 @@
 
         $scope.saveFiles = function () {
             // let files = $('#container').jstree(true).get_json('#', {flat:true})
-            let file = [
-                {"text":"src", "type":"directory", "children":[
-                    {"text":"hello_world_1.java", "type":"file", "data":"I am hello world 1 ."},
-                    {"text":"hello_world_2.java", "type":"file", "data":"I am hello world 2 ."}
-                ]},
-                {"text":"dist", "type":"directory", "children":[]},
-                {"text":"Application.java", "type":"file", "data":"I am application.java"},
+            let file = [ {"text":"/", "type":"directory", "children": [
+                    {"text":"src", "type":"directory", "children":[
+                        {"text":"hello_world_1.java", "type":"file", "data":"I am hello world 1 ."},
+                        {"text":"hello_world_2.java", "type":"file", "data":"I am hello world 2 ."}
+                    ]},
+                    {"text":"dist", "type":"directory", "children":[]},
+                    {"text":"Application.java", "type":"file", "data":"I am application.java"}
+                ]}
             ]
             $.ajax({
                 // url: $scope.webidUrl + "/srcfiles"
@@ -193,19 +193,22 @@
             $scope.display_rightbar = !$scope.display_rightbar;
         }
 
+
+
         $scope.test = function () {
             console.log('rain test');
             // $scope.getFiles();
 
-            let data = [
+            let file = [ {"text":"/", "type":"directory", "children": [
                 {"text":"src", "type":"directory", "children":[
                     {"text":"hello_world_1.java", "type":"file", "data":"I am hello world 1 ."},
                     {"text":"hello_world_2.java", "type":"file", "data":"I am hello world 2 ."}
                 ]},
                 {"text":"dist", "type":"directory", "children":[]},
-                {"text":"Application.java", "type":"file", "data":"I am application.java"},
-            ];
-            $scope.updateFileTree(data)
+                {"text":"Application.java", "type":"file", "data":"I am application.java"}
+            ]}
+            ]
+            $scope.updateFileTree(file)
         }
 
         let initRequest = function () {
@@ -263,6 +266,7 @@
                 }
             });
         }
+
 
         let init = function () {
             // initRequest()
