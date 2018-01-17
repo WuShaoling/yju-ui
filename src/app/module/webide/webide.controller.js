@@ -27,22 +27,16 @@
             $('#container').jstree({
                 'types' : {
                     'default' : {
-                        'icon' : 'fa fa-folder'
-                    },
-                    'html' : {
-                        'icon' : 'fa fa-file-code-o'
+                        'icon' : 'fa fa-folder-o'
                     },
                     'java' : {
-                        'icon' : 'fa fa-file-picture-o'
-                    },
-                    'css' : {
                         'icon' : 'fa fa-file-code-o'
                     },
-                    'img' : {
-                        'icon' : 'fa fa-file-image-o'
+                    'c' : {
+                        'icon' : 'fa fa-file-code-o'
                     },
-                    'js' : {
-                        'icon' : 'fa fa-file-text-o'
+                    'c++' : {
+                        'icon' : 'fa fa-file-code-o'
                     },
                 },
                 'core' : {
@@ -76,9 +70,9 @@
             })
         })
         // todo bugs    搜索不生效
-        $scope.selectFile = function() {
-            $("#container").jstree(true).search($scope.searchValue);
-        }
+        // $scope.selectFile = function() {
+        //     $("#container").jstree(true).search($scope.searchValue);
+        // }
 
         /* INIT WEB EDITOR */
         $scope.themes = ['default',"3024-day",'3024-night','neat','solarized','monokai']
@@ -99,19 +93,6 @@
         }
 
 
-
-        // CodeMirror.commands.autocomplete = function(cm) {
-        //     cm.showHint({hint: CodeMirror.hint.javascript});
-        //   }
-        //   var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
-        //     lineNumbers: true,
-        //     mode: 'javascript',
-        //     theme:"default",
-        //     extraKeys: {"Alt-Space": "autocomplete"}
-        //   }); 
-
-
-
         $scope.$watch('currentCode',function(newValue, oldValue, scope){
             console.log(newValue)
         });
@@ -123,8 +104,8 @@
 
         $scope.getFiles = function () {
             $.ajax({
-                // url: $scope.webidUrl + "srcfiles/" + $stateParams.studentId,
-                url: "http://192.168.1.118:8080/srcfiles/4",
+                // url: $scope.webidUrl + "/srcfiles/" + $stateParams.studentId,
+                url: "http://192.168.1.114:8080/srcfiles/4",
                 method: 'get',
                 dataType: 'json',
                 success: function (response) {
@@ -139,13 +120,14 @@
 
         $scope.saveFiles = function () {
             $.ajax({
-                // url: $scope.webidUrl + "srcfiles"
-                url: "http://192.168.1.118:8080/srcfiles",
+                // url: $scope.webidUrl + "/srcfiles"
+                url: "http://192.168.1.114:8080/srcfiles",
                 method: 'post',
                 dataType: 'json',
                 data: {
-                    experimentId: $stateParams.experimentId,
-                    files: [{"text":"/dir","children":[{"text":"/dir/ClassB.java","data":"package dir;public class ClassB {public ClassB(){System.out.println(\"this is ClassB\");}}"}]},{"text":"/Application2.java","data":"import dir.ClassB;public class Application {public static void main(String[] args){ClassA a = new ClassA();ClassB b = new ClassB();System.out.println(\"hello world from main！\");}}"},{"text":"/ClassA.java","data":"public class ClassA {public ClassA(){System.out.println(\"this is ClassA\");}}"}]
+                    experimentId: 4,
+                    // experimentId: $stateParams.experimentId,
+                    files: [{"text":"/dir","children":[{"text":"/dir/ClassB222.java","data":"package dir;public class ClassB {public ClassB(){System.out.println(\"this is ClassB\");}}"}]},{"text":"/Application2.java","data":"import dir.ClassB;public class Application {public static void main(String[] args){ClassA a = new ClassA();ClassB b = new ClassB();System.out.println(\"hello world from main！\");}}"},{"text":"/ClassA.java","data":"public class ClassA {public ClassA(){System.out.println(\"this is ClassA\");}}"}]
                 },
                 success: function (response) {
                     console.log(response)
@@ -157,14 +139,13 @@
         }
 
         $scope.runFiles = function () {
-            // todo run program & get result
             $.ajax({
-                // url: $scope.webidUrl + "srcfiles/" + $stateParams.studentId,
-                url: "http://syyxm7svz.cloudwarehub.com:84/srcfiles/4",
-                method: 'post',
+                // url: $scope.webidUrl + "/result/" + $stateParams.studentId,
+                url: "http://192.168.1.114:8080/result/6",
+                method: 'get',
                 dataType: 'json',
                 success: function (response) {
-                    console.log(response)
+                    console.log(response.result)
                 },
                 error: function (response) {
                     console.log(response)
@@ -200,16 +181,12 @@
         }
 
         $scope.test = function () {
-            console.log('rain test')
-            // alert($scope.currentFile)
-            // alert($scope.currentCode)
-
-            // $scope.getFiles();
-            // $scope.saveFiles();
+            console.log('rain test');
+            $scope.getFiles();
 
 
-            let data = [{"text":"/dir","children":[{"text":"/dir/ClassB.java","data":"package dir;public class ClassB {public ClassB(){System.out.println(\"this is ClassB\");}}"}]},{"text":"/Application.java","data":"import dir.ClassB;public class Application {public static void main(String[] args){ClassA a = new ClassA();ClassB b = new ClassB();System.out.println(\"hello world from main！\");}}"},{"text":"/ClassA.java","data":"public class ClassA {public ClassA(){System.out.println(\"this is ClassA\");}}"}]
-            $scope.updateFileTree(data)
+            // let data = [{"text":"/dir","children":[{"text":"/dir/ClassB.java","data":"package dir;public class ClassB {public ClassB(){System.out.println(\"this is ClassB\");}}"}]},{"text":"/Application.java","data":"import dir.ClassB;public class Application {public static void main(String[] args){ClassA a = new ClassA();ClassB b = new ClassB();System.out.println(\"hello world from main！\");}}"},{"text":"/ClassA.java","data":"public class ClassA {public ClassA(){System.out.println(\"this is ClassA\");}}"}]
+            // $scope.updateFileTree(data)
         }
 
         let initRequest = function () {
@@ -276,6 +253,8 @@
             })
         }
         init()
+
+        /* ---------------------------------------------------------------------------------------------------------- */
 
 
         $scope.isLogin = localStorage["logined"] === 'true';
