@@ -52,13 +52,13 @@
                 },
                 "plugins" : [
                     "unique",
-                    "dnd",
+                    // "dnd",
                     "sort",
                     "wholerow",
                     "types",
-                    "contextmenu",
+                    // "contextmenu",
                     // "checkbox",     // todo 增加控件可控
-                ]
+                ],
             });
 
             $('#container').on("changed.jstree", function (e, data) {
@@ -103,7 +103,9 @@
             $('#container').jstree(true).settings.core.data = newDate;
             $('#container').jstree(true).refresh();
         }
-
+        
+        
+        
         $scope.getFiles = function () {
             $.ajax({
                 // url: $scope.webidUrl + "/srcfiles/" + $stateParams.studentId,
@@ -121,14 +123,22 @@
         }
 
         $scope.saveFiles = function () {
-            let files = $('#container').jstree(true).get_json('#', {flat:true})
+            // let files = $('#container').jstree(true).get_json('#', {flat:true})
+            let file = [
+                {"text":"src", "type":"directory", "children":[
+                    {"text":"hello_world_1.java", "type":"file", "data":"I am hello world 1 ."},
+                    {"text":"hello_world_2.java", "type":"file", "data":"I am hello world 2 ."}
+                ]},
+                {"text":"dist", "type":"directory", "children":[]},
+                {"text":"Application.java", "type":"file", "data":"I am application.java"},
+            ]
             $.ajax({
                 // url: $scope.webidUrl + "/srcfiles"
                 url: "http://192.168.1.114:8080/srcfiles",
                 method: 'post',
                 dataType: 'json',
                 data: {
-                    experimentId: 4,
+                    experimentId: 7,
                     // experimentId: $stateParams.experimentId,
                     files: files,
                 },
@@ -185,10 +195,16 @@
 
         $scope.test = function () {
             console.log('rain test');
-            $scope.getFiles();
+            // $scope.getFiles();
 
-
-            let data = [{"text":"/dir","children":[{"text":"/dir/ClassB.java","data":"package dir;public class ClassB {public ClassB(){System.out.println(\"this is ClassB\");}}"}]},{"text":"/Application.java","data":"import dir.ClassB;public class Application {public static void main(String[] args){ClassA a = new ClassA();ClassB b = new ClassB();System.out.println(\"hello world from main！\");}}"},{"text":"/ClassA.java","data":"public class ClassA {public ClassA(){System.out.println(\"this is ClassA\");}}"}]
+            let data = [
+                {"text":"src", "type":"directory", "children":[
+                    {"text":"hello_world_1.java", "type":"file", "data":"I am hello world 1 ."},
+                    {"text":"hello_world_2.java", "type":"file", "data":"I am hello world 2 ."}
+                ]},
+                {"text":"dist", "type":"directory", "children":[]},
+                {"text":"Application.java", "type":"file", "data":"I am application.java"},
+            ];
             $scope.updateFileTree(data)
         }
 
