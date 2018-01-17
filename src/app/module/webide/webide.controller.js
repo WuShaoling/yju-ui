@@ -9,7 +9,7 @@
     webideCtrl.$inject = ['$scope', '$timeout', 'usSpinnerService', '$uibModal', '$state', 'stuCourseSrv', '$stateParams', 'cloudwareUrl', '$window', '$rootScope'];
     webide_addfile_ctrl.$inject = ['param', '$scope', '$uibModalInstance', 'classManagementSrv', '$stateParams'];
 
-    function webide_addfile_ctrl(param, $scope, $uibModalInstance, classManagementSrv, $stateParams, ) {
+    function webide_addfile_ctrl(param, $scope, $uibModalInstance, classManagementSrv, $stateParams) {
         if (param.type === 0) {
             $scope.title = "新建目录"
         } else if (param.type === 1) {
@@ -26,7 +26,6 @@
             } else {
                 $scope.filePath = param.filePath;
             }
-
         }
 
         $scope.cancel = function() {
@@ -89,7 +88,7 @@
                 if (data.selected[0] !== undefined) {
                     $scope.currentFileId = data.selected[0];
 
-                    let temp = "";
+                    var temp = "";
                     for (i=0; i<data.instance.get_path(data.selected[0]).length; i++) {
                         temp += data.instance.get_path(data.selected[0])[i];
                         if (i>0) {
@@ -144,7 +143,7 @@
             }
 
             console.log("targetId  " + $scope.targetId)
-            let obj = {
+            var obj = {
                 filePath: $scope.currentFilePath,
                 type: type
             }
@@ -184,8 +183,8 @@
         }
 
         $scope.saveFiles = function () {
-            // let files = $('#container').jstree(true).get_json('#', {flat:true})
-            let file = [ {"text":"/", "type":"directory", "children": [
+            // var files = $('#container').jstree(true).get_json('#', {flat:true})
+            var file = [ {"text":"/", "type":"directory", "children": [
                     {"text":"src", "type":"directory", "children":[
                         {"text":"hello_world_1.java", "type":"file", "data":"I am hello world 1 ."},
                         {"text":"hello_world_2.java", "type":"file", "data":"I am hello world 2 ."}
@@ -260,7 +259,7 @@
         $scope.test = function () {
             // $scope.getFiles();
 
-            let file = [ {"text":"/", "type":"directory", "children": [
+            var file = [ {"text":"/", "type":"directory", "children": [
                 {"text":"src", "type":"directory", "children":[
                     {"text":"hello_world_1.java", "type":"file", "data":"I am hello world 1 ."},
                     {"text":"hello_world_2.java", "type":"file", "data":"I am hello world 2 ."}
@@ -272,7 +271,7 @@
             $scope.updateFileTree(file)
         }
 
-        let initRequest = function () {
+        var initRequest = function () {
             $.ajax({
                 // url: cloudwareUrl + '/services',
                 url: 'http://192.168.1.118:8080' + '/services',    // todo test to delete
@@ -329,7 +328,7 @@
         }
 
 
-        let init = function () {
+        var init = function () {
             // initRequest()
 
             $timeout(function(){
