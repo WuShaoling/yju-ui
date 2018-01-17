@@ -19,7 +19,7 @@
         $scope.runResult = 'result result result result result result result result result result ';
         $scope.fileTreeData = null;
         $scope.currentFile = null;
-        $scope.currentCode = '\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n';
+        $scope.currentCode = '';
         $scope.display_rightbar = true;
 
         /* INIT FILE TREE */
@@ -103,7 +103,7 @@
             $('#container').jstree(true).settings.core.data = newDate;
             $('#container').jstree(true).refresh();
         }
-        
+
         
         
         $scope.getFiles = function () {
