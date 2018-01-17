@@ -10,6 +10,9 @@
     webide_addfile_ctrl.$inject = ['param', '$scope', '$uibModalInstance', 'classManagementSrv', '$stateParams'];
 
     function webide_addfile_ctrl(param, $scope, $uibModalInstance, classManagementSrv, $stateParams) {
+        var isValidFile = function(str) { return /^\w+\.(java)$/.test(str); }
+        var isValidDir = function(str) { return /^\w+$/.test(str); }
+
         if (param.type === 0) {
             $scope.title = "新建目录"
         } else if (param.type === 1) {
@@ -33,7 +36,18 @@
         }
         
         $scope.sure = function () {
-            // todo 正则校验 文件名
+            if (param.type === 0) {
+                if (!isValidDir($scope.newFile)) {
+                    toastr.error("请输入正确的目录名")
+                    return;
+                }
+            } else if (param.type === 1) {
+                if (!isValidFile($scope.newFile)) {
+                    toastr.error("请输入正确的文件名")
+                    return;
+                }
+            }
+
             $uibModalInstance.close({
                 data: {"text":$scope.newFile, "type":param.type?"file":"directory"}
             });
@@ -183,16 +197,7 @@
         }
 
         $scope.saveFiles = function () {
-            // var files = $('#container').jstree(true).get_json('#', {flat:true})
-            var file = [ {"text":"/", "type":"directory", "children": [
-                    {"text":"src", "type":"directory", "children":[
-                        {"text":"hello_world_1.java", "type":"file", "data":"I am hello world 1 ."},
-                        {"text":"hello_world_2.java", "type":"file", "data":"I am hello world 2 ."}
-                    ]},
-                    {"text":"dist", "type":"directory", "children":[]},
-                    {"text":"Application.java", "type":"file", "data":"I am application.java"}
-                ]}
-            ]
+            var files = $('#container').jstree(true).get_json('#', {flat:true})
             $.ajax({
                 // url: $scope.webidUrl + "/srcfiles"
                 url: "http://192.168.1.114:8080/srcfiles",
