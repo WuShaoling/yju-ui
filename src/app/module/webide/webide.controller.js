@@ -302,6 +302,17 @@
             $scope.updateFileTree(file)
         }
 
+        $scope.display_full_editor = true;
+        $scope.fullEditor = function () {
+            $scope.display_full_editor = !$scope.display_full_editor;
+
+            if (!$scope.display_full_editor) {
+                angular.element('.CodeMirror').css({"position":"absolute"});
+            } else {
+                angular.element('.CodeMirror').css({"position":"relative"});
+            }
+        }
+
         var initRequest = function () {
             $.ajax({
                 // url: cloudwareUrl + '/services',
@@ -381,14 +392,10 @@
         $scope.resizeMouseDown2 = function ($event) {
             startMoving2 = true;
         }
-        $scope.resizeMouseDown3 = function ($event) {
-            startMoving3 = true;
-        }
 
         $(document).mouseup(function () {
             startMoving = false;
             startMoving2 = false;
-            startMoving3 = false;
         })
         $(document).mousemove(function (e) {
             if(startMoving) {
@@ -405,13 +412,8 @@
                 $($('#editor')[0]).width(originalLeftWidth - ($($('#container_box')[0]).width() - currentDesignWidth));
                 e.preventDefault();
             }
-            if(startMoving3) {
-                // can't move
-                e.preventDefault();
-            }
+
         })
-
-
 
 
         if(!$scope.isLogin){
