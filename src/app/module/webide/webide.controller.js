@@ -61,7 +61,7 @@
     function webideCtrl($scope, $timeout, usSpinnerService, $uibModal, $state, stuCourseSrv, $stateParams, cloudwareUrl, $window, $rootScope) {
 
         $scope.webidUrl = null;
-        $scope.runResult = 'result result result result result result result result result result ';
+        $scope.runResult = '';
         $scope.fileTreeData = null;
         $scope.currentFilePath = '/';
         $scope.currentFileId = null;
@@ -124,23 +124,15 @@
         })
 
         /* INIT WEB EDITOR */
-        $scope.themes = ['default',"3024-day",'3024-night','neat','solarized','monokai']
-        $scope.theme = $scope.themes[0];
         $scope.cmOption = {
             lineNumbers: true,
             indentWithTabs: true,
-            lineWrapping: true,
-            viewportMargin: 100,
-            height:300,
             styleActiveLine: true,
             matchBrackets: true,
+            viewportMargin: 30,
             mode: 'java',
             theme:"default"
         };
-        $scope.changeTheme = function() {
-            $scope.cmOption.theme = $scope.theme
-        }
-
 
         $scope.$watch('currentFileData',function(newValue, oldValue, scope){
             var node = $('#container').jstree('get_node', $scope.currentFileId);

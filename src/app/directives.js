@@ -37,6 +37,7 @@ angular.module('phoenix')
                         angular.element('#leftNav').hide(200, function() {
                             $($('#design')[0]).css({"float": ""});
                             $($('#design')[0]).width("85%");
+                            $($('#editor')[0]).width("79.5%");
                         });
 
                         $scope.leftText = "显示教程";
@@ -44,6 +45,7 @@ angular.module('phoenix')
                     } else {
                         $($('#design')[0]).css({"float": "right"});
                         $($('#design')[0]).width(originalRightWidth);
+                        $($('#editor')[0]).width("46.33%");
                         angular.element('#leftNav').show(200, function () {
                             angular.element('#resizeDiv').show();
                             $($('#leftNav')[0]).css({"min-width": "33%"});
@@ -56,6 +58,8 @@ angular.module('phoenix')
                     if (!$scope.maximized) {
                         originalLeftWidth = $($('#leftNav')[0]).width();
                         angular.element('#resizeDiv').hide(500);
+                        angular.element('#editor').hide(500);
+                        angular.element('#container_box').hide(500);
                         angular.element('#design').hide(500, function() {
                             $($('#leftNav')[0]).css({"max-width": "100%"});
                             $($('#leftNav')[0]).width("100%");
@@ -65,6 +69,8 @@ angular.module('phoenix')
                         $($('#leftNav')[0]).width(originalLeftWidth);
                         angular.element('#resizeDiv').show(500);
                         angular.element('#design').show(500);
+                        angular.element('#editor').show(500);
+                        angular.element('#container_box').show(500);
                     }
                     $scope.maximized = !$scope.maximized;
                 }
