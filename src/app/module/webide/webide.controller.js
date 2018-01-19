@@ -306,13 +306,17 @@
         $scope.fullEditor = function () {
             $scope.display_full_editor = !$scope.display_full_editor;
 
-            if (!$scope.display_full_editor) {
+            if ($scope.display_full_editor) {
                 angular.element('.CodeMirror').css({"position":"absolute"});
             } else {
                 angular.element('.CodeMirror').css({"position":"relative"});
             }
         }
 
+        $scope.deleteFile = function () {
+            $('#container').jstree('delete_node', $scope.currentFileId);
+        }
+        
         var initRequest = function () {
             $.ajax({
                 // url: cloudwareUrl + '/services',
