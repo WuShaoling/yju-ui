@@ -362,7 +362,10 @@
 
             $timeout(function(){
                 $("#codeFolder").css("position","absolute");
+                $($('.CodeMirror cm-s-default')[0]).css({"height": "200px"});
             })
+
+
         }
         init()
 
