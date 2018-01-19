@@ -119,6 +119,8 @@
                     $scope.currentFileData = data.instance.get_node(data.selected[0]).data;
 
                     $scope.currentFileType = data.instance.get_type(data.selected[0]);
+
+                    $scope.$apply();
                 }
             })
         })
