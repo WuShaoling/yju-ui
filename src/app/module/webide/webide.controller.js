@@ -216,18 +216,20 @@
         }
 
         $scope.runFiles = function () {
-            $.ajax({
-                // url: $scope.webidUrl + "/result/" + $stateParams.studentId,
-                url: "http://192.168.1.114:8080/result/6",
-                method: 'get',
-                dataType: 'json',
-                success: function (response) {
-                    console.log(response.result)
-                },
-                error: function (response) {
-                    console.log(response)
-                }
-            })
+            $scope.runResult = 'I am a result ....'
+            // $.ajax({
+            //     // url: $scope.webidUrl + "/result/" + $stateParams.studentId,
+            //     url: "http://192.168.1.114:8080/result/6",
+            //     method: 'get',
+            //     dataType: 'json',
+            //     success: function (response) {
+            //         console.log(response.result)
+            //         $scope.runResult = response.result;
+            //     },
+            //     error: function (response) {
+            //         console.log(response)
+            //     }
+            // })
         }
 
         var deleteWebide= function () {
@@ -265,10 +267,42 @@
             var file = [ {"text":"/", "type":"directory", "children": [
                 {"text":"src", "type":"directory", "children":[
                     {"text":"hello_world_1.java", "type":"file", "data":"I am hello world 1 ."},
-                    {"text":"hello_world_2.java", "type":"file", "data":"I am hello world 2 ."}
+                    {"text":"hello_world_2.java", "type":"file", "data":"I am hello world 2 ."},
+                    {"text":"hello_world_2.java", "type":"file", "data":"I am hello world 2 ."},
+                    {"text":"hello_world_2.java", "type":"file", "data":"I am hello world 2 ."},
+                    {"text":"hello_world_2.java", "type":"file", "data":"I am hello world 2 ."},
+                    {"text":"hello_world_2.java", "type":"file", "data":"I am hello world 2 ."},
+                    {"text":"hello_world_2.java", "type":"file", "data":"I am hello world 2 ."},
+                    {"text":"hello_world_2.java", "type":"file", "data":"I am hello world 2 ."},
+                    {"text":"hello_world_2.java", "type":"file", "data":"I am hello world 2 ."},
+                    {"text":"hello_world_2.java", "type":"file", "data":"I am hello world 2 ."},
+                    {"text":"hello_world_2.java", "type":"file", "data":"I am hello world 2 ."},
+                    {"text":"hello_world_2.java", "type":"file", "data":"I am hello world 2 ."},
+                    {"text":"hello_world_2.java", "type":"file", "data":"I am hello world 2 ."},
+                    {"text":"hello_world_2.java", "type":"file", "data":"I am hello world 2 ."},
+                    {"text":"hello_world_2.java", "type":"file", "data":"I am hello world 2 ."},
+                    {"text":"hello_world_2.java", "type":"file", "data":"I am hello world 2 ."},
+                    {"text":"hello_world_2.java", "type":"file", "data":"I am hello world 2 ."},
+                    {"text":"hello_world_2.java", "type":"file", "data":"I am hello world 2 ."},
+                    {"text":"hello_world_2.java", "type":"file", "data":"I am hello world 2 ."},
+                    {"text":"hello_world_2.java", "type":"file", "data":"I am hello world 2 ."},
+                    {"text":"hello_world_2.java", "type":"file", "data":"I am hello world 2 ."},
+                    {"text":"hello_world_2.java", "type":"file", "data":"I am hello world 2 ."},
+                    {"text":"hello_world_2.java", "type":"file", "data":"I am hello world 2 ."},
+                    {"text":"hello_world_2.java", "type":"file", "data":"I am hello world 2 ."},
+                    {"text":"hello_world_2.java", "type":"file", "data":"I am hello world 2 ."},
+                    {"text":"hello_world_2.java", "type":"file", "data":"I am hello world 2 ."},
+                    {"text":"hello_world_2.java", "type":"file", "data":"I am hello world 2 ."},
+                    {"text":"hello_world_2.java", "type":"file", "data":"I am hello world 2 ."},
+                    {"text":"hello_world_2.java", "type":"file", "data":"I am hello world 2 ."},
+                    {"text":"hello_world_2.java", "type":"file", "data":"I am hello world 2 ."},
+                    {"text":"hello_world_2.java", "type":"file", "data":"I am hello world 2 ."},
+                    {"text":"hello_world_2.java", "type":"file", "data":"I am hello world 2 ."},
+                    {"text":"hello_world_2.java", "type":"file", "data":"I am hello world 2 ."},
+                    {"text":"hello_world_2.java", "type":"file", "data":"I am hello world 2 ."},
                 ]},
                 {"text":"dist", "type":"directory", "children":[]},
-                {"text":"Application.java", "type":"file", "data":"I am application.java"}
+                {"text":"Application.java", "type":"file", "data":"I am application.java"},
             ]}
             ]
             $scope.updateFileTree(file)
