@@ -132,7 +132,7 @@
             height:300,
             styleActiveLine: true,
             matchBrackets: true,
-            mode: 'javascript',
+            mode: 'java',
             theme:"default"
         };
         $scope.changeTheme = function() {
@@ -141,7 +141,8 @@
 
 
         $scope.$watch('currentFileData',function(newValue, oldValue, scope){
-            console.log(newValue)
+            var node = $('#container').jstree('get_node', $scope.currentFileId);
+            node.data = newValue
         });
 
         $scope.updateFileTree = function (newDate) {
@@ -156,7 +157,6 @@
                 $scope.targetId = $scope.currentFileId;
             }
 
-            console.log("targetId  " + $scope.targetId)
             var obj = {
                 filePath: $scope.currentFilePath,
                 type: type
@@ -172,11 +172,7 @@
             });
 
             modalInstance.result.then(function(result) {
-                console.log(result);
-
-                //todo rain
                 $('#container').jstree('create_node', $scope.targetId, result.data, "last", false, false);
-
             });
         }
         
