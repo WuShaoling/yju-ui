@@ -373,12 +373,22 @@
         $scope.isLogin = localStorage["logined"] === 'true';
 
         var startMoving;
+        var startMoving2;
+        var startMoving3;
         $scope.resizeMouseDown = function ($event) {
             startMoving = true;
         }
+        $scope.resizeMouseDown2 = function ($event) {
+            startMoving2 = true;
+        }
+        $scope.resizeMouseDown3 = function ($event) {
+            startMoving3 = true;
+        }
+
         $(document).mouseup(function () {
             startMoving = false;
             startMoving2 = false;
+            startMoving3 = false;
         })
         $(document).mousemove(function (e) {
             if(startMoving) {
@@ -386,6 +396,17 @@
                 var currentDesignWidth = $($('#editor')[0]).width();
                 $($('#leftNav')[0]).width(e.clientX);
                 $($('#editor')[0]).width(currentDesignWidth - ($($('#leftNav')[0]).width() - originalLeftWidth));
+                e.preventDefault();
+            }
+            if(startMoving2) {
+                var originalLeftWidth = $($('#container_box')[0]).width();
+                var currentDesignWidth = $($('#editor')[0]).width();
+                $($('#container_box')[0]).width(e.clientX - $($('#leftNav')[0]).width());
+                $($('#editor')[0]).width(originalLeftWidth - ($($('#container_box')[0]).width() - currentDesignWidth));
+                e.preventDefault();
+            }
+            if(startMoving3) {
+                // can't move
                 e.preventDefault();
             }
         })

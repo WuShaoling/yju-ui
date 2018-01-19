@@ -11,7 +11,7 @@
     </div>
 
     <!--Vertical line-->
-    <div style="width:2px; background-color: #0060b1; height:800px; float: left;"></div>
+    <div style="width:2.2px; background-color: #0060b1; height:800px; float: left; cursor: ew-resize;" id="resizeDiv2" ng-mousedown="resizeMouseDown2($event)"></div>
 
     <!--Editor-->
     <div style="background-color: #F5f5f5; z-index:9; height:100%; width:46.33%; float:right" id="editor">
@@ -20,8 +20,11 @@
             <textarea ui-codemirror="cmOption"  ng-model="currentFileData" id="code"></textarea>
         </div>
 
+        <!--Horizontal line-->
+        <div style="background-color: #0060b1; height:3px; width:100%; cursor: ns-resize;" id="resizeDiv3" ng-mousedown="resizeMouseDown3($event)"></div>
+
         <!--Result-->
-        <div style="border-width:2px 0 0 0; border-style:solid; border-color:black; height:20%;" id="runResult">
+        <div style="height:20%;" id="runResult">
             <p>{{runResult}}</p>
         </div>
     </div>
