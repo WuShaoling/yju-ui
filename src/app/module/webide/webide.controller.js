@@ -362,15 +362,11 @@
 
             $timeout(function(){
                 $("#codeFolder").css("position","absolute");
-                $($('.CodeMirror cm-s-default')[0]).css({"height": "200px"});
             })
 
 
         }
         init()
-
-        /* ---------------------------------------------------------------------------------------------------------- */
-
 
         $scope.isLogin = localStorage["logined"] === 'true';
 
@@ -385,7 +381,7 @@
         $(document).mousemove(function (e) {
             if(startMoving) {
                 var originalLeftWidth = $($('#leftNav')[0]).width();
-                var currentDesignWidth = $($('#design')[0]).width();
+                var currentDesignWidth = $($('#editor')[0]).width();
                 $($('#leftNav')[0]).width(e.clientX);
                 $($('#editor')[0]).width(currentDesignWidth - ($($('#leftNav')[0]).width() - originalLeftWidth));
                 e.preventDefault();
