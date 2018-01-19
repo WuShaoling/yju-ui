@@ -15,8 +15,10 @@
 
         if (param.type === 0) {
             $scope.title = "新建目录"
+            $scope.tips = "新建文件夹名称"
         } else if (param.type === 1) {
             $scope.title = "新建文件"
+            $scope.tips = "新建文件名称"
         }
 
         if (param.filePath.includes(".")) {
@@ -43,7 +45,7 @@
                 }
             } else if (param.type === 1) {
                 if (!isValidFile($scope.newFile)) {
-                    toastr.error("请输入正确的文件名")
+                    toastr.error("请输入正确的文件名，文件名以.java结尾")
                     return;
                 }
             }

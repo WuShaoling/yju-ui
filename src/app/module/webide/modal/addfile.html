@@ -1,8 +1,8 @@
 <div class="inmodal">
     <div class="modal-body">
         <p>{{title}}</p>
-        <p nstyle=" display: inline-block" disabled> {{filePath}}</p>
-        <input ng-model="newFile" style=" display: inline-block">
+        <p>当前路径：{{filePath}}</p>
+        <label>{{tips}}：</label> <input ng-model="newFile" style=" display: inline-block">
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-white" ng-click="cancel()">取消</button>
