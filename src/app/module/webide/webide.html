@@ -2,21 +2,33 @@
 
 <div style="width:5px; background-color: #0060b1; height:800px; float: left; cursor: ew-resize;" id="resizeDiv" ng-mousedown="resizeMouseDown($event)" ></div>
 
+<div style="height: 800px;">
+    <!--File tree-->
+    <div style="background-color: #F5f5f5; z-index:9; height:100%; width:20%; float:left; margin-left:auto; margin-right:auto; display: inline-block;" id="container_box">
+        <div id="container"></div>
+    </div>
 
-<div style="background-color: #F5f5f5; z-index:9; height:800px; width:20%; float:left; margin-left:auto; margin-right:auto;" id="container_box">
-    <div id="container"></div>
+    <!--Vertical line-->
+    <div style="width:2px; background-color: #0060b1; height:800px; float: left; cursor: ew-resize;"></div>
+
+    <!--Editor-->
+    <div style="background-color: #F5f5f5; z-index:9; height:100%; width:46.35%; float:right" id="editor">
+        <!--CodeMirror-->
+        <div style="height:80%;" id="design">
+            <textarea ui-codemirror="cmOption"  ng-model="currentFileData"></textarea>
+        </div>
+
+        <!--Result-->
+        <div style="border-width:2px 0 0 0; border-style:solid; border-color:black; height:20%;" id="runResult">
+            <p>{{runResult}}</p>
+        </div>
+    </div>
 </div>
 
-<div style="background-color: #F5f5f5; z-index:9; height:800px; width:46%; float:right; margin-left:auto; margin-right:auto;" id="design">
 
-    <textarea ui-codemirror="cmOption"  ng-model="currentFileData"></textarea>
-
-</div>
-
-<!--<div style="height: 200px; ">-->
-    <!--{{runResult}}-->
-<!--</div>-->
 <div left-Bar ></div>
+
+
 
 <!--right bar-->
 <button style="position: fixed;top:100px;right:0;z-index:101; height: 30px; width: 38px" class="navbar-minimalize minimalize-styl-2 btn btn-success " uib-tooltip="隐藏" ng-show="display_rightbar" ng-click="toggleRightBar()"><i class="fa fa-arrow-right"></i></button>
