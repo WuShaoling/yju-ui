@@ -16,7 +16,7 @@
     function webideCtrl($scope, $timeout, usSpinnerService, $uibModal, $state, stuCourseSrv, $stateParams, cloudwareUrl, $window, $rootScope) {
 
         $scope.webideBaseUrl = "http://localhost:7070/ws/";
-        $scope.webideUrl = "http://localhost:7070/ws/test";
+        $scope.webideUrl = "http://baidu.com";
 
         $scope.webideServiceUrl = null;
         $scope.webideServiceId = null;
@@ -24,6 +24,10 @@
 
         $scope.display_right_bar = true;
         $scope.md_full_screen = false;
+
+        $scope.test = function () {
+            // $scope.webideUrl = "http://baidu.com"
+        }
 
         $scope.toggle_right_bar = function () {
             $scope.display_right_bar = !$scope.display_right_bar;
@@ -36,7 +40,6 @@
                 angular.element('#resizeDiv').hide();
                 angular.element('#leftNav').hide();
                 angular.element('#design').width("100%");
-
             } else {
                 angular.element('#resizeDiv').show();
                 angular.element('#leftNav').show();
@@ -47,8 +50,8 @@
 
         var initRequest = function () {
             $.ajax({
-                // url: cloudwareUrl + '/services',
-                url: 'http://192.168.1.118:8080' + '/services',
+                url: cloudwareUrl + '/services',
+                // url: 'http://192.168.1.118:8080' + '/services',
                 method: 'post',
                 data: {
                     'secret': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJpYXQiOjE1MDU4MTM0NTd9.Ftw1yHeUrqdNvymFZcIpuEoS0RHBFZqu4MfUZON9Zm0',
@@ -57,9 +60,12 @@
                 },
                 dataType: 'json',
                 success: function (response) {
-                    $scope.webideServiceUrl = response.ws
-                    $scope.webideServiceId = response.service_id
-                    $scope.webideServiceName = response.service_name
+                    $scope.webideServiceUrl = response.ws;
+                    $scope.webideServiceId = response.service_id;
+                    $scope.webideServiceName = response.service_name;
+
+                    $scope.webideUrl = $scope.webideBaseUrl + $stateParams.studentId + "/?wsUrl=" +  $scope.webideServiceUrl
+                    console.log($scope.webideUrl)
 
                     // Homework
                     if ($stateParams.type === '0') {
@@ -125,7 +131,8 @@
 
 
         var init = function () {
-
+            // initRequest()
+            $window.onbeforeunload =  deleteWebide;
         }
         init()
 
