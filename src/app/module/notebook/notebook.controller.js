@@ -27,6 +27,7 @@
                         if (response.errorCode === 0) {
                             // existed
                             $scope.notebookUrl = response.data.webSocket;
+
                         } else if (response.errorCode === 7 || response.errorCode === 47) {
                             // not existed
                             $scope.loading = false

@@ -64,11 +64,11 @@
                     $scope.webideServiceId = response.service_id;
                     $scope.webideServiceName = response.service_name;
 
-                    $scope.webideUrl = $scope.webideBaseUrl + $stateParams.studentId + "/?wsUrl=" +  $scope.webideServiceUrl
-                    console.log($scope.webideUrl)
-
                     // Homework
                     if ($stateParams.type === '0') {
+                        $scope.webideUrl = $scope.webideBaseUrl + $stateParams.studentId+ '_' + $stateParams.homeworkId + "/?wsUrl=" +  $scope.webideServiceUrl
+                        console.log($scope.webideUrl)
+
                         var param = {
                             "homeworkId": $stateParams.homeworkId,
                             "pulsarId": response.pulsar_id,
@@ -85,6 +85,9 @@
 
                     // Experiment
                     if ($stateParams.type === '1') {
+                        $scope.webideUrl = $scope.webideBaseUrl + $stateParams.studentId+ '_' + $stateParams.experimentId + "/?wsUrl=" +  $scope.webideServiceUrl
+                        console.log($scope.webideUrl)
+
                         var param = {
                             "experimentId": $stateParams.experimentId,
                             "pulsarId": response.pulsar_id,
