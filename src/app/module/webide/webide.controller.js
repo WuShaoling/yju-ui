@@ -15,7 +15,7 @@
 
     function webideCtrl($scope, $timeout, usSpinnerService, $uibModal, $state, stuCourseSrv, $stateParams, cloudwareUrl, $window, $rootScope) {
 
-        $scope.webideBaseUrl = "http://localhost:7070/ws/";
+        $scope.webideBaseUrl = "http://api.cloudwarehub.com:8080/ws/";
         $scope.webideUrl = "http://baidu.com";
 
         $scope.webideServiceUrl = null;
@@ -24,10 +24,6 @@
 
         $scope.display_right_bar = true;
         $scope.md_full_screen = false;
-
-        $scope.test = function () {
-            // $scope.webideUrl = "http://baidu.com"
-        }
 
         $scope.toggle_right_bar = function () {
             $scope.display_right_bar = !$scope.display_right_bar;
@@ -50,8 +46,8 @@
 
         var initRequest = function () {
             $.ajax({
-                url: cloudwareUrl + '/services',
-                // url: 'http://192.168.1.118:8080' + '/services',
+                // url: cloudwareUrl + '/services',
+                url: 'http://192.168.1.110:8080/services',
                 method: 'post',
                 data: {
                     'secret': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJpYXQiOjE1MDU4MTM0NTd9.Ftw1yHeUrqdNvymFZcIpuEoS0RHBFZqu4MfUZON9Zm0',
@@ -67,7 +63,7 @@
                     // Homework
                     if ($stateParams.type === '0') {
                         $scope.webideUrl = $scope.webideBaseUrl + $stateParams.studentId+ '_' + $stateParams.homeworkId + "/?wsUrl=" +  $scope.webideServiceUrl
-                        console.log($scope.webideUrl)
+                        console.log('webideUrl: ' + $scope.webideUrl)
 
                         var param = {
                             "homeworkId": $stateParams.homeworkId,
@@ -134,7 +130,7 @@
 
 
         var init = function () {
-            // initRequest()
+            initRequest()
             $window.onbeforeunload =  deleteWebide;
         }
         init()
