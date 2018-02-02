@@ -46,8 +46,7 @@
 
         var initRequest = function () {
             $.ajax({
-                // url: cloudwareUrl + '/services',
-                url: 'http://192.168.1.110:8080/services',
+                url: cloudwareUrl + '/services',
                 method: 'post',
                 data: {
                     'secret': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJpYXQiOjE1MDU4MTM0NTd9.Ftw1yHeUrqdNvymFZcIpuEoS0RHBFZqu4MfUZON9Zm0',
