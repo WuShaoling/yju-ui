@@ -16,7 +16,7 @@
     function webideCtrl($scope, $timeout, usSpinnerService, $uibModal, $state, stuCourseSrv, $stateParams, cloudwareUrl, $window, $rootScope) {
 
         $scope.webideBaseUrl = "http://api.cloudwarehub.com:8080/ws/";
-        $scope.webideUrl = "http://baidu.com";
+        $scope.webideUrl = "http://www.x-lab.ac:13004/";
 
         $scope.webideServiceUrl = null;
         $scope.webideServiceId = null;
