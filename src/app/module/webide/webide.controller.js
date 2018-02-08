@@ -16,7 +16,6 @@
     function webideCtrl($scope, $timeout, usSpinnerService, $uibModal, $state, stuCourseSrv, $stateParams, cloudwareUrl, $window, $rootScope) {
 
         $scope.webideBaseUrl = "http://api.cloudwarehub.com:8080/ws/";
-        $scope.webideUrl = "http://www.x-lab.ac:13004/";
 
         $scope.webideServiceUrl = null;
         $scope.webideServiceId = null;
@@ -24,6 +23,8 @@
 
         $scope.display_right_bar = true;
         $scope.md_full_screen = false;
+
+        $scope.loaded = false;
 
         $scope.toggle_right_bar = function () {
             $scope.display_right_bar = !$scope.display_right_bar;
@@ -55,14 +56,16 @@
                 },
                 dataType: 'json',
                 success: function (response) {
+                    $scope.loaded = true;
                     $scope.webideServiceUrl = response.ws;
                     $scope.webideServiceId = response.service_id;
                     $scope.webideServiceName = response.service_name;
 
                     // Homework
                     if ($stateParams.type === '0') {
-                        $scope.webideUrl = $scope.webideBaseUrl + $stateParams.studentId+ '_' + $stateParams.homeworkId + "/?wsUrl=" +  $scope.webideServiceUrl
-                        console.log('webideUrl: ' + $scope.webideUrl)
+                        var webIdeUrl = $scope.webideBaseUrl + $stateParams.studentId+ '_' + $stateParams.homeworkId + "/?wsUrl=" +  $scope.webideServiceUrl
+                        console.log('webIdeUrl: ' + webIdeUrl)
+                        createIframe(webIdeUrl)
 
                         var param = {
                             "homeworkId": $stateParams.homeworkId,
@@ -80,8 +83,9 @@
 
                     // Experiment
                     if ($stateParams.type === '1') {
-                        $scope.webideUrl = $scope.webideBaseUrl + $stateParams.studentId+ '_' + $stateParams.experimentId + "/?wsUrl=" +  $scope.webideServiceUrl
-                        console.log($scope.webideUrl)
+                        var webIdeUrl = $scope.webideBaseUrl + $stateParams.studentId+ '_' + $stateParams.experimentId + "/?wsUrl=" +  $scope.webideServiceUrl
+                        console.log('webIdeUrl: ' + webIdeUrl)
+                        createIframe(webIdeUrl)
 
                         var param = {
                             "experimentId": $stateParams.experimentId,
@@ -128,8 +132,32 @@
         }
 
 
+        var createIframe = function (url) {
+            var oldIframe = document.getElementById("iframe");
+            if (oldIframe != null) {
+                document.getElementById("design").removeChild(oldIframe);
+            }
+
+            var iframe = document.createElement('iframe');
+            iframe.id = "iframe";
+            iframe.src = url;
+            iframe.style = "height:100%;width:100%";
+            document.getElementById("design").appendChild(iframe);
+        }
+
+
         var init = function () {
-            initRequest()
+            // 创建loading iframe
+            var loadingUrl = "http://www.x-lab.ac:13004/";
+            createIframe(loadingUrl);
+
+            // 请求webide容器
+            if (!$scope.loaded) {
+                console.log('Requesting...')
+                initRequest()
+            }
+
+            // 退出时删除容器
             $window.onbeforeunload =  deleteWebide;
         }
         init()
