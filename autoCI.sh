@@ -5,6 +5,7 @@ apt-get update
 apt-get install -y npm
 ln -s /usr/bin/nodejs /usr/bin/node
 npm install -g gulp
+npm install -g bower
 npm install
 bower install
 
