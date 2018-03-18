@@ -1,6 +1,8 @@
 #! /bin/bash
 
-echo install gulp
+
+echo "installing gulp..."
+apt-get install nodejs
 npm install -g gulp
 
 echo "Cleaning..."
