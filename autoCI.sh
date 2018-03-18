@@ -3,7 +3,7 @@
 echo "installing gulp..."
 add-apt-repository ppa:chris-lea/node.js
 apt-get update
-apt-get install nodejs
+apt-get install -y nodejs
 npm install -g gulp
 
 echo "Cleaning..."
