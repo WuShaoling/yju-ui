@@ -320,7 +320,7 @@
                     var buf = new ArrayBuffer(5);
                     var dv = new DataView(buf);
                     dv.setUint8(0, 3);
-                    dv.setUint32(1, mapKey(i), true);
+                    dv.setUint32(1, mapKey(e.which), true);
                     if (ws.readyState == 1 && canvasOnFocus)
                         ws.send(buf);
                 };
