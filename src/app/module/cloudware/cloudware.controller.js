@@ -257,7 +257,6 @@
                     canvas.tabIndex = 0
                 }
 
-                var canvasOnFocus = true
                 canvas.oncontextmenu = function(e) {
                     return false;
                 }
@@ -284,22 +283,16 @@
                     dv.setUint8(0, 0);
                     dv.setUint16(1, x, true);
                     dv.setUint16(3, y, true);
-                    if (ws.readyState == 1 && canvasOnFocus)
+                    if (ws.readyState == 1)
                         ws.send(buf);
                 };
-                canvas.onblur = function (e) {
-                    canvasOnFocus = false;
-                }
-                canvas.onfocus = function (e) {
-                    canvasOnFocus = true;
-                }
                 canvas.onmousedown = function(e) {
                     e.preventDefault();
                     var buf = new ArrayBuffer(5);
                     var dv = new DataView(buf);
                     dv.setUint8(0, 1);
                     dv.setUint32(1, e.which, true);
-                    if (ws.readyState == 1 && canvasOnFocus)
+                    if (ws.readyState == 1)
                         ws.send(buf);
                 };
                 canvas.onmouseup = function(e) {
@@ -308,32 +301,26 @@
                     var dv = new DataView(buf);
                     dv.setUint8(0, 2);
                     dv.setUint32(1, e.which, true);
-                    if (ws.readyState == 1 && canvasOnFocus)
+                    if (ws.readyState == 1)
                         ws.send(buf);
                 };
-                document.onkeydown = function(e) {
+                canvas.onkeydown = function(e) {
                     e.preventDefault();
                     console.log("key:" + e.key + " which:" + e.which + " mapto: " + (mapKey(e.which)-8));
-                    if (e.keyCode == 9 || e.keyCode == 32) { //tab pressed
-                        e.preventDefault(); // stops its action
-                    }
                     var buf = new ArrayBuffer(5);
                     var dv = new DataView(buf);
                     dv.setUint8(0, 3);
                     dv.setUint32(1, mapKey(e.which), true);
-                    if (ws.readyState == 1 && canvasOnFocus)
+                    if (ws.readyState == 1)
                         ws.send(buf);
                 };
-                document.onkeyup = function(e) {
+                canvas.onkeyup = function(e) {
                     e.preventDefault();
-                    if (e.keyCode == 9 || e.keyCode == 32) { //tab pressed
-                        e.preventDefault(); // stops its action
-                    }
                     var buf = new ArrayBuffer(5);
                     var dv = new DataView(buf);
                     dv.setUint8(0, 4);
                     dv.setUint32(1, mapKey(e.which), true);
-                    if (ws.readyState == 1 && canvasOnFocus)
+                    if (ws.readyState == 1)
                         ws.send(buf);
                 };
             };
@@ -495,17 +482,17 @@
         var xkm = [
             [65406, 0, 65406, 0, 0, 0, 0],
             [65307, 0, 65307, 0, 0, 0, 0],
-            [49, 33, 49, 33, 0, 0, 0],
+            [49, 0, 49, 0, 0, 0, 0],
             [50, 64, 50, 64, 0, 0, 0],
-            [51, 35, 51, 35, 0, 0, 0],
-            [52, 36, 52, 36, 0, 0, 0],
+            [51, 0, 51, 0, 0, 0, 0],
+            [52, 0, 52, 0, 0, 0, 0],
             [53, 37, 53, 37, 0, 0, 0],
             [54, 94, 54, 94, 0, 0, 0],
             [55, 38, 55, 38, 0, 0, 0],
             [56, 42, 56, 42, 0, 0, 0],
             [57, 40, 57, 40, 0, 0, 0],
             [48, 41, 48, 41, 0, 0, 0],
-            [45, 95, 45, 95, 0, 0, 0],
+            [0, 95, 0, 95, 0, 0, 0],
             [61, 43, 61, 43, 0, 0, 0],
             [65288, 65288, 65288, 65288, 0, 0, 0],
             [65289, 65056, 65289, 65056, 0, 0, 0],
@@ -533,7 +520,7 @@
             [0, 75, 0, 75, 0, 0, 0],
             [108, 76, 108, 76, 0, 0, 0],
             [59, 58, 59, 58, 0, 0, 0],
-            [39, 34, 39, 34, 0, 0, 0],
+            [39, 0, 39, 0, 0, 0, 0],
             [0, 126, 0, 126, 0, 0, 0],
             [65505, 0, 65505, 0, 0, 0, 0],
             [92, 124, 92, 124, 0, 0, 0],
@@ -545,7 +532,7 @@
             [0, 78, 0, 78, 0, 0, 0],
             [0, 77, 0, 77, 0, 0, 0],
             [44, 60, 44, 60, 0, 0, 0],
-            [46, 62, 46, 62, 0, 0, 0],
+            [0, 62, 0, 62, 0, 0, 0],
             [47, 63, 47, 63, 0, 0, 0],
             [65506, 0, 65506, 0, 0, 0, 0],
             [65450, 106, 65450, 106, 65450, 65450, 269024801],
@@ -582,17 +569,17 @@
             [60, 62, 60, 62, 124, 166, 124],
             [65480, 122, 65480, 65480, 65480, 65480, 269024779],
             [65481, 123, 65481, 65481, 65481, 65481, 269024780],
-            [65360, 0, 65360, 0, 0, 0, 0],
+            [65360, 36, 65360, 0, 0, 0, 0],
             [65362, 0, 65362, 0, 0, 0, 0],
-            [65365, 0, 65365, 0, 0, 0, 0],
+            [65365, 33, 65365, 0, 0, 0, 0],
             [65361, 0, 65361, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0],
             [65363, 0, 65363, 0, 0, 0, 0],
-            [65367, 0, 65367, 0, 0, 0, 0],
+            [65367, 35, 65367, 0, 0, 0, 0],
             [65364, 0, 65364, 0, 0, 0, 0],
-            [65366, 0, 65366, 0, 0, 0, 0],
-            [65379, 0, 65379, 0, 0, 0, 0],
-            [65535, 0, 65535, 0, 0, 0, 0],
+            [65366, 34, 65366, 0, 0, 0, 0],
+            [65379, 45, 65379, 0, 0, 0, 0],
+            [65535, 46, 65535, 0, 0, 0, 0],
             [65421, 0, 65421, 0, 0, 0, 0],
             [65508, 0, 65508, 0, 0, 0, 0],
             [65299, 65387, 65299, 65387, 0, 0, 0],
