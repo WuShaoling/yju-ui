@@ -1,7 +1,11 @@
 #! /bin/bash
 
-echo "installing gulp..."
 apt-get update
+echo "install git..."
+
+echo "installing npm..."
+apt-get install -y git
+
 apt-get install -y npm
 ln -s /usr/bin/nodejs /usr/bin/node
 
