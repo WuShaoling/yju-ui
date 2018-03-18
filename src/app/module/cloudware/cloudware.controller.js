@@ -320,7 +320,7 @@
                     var buf = new ArrayBuffer(5);
                     var dv = new DataView(buf);
                     dv.setUint8(0, 3);
-                    dv.setUint32(1, i, true);
+                    dv.setUint32(1, i+8, true);
                     if (ws.readyState == 1 && canvasOnFocus)
                         ws.send(buf);
                 };
@@ -332,7 +332,7 @@
                     var buf = new ArrayBuffer(5);
                     var dv = new DataView(buf);
                     dv.setUint8(0, 4);
-                    dv.setUint32(1, i, true);
+                    dv.setUint32(1, i+8, true);
                     i++;
                     if (ws.readyState == 1 && canvasOnFocus)
                         ws.send(buf);
