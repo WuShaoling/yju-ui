@@ -4,9 +4,17 @@ echo "installing gulp..."
 apt-get update
 apt-get install -y npm
 ln -s /usr/bin/nodejs /usr/bin/node
-npm install -g gulp
+
+echo "install bower..."
 npm install -g bower
+
+echo "install gulp..."
+npm install -g gulp
+
+echo "npm installing..."
 npm install
+
+echo "bower installing..."
 bower install
 
 echo "Cleaning..."
