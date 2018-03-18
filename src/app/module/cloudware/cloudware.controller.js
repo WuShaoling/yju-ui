@@ -732,7 +732,6 @@
             '16': '65506', // SHIFT CHROME
             '17': '65507', // CTRL CHROME
             '18': '65513', // ALT CHROME
-            '34': '65307', // ESC CHROME
             '191': '47', // BACKSLASH CHROME
             '20': '65509', // CAPS CHROME
             '9': '65289', // TAB CHROME
