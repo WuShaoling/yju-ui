@@ -202,7 +202,7 @@
         function start(wsaddr, el, retryTime) {
             var retryTime = retryTime || 0;
             ws = new WebSocket(wsaddr);
-
+            var i = 0;
             var instance = {
                 canvas: null,
                 isFullscreen: false,
@@ -313,7 +313,7 @@
                 };
                 document.onkeydown = function(e) {
                     e.preventDefault();
-                    console.log("key:" + e.key + " which:" + e.which + " mapto: " + (mapKey(e.which)-8));
+                    console.log("key:" + e.key + " which:" + i + " mapto: " + (mapKey(i)-8));
                     if (e.keyCode == 9 || e.keyCode == 32) { //tab pressed
                         e.preventDefault(); // stops its action
                     }
@@ -332,7 +332,8 @@
                     var buf = new ArrayBuffer(5);
                     var dv = new DataView(buf);
                     dv.setUint8(0, 4);
-                    dv.setUint32(1, mapKey(e.which), true);
+                    dv.setUint32(1, mapKey(i), true);
+                    i++;
                     if (ws.readyState == 1 && canvasOnFocus)
                         ws.send(buf);
                 };
