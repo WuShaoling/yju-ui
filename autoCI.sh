@@ -3,9 +3,10 @@
 echo "installing gulp..."
 apt-get update
 apt-get install -y npm
-npm install -g gulp
-npm install gulp
 ln -s /usr/bin/nodejs /usr/bin/node
+npm install -g gulp
+npm install
+bower install
 
 echo "Cleaning..."
 gulp clean
