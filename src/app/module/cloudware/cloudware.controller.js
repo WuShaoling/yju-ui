@@ -253,7 +253,7 @@
                     canvas.height = 900;
                     canvas.style.width = '100%';
                     canvas.style.height = '100%';
-                    canvas.id = "theCanvas"
+                    canvas.id = "theCanvas";
                     canvas.tabIndex = 0
                 }
 
@@ -261,11 +261,12 @@
                     return false;
                 }
                 $('#design').css('height', 'initial');
-                canvas.focus()
+
                 $('#leftNav').height($('#design').height());
                 usSpinnerService.stop('ex-spinner');
-                instance.canvas = canvas
+                instance.canvas = canvas;
 
+                canvas.focus();
                 canvas.onmousemove = function(e) {
                     e.preventDefault();
                     var dom_left = canvas.offsetLeft + canvas.offsetParent.offsetLeft;
@@ -288,6 +289,7 @@
                 };
                 canvas.onmousedown = function(e) {
                     e.preventDefault();
+                    canvas.focus();
                     var buf = new ArrayBuffer(5);
                     var dv = new DataView(buf);
                     dv.setUint8(0, 1);
@@ -780,6 +782,10 @@
                 key = 35
             }
             return key;
+        }
+
+        $scope.onfocus = function () {
+            alert("focus!");
         }
     }
 })();
