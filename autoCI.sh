@@ -1,9 +1,8 @@
 #! /bin/bash
 
 echo "installing gulp..."
-add-apt-repository ppa:chris-lea/node.js
 apt-get update
-apt-get install -y nodejs
+apt-get install -y npm
 npm install -g gulp
 
 echo "Cleaning..."
