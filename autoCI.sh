@@ -15,7 +15,7 @@ echo "npm installing..."
 npm install
 
 echo "bower installing..."
-bower install
+bower install --allow-root
 
 echo "Cleaning..."
 gulp clean
