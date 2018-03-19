@@ -52,7 +52,7 @@
         }
 
         $scope.startEx = function() {
-            if ($scope.notFirst) {
+            if (true) {
                 console.log("start...")
                 console.log($scope.cloudwareInfo);
                 console.log($('#cloudware'));
@@ -61,7 +61,7 @@
                 //         start($scope.cloudwareInfo.webSocket, el)
 
                 //     })
-                start($scope.cloudwareInfo.webSocket, $('#cloudware')[0])
+                start("ws://192.168.1.126:5678", $('#cloudware')[0])
                 // return;
 
             } else {
