@@ -309,6 +309,8 @@
                 canvas.onkeydown = function(e) {
                     e.preventDefault();
                     console.log("key:" + e.key + " which:" + e.which + " mapto: " + (mapKey(e.which)-8));
+                    if(e.which === 144) // do not send num lock
+                        return;
                     var buf = new ArrayBuffer(5);
                     var dv = new DataView(buf);
                     dv.setUint8(0, 3);
@@ -318,6 +320,8 @@
                 };
                 canvas.onkeyup = function(e) {
                     e.preventDefault();
+                    if(e.which === 144) // do not send num lock
+                        return;
                     var buf = new ArrayBuffer(5);
                     var dv = new DataView(buf);
                     dv.setUint8(0, 4);
