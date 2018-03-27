@@ -15,10 +15,10 @@
         stuCourseSrv.getExperimentDetail().get({
                 experimentId: $stateParams.experimentId
             }, function(response) {
-                console.log(response);
+                // console.log(response);
                 if(response.errorCode == 0) {
                     $scope.detail = response.data
-                    console.log($scope.detail)
+                    // console.log($scope.detail)
                     $scope.text = $scope.detail.experimentContent;
                     if (!$scope.text) {
                         toastr.warning("实验内容为空")
