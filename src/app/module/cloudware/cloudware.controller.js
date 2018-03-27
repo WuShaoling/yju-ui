@@ -752,6 +752,17 @@
             '38': '65362', // UP ARROW CHROME
             '40': '65364', // DOWN ARROW CHROME
             '91': '65506', // set osx cmd to shift
+            '96': '48', //num pad 0 to 0
+            '97': '49', //num pad 1 to 1
+            '98': '50', //num pad 2 to 2
+            '99': '51', //num pad 3 to 3
+            '100': '52', //num pad 4 to 4
+            '101': '53', //num pad 5 to 5
+            '102': '54', //num pad 6 to 6
+            '103': '55', //num pad 7 to 7
+            '104': '56', //num pad 8 to 8
+            '105': '57', //num pad 9 to 9
+            '110': '190' //num pad . to .
         };
 
         function buildASCIIToXKeyMap(XKeysMap, min) {
