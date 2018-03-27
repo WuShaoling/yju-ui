@@ -784,9 +784,5 @@
             }
             return key;
         }
-
-        $scope.onfocus = function () {
-            alert("focus!");
-        }
     }
 })();
