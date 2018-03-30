@@ -6,3 +6,4 @@ gulp clean build
 2. 提交版本
 git add dist/
 git ci -m "release message"
+
