@@ -156,9 +156,6 @@
                 console.log('Requesting...')
                 initRequest()
             }
-
-            // 退出时删除容器
-            $window.onbeforeunload =  deleteWebide;
         }
         init()
 
@@ -285,6 +282,12 @@
 
             }, 500)
         });
+
+        // 退出时删除容器
+        $scope.$on('$destroy', function(){
+            deleteWebide();
+        })
+        $window.onbeforeunload =  deleteWebide;
     }
 
 
