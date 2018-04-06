@@ -3,64 +3,64 @@
 
     angular
         .module('phoenix')
-        .controller('addNewExCtrl', addNewExCtrl);
+        .controller('addNewHwCtrl', addNewHwCtrl)
 
-    addNewExCtrl.$inject = ['$scope', '$timeout', '$uibModal', 'commonSrv', 'courseManagementSrv', '$stateParams', 'reqUrl', '$state', 'stuCourseSrv'];
+    addNewHwCtrl.$inject = ['$scope', '$timeout', '$uibModal', 'stuCourseSrv', 'classManagementSrv', 'courseManagementSrv', '$stateParams', 'reqUrl', '$state'];
 
-    function addNewExCtrl($scope, $timeout, $uibModal, commonSrv, courseManagementSrv, $stateParams, reqUrl, $state, stuCourseSrv) {
-        $scope.experiment = {};
+    function addNewHwCtrl($scope, $timeout, $uibModal, stuCourseSrv, classManagementSrv, courseManagementSrv, $stateParams, reqUrl, $state) {
+        $scope.homework = {};
         $scope.text = "";
         $scope.disableSave = false;
-        $scope.loadEx = function () {
-            if($stateParams.experimentId != 0) {
+        $scope.loadHw = function () {
+            if($stateParams.homeworkId != 0) {
                 $scope.disableSave = true;
-                stuCourseSrv.getExperimentDetail().get({
-                        experimentId: $stateParams.experimentId
+                stuCourseSrv.getHomeworkDetail().get({
+                        homeworkId: $stateParams.homeworkId
                     }, function(response) {
                         console.log(response);
                         if (response.errorCode == 0) {
-                            $scope.experiment = response.data
-                            $scope.text = response.data.experimentContent
-                            $scope.experiment.cloudwareType = response.data.cloudwareTypeId
+                            $scope.homework = response.data
+                            $scope.text = response.data.homeworkContent
+                            $scope.homework.cloudwareType = response.data.cloudwareTypeId
                             $scope.disableSave = false
                         } else {
                             toastr.error(response.message)
                         }
                     },
                     function(error) {
-                        toastr.error("获取实验详情失败，请稍后再试")
+                        toastr.error("获取作业详情失败，请稍后再试")
                     })
             }
         }()
 
         $scope.ok = function() {
-            if (!$scope.experiment.experimentName) {
-                toastr.error("实验名称不能为空");
+            if (!$scope.homework.homeworkName) {
+                toastr.error("作业名称不能为空");
                 return;
             }
-            if (!$scope.experiment.cloudwareType) {
+            if (!$scope.homework.cloudwareType) {
                 toastr.error("容器类型不能为空");
                 return;
             }
 
 
             console.log($scope.text);
-            if($stateParams.experimentId == 0) {
-                courseManagementSrv.addExperiment().save({
-                    "cloudwareType": $scope.experiment.cloudwareType,
-                    "experimentContent": $scope.text,
-                    "experimentDes": $scope.experiment.experimentDes,
-                    "experimentCreateDate": new Date(),
-                    // "experimentDueDate": "2017-10-24T07:10:27.269Z",
-                    "experimentName": $scope.experiment.experimentName,
-                    // "experimentUrl": "string",
+            if($stateParams.homeworkId == 0) {
+                classManagementSrv.addHomework().save({
+                    "classId": $stateParams.classId,
+                    "cloudwareType": $scope.homework.cloudwareType,
+                    "homeworkCreateDate": new Date(),
+                    "homeworkDes": $scope.homework.homeworkDes,
+                    "homeworkDueDate": $scope.homework.dueDate,
+                    "homeworkName": $scope.homework.homeworkName,
+                    "homeworkContent": $scope.text,
                     "moduleId": $stateParams.moduleId
                 }).$promise.then(
                     function (response) {
                         console.log(response)
                         if (response.errorCode == 0) {
                             toastr.success("添加成功")
-                            $state.go('index.courseMaintainence', {courseId: $stateParams.courseId});
+                            $state.go('index.homeworkManagement', {classId: $stateParams.classId});
 
                         } else {
                             toastr.error(response.message);
@@ -71,19 +71,19 @@
                     }
                 )
             } else {
-                courseManagementSrv.updateExperiment().save({
-                    "id": $scope.experiment.id,
-                    "cloudwareType": $scope.experiment.cloudwareType,
-                    "experimentContent": $scope.text,
-                    "experimentDes": $scope.experiment.experimentDes,
-                    "experimentName": $scope.experiment.experimentName,
-                    "moduleId": $stateParams.moduleId
+                classManagementSrv.updateHomework().save({
+                    "cloudwareType": $scope.homework.cloudwareType,
+                    "homeworkDes": $scope.homework.homeworkDes,
+                    "homeworkDueDate": $scope.homework.dueDate,
+                    "homeworkName": $scope.homework.homeworkName,
+                    "homeworkContent": $scope.text,
+                    "homeworkId": $stateParams.homeworkId,
                 }).$promise.then(
                     function (response) {
                         console.log(response)
                         if (response.errorCode == 0) {
                             toastr.success("更新成功")
-                            $state.go('index.courseMaintainence', {courseId: $stateParams.courseId});
+                            $state.go('index.homeworkManagement', {classId: $stateParams.classId});
 
                         } else {
                             toastr.error(response.message);
@@ -107,6 +107,12 @@
         }, {
             label: "Hadoop",
             value: 4,
+        }, {
+            label: "JupyterPython",
+            value: 5,
+        }, {
+            label: "IdeJava",   // just display
+            value: 6,
         }];
         $scope.$on("$destroy", function() {
 

@@ -77,7 +77,7 @@
                                 <th>授课教师</th>
                                 <th>截止日期</th>
                                 <th>
-                                    <button type="button" class="btn btn-success btn-sm " ng-click="addNewHw(item)">添加作业</button>
+                                    <button type="button" class="btn btn-success btn-sm " ui-sref="index.addNewHw({classId:courseDetail.classId, moduleId:item.moduleId})">添加作业</button>
 
                                 </th>
                             </tr>
@@ -93,7 +93,7 @@
                                 <td>{{hw.homeworkDueDate}}</td>
                                 <td>
                                     <!-- <button type="button" class="btn btn-success btn-outline" ng-click="startExp()">查看详情</button> -->
-                                    <button type="button" class="btn btn-success btn-outline" ng-click="editHw(hw)">更新作业</button>
+                                    <button type="button" class="btn btn-success btn-outline" ui-sref="index.addNewHw({classId:courseDetail.classId, moduleId:item.moduleId, homeworkId:hw.homeworkId})">更新作业</button>
                                     <button type="button" class="btn btn-danger btn-outline" ng-click="deleteHw(hw)">删除作业</button>
 
                                 </td>
