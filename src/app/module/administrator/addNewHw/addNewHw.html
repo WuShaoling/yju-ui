@@ -1,0 +1,74 @@
+<div class="main_wrapper">
+    <div class="mainContent clearfix">
+
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+
+                    <select type="text" placeholder="" ng-model="homework.cloudwareType" ng-options="item.value as item.label for item in cloudwares" class="form-control">
+                                
+                                                </select>
+                </div>
+                <div class="col-md-3">
+
+                    <input type="text" class="form-control" ng-model="homework.homeworkName" placeholder="作业名称">
+                </div>
+                <div class="col-md-3">
+
+                    <input type="text" class="form-control" ng-model="homework.homeworkDes" placeholder="作业描述">
+                </div>
+                <div class="col-md-2">
+                    <input data-provide="datepicker" ng-model="homework.dueDate" class="form-control" data-date-format="yyyy-mm-dd">
+                    <!-- <input type="text" placeholder="" ng-model="homework.dueDate" class="form-control"> -->
+                </div>
+                <div class="col-md-1">
+                    <div class="btn-group">
+                        <!-- <button type="submit" class="btn btn-success btn-outline">预览容器</button> -->
+
+
+                        <button type="submit" class="btn btn-success btn-outline btn-block" ng-click="ok()" ng-disabled="disableSave">保存</button>
+
+                        <!-- <button type="button" class="btn btn-danger btn-outline" ng-click="cancel()">取消</button> -->
+                    </div>
+
+                </div>
+
+
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-12" height="600px">
+                    <div class="tabs-container">
+
+                        <uib-tabset>
+                            <uib-tab heading="上传markdown文件" ng-click="change(0)">
+                                <div class="panel-body">
+                                    <button class="btn btn-success" ng-click="chooseMarkdown()">上传</button>
+                                    <input type="file" accept="*" ng-show="false" id="markdownFile" file-model>
+
+                                    <!-- <button class="btn btn-success" ng-click="uploadFile()">上传</button> -->
+                                </div>
+                            </uib-tab>
+                            <uib-tab heading="在线编辑markdown" ng-click="change(1)">
+                                <div class="panel-body">
+                                    <div id="test-editormd">
+                                        <textarea style="display:none;" ng-model="text"></textarea>
+                                    </div>
+                                </div>
+                            </uib-tab>
+                            <button class="btn btn-default pull-right" ng-if="showPicLibBtn" ng-click="showPicLib()">图片资源</button>
+                        </uib-tabset>
+
+                    </div>
+
+
+                </div>
+                <div class="col-md-2">
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -285,6 +285,15 @@
                     validateLoginState($state, $location)
                 }
             })
+            .state('index.addNewHw', {
+                url: "/administrator/:classId/:moduleId/:homeworkId/addNewHw",
+                params: { classId: null, moduleId: null, homeworkId: "0"},
+                templateUrl: "app/module/administrator/addNewHw/addNewHw.html",
+                controller: "addNewHwCtrl",
+                onEnter: function ($state, $location) {
+                    validateLoginState($state, $location)
+                }
+            })
             .state('index.adCheckHw', {
                 url: "/administrator/adCheckHw",
                 templateUrl: "app/module/administrator/adCheckHw/adCheckHw.html",

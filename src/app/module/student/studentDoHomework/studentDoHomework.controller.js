@@ -92,6 +92,10 @@
 
     function studentDoHomeworkCtrl($scope, $uibModal, $timeout, stuCourseSrv, $stateParams) {
         var vm = this;
+        var converter = new showdown.Converter();
+        converter.setOption('tasklists', true);
+        converter.setOption('tables', true);
+
         $scope.commitWork = function() {
             toastr.success("提交成功")
         }
@@ -101,7 +105,10 @@
         }, function(response) {
             console.log(response);
             $scope.detail = response.data
-            console.log($scope.detail)
+            if (!$scope.detail.homeworkContent) {
+                toastr.warning("作业内容为空")
+            }
+            $scope.html = converter.makeHtml($scope.detail.homeworkContent);
         }, function(error) {
             console.log(error);
         })
