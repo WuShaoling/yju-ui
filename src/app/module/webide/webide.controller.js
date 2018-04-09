@@ -60,7 +60,7 @@
                         $scope.webideServiceUrl = response.data.webSocket;
                         $scope.webideServiceId = response.data.serviceId;
                         $scope.webideServiceName = response.data.serviceName;
-                        var webIdeUrl = $scope.webideBaseUrl + $stateParams.studentId+ '_' + $stateParams.experimentId + "/?wsUrl=" +  $scope.webideServiceUrl
+                        var webIdeUrl = $scope.webideBaseUrl + $stateParams.studentId+ '_' + $stateParams.homeworkId + "/?wsUrl=" +  $scope.webideServiceUrl
                         console.log('webIdeUrl: ' + webIdeUrl)
                         createIframe(webIdeUrl)
                     } else {
