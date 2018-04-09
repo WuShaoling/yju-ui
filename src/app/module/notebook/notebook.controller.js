@@ -11,8 +11,8 @@
             };
         }])
 
-    notebookCtrl.$inject = ['$scope', '$timeout', 'usSpinnerService', '$state', 'stuCourseSrv', '$stateParams', 'cloudwareUrl', '$window', '$rootScope'];
-    function notebookCtrl($scope, $timeout, usSpinnerService, $state, stuCourseSrv, $stateParams, cloudwareUrl, $window, $rootScope) {
+    notebookCtrl.$inject = ['$scope', '$timeout', 'usSpinnerService', '$state', 'stuCourseSrv', '$stateParams', '$window', '$rootScope'];
+    function notebookCtrl($scope, $timeout, usSpinnerService, $state, stuCourseSrv, $stateParams, $window, $rootScope) {
 
         $scope.notebookUrl = null
 
@@ -64,79 +64,48 @@
         }
         
         var getNewNotebookInfo = function () {
-            // get notebook info
-            $.ajax({
-                url: cloudwareUrl + '/services',
-                method: 'post',
-                data: {
-                    'secret': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJpYXQiOjE1MDU4MTM0NTd9.Ftw1yHeUrqdNvymFZcIpuEoS0RHBFZqu4MfUZON9Zm0',
-                    cloudware_type: $stateParams.cloudwareType,
-                    user_id: $stateParams.studentId
-                },
-                dataType: 'json',
-                success: function (response) {
-                    $scope.notebookUrl = response.ws
-                    $scope.notebookServiceId = response.service_id
-                    $scope.notebookServiceName = response.service_name
-
-                    // store note book to db
-                    // Homework
-                    if ($stateParams.type === '0') {
-                        var param = {
-                            "homeworkId": $stateParams.homeworkId,
-                            "pulsarId": response.pulsar_id,
-                            "serviceId": response.service_id,
-                            "serviceName": response.service_name,
-                            "studentId": $stateParams.studentId,
-                            "webSocket": response.ws
-                        }
-                        stuCourseSrv.createHwCloudware().save(param).$promise.then(function(response) {
-                            // console.log(response)
-                        }, function(error) {
-                            console.log(error);
-                        });
-                    }
-
-                    // Experiment
-                    if ($stateParams.type === '1') {
-                        var param = {
-                            "experimentId": $stateParams.experimentId,
-                            "pulsarId": response.pulsar_id,
-                            "serviceId": response.service_id,
-                            "serviceName": response.service_name,
-                            "studentId": $stateParams.studentId,
-                            "webSocket": response.ws
-                        }
-                        stuCourseSrv.createExCloudware().save(param).$promise.then(function(response) {
-                            // console.log(response)
-                        }, function(error) {
-                            console.log(error);
-                        });
-                    }
-                },
-                error: function (response) {
-                    console.log(response)
+            // Homework
+            if ($stateParams.type === '0') {
+                var param = {
+                    "homeworkId": $stateParams.homeworkId,
+                    "studentId": $stateParams.studentId,
+                    "cloudwareType": $stateParams.cloudwareType
                 }
-            });
+                stuCourseSrv.createHwCloudware().save(param).$promise.then(function(response) {
+                    if (response.errorCode == 0) {
+                        $scope.notebookUrl = response.data.webSocket
+                        $scope.notebookServiceId = response.data.serviceId
+                        $scope.notebookServiceName = response.data.serviceName
+                    } else {
+                        toastr.error(response.message);
+                    }
+                }, function(error) {
+                    toastr.error("创建云件失败，请重试！");
+                });
+            }
+
+            // Experiment
+            if ($stateParams.type === '1') {
+                var param = {
+                    "experimentId": $stateParams.experimentId,
+                    "studentId": $stateParams.studentId,
+                    "cloudwareType": $stateParams.cloudwareType
+                }
+                stuCourseSrv.createExCloudware().save(param).$promise.then(function(response) {
+                    if (response.errorCode == 0) {
+                        $scope.notebookUrl = response.data.webSocket
+                        $scope.notebookServiceId = response.data.serviceId
+                        $scope.notebookServiceName = response.data.serviceName
+                    } else {
+                        toastr.error(response.message);
+                    }
+                }, function(error) {
+                    toastr.error("创建云件失败，请重试！");
+                });
+            }
         }
 
         var deleteNotebook= function () {
-            $.ajax({
-                url: cloudwareUrl + '/homeworks',
-                method: 'post',
-                data: {
-                    'secret': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJpYXQiOjE1MDU4MTM0NTd9.Ftw1yHeUrqdNvymFZcIpuEoS0RHBFZqu4MfUZON9Zm0',
-                    service_name: $scope.notebookServiceName,
-                    service_id: $scope.notebookServiceId,
-                },
-                dataType: 'json',
-                success: function (response) {
-                },
-                error: function (response) {
-                    console.log(response)
-                }
-            })
-
             stuCourseSrv.deleteExCloudware().save({
                 studentId: $stateParams.studentId,
                 experimentId: $stateParams.experimentId
@@ -148,6 +117,9 @@
             getNotebookInfo();
             $window.onbeforeunload =  deleteNotebook;
         }
+        $scope.$on('$destroy', function(){
+            deleteNotebook();
+        })
 
         init();
         
@@ -233,23 +205,6 @@
                     break;
             }
         }
-
-        $scope.fullScreen = function() {
-            // $('#design').css({ 'position': 'absolute', 'top': '0' });
-            // $('body').height($(window).height());
-            // $('body').width($(window).width());
-            // $('#design').height($(window).height());
-            // $('#design').width($(window).width());
-            var canvas = document.getElementById('theCanvas')
-            var docElm = document.documentElement;
-            if (docElm.requestFullscreen) {
-                canvas.requestFullscreen();
-            } else if (docElm.webkitRequestFullScreen) {
-                canvas.webkitRequestFullScreen();
-            }
-
-        };
-
 
         $scope.getCloudwareInfo();
         $scope.loading = true;

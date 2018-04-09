@@ -302,15 +302,6 @@
                     validateLoginState($state, $location)
                 }
             })
-            .state('index.adCheckEx', {
-                url: "/administrator/adCheckEx",
-
-                templateUrl: "app/module/administrator/adCheckEx/adCheckEx.html",
-                controller: "adCheckExCtrl",
-                onEnter: function ($state, $location) {
-                    validateLoginState($state, $location)
-                }
-            })
             .state('index.classDetail', {
                 url: "/administrator/:classId/classDetail",
                 params: { classId: null },
