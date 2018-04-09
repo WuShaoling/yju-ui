@@ -5,9 +5,9 @@
         .module('phoenix')
         .controller('cloudwareCtrl', cloudwareCtrl);
 
-    cloudwareCtrl.$inject = ['$scope', '$timeout', 'usSpinnerService', '$state', 'stuCourseSrv', '$stateParams', 'cloudwareUrl', '$window', '$rootScope'];
+    cloudwareCtrl.$inject = ['$scope', '$timeout', 'usSpinnerService', '$state', 'stuCourseSrv', '$stateParams', '$window', '$rootScope'];
 
-    function cloudwareCtrl($scope, $timeout, usSpinnerService, $state, stuCourseSrv, $stateParams, cloudwareUrl, $window, $rootScope) {
+    function cloudwareCtrl($scope, $timeout, usSpinnerService, $state, stuCourseSrv, $stateParams, $window, $rootScope) {
         var vm = this;
         var ws = null;
 
@@ -196,9 +196,6 @@
             }, 500)
         });
 
-
-
-
         function start(wsaddr, el, retryTime) {
             var retryTime = retryTime || 0;
             ws = new WebSocket(wsaddr);
@@ -225,7 +222,7 @@
                 console.log("close and restart")
                 if(!$scope.leavePage) {
                     setTimeout(function() {
-                        if (retryTime > 10) {
+                        if (retryTime > 25) {
                             toastr.error("启动云件失败，请重试")
                             $scope.hasStarted = false
                             usSpinnerService.stop('ex-spinner');
@@ -419,67 +416,50 @@
         function createCloudware(studentId, cloudware_type, type) {
             if ($('[data-cloudware-env]').length > 0) {
                 $('[data-cloudware-env]').each(function(index, el) {
-                    var env = $(el).attr('data-cloudware-env')
-                    $.ajax({
-                        url: cloudwareUrl + '/services',
-                        // headers: { 'secret': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJpYXQiOjE1MDU4MTM0NTd9.Ftw1yHeUrqdNvymFZcIpuEoS0RHBFZqu4MfUZON9Zm0' },
-                        method: 'post',
-                        data: {
-                            'secret': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJpYXQiOjE1MDU4MTM0NTd9.Ftw1yHeUrqdNvymFZcIpuEoS0RHBFZqu4MfUZON9Zm0',
-                            cloudware_type: cloudware_type,
-                            user_id: studentId
-                        },
-                        dataType: 'json',
-                        success: function(resp, textStatus, xhr) {
-                            if (resp.errorCode == 0) {
-                                start(resp.ws, el)
-                                $scope.notFirst = true
-                                $scope.cloudwareInfo = $scope.cloudwareInfo || {}
-                                $scope.cloudwareInfo.webSocket = resp.ws
-                                switch (type) {
-                                    case "0":
-                                        stuCourseSrv.createHwCloudware().save({
-                                            "homeworkId": $stateParams.homeworkId,
-                                            "pulsarId": resp.pulsar_id,
-                                            "serviceId": resp.service_id,
-                                            "serviceName": resp.service_name,
-                                            "studentId": studentId,
-                                            "webSocket": resp.ws
-                                        }).$promise.then(function(response) {
-                                            console.log(response)
-                                        }, function(error) {
-                                            console.log(error);
-                                        });
-                                        break;
-                                    case "1":
-                                        stuCourseSrv.createExCloudware().save({
-                                            "experimentId": $stateParams.experimentId,
-                                            "pulsarId": resp.pulsar_id,
-                                            "serviceId": resp.service_id,
-                                            "serviceName": resp.service_name,
-                                            "studentId": studentId,
-                                            "webSocket": resp.ws
-                                        }).$promise.then(function(response) {
-                                            console.log(response)
-                                        }, function(error) {
-                                            console.log(error);
-                                        });
-                                        break;
 
-                                    default:
-                                        break;
+                    switch (type) {
+                        case "0":
+                            stuCourseSrv.createHwCloudware().save({
+                                "homeworkId": $stateParams.homeworkId,
+                                "studentId": studentId,
+                                "cloudwareType": cloudware_type,
+                            }).$promise.then(function(response) {
+                                if (response.errorCode == 0) {
+                                    start(response.data.webSocket, el)
+                                    $scope.notFirst = true
+                                    $scope.cloudwareInfo = $scope.cloudwareInfo || {}
+                                    $scope.cloudwareInfo.webSocket = response.data.webSocket
+                                } else {
+                                    toastr.error("创建云件失败，请重试！");
                                 }
-                            } else {
-                                toastr.error(resp.errorMessage)
-                            }
-                            console.log(resp)
-                        },
-                        error: function () {
-                            toastr.error("创建云件失败，请重试！");
-                        }
-                    });
+                            }, function(error) {
+                                toastr.error("创建云件失败，请重试！");
+                            });
+                            break;
+                        case "1":
+                            stuCourseSrv.createExCloudware().save({
+                                "experimentId": $stateParams.experimentId,
+                                "studentId": studentId,
+                                "cloudwareType": cloudware_type,
+                            }).$promise.then(function(response) {
+                                if (response.errorCode == 0) {
+                                    start(response.data.webSocket, el)
+                                    $scope.notFirst = true
+                                    $scope.cloudwareInfo = $scope.cloudwareInfo || {}
+                                    $scope.cloudwareInfo.webSocket = response.data.webSocket
+                                } else {
+                                    toastr.error("创建云件失败，请重试！");
+                                }
+                            }, function(error) {
+                                toastr.error("创建云件失败，请重试！");
+                            });
+                            break;
+
+                        default:
+                            break;
+                    }
                 });
-                return;
+
             } else {
                 startService();
             }

@@ -11,11 +11,11 @@
             };
         }]);
 
-    webideCtrl.$inject = ['$scope', '$timeout', 'usSpinnerService', '$uibModal', '$state', 'stuCourseSrv', '$stateParams', 'cloudwareUrl', '$window', '$rootScope'];
+    webideCtrl.$inject = ['$scope', '$timeout', 'usSpinnerService', '$uibModal', '$state', 'stuCourseSrv', '$stateParams', 'cloudwareUrl', '$window', 'cloudwareUrl'];
 
-    function webideCtrl($scope, $timeout, usSpinnerService, $uibModal, $state, stuCourseSrv, $stateParams, cloudwareUrl, $window, $rootScope) {
+    function webideCtrl($scope, $timeout, usSpinnerService, $uibModal, $state, stuCourseSrv, $stateParams, cloudwareUrl, $window, cloudwareUrl) {
 
-        $scope.webideBaseUrl = "http://api.cloudwarehub.com:8080/ws/";
+        $scope.webideBaseUrl = cloudwareUrl + ":8080/ws/";
 
         $scope.webideServiceUrl = null;
         $scope.webideServiceId = null;
@@ -46,85 +46,57 @@
         }
 
         var initRequest = function () {
-            $.ajax({
-                url: cloudwareUrl + '/services',
-                method: 'post',
-                data: {
-                    'secret': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJpYXQiOjE1MDU4MTM0NTd9.Ftw1yHeUrqdNvymFZcIpuEoS0RHBFZqu4MfUZON9Zm0',
-                    cloudwareType: $stateParams.cloudwareType,
-                    userId: $stateParams.studentId
-                },
-                dataType: 'json',
-                success: function (response) {
-                    $scope.loaded = true;
-                    $scope.webideServiceUrl = response.ws;
-                    $scope.webideServiceId = response.service_id;
-                    $scope.webideServiceName = response.service_name;
+            // Homework
+            if ($stateParams.type === '0') {
+                var param = {
+                    "homeworkId": $stateParams.homeworkId,
+                    "studentId": $stateParams.studentId,
+                    "cloudwareType": $stateParams.cloudwareType
+                }
 
-                    // Homework
-                    if ($stateParams.type === '0') {
-                        var webIdeUrl = $scope.webideBaseUrl + $stateParams.studentId+ '_' + $stateParams.homeworkId + "/?wsUrl=" +  $scope.webideServiceUrl
-                        console.log('webIdeUrl: ' + webIdeUrl)
-                        createIframe(webIdeUrl)
-
-                        var param = {
-                            "homeworkId": $stateParams.homeworkId,
-                            "pulsarId": response.pulsar_id,
-                            "serviceId": response.service_id,
-                            "serviceName": response.service_name,
-                            "studentId": $stateParams.studentId,
-                            "webSocket": response.ws
-                        }
-                        stuCourseSrv.createHwCloudware().save(param).$promise.then(function(response) {
-                        }, function(error) {
-                            console.log(error);
-                        });
-                    }
-
-                    // Experiment
-                    if ($stateParams.type === '1') {
+                stuCourseSrv.createHwCloudware().save(param).$promise.then(function(response) {
+                    if (response.errorCode == 0) {
+                        $scope.loaded = true;
+                        $scope.webideServiceUrl = response.data.webSocket;
+                        $scope.webideServiceId = response.data.serviceId;
+                        $scope.webideServiceName = response.data.serviceName;
                         var webIdeUrl = $scope.webideBaseUrl + $stateParams.studentId+ '_' + $stateParams.experimentId + "/?wsUrl=" +  $scope.webideServiceUrl
                         console.log('webIdeUrl: ' + webIdeUrl)
                         createIframe(webIdeUrl)
-
-                        var param = {
-                            "experimentId": $stateParams.experimentId,
-                            "pulsarId": response.pulsar_id,
-                            "serviceId": response.service_id,
-                            "serviceName": response.service_name,
-                            "studentId": $stateParams.studentId,
-                            "webSocket": response.ws
-                        }
-                        stuCourseSrv.createExCloudware().save(param).$promise.then(function(response) {
-                            // console.log(response)
-                        }, function(error) {
-                            console.log(error);
-                        });
+                    } else {
+                        toastr.error(response.message);
                     }
-                },
-                error: function (response) {
-                    console.log(response)
+                }, function(error) {
+                    toastr.error("创建云件失败，请重试！");
+                });
+            }
+
+            // Experiment
+            if ($stateParams.type === '1') {
+                var param = {
+                    "experimentId": $stateParams.experimentId,
+                    "studentId": $stateParams.studentId,
+                    "cloudwareType": $stateParams.cloudwareType
                 }
-            });
+                stuCourseSrv.createExCloudware().save(param).$promise.then(function(response) {
+                    if (response.errorCode == 0) {
+                        $scope.loaded = true;
+                        $scope.webideServiceUrl = response.data.webSocket;
+                        $scope.webideServiceId = response.data.serviceId;
+                        $scope.webideServiceName = response.data.serviceName;
+                        var webIdeUrl = $scope.webideBaseUrl + $stateParams.studentId+ '_' + $stateParams.experimentId + "/?wsUrl=" +  $scope.webideServiceUrl
+                        console.log('webIdeUrl: ' + webIdeUrl)
+                        createIframe(webIdeUrl)
+                    } else {
+                        toastr.error(response.message);
+                    }
+                }, function(error) {
+                    toastr.error("创建云件失败，请重试！");
+                });
+            }
         }
 
         var deleteWebide= function () {
-            $.ajax({
-                url: cloudwareUrl + '/homeworks',
-                method: 'post',
-                data: {
-                    'secret': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJpYXQiOjE1MDU4MTM0NTd9.Ftw1yHeUrqdNvymFZcIpuEoS0RHBFZqu4MfUZON9Zm0',
-                    serviceName: $scope.webideServiceName,
-                    serviceId: $scope.webideServiceId,
-                },
-                dataType: 'json',
-                success: function (response) {
-                },
-                error: function (response) {
-                    console.log(response)
-                }
-            })
-
             stuCourseSrv.deleteExCloudware().save({
                 studentId: $stateParams.studentId,
                 experimentId: $stateParams.experimentId
