@@ -222,7 +222,10 @@
             $('#courseImage').trigger('click');
         }
 
+        $scope.uploading = false;
+
         $scope.getFile = function(file) {
+            $scope.uploading = true;
             console.log(file);
             var fileFormData = new FormData();
             fileFormData.append('file', file);
@@ -280,7 +283,7 @@
                     } else {
                         toastr.error(res.message);
                     }
-
+                    $scope.uploading = false;
                 }
             });
             $scope.filename = file.name;
@@ -352,7 +355,10 @@
             $('#courseImage').trigger('click');
         }
 
+        $scope.uploading = false;
+
         $scope.getFile = function(file) {
+            $scope.uploading = true;
             console.log(file);
             var fileFormData = new FormData();
             fileFormData.append('file', file);
@@ -410,7 +416,7 @@
                     } else {
                         toastr.error(res.message);
                     }
-
+                    $scope.uploading = false;
                 }
             });
             $scope.filename = file.name;
