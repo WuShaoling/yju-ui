@@ -284,6 +284,7 @@
                         toastr.error(res.message);
                     }
                     $scope.uploading = false;
+                    $scope.$apply();
                 }
             });
             $scope.filename = file.name;
@@ -417,6 +418,7 @@
                         toastr.error(res.message);
                     }
                     $scope.uploading = false;
+                    $scope.$apply();
                 }
             });
             $scope.filename = file.name;
