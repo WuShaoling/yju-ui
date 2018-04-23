@@ -28,11 +28,11 @@
                 templateUrl: "app/module/login/login.html",
                 controller: "loginCtrl"
             })
-            .state('intro', {
-                url: "",
-                templateUrl: "app/module/intro/intro.html",
-                controller: "introCtrl"
-            })
+            // .state('intro', {
+            //     url: "",
+            //     templateUrl: "app/module/intro/intro.html",
+            //     controller: "introCtrl"
+            // })
             .state('index.main', {
                 url: "/main",
                 templateUrl: "app/module/main/main.html",
