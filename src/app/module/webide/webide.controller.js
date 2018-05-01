@@ -11,11 +11,11 @@
             };
         }]);
 
-    webideCtrl.$inject = ['$scope', '$timeout', 'usSpinnerService', '$uibModal', '$state', 'stuCourseSrv', '$stateParams', 'cloudwareUrl', '$window', 'cloudwareUrl'];
+    webideCtrl.$inject = ['$scope', '$timeout', 'usSpinnerService', '$uibModal', '$state', 'stuCourseSrv', '$stateParams', 'cloudwareUrl', '$window', 'webIdeUrl'];
 
-    function webideCtrl($scope, $timeout, usSpinnerService, $uibModal, $state, stuCourseSrv, $stateParams, cloudwareUrl, $window, cloudwareUrl) {
+    function webideCtrl($scope, $timeout, usSpinnerService, $uibModal, $state, stuCourseSrv, $stateParams, cloudwareUrl, $window, webIdeUrl) {
 
-        $scope.webideBaseUrl = cloudwareUrl + ":8080/ws/";
+        $scope.webideBaseUrl = webIdeUrl + "/ws/";
 
         $scope.webideServiceUrl = null;
         $scope.webideServiceId = null;

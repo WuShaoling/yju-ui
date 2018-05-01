@@ -7,7 +7,7 @@
 
     // Product
     angular.module('phoenix').value('reqUrl', "http://api.cloudwarehub.com:8080")
-    angular.module('phoenix').value('cloudwareUrl', "http://api.cloudwarehub.com")
+    angular.module('phoenix').value('webIdeUrl', "http://api.cloudwarehub.com:8081")
     angular.module('phoenix').value('fileManagementUrl', "http://117.50.1.134:8090")
 
     //toastr配置
