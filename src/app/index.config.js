@@ -6,7 +6,7 @@
     // angular.module('phoenix').value('fileManagementUrl', "http://127.0.0.1:8080")
 
     // Product
-    angular.module('phoenix').value('reqUrl', "http://www.x-lab.ac:13001")
+    angular.module('phoenix').value('reqUrl', "http://api.cloudwarehub.com:8080")
     angular.module('phoenix').value('cloudwareUrl', "http://api.cloudwarehub.com")
     angular.module('phoenix').value('fileManagementUrl', "http://117.50.1.134:8090")
 
