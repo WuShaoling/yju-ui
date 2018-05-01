@@ -6,10 +6,11 @@
         .controller('commonCtrl', commonCtrl)
         .controller('loginCtrl', loginCtrl);
 
-    commonCtrl.$inject = ['$scope', '$uibModal', '$state', '$rootScope'];
+    commonCtrl.$inject = ['$scope', '$uibModal', '$state', '$rootScope', 'videoSysUrl'];
     loginCtrl.$inject = ['$scope', '$uibModalInstance', '$uibModal', 'commonSrv', '$rootScope', '$state', '$location'];
 
-    function commonCtrl($scope, $uibModal, $state, $rootScope) {
+    function commonCtrl($scope, $uibModal, $state, $rootScope, videoSysUrl) {
+        $scope.videoSysUrl = videoSysUrl;
         var vm = this;
         $scope.test = function() {
             vm.searchData = $scope.searchData;
