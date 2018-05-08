@@ -9,7 +9,13 @@
 
     function teacherCourseManagementCtrl($scope, $uibModal, teacherCourseSrv, $stateParams, $state) {
         $scope.checkEx = function(item) {
-            $state.go('index.startExperiment.cloudware', { experimentId: item.id, studentId: localStorage['userId'], cloudwareType: item.cloudwareType })
+            if (item.imageTypeId === 2) {
+                $state.go('index.startExperiment.notebook', { experimentId: item.id, studentId: localStorage['userId']});
+            } else if (item.imageTypeId === 3) {
+                $state.go('index.startExperiment.webide', { experimentId: item.id, studentId: localStorage['userId']});
+            } else if (item.imageTypeId === 1) {
+                $state.go('index.startExperiment.cloudware', { experimentId: item.id, studentId: localStorage['userId']});
+            }
         }
         $scope.classId = $stateParams.classId
         teacherCourseSrv.getCourseDetail().get({

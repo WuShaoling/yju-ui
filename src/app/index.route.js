@@ -124,8 +124,8 @@
                 }
             })
             .state('index.studentDoHomework', {
-                url: "/homework/:homeworkId/:type/:studentId/:cloudwareType/detail",
-                params: { homeworkId: null, type: "0", studentId: null, cloudwareType: null },
+                url: "/homework/:homeworkId/:type/:studentId/detail",
+                params: { homeworkId: null, type: "0", studentId: null},
                 templateUrl: "app/module/student/studentDoHomework/studentDoHomework.html",
                 controller: "studentDoHomeworkCtrl",
                 onEnter: function ($state, $location) {
@@ -133,8 +133,8 @@
                 }
             })
             .state('index.startExperiment', {
-                url: "/course/experiment/:experimentId/:type/:studentId/:cloudwareType",
-                params: { experimentId: null, type: "1", studentId: null, cloudwareType: null },
+                url: "/course/experiment/:experimentId/:type/:studentId",
+                params: { experimentId: null, type: "1", studentId: null},
                 templateUrl: "app/module/student/studentStartExperiment/studentStartExperiment.html",
                 controller: "studentStartExperimentCtrl"
             })
@@ -142,9 +142,16 @@
                 url: "/cloudware",
                 templateUrl: "app/module/cloudware/cloudware.html",
                 controller: "cloudwareCtrl",
-                onEnter: function ($state, $location) {
-                    validateLoginState($state, $location)
-                }
+            })
+            .state('index.studentDoHomework.notebook', {
+                url: "/notebook",
+                templateUrl: "app/module/notebook/notebook.html",
+                controller: "notebookCtrl",
+            })
+            .state('index.studentDoHomework.webide', {
+                url: "/webide",
+                templateUrl: "app/module/webide/webide.html",
+                controller: "webideCtrl",
             })
             .state('index.startExperiment.cloudware', {
                 url: "/cloudware",
@@ -197,24 +204,34 @@
                 }
             })
             .state('index.teacherCheckHomework', {
-                url: "/checkHomework/:homeworkId/:type/:studentId/:cloudwareType/:studentHomeworkId",
-                params: { homeworkId: null, type: "0", studentId: null, cloudwareType: null, studentHomeworkId: null },
+                url: "/checkHomework/:homeworkId/:type/:studentId/:studentHomeworkId",
+                params: { homeworkId: null, type: "0", studentId: null, studentHomeworkId: null },
                 templateUrl: "app/module/teacher/checkHomework/checkHomework.html",
                 controller: "checkHomeworkCtrl",
                 onEnter: function ($state, $location) {
                     validateLoginState($state, $location)
                 }
             })
-            // .state('index.cloudware.checkHomework', {
-            //     url: "/teacher/homework/:id",
-            //     params: { courseId: null, id: null },
-            //     templateUrl: "app/module/teacher/checkHomework/checkHomework.html",
-            //     controller: "checkHomeworkCtrl"
-            // })
             .state('index.teacherCheckHomework.cloudware', {
                 url: "/cloudware",
                 templateUrl: "app/module/cloudware/cloudware.html",
                 controller: "cloudwareCtrl",
+                onEnter: function ($state, $location) {
+                    validateLoginState($state, $location)
+                }
+            })
+            .state('index.teacherCheckHomework.notebook', {
+                url: "/notebook",
+                templateUrl: "app/module/notebook/notebook.html",
+                controller: "notebookCtrl",
+                onEnter: function ($state, $location) {
+                    validateLoginState($state, $location)
+                }
+            })
+            .state('index.teacherCheckHomework.webide', {
+                url: "/webide",
+                templateUrl: "app/module/webide/webide.html",
+                controller: "webideCtrl",
                 onEnter: function ($state, $location) {
                     validateLoginState($state, $location)
                 }

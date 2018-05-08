@@ -4,17 +4,21 @@
 
         <div class="container">
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-2">
 
-                    <select type="text" placeholder="" ng-model="experiment.cloudwareType" ng-options="item.value as item.label for item in cloudwares" class="form-control">
+                    <select type="text" placeholder="" ng-model="experiment.imageTypeId" ng-options="item.value as item.label for item in imageTypes" class="form-control">
                                 
                                                 </select>
                 </div>
                 <div class="col-md-3">
 
+                    <input type="text" class="form-control" ng-model="experiment.imageNameVersion" placeholder="实验镜像名:版本号">
+                </div>
+                <div class="col-md-3">
+
                     <input type="text" class="form-control" ng-model="experiment.experimentName" placeholder="实验名称">
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-3">
 
                     <input type="text" class="form-control" ng-model="experiment.experimentDes" placeholder="实验描述">
                 </div>

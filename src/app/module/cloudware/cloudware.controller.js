@@ -67,21 +67,9 @@
             } else {
                 console.log("start...service")
 
-                startService($stateParams.studentId, $stateParams.cloudwareType, $stateParams.type);
+                startService($stateParams.studentId, $stateParams.type);
             }
-            // commonSrv.startEx().save({
-            //     secret: "123",
-            //     cloudware_type: "rstudio",
-            //     user_id: JSON.parse(localStorage['user']).username
-            // }).$promise.then(
-            //     function(response) {
-            //         console.log(response);
-            //         start(wsaddr, el)
-            //     },
-            //     function(error) {
 
-            //     }
-            // )
             $scope.hideExText = true;
             usSpinnerService.spin('ex-spinner')
             $scope.hasStarted = true;
@@ -365,7 +353,7 @@
 
         $window.onbeforeunload =  $scope.onExit;
 
-        var startService = function(studentId, cloudware_type, type) {
+        var startService = function(studentId, type) {
             if(type == "1") {
                 stuCourseSrv.getLastExperiment().get({
                     studentId: localStorage['userId']
@@ -393,7 +381,7 @@
                                         }, function (response) {
                                             if (response.errorCode == 0) {
                                                 toastr.success("删除上次实验成功")
-                                                createCloudware(studentId, cloudware_type, type)
+                                                createCloudware(studentId, type)
                                             } else {
                                                 toastr.error("删除上次实验失败，请重试")
                                             }
@@ -404,16 +392,16 @@
                                 });
                         } else {
                             //如果上次实验存在且与本次实验id一致或没做过实验，直接开启
-                            createCloudware(studentId, cloudware_type, type)
+                            createCloudware(studentId, type)
                         }
                     }
                 })
             } else {
-                createCloudware(studentId, cloudware_type, type)
+                createCloudware(studentId, type)
             }
         }
 
-        function createCloudware(studentId, cloudware_type, type) {
+        function createCloudware(studentId, type) {
             if ($('[data-cloudware-env]').length > 0) {
                 $('[data-cloudware-env]').each(function(index, el) {
 
@@ -422,7 +410,6 @@
                             stuCourseSrv.createHwCloudware().save({
                                 "homeworkId": $stateParams.homeworkId,
                                 "studentId": studentId,
-                                "cloudwareType": cloudware_type,
                             }).$promise.then(function(response) {
                                 if (response.errorCode == 0) {
                                     start(response.data.webSocket, el)
@@ -440,7 +427,6 @@
                             stuCourseSrv.createExCloudware().save({
                                 "experimentId": $stateParams.experimentId,
                                 "studentId": studentId,
-                                "cloudwareType": cloudware_type,
                             }).$promise.then(function(response) {
                                 if (response.errorCode == 0) {
                                     start(response.data.webSocket, el)
