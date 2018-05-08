@@ -5,9 +5,18 @@
         .module('phoenix')
         .controller('homeworkDetailCtrl', homeworkDetailCtrl);
 
-    homeworkDetailCtrl.$inject = ['$scope', '$uibModal', 'teacherCourseSrv', '$stateParams'];
+    homeworkDetailCtrl.$inject = ['$scope', '$uibModal', 'teacherCourseSrv', '$stateParams', "$state"];
 
-    function homeworkDetailCtrl($scope, $uibModal, teacherCourseSrv, $stateParams) {
+    function homeworkDetailCtrl($scope, $uibModal, teacherCourseSrv, $stateParams, $state) {
+        $scope.checkHomework = function(item, imageTypeId){
+            if (imageTypeId === 2) {
+                $state.go('index.teacherCheckHomework.notebook', { homeworkId: item.homeworkId, studentId: item.studentId, studentHomeworkId:item.studentHomeworkId });
+            } else if (imageTypeId === 3) {
+                $state.go('index.teacherCheckHomework.webide', { homeworkId: item.homeworkId, studentId: item.studentId, studentHomeworkId:item.studentHomeworkId });
+            } else if (imageTypeId === 1) {
+                $state.go('index.teacherCheckHomework.cloudware', { homeworkId: item.homeworkId, studentId: item.studentId, studentHomeworkId:item.studentHomeworkId });
+            }
+        }
         $scope.grade = function(homeworkId) {
             var modalInstance = $uibModal.open({
                 // size: "",

@@ -9,7 +9,13 @@
 
     function studentHomeworkCtrl($scope, $state, stuCourseSrv, $stateParams) {
         $scope.doHomework = function(item) {
-            $state.go('index.studentDoHomework.cloudware', { homeworkId: item.id, studentId: localStorage['userId'], cloudwareType: item.cloudwareType });
+            if (item.imageTypeId === 2) {
+                $state.go('index.studentDoHomework.notebook', { homeworkId: item.id, studentId: localStorage['userId']});
+            } else if (item.imageTypeId === 3) {
+                $state.go('index.studentDoHomework.webide', { homeworkId: item.id, studentId: localStorage['userId']});
+            } else if (item.imageTypeId === 1) {
+                $state.go('index.studentDoHomework.cloudware', { homeworkId: item.id, studentId: localStorage['userId']});
+            }
         }
         stuCourseSrv.getAllHomework().get({
                 classId: $stateParams.classId,

@@ -68,8 +68,7 @@
             if ($stateParams.type === '0') {
                 var param = {
                     "homeworkId": $stateParams.homeworkId,
-                    "studentId": $stateParams.studentId,
-                    "cloudwareType": $stateParams.cloudwareType
+                    "studentId": $stateParams.studentId
                 }
                 stuCourseSrv.createHwCloudware().save(param).$promise.then(function(response) {
                     if (response.errorCode == 0) {
@@ -88,8 +87,7 @@
             if ($stateParams.type === '1') {
                 var param = {
                     "experimentId": $stateParams.experimentId,
-                    "studentId": $stateParams.studentId,
-                    "cloudwareType": $stateParams.cloudwareType
+                    "studentId": $stateParams.studentId
                 }
                 stuCourseSrv.createExCloudware().save(param).$promise.then(function(response) {
                     if (response.errorCode == 0) {

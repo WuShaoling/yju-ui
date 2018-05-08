@@ -4,17 +4,21 @@
 
         <div class="container">
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-2">
 
-                    <select type="text" placeholder="" ng-model="homework.cloudwareType" ng-options="item.value as item.label for item in cloudwares" class="form-control">
+                    <select type="text" placeholder="" ng-model="homework.imageTypeId" ng-options="item.value as item.label for item in imageTypes" class="form-control">
                                 
                                                 </select>
                 </div>
                 <div class="col-md-3">
 
+                    <input type="text" class="form-control" ng-model="homework.imageNameVersion" placeholder="作业镜像名:版本号">
+                </div>
+                <div class="col-md-2">
+
                     <input type="text" class="form-control" ng-model="homework.homeworkName" placeholder="作业名称">
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
 
                     <input type="text" class="form-control" ng-model="homework.homeworkDes" placeholder="作业描述">
                 </div>

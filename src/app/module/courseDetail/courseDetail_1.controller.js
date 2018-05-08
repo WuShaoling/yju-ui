@@ -10,13 +10,24 @@
     function courseDetail1Ctrl($scope, $stateParams, courseSrv, commonSrv, $state) {
         var vm = this;
         $scope.doEx = function(item) {
-            if (item.cloudwareType === 'jupyter_python') {
-                $state.go('index.startExperiment.notebook', { experimentId: item.id, studentId: localStorage['userId'], cloudwareType: item.cloudwareType });
-            } else if (item.cloudwareType === 'ide_java') {
-                $state.go('index.startExperiment.webide', { experimentId: item.id, studentId: localStorage['userId'], cloudwareType: item.cloudwareType });
-            } else {
+            if (item.imageTypeId === 1) {
                 $state.go("index.startExperiment.cloudware",
-                    {experimentId: item.id, studentId: localStorage['userId'] || 0, cloudwareType: item.cloudwareType})
+                    {experimentId: item.id, studentId: localStorage['userId'] || 0})
+            } else if (item.imageTypeId === 2) {
+
+                if (!localStorage['logined']) {
+                    toastr.warning("请登录以后查看课程！");
+                } else {
+                    $state.go('index.startExperiment.notebook', { experimentId: item.id, studentId: localStorage['userId']});
+                }
+
+            } else if (item.imageTypeId === 3) {
+
+                if (!localStorage['logined']) {
+                    toastr.warning("请登录以后查看课程！");
+                } else {
+                    $state.go('index.startExperiment.webide', { experimentId: item.id, studentId: localStorage['userId']});
+                }
             }
         }
 

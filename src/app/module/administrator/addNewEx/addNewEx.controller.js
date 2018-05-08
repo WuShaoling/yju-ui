@@ -21,7 +21,6 @@
                         if (response.errorCode == 0) {
                             $scope.experiment = response.data
                             $scope.text = response.data.experimentContent
-                            $scope.experiment.cloudwareType = response.data.cloudwareTypeId
                             $scope.disableSave = false
                         } else {
                             toastr.error(response.message)
@@ -38,8 +37,12 @@
                 toastr.error("实验名称不能为空");
                 return;
             }
-            if (!$scope.experiment.cloudwareType) {
-                toastr.error("容器类型不能为空");
+            if (!$scope.experiment.imageTypeId) {
+                toastr.error("实验类型不能为空");
+                return;
+            }
+            if (!$scope.experiment.imageNameVersion) {
+                toastr.error("实验镜像名字不能为空");
                 return;
             }
 
@@ -47,7 +50,8 @@
             console.log($scope.text);
             if($stateParams.experimentId == 0) {
                 courseManagementSrv.addExperiment().save({
-                    "cloudwareType": $scope.experiment.cloudwareType,
+                    "imageType": $scope.experiment.imageTypeId,
+                    "imageNameVersion": $scope.experiment.imageNameVersion,
                     "experimentContent": $scope.text,
                     "experimentDes": $scope.experiment.experimentDes,
                     "experimentCreateDate": new Date(),
@@ -73,7 +77,8 @@
             } else {
                 courseManagementSrv.updateExperiment().save({
                     "id": $scope.experiment.id,
-                    "cloudwareType": $scope.experiment.cloudwareType,
+                    "imageType": $scope.experiment.imageTypeId,
+                    "imageNameVersion": $scope.experiment.imageNameVersion,
                     "experimentContent": $scope.text,
                     "experimentDes": $scope.experiment.experimentDes,
                     "experimentName": $scope.experiment.experimentName,
@@ -95,24 +100,15 @@
                 )
             }
         }
-        $scope.cloudwares = [{
-            label: "Rstudio",
+        $scope.imageTypes = [{
+            label: "cloudware",
             value: 1,
         }, {
-            label: "Python",
+            label: "notebook",
             value: 2,
         }, {
-            label: "Base",
+            label: "webide",
             value: 3,
-        }, {
-            label: "Hadoop",
-            value: 4,
-        }, {
-            label: "JupyterPython",
-            value: 5,
-        }, {
-            label: "IdeJava",   // just display
-            value: 6,
         }];
         $scope.$on("$destroy", function() {
 

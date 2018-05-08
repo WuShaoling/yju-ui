@@ -91,7 +91,7 @@
 
                             <td>
                                 <!-- <button type="button" class="btn btn-success btn-outline" ng-click="startExp()">启动</button> -->
-                                <button type="button" class="btn btn-success btn-outline" ng-disabled="!detail.completed" ui-sref="index.teacherCheckHomework.cloudware({ homeworkId: detail.homeworkId, studentId: detail.studentId, cloudwareType: item.cloudwareType,studentHomeworkId:detail.studentHomeworkId })">查看作业</button>
+                                <button type="button" class="btn btn-success btn-outline" ng-disabled="!detail.completed" ng-click="checkHomework(detail, item.imageTypeId)">查看作业</button>
 
                                 <button type="button" class="btn btn-success btn-outline" ng-disabled="!detail.completed" ng-click="grade(detail.studentHomeworkId)">评分</button>
 
