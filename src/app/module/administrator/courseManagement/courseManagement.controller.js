@@ -70,7 +70,7 @@
                     "targets": -1,
                     "data": null,
                     'className': "lsr-body-center",
-                    "defaultContent": "<div class='btn-group'><button class='btn btn-info btn-outline courseMaintain'>课程实验维护</button><button class='btn btn-info btn-outline updateCourse'>更新课程</button><button class='btn btn-danger btn-outline deleteCourse'>删除课程</button></div>"
+                    "defaultContent": "<div class='btn-group'><button class='btn btn-info btn-outline btn-sm courseMaintain'>课程实验维护</button><button class='btn btn-info btn-outline btn-sm updateCourse'>更新课程</button><button class='btn btn-danger btn-outline btn-sm deleteCourse'>删除课程</button></div>"
                 }],
                 //自定义Button
                 buttons: [{
