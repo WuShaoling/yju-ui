@@ -6,9 +6,9 @@
     // angular.module('phoenix').value('fileManagementUrl', "http://127.0.0.1:8080")
 
     // Product
-    angular.module('phoenix').value('reqUrl', "http://api.cloudwarehub.com:8080")
-    angular.module('phoenix').value('webIdeUrl', "http://api.cloudwarehub.com:8081")
-    angular.module('phoenix').value('fileManagementUrl', "http://api.cloudwarehub.com:8090")
+    angular.module('phoenix').value('reqUrl', "http://api.phoenixlab.ai:8080")
+    angular.module('phoenix').value('webIdeUrl', "http://api.phoenixlab.ai:8081")
+    angular.module('phoenix').value('fileManagementUrl', "http://api.phoenixlab.ai:8090")
 
     //toastr配置
     toastr.options = {
