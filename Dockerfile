@@ -1,12 +1,12 @@
 FROM node as builder
 
-RUN npm install -g cnpm gulp bower
+RUN npm install -g gulp bower
 
 WORKDIR /app
 
 COPY bower.json package.json /app/
 
-RUN rm -rf /node_modules && cnpm install && bower install --allow-root
+RUN rm -rf /node_modules && npm install && bower install --allow-root
 
 COPY . /app/
 
