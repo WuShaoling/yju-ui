@@ -17,6 +17,6 @@ FROM nginx:latest
 
 EXPOSE 80
 
-COPY --from=builder /app/dist/* /usr/share/nginx/html
+COPY --from=builder /app/dist/* /usr/share/nginx/html/
 
 CMD ["nginx", "-g", "daemon off;"]
