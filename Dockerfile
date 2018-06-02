@@ -10,7 +10,7 @@ RUN rm -rf /node_modules && npm install && bower install --allow-root
 
 COPY . /app/
 
-RUN gulp env:config && gulp clean && gulp build
+RUN gulp clean && gulp build
 
 
 FROM nginx:latest
