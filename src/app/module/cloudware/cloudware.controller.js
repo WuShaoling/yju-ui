@@ -255,7 +255,7 @@
                 canvas.onmousemove = function(e) {
                     e.preventDefault();
                     var dom_left = canvas.offsetLeft + canvas.offsetParent ? canvas.offsetParent.offsetLeft : 0;
-                    var dom_top = canvas.offsetTop + canvas.offsetTop ? canvas.offsetParent.offsetTop : 0;
+                    var dom_top = canvas.offsetTop + canvas.offsetParent ? canvas.offsetParent.offsetTop : 0;
                     var scroll_top = el.scrollTop;
                     if (instance.isFullscreen) {
                         scroll_top = 0;
